@@ -9,6 +9,15 @@ namespace Golf_6.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public string Fornamn { get; set; }
+        public string Efternamn { get; set; }
+        public string Adress { get; set; }
+        public string Postnummer { get; set; }
+        public string Ort { get; set; }
+        public string Kon { get; set; }
+        public double Hcp { get; set; }
+        public int MedlemsKategori { get; set; }
+        
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

@@ -8,6 +8,30 @@ namespace Golf_6.Models
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+        [Required]
+        [Display(Name = "Förnamn")]
+        public string Fornamn { get; set; }
+        [Required]
+        [Display(Name = "Efternamn")]
+        public string Efternamn { get; set; }
+        [Required]
+        [Display(Name = "Gatuadress")]
+        public string Adress { get; set; }
+        [Required]
+        [Display(Name = "Postnummer")]
+        public string Postnummer { get; set; }
+        [Required]
+        [Display(Name = "Ort")]
+        public string Ort { get; set; }
+        [Required]
+        [Display(Name = "Kön")]
+        public string Kon { get; set; }
+        [Required]
+        [Display(Name = "Handikapp")]
+        public double Hcp { get; set; }
+        [Required]
+        [Display(Name = "Medlemskategori")]
+        public int MedlemsKategori { get; set; }
     }
 
     public class ExternalLoginListViewModel

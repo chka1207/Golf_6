@@ -25,6 +25,62 @@
         </div>
     </div>
     <div class="form-group">
+        @Html.LabelFor(m => m.Fornamn, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Fornamn, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Fornamn, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Efternamn, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Efternamn, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Efternamn, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Adress, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Adress, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Adress, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Postnummer, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Postnummer, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Postnummer, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Ort, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Ort, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Ort, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Kon, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Kon, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Kon, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Hcp, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Hcp, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Hcp, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.MedlemsKategori, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.MedlemsKategori, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.MedlemsKategori, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Register" />
         </div>
