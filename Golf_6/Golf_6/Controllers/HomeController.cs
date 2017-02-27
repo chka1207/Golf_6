@@ -17,7 +17,7 @@ namespace Golf_6.Controllers
         [AllowAnonymousAttribute]
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Hålslagets golfklubb - En golfklubb för alla";
 
             return View();
         }
@@ -25,7 +25,14 @@ namespace Golf_6.Controllers
         [AllowAnonymousAttribute]
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Vi befinner oss på:";
+
+            return View();
+        }
+        [AllowAnonymousAttribute]
+        public ActionResult Golfbanan()
+        {
+            ViewBag.Message = "Hålslagets unika golfbana";
 
             return View();
         }
