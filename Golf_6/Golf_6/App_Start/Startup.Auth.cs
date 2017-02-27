@@ -54,9 +54,9 @@ namespace Golf_6
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "1858606901067531",
+               appSecret: "410f1fbdee98bce6d339fb4af5df078c");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

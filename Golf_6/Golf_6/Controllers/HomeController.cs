@@ -8,11 +8,13 @@ namespace Golf_6.Controllers
 {
     public class HomeController : Controller
     {
+        [AllowAnonymousAttribute]
         public ActionResult Index()
-        {
+        {   
             return View();
         }
 
+        [AllowAnonymousAttribute]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -20,6 +22,7 @@ namespace Golf_6.Controllers
             return View();
         }
 
+        [AllowAnonymousAttribute]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
