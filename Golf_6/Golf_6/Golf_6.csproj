@@ -246,6 +246,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\Golfbanan.cshtml" />
     <Content Include="Views\Tidsbokning\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
