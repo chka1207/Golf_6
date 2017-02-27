@@ -20,6 +20,7 @@ namespace Golf_6.Controllers
 
         public AccountController()
         {
+            string test;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
