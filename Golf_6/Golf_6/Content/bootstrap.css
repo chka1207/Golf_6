@@ -4960,11 +4960,13 @@ a.badge:focus {
   margin-left: 3px;
 }
 .jumbotron {
-  padding-top: 30px;
+  padding-top: 20px;
   padding-bottom: 30px;
-  margin-bottom: 30px;
-  color: inherit;
-  background-color: #ecf0f1;
+  margin-bottom: 20px;
+  color: white;
+  background-color: darkseagreen;
+  background-size: auto 100%;
+  background-image: url('Images/Golf_ball_3 (1).jpg');
 }
 .jumbotron h1,
 .jumbotron .h1 {
@@ -4986,6 +4988,7 @@ a.badge:focus {
 }
 .jumbotron .container {
   max-width: 100%;
+
 }
 @media screen and (min-width: 768px) {
   .jumbotron {

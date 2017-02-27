@@ -36,5 +36,31 @@ namespace Golf_6.Controllers
 
             return View();
         }
+        [AllowAnonymousAttribute]
+        public ActionResult Restauranger()
+        {
+            ViewBag.Message = "Mat i världsklass";
+
+            return View();
+        }
+        [AllowAnonymousAttribute]
+        public ActionResult Tävlingar()
+        {
+            ViewBag.Message = "Tävlingar vid Hålslagets golfklubb";
+
+            return View();
+        }
+        [AllowAnonymousAttribute]
+        public ActionResult BokningPriser()
+        {
+            ViewBag.Message = "Logga in eller bli medlem för att boka din golfupplevelse hos Hålslagets Golfklubb";
+
+            return View();
+        }
+        //[AllowAnonymous]
+        //public ActionResult Boka()
+        //{
+        //    return Redirect("/Account/Login");
+        //}
     }
 }

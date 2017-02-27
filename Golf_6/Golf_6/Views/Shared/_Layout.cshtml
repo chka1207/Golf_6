@@ -21,10 +21,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Start", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Golfbanan", "Golfbanan", "Home")</li>
+                    <li>@Html.ActionLink("Bokning & Priser", "BokningPriser", "Home")</li>
+                    <li>@Html.ActionLink("Tävlingar", "Tävlingar", "Home")</li>
+                    <li>@Html.ActionLink("Restauranger", "Restauranger", "Home")</li>
                     <li>@Html.ActionLink("Om", "About", "Home")</li>
                     <li>@Html.ActionLink("Kontakta oss", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Golfbanan", "Golfbanan", "Home")</li>
+                    
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
