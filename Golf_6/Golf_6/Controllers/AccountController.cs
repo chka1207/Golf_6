@@ -20,7 +20,6 @@ namespace Golf_6.Controllers
 
         public AccountController()
         {
-            string test;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -368,7 +367,10 @@ namespace Golf_6.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,
+                    Fornamn = model.Fornamn, Efternamn = model.Efternamn, Adress = model.Adress,
+                    Postnummer = model.Postnummer, Ort = model.Ort, Kon = model.Kon,
+                Hcp = model.Hcp, MedlemsKategori = model.MedlemsKategori };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
