@@ -65,6 +65,9 @@
       <HintPath>..\packages\Npgsql.3.2.1\lib\net45\Npgsql.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\..\..\..\..\..\..\tillfällig\Downloads\npgsql\Npgsql.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
@@ -192,6 +195,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TidsbokningController.cs" />
@@ -208,6 +212,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Postgres.cs" />
@@ -221,6 +226,7 @@
     <Content Include="Content\Images\2542983390_314871d595_b.jpg" />
     <Content Include="Content\Images\bakery1.jpg" />
     <Content Include="Content\Images\bar.jpg" />
+    <Content Include="Content\Images\Brandt_Snedeker_2012_PGA_Tour_Championship_Win1.jpg" />
     <Content Include="Content\Images\Brandt_Snedeker_2012_PGA_Tour_Championship_Winsquare.jpg" />
     <Content Include="Content\Images\Bukit_Golf_Course.jpg" />
     <Content Include="Content\Images\Cacapon_Resort_State_Park_-_Golf_Course.jpg" />
@@ -232,6 +238,7 @@
     <Content Include="Content\Images\Golf_ball_3 %281%29.jpg" />
     <Content Include="Content\Images\logo18.png" />
     <Content Include="Content\Images\restaurant.jpg" />
+    <Content Include="Content\Images\tour1.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -289,6 +296,10 @@
     <Content Include="Views\Home\Restauranger.cshtml" />
     <Content Include="Views\Home\Tävlingar.cshtml" />
     <Content Include="Views\Home\Bokning &amp; Priser.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\RegistreraNyMedlem.cshtml" />
+    <Content Include="Views\Admin\RedigeraMedlem.cshtml" />
+    <Content Include="Views\Home\BokningPriser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -308,6 +319,9 @@
     <EmbeddedResource Include="Migrations\201702271247584_Init.resx">
       <DependentUpon>201702271247584_Init.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

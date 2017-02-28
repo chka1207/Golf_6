@@ -53,7 +53,7 @@ namespace Golf_6.Controllers
         [AllowAnonymousAttribute]
         public ActionResult BokningPriser()
         {
-            ViewBag.Message = "Logga in eller bli medlem för att boka din golfupplevelse hos Hålslagets Golfklubb";
+            ViewBag.Message = "";
 
             return View();
         }
