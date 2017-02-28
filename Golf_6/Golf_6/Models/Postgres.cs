@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Configuration;
 using Npgsql;
+using System.Xml;
 
 namespace Golf_6.Models
 {
@@ -12,6 +13,8 @@ namespace Golf_6.Models
         private NpgsqlConnection _conn;
         private NpgsqlConnection _cmd;
         private NpgsqlConnection _dr;
+        private string _error;
+
 
         public Postgres()
         {
@@ -20,9 +23,9 @@ namespace Golf_6.Models
             {
                 _conn.Open();
             }
-            catch
+            catch(Exception ex)
             {
-                
+                _error = ex.Message;
             }
         }
         
