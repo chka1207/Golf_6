@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Golf_6.Models
 {
@@ -26,9 +27,40 @@ namespace Golf_6.Models
         [Required]
         [Display(Name = "Kön")]
         public string Kon { get; set; }
+        //[Required]
+        //[Display(Name = "Handikapp")]
+        //public double Hcp { get; set; }
         [Required]
-        [Display(Name = "Handikapp")]
-        public double Hcp { get; set; }
+        [Display(Name = "Medlemskategori")]
+        public int MedlemsKategori { get; set; }
+    }
+
+    public class RegistreraNyMedlem
+    {
+        [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+        [Required]
+        [Display(Name = "Förnamn")]
+        public string Fornamn { get; set; }
+        [Required]
+        [Display(Name = "Efternamn")]
+        public string Efternamn { get; set; }
+        [Required]
+        [Display(Name = "Gatuadress")]
+        public string Adress { get; set; }
+        [Required]
+        [Display(Name = "Postnummer")]
+        public string Postnummer { get; set; }
+        [Required]
+        [Display(Name = "Ort")]
+        public string Ort { get; set; }
+        [Required]
+        [Display(Name = "Kön")]
+        public string Kon { get; set; }
+        //[Required]
+        //[Display(Name = "Handikapp")]
+        //public double Hcp { get; set; }
         [Required]
         [Display(Name = "Medlemskategori")]
         public int MedlemsKategori { get; set; }
@@ -101,9 +133,10 @@ namespace Golf_6.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
+    
 
     public class ResetPasswordViewModel
     {
@@ -120,7 +153,7 @@ namespace Golf_6.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
