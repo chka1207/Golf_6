@@ -13,6 +13,11 @@ namespace Golf_6.Controllers
         // GET: Tidsbokning
         [AllowAnonymous]
         public ActionResult Index()
+        {            
+            return View();
+        }
+
+        public ActionResult Search()
         {
             return View();
         }
