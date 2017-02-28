@@ -300,6 +300,7 @@
     <Content Include="Views\Admin\RegistreraNyMedlem.cshtml" />
     <Content Include="Views\Admin\RedigeraMedlem.cshtml" />
     <Content Include="Views\Home\BokningPriser.cshtml" />
+    <Content Include="Views\Tidsbokning\Bokningsschema.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
