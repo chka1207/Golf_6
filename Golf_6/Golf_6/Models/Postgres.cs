@@ -5,6 +5,7 @@ using System.Web;
 using System.Configuration;
 using Npgsql;
 using System.Xml;
+using System.Data;
 
 namespace Golf_6.Models
 {
@@ -14,6 +15,9 @@ namespace Golf_6.Models
         private NpgsqlCommand _cmd;
         private NpgsqlDataReader _dr;
         private string _error;
+        public DataTable _tabell;
+        public static List<NpgsqlParameter> lista { get; set; }
+
 
         //Metod för anslutning
         public Postgres()
@@ -69,5 +73,69 @@ namespace Golf_6.Models
 
         }
 
+        public DataTable sqlFragaTable(string sql)
+        {
+            try
+            {
+                _cmd = new NpgsqlCommand(sql, _conn);
+
+                _dr = _cmd.ExecuteReader();
+                _tabell.Load(_dr);
+                return _tabell;
+            }
+            catch (NpgsqlException ex)
+            {
+                _error = ex.Message;
+                return null;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+
+        }
+
+        public void SqlParameters(string sqlfraga, List<NpgsqlParameter> parametrar)
+        {
+            try
+            {
+                _cmd = new NpgsqlCommand(sqlfraga, _conn);
+                _cmd.Parameters.AddRange(parametrar.ToArray());
+                _cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                _error = ex.Message;
+            }
+
+            finally
+            {
+                _conn.Close();
+            }
+        }
+
+        public DataTable SqlFrågaParameters(string sqlfraga, List<NpgsqlParameter> parametrar)
+        {
+            try
+            {
+                _cmd = new NpgsqlCommand(sqlfraga, _conn);
+                _cmd.Parameters.AddRange(parametrar.ToArray());
+                _dr = _cmd.ExecuteReader();
+                _tabell.Load(_dr);
+                return _tabell;
+
+            }
+            catch (Exception ex)
+            {
+                _error = ex.Message;
+                return null;
+            }
+
+            finally
+            {
+                _conn.Close();
+            }
+
+        }
     }
 }
