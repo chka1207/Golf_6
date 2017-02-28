@@ -9,6 +9,11 @@ namespace Golf_6.Models
 {
     public class Admin
     {
+        
+    }
+
+    public class RegistreraNyMedlem
+    {
         [Required]
         [Display(Name = "Förnamn")]
         public string Fornamn { get; set; }
@@ -35,4 +40,5 @@ namespace Golf_6.Models
         [Display(Name = "Medlemskategori")]
         public int MedlemsKategori { get; set; }
     }
+
 }
