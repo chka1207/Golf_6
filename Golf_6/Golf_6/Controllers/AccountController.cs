@@ -17,6 +17,7 @@ namespace Golf_6.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        
 
         public AccountController()
         {
@@ -141,7 +142,7 @@ namespace Golf_6.Controllers
         {
             return View();
         }
-
+        
         //
         // POST: /Account/Register
         [HttpPost]
@@ -296,6 +297,7 @@ namespace Golf_6.Controllers
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
+        
 
         //
         // POST: /Account/SendCode
@@ -370,7 +372,7 @@ namespace Golf_6.Controllers
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email,
                     Fornamn = model.Fornamn, Efternamn = model.Efternamn, Adress = model.Adress,
                     Postnummer = model.Postnummer, Ort = model.Ort, Kon = model.Kon,
-                Hcp = model.Hcp, MedlemsKategori = model.MedlemsKategori };
+                /* Hcp = model.Hcp,*/ MedlemsKategori = model.MedlemsKategori };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
