@@ -39,7 +39,7 @@ namespace Golf_6.Controllers
         [AllowAnonymousAttribute]
         public ActionResult Restauranger()
         {
-            ViewBag.Message = "Mat i världsklass";
+            ViewBag.Message = "Mat i världsklass hos Hålslagets Golfklubb";
 
             return View();
         }
