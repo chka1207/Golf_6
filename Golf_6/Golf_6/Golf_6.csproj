@@ -170,6 +170,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TidsbokningController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -252,6 +253,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Golfbanan.cshtml" />
+    <Content Include="Views\Tidsbokning\Index.cshtml" />
     <Content Include="Views\Home\Restauranger.cshtml" />
     <Content Include="Views\Home\Tävlingar.cshtml" />
     <Content Include="Views\Home\Bokning &amp; Priser.cshtml" />

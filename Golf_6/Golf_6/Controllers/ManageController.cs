@@ -10,7 +10,7 @@ using Golf_6.Models;
 
 namespace Golf_6.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
