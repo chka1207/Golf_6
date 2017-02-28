@@ -196,6 +196,7 @@
     <Content Include="Content\Images\2542983390_314871d595_b.jpg" />
     <Content Include="Content\Images\bakery1.jpg" />
     <Content Include="Content\Images\bar.jpg" />
+    <Content Include="Content\Images\Brandt_Snedeker_2012_PGA_Tour_Championship_Win1.jpg" />
     <Content Include="Content\Images\Brandt_Snedeker_2012_PGA_Tour_Championship_Winsquare.jpg" />
     <Content Include="Content\Images\Bukit_Golf_Course.jpg" />
     <Content Include="Content\Images\Cacapon_Resort_State_Park_-_Golf_Course.jpg" />
@@ -207,6 +208,7 @@
     <Content Include="Content\Images\Golf_ball_3 %281%29.jpg" />
     <Content Include="Content\Images\logo18.png" />
     <Content Include="Content\Images\restaurant.jpg" />
+    <Content Include="Content\Images\tour1.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
