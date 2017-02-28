@@ -61,10 +61,6 @@
       <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.1.1.0\lib\netstandard1.1\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Npgsql, Version=3.2.1.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Npgsql.3.2.1\lib\net45\Npgsql.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Npgsql">
       <HintPath>..\..\..\..\..\..\..\tillfällig\Downloads\npgsql\Npgsql.dll</HintPath>
     </Reference>
@@ -300,6 +296,7 @@
     <Content Include="Views\Admin\RegistreraNyMedlem.cshtml" />
     <Content Include="Views\Admin\RedigeraMedlem.cshtml" />
     <Content Include="Views\Home\BokningPriser.cshtml" />
+    <Content Include="Views\Tidsbokning\Bokningsschema.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

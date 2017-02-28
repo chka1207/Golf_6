@@ -16,9 +16,14 @@ namespace Golf_6.Controllers
         }
 
         // GET: Admin/RegistreraNyMedlem
+        //[HttpPost]
         [AllowAnonymous]
         public ActionResult RegistreraNyMedlem()
         {
+            if (ModelState.IsValid)
+            {
+                //TO-DO:
+            }
             return View();
         }
 
