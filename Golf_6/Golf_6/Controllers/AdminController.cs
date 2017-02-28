@@ -16,7 +16,7 @@ namespace Golf_6.Controllers
         }
 
         // GET: Admin/RegistreraNyMedlem
-        [HttpPost]
+        //[HttpPost]
         [AllowAnonymous]
         public ActionResult RegistreraNyMedlem()
         {
