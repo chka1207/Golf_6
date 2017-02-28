@@ -293,7 +293,7 @@
     <Content Include="Views\Tidsbokning\Index.cshtml" />
     <Content Include="Views\Home\Restauranger.cshtml" />
     <Content Include="Views\Home\Tävlingar.cshtml" />
-    <Content Include="Views\Home\Bokning &amp; Priser.cshtml" />
+    <Content Include="Views\Home\BokningPriser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
