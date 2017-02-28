@@ -33,9 +33,9 @@ namespace Golf_6.Controllers
         [AllowAnonymous]
         public ActionResult Create()
         {
-            //Tidsbokning t = new Tidsbokning(); Tester för att kolla dbconnection, dbconnection fungerar
-            //DataTable dt = new DataTable();
-            //dt = t.GetSchema("select * from schema where datum = @par1", DateTime.Today);
+            //Tidsbokning t = new Tidsbokning(); /*Tester för att kolla dbconnection, dbconnection fungerar*/
+            //t.GetSchema("select * from schema where datum = @par1", DateTime.Today);
+            
             //t.BokaTid(2, DateTime.Today, Convert.ToDateTime("09:00"), "1");
 
             return View();
