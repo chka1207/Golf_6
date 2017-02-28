@@ -12,8 +12,10 @@ namespace Golf_6.Models
         public string Adress { get; set; }
         public string Postnummer { get; set; }
         public string Ort { get; set; }
+        public string Email { get; set; }
         public string Kon { get; set; }
-        //public double Hcp { get; set; }
+        public double Handikapp { get; set; }
+        public string GolfID { get; set; }
         public int MedlemsKategori { get; set; }
     }
 }
