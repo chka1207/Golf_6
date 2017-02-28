@@ -20,9 +20,12 @@ namespace Golf_6.Models
         [DataType(DataType.Time)]
         public DateTime Tid { get; set; }
 
-        public int Spelare2ID { get; set; }
-        public int Spelare3ID { get; set; }
-        public int Spelare4ID { get; set; }
+        [Display(Name ="GolfID för medspelare")]
+        public string Spelare2ID { get; set; }
+        [Display(Name = "GolfID för medspelare")]
+        public string Spelare3ID { get; set; }
+        [Display(Name = "GolfID för medspelare")]
+        public String Spelare4ID { get; set; }
 
 
          
