@@ -17,6 +17,12 @@ namespace Golf_6.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult Bokningsschema()
+        {
+            return View();
+        }
+
         public ActionResult Search()
         {
             return View();

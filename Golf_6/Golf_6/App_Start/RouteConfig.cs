@@ -14,7 +14,13 @@ namespace Golf_6
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
+    name: "Medlem",
+    url: "{controller}/{action}/{id}",
+    defaults: new { controller = "Medlem", action = "Index", id = UrlParameter.Optional }
+);
+
+            routes.MapRoute(
+                name: "Home",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
