@@ -90,6 +90,7 @@ namespace Golf_6.Models
                 new Npgsql.NpgsqlParameter("@par1", d)
             });
             List<Tidsbokning> y = new List<Tidsbokning>();
+            
             foreach (DataRow dr in x._tabell.Rows)
             {
                 string bokningsID, tid, bokareID;
@@ -97,16 +98,9 @@ namespace Golf_6.Models
                 Tidsbokning t = new Tidsbokning();
                 bokningsID = dr["bokning_id"].ToString();
                 tid = dr["tid"].ToString();
-
-                if (dr["bokare_id"] == null)
-                {
-                    t.BokareID = 000;
-                }
-                else
-                {
-                    bokareID = dr["bokare_id"].ToString();
-                    t.BokareID = Convert.ToUInt16(bokareID);
-                }
+                bokareID = dr["bokare_id"].ToString();
+                t.BokareID = Convert.ToUInt16(bokareID);
+                
                 if (dr["guest1"] == null)
                 {
                     t.Spelare2ID = "";
@@ -114,6 +108,7 @@ namespace Golf_6.Models
                 else
                 {
                     t.Spelare2ID = dr["guest2"].ToString();
+                                    
                 }
                 if (dr["guest2"] == null)
                 {
