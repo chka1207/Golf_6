@@ -300,11 +300,10 @@
     <Content Include="Views\Home\BokningPriser.cshtml" />
     <Content Include="Views\Tidsbokning\Bokningsschema.cshtml" />
     <Content Include="Views\Shared\_LayoutMedlem.cshtml" />
-    <Content Include="Views\Medlem.cshtml" />
+    <Content Include="Views\Medlem\Medlem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Medlem\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
