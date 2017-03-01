@@ -29,6 +29,48 @@ namespace Golf_6.Models
         [Display(Name = "GolfID för medspelare")]
         public String Spelare4ID { get; set; }
 
+        public string SokFornamn { get; set; }
+        public string SokEfternamn { get; set; }
+        public string Medlem { get; set; }
+
+        public List<Tidsbokning> GetMedlemmen(string fornamn, string efternamn)
+        {
+            SokFornamn = fornamn;
+            SokEfternamn = efternamn;
+            string adress = "";
+            string golfid = "";
+            
+
+            List<Tidsbokning> Lista = new List<Tidsbokning>();
+            Postgres p = new Postgres();
+
+            p.SqlFrågaParameters("select golfid, adress from medlemmar where fornamn =@par1 and efternamn =@par2", Postgres.lista = new List<NpgsqlParameter> ()
+                {
+                    new Npgsql.NpgsqlParameter("@par1", fornamn),
+                    new Npgsql.NpgsqlParameter("@par2", efternamn)
+                });
+            
+            if (p._tabell != null)
+            {
+                 foreach (DataRow row in p._tabell.Rows)
+                    {
+                        Tidsbokning t = new Tidsbokning();
+                        adress = row["adress"].ToString();
+                        golfid = row["golfid"].ToString();
+                        t.Medlem = adress + golfid;
+                        Lista.Add(t);
+                     }
+            }
+            else
+                {
+                    Tidsbokning t1 = new Tidsbokning();
+                    t1.Medlem = "Finns ingen medlem med det namnet.";
+                    Lista.Add(t1);
+                }
+           
+            return Lista;
+        }
+
         //public List<Tidsbokning> GetSchema(string psql, DateTime d)        /*Ska hämta en lista med bokade tider, ej klar*/
         //{
         //    Postgres x = new Postgres();
