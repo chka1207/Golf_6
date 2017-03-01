@@ -13,7 +13,12 @@ namespace Golf_6.Controllers
         // GET: Tidsbokning
         [AllowAnonymous]
         public ActionResult Index()
-        {            
+        {  
+            //DENNA METOD SKA LIGGA I VYN FÖR ATT SÖKA EFTER GOLFID
+            //MÅSTE ÄNDRA DE HÅRDKODADE NAMNEN SOM PARAMETRAR SEN
+            Tidsbokning t = new Tidsbokning();
+            List<Tidsbokning> lista = new List<Tidsbokning>();
+            lista = t.GetMedlemmen("Maria", "Rodriguez");         
             return View();
         }
 
@@ -23,8 +28,10 @@ namespace Golf_6.Controllers
             return View();
         }
 
+        
         public ActionResult Search()
         {
+            
             return View();
         }
 
@@ -39,12 +46,16 @@ namespace Golf_6.Controllers
         [AllowAnonymous]
         public ActionResult Create()
         {
-            Tidsbokning t = new Tidsbokning(); /*Tester för att kolla dbconnection, dbconnection fungerar*/
-            //t.GetSchema("select * from schema where datum = @par1", DateTime.Today);
+            Tidsbokning t = new Tidsbokning(); 
+            List<Tidsbokning> l = new List<Tidsbokning>();
+            l = t.GetSchema("select * from schema where datum = @par1", DateTime.Today);
 
-            t.BokaTid(2, DateTime.Today, Convert.ToDateTime("09:00"), "1");
+            //t.BokaTid(2, DateTime.Today, Convert.ToDateTime("09:00"), "1");
 
-            return View();
+            //Medlem m = new Medlem();
+            //m.GetMedlem("select * from medlemmar where id = @par1", 1);
+
+            return View(l);
         }
 
         // POST: Tidsbokning/Create

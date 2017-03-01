@@ -29,6 +29,59 @@ namespace Golf_6.Models
         [Display(Name = "GolfID för medspelare")]
         public String Spelare4ID { get; set; }
 
+        public string SokFornamn { get; set; }
+        public string SokEfternamn { get; set; }
+        public string Medlem { get; set; }
+
+        public List<Tidsbokning> GetMedlemmen(string fornamn, string efternamn)
+        {
+            SokFornamn = fornamn;
+            SokEfternamn = efternamn;
+            string adress = "";
+            string golfid = "";
+            
+
+            List<Tidsbokning> Lista = new List<Tidsbokning>();
+            Postgres p = new Postgres();
+
+            p.SqlFrågaParameters("select golfid, adress from medlemmar where fornamn =@par1 and efternamn =@par2", Postgres.lista = new List<NpgsqlParameter> ()
+                {
+                    new Npgsql.NpgsqlParameter("@par1", fornamn),
+                    new Npgsql.NpgsqlParameter("@par2", efternamn)
+                });
+            
+            if (p._tabell != null)
+            {
+                 foreach (DataRow row in p._tabell.Rows)
+                    {
+                        Tidsbokning t = new Tidsbokning();
+                        adress = row["adress"].ToString();
+                        golfid = row["golfid"].ToString();
+                        t.Medlem = adress + " " + golfid;
+                        Lista.Add(t);
+                     }
+            }
+            else
+                {
+                    Tidsbokning t1 = new Tidsbokning();
+                    t1.Medlem = "Finns ingen medlem med det namnet.";
+                    Lista.Add(t1);
+                }
+           
+            return Lista;
+        }
+
+        //public List<Tidsbokning> GetSchema(string psql, DateTime d)        /*Ska hämta en lista med bokade tider, ej klar*/
+        //{
+        //    Postgres x = new Postgres();
+        //    x.SqlFrågaParameters(psql, Postgres.lista = new List<Npgsql.NpgsqlParameter>()
+        //    {
+        //        new Npgsql.NpgsqlParameter("@par1", d)
+        //    });
+        //    List<Tidsbokning> y = new List<Tidsbokning>();
+        //    foreach (DataRow dr in x._tabell.Rows)
+        //    {
+        //        string bokningsID, tid, bokareID;
         public List<Tidsbokning> GetSchema(string psql, DateTime d)        /*Ska hämta en lista med bokade tider, ej klar*/
         {
             Postgres x = new Postgres();
@@ -37,6 +90,7 @@ namespace Golf_6.Models
                 new Npgsql.NpgsqlParameter("@par1", d)
             });
             List<Tidsbokning> y = new List<Tidsbokning>();
+            
             foreach (DataRow dr in x._tabell.Rows)
             {
                 string bokningsID, tid, bokareID;
@@ -44,16 +98,9 @@ namespace Golf_6.Models
                 Tidsbokning t = new Tidsbokning();
                 bokningsID = dr["bokning_id"].ToString();
                 tid = dr["tid"].ToString();
-
-                if (dr["bokare_id"] == null)
-                {
-                    t.BokareID = 000;
-                }
-                else
-                {
-                    bokareID = dr["bokare_id"].ToString();
-                    t.BokareID = Convert.ToUInt16(bokareID);
-                }
+                bokareID = dr["bokare_id"].ToString();
+                t.BokareID = Convert.ToUInt16(bokareID);
+                
                 if (dr["guest1"] == null)
                 {
                     t.Spelare2ID = "";
@@ -61,6 +108,7 @@ namespace Golf_6.Models
                 else
                 {
                     t.Spelare2ID = dr["guest2"].ToString();
+                                    
                 }
                 if (dr["guest2"] == null)
                 {
@@ -78,11 +126,11 @@ namespace Golf_6.Models
                 {
                     t.Spelare4ID = dr["guest2"].ToString();
                 }
-
+               
                 t.BokningsID = Convert.ToUInt16(bokningsID);
                 t.Datum = d;
                 t.Tid = Convert.ToDateTime(tid);
-
+                
                 y.Add(t);
             }
             return y;

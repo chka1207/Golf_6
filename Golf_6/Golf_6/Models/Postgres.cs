@@ -7,6 +7,7 @@ using Npgsql;
 using System.Xml;
 using System.Data;
 
+
 namespace Golf_6.Models
 {
     public class Postgres
@@ -31,6 +32,7 @@ namespace Golf_6.Models
             {
                 _error = ex.Message;
             }
+            _tabell = new DataTable();
         }
         //ExempelMetod för sqlFråga utan paramterar
         private NpgsqlDataReader sqlFraga(string sql)
@@ -137,5 +139,6 @@ namespace Golf_6.Models
             }
 
         }
+        
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Golf_6.Models;
+using Golf_6.ViewModels;
 
 namespace Golf_6.Controllers
 {
@@ -15,16 +17,35 @@ namespace Golf_6.Controllers
             return View();
         }
 
-        // GET: Admin/RegistreraNyMedlem
-        //[HttpPost]
+        //GET: Admin/RegistreraNyMedlem
         [AllowAnonymous]
         public ActionResult RegistreraNyMedlem()
+        {
+            var viewModel = new NyMedlemViewModel();
+
+            return View(viewModel);
+        }
+
+        // POST: Admin/RegistreraNyMedlem
+        [HttpPost]
+        [AllowAnonymous]
+        //public ActionResult RegistreraNyMedlem(string fnamn, string enamn)
+        public ActionResult RegistreraNyMedlem(NyMedlemViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 //TO-DO:
+                //RegistreraNyMedlem(model.Fornamn);
             }
-            return View();
+
+            Admin admin = new Admin();
+
+            admin.RegistreraNyMedlem(viewModel.RegistreraNyMedlem.Fornamn, viewModel.RegistreraNyMedlem.Efternamn,
+                viewModel.RegistreraNyMedlem.Adress, viewModel.RegistreraNyMedlem.Postnummer, viewModel.RegistreraNyMedlem.Ort,
+                viewModel.RegistreraNyMedlem.Email, viewModel.RegistreraNyMedlem.Kon, viewModel.RegistreraNyMedlem.Handikapp,
+                viewModel.RegistreraNyMedlem.GolfID, viewModel.RegistreraNyMedlem.MedlemsKategori, 
+                viewModel.RegistreraNyMedlem.Telefonnummer);
+            return View("Index");
         }
 
         // GET: Admin/RedigeraMedlem
