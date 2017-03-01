@@ -2,14 +2,40 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Collections.Generic;
+using System.Data;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlClient;
+using Npgsql;
 
 namespace Golf_6.Models
 {
     public class Admin
     {
-        
+        public void NyMedlem(string fornamn, string efternamn, string adress, string postnummer, string ort, string email,
+            string kon, double handikapp, string golfid, int medlemskategori, string telefonnummer)
+        {
+            //string sql = ;
+
+            Postgres db = new Postgres();
+
+            db.SqlParameters("INSERT INTO medlemmar(fornamn, efternamn, adress, postnummer, ort, email, kon, handikapp, " +
+                "golfid, medlemskategori, telefonnummer) VALUES(@fornamn, @efternamn, @adress, @postnummer, @ort, @email, " +
+                "@kon, @handikapp, @golfid, @medlemskategori, @telefonnummer)", Postgres.lista = new List<NpgsqlParameter>()
+        {
+            new NpgsqlParameter("@fornamn", fornamn),
+            new NpgsqlParameter("@efternamn", efternamn),
+            new NpgsqlParameter("@adress", adress),
+            new NpgsqlParameter("@postnummer", postnummer),
+            new NpgsqlParameter("@ort", ort),
+            new NpgsqlParameter("@email", email),
+            new NpgsqlParameter("@kon", kon),
+            new NpgsqlParameter("@handikapp", handikapp),
+            new NpgsqlParameter("@golfid", golfid),
+            new NpgsqlParameter("@medlemskategori", medlemskategori),
+            new NpgsqlParameter("@telefonnummer", telefonnummer)
+        });
+
+        }
     }
 
     public class RegistreraNyMedlem
@@ -41,4 +67,5 @@ namespace Golf_6.Models
         public int MedlemsKategori { get; set; }
     }
 
+    
 }
