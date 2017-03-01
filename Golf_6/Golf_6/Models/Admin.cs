@@ -11,7 +11,7 @@ namespace Golf_6.Models
 {
     public class Admin
     {
-        public void NyMedlem(string fornamn, string efternamn, string adress, string postnummer, string ort, string email,
+        public void RegistreraNyMedlem(string fornamn, string efternamn, string adress, string postnummer, string ort, string email,
             string kon, double handikapp, string golfid, int medlemskategori, string telefonnummer)
         {
             //string sql = ;
@@ -65,6 +65,8 @@ namespace Golf_6.Models
         [Required]
         [Display(Name = "Medlemskategori")]
         public int MedlemsKategori { get; set; }
+        [Required]
+        public string Telefonnummer { get; set; }
     }
 
     

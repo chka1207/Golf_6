@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Golf_6.Models;
+using Golf_6.ViewModels;
 
 namespace Golf_6.Controllers
 {
@@ -16,10 +17,20 @@ namespace Golf_6.Controllers
             return View();
         }
 
-        // GET: Admin/RegistreraNyMedlem
-        //[HttpPost]
+        //GET: Admin/RegistreraNyMedlem
         [AllowAnonymous]
-        public ActionResult NyMedlem(Admin model)
+        public ActionResult RegistreraNyMedlem()
+        {
+            var viewModel = new NyMedlemViewModel();
+
+            return View(viewModel);
+        }
+
+        // POST: Admin/RegistreraNyMedlem
+        [HttpPost]
+        [AllowAnonymous]
+        //public ActionResult RegistreraNyMedlem(string fnamn, string enamn)
+        public ActionResult RegistreraNyMedlem(NyMedlemViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -29,8 +40,12 @@ namespace Golf_6.Controllers
 
             Admin admin = new Admin();
 
-            admin.NyMedlem("Sean", "Banan", "banangatan 23", "88844", "Gällivare", "banan@banan.se", "Man", 20.3, "880112-222", 2, "07044433322");
-            return View();
+            admin.RegistreraNyMedlem(viewModel.RegistreraNyMedlem.Fornamn, viewModel.RegistreraNyMedlem.Efternamn,
+                viewModel.RegistreraNyMedlem.Adress, viewModel.RegistreraNyMedlem.Postnummer, viewModel.RegistreraNyMedlem.Ort,
+                viewModel.RegistreraNyMedlem.Email, viewModel.RegistreraNyMedlem.Kon, viewModel.RegistreraNyMedlem.Handikapp,
+                viewModel.RegistreraNyMedlem.GolfID, viewModel.RegistreraNyMedlem.MedlemsKategori, 
+                viewModel.RegistreraNyMedlem.Telefonnummer);
+            return View("Index");
         }
 
         // GET: Admin/RedigeraMedlem
