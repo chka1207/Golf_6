@@ -211,6 +211,7 @@
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Medlem.cs" />
     <Compile Include="Models\Postgres.cs" />
     <Compile Include="Models\Tidsbokning.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
