@@ -36,7 +36,10 @@ namespace Golf_6.Controllers
             Tidsbokning t = new Tidsbokning(); /*Tester för att kolla dbconnection, dbconnection fungerar*/
             //t.GetSchema("select * from schema where datum = @par1", DateTime.Today);
 
-            t.BokaTid(2, DateTime.Today, Convert.ToDateTime("09:00"), "1");
+            //t.BokaTid(2, DateTime.Today, Convert.ToDateTime("09:00"), "1");
+
+            Medlem m = new Medlem();
+            m.GetMedlem("select * from medlemmar where id = @par1", 1);
 
             return View();
         }
