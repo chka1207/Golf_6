@@ -57,7 +57,7 @@ namespace Golf_6.Models
                         Tidsbokning t = new Tidsbokning();
                         adress = row["adress"].ToString();
                         golfid = row["golfid"].ToString();
-                        t.Medlem = adress + golfid;
+                        t.Medlem = adress + " " + golfid;
                         Lista.Add(t);
                      }
             }

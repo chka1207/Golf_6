@@ -14,10 +14,10 @@ namespace Golf_6.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {  
+            //DENNA METOD SKA LIGGA I VYN FÖR ATT SÖKA EFTER GOLFID
+            //MÅSTE ÄNDRA DE HÅRDKODADE NAMNEN SOM PARAMETRAR SEN
             Tidsbokning t = new Tidsbokning();
             List<Tidsbokning> lista = new List<Tidsbokning>();
-
-            
             lista = t.GetMedlemmen("Maria", "Rodriguez");         
             return View();
         }
