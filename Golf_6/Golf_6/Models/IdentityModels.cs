@@ -38,5 +38,7 @@ namespace Golf_6.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<Golf_6.Models.Medlem> Medlems { get; set; }
     }
 }
