@@ -13,12 +13,18 @@ namespace Golf_6.Controllers
         // GET: Tidsbokning
         [AllowAnonymous]
         public ActionResult Index()
-        {            
+        {  
+            Tidsbokning t = new Tidsbokning();
+            List<Tidsbokning> lista = new List<Tidsbokning>();
+
+            
+            lista = t.GetMedlemmen("Maria", "Rodriguez");         
             return View();
         }
-
+        
         public ActionResult Search()
         {
+            
             return View();
         }
 
