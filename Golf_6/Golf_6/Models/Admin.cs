@@ -111,5 +111,17 @@ namespace Golf_6.Models
         
     }
 
-    
+    public class SasongsHantering
+    {
+        public void HanteraSasong(DateTime sasongStart, DateTime sasongSlut)
+        {
+            Postgres db = new Postgres();
+
+            db.SqlParameters("UPDATE Sasong SET startdatum = @par1, slutdatum = @par2 WHERE ID = 1", Postgres.lista = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@par1", sasongStart),
+                new NpgsqlParameter("@par2", sasongSlut)
+            });
+        }
+    }
 }
