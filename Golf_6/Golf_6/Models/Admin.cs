@@ -38,6 +38,29 @@ namespace Golf_6.Models
 
         }
 
+        public void RedigeraMedlem(string fornamn, string efternamn, string adress, string postnummer, string ort, string email,
+            double handikapp, int medlemskategori, string telefonnummer)
+        {
+
+            Postgres db = new Postgres();
+
+            db.SqlParameters("INSERT INTO medlemmar(fornamn, efternamn, adress, postnummer, ort, email, handikapp, " +
+                "medlemskategori, telefonnummer) VALUES(@fornamn, @efternamn, @adress, @postnummer, @ort, @email, " +
+                "@handikapp, @medlemskategori, @telefonnummer)", Postgres.lista = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@fornamn", fornamn),
+                new NpgsqlParameter("@efternamn", efternamn),
+                new NpgsqlParameter("@adress", adress),
+                new NpgsqlParameter("@postnummer", postnummer),
+                new NpgsqlParameter("@ort", ort),
+                new NpgsqlParameter("@email", email),
+                new NpgsqlParameter("@handikapp", handikapp),
+                new NpgsqlParameter("@medlemskategori", medlemskategori),
+                new NpgsqlParameter("@telefonnummer", telefonnummer)
+            });
+
+        }
+
         public List<Admin> GetMedlemmen(string fornamn, string efternamn)
         {
             //SokFornamn = fornamn;
@@ -90,7 +113,7 @@ namespace Golf_6.Models
 
     }
     
-    public class RegistreraNyMedlem
+    public class AdminMedlemshantering
     {
         [Required]
         [Display(Name = "Förnamn")]
@@ -120,7 +143,7 @@ namespace Golf_6.Models
         [Required]
         public string Telefonnummer { get; set; }
     }
-
+    
     public class HanteraSasong
     {
         [Required]
