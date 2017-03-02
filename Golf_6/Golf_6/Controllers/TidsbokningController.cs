@@ -25,14 +25,14 @@ namespace Golf_6.Controllers
             //List<string> li = new List<string>();
             //string datum = "2017-02-28";
 
-           
+            
 
             //li = t1.KontrolleraGolfID("10956-019", "11115-033", "10477-086", "10623-085");
 
             Tidsbokning t1 = new Tidsbokning();
-            List<string> li = new List<string>();
+            string meddelande;
             //string datum = "2017-02-28";"10956-019", "11115-033", "10477-086", "10623-085"
-            li = t1.HämtaGolfId("10356-144", "10336-149", "10114-136", "");
+            meddelande = t1.HämtaGolfId("10356-144", "10336-149", "10114-136", "");
             return View();
         }
 
