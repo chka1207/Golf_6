@@ -163,12 +163,12 @@ namespace Golf_6.Models
 
         //Metod påbörjad för att kontrollera om spelarna som ska bokas i en tid redan finns i samma datum
         //EJ KLAR då det blir ett felmeddelande när vissa kolumner i databasen är tomma.
-        public List<string> HämtaGolfId()
+        public List<string> HämtaGolfId(string golfare1, string golfare2, string golfare3, string golfare4)
         {
             List<string> list = new List<string> ();
            
             Postgres p1 = new Postgres();
-            p1.sqlFragaTable("select guest1, guest2, guest3, guest4 from schema where datum ='2017-03-01'");
+            p1.sqlFragaTable("select guest1, guest2, guest3, guest4 from schema where datum ='2017-02-26'");
 
             foreach (DataRow dr in p1._tabell.Rows)
             {
@@ -176,7 +176,7 @@ namespace Golf_6.Models
 
                 if ( dr["guest1"] == null)
                 {
-                    Spelare1ID = "";
+                    Spelare1ID = "";                    
                 }
                 else
                 {
@@ -218,6 +218,28 @@ namespace Golf_6.Models
                     list.Add(id4);        
                 }
                
+            }
+            
+            List<string> meddelandeLista = new List<string>();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (golfare1 == list[i])
+                {
+                    meddelandeLista.Add(golfare1);
+                }
+                else if (golfare2 == list[i])
+                {
+                    meddelandeLista.Add(golfare2);
+                }
+                else if (golfare3 == list[i])
+                {
+                    meddelandeLista.Add(golfare3);
+                }
+                else if (golfare4 == list[i])
+                {
+                    meddelandeLista.Add(golfare4);
+                }
             }
             return list;
         }
