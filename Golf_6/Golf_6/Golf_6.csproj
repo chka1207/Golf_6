@@ -306,6 +306,7 @@
     <Content Include="Views\Medlem\Personuppgifter.cshtml" />
     <Content Include="Views\Medlem\Index.cshtml" />
     <Content Include="Views\Medlem\MinaBokningar.cshtml" />
+    <Content Include="Views\Admin\HanteraSasong.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
