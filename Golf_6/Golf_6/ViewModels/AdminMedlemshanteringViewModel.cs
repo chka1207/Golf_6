@@ -6,8 +6,8 @@ using Golf_6.Models;
 
 namespace Golf_6.ViewModels
 {
-    public class NyMedlemViewModel
+    public class AdminMedlemshanteringViewModel
     {
-        public RegistreraNyMedlem RegistreraNyMedlem { get; set; }
+        public AdminMedlemshantering AdminMedlemshantering { get; set; }
     }
 }

@@ -17,20 +17,21 @@ namespace Golf_6.Controllers
             return View();
         }
 
+        #region Registrera ny medlem /GET: /POST:
+
         //GET: Admin/RegistreraNyMedlem
         [AllowAnonymous]
         public ActionResult RegistreraNyMedlem()
         {
-            var viewModel = new NyMedlemViewModel();
+            var viewModel = new AdminMedlemshanteringViewModel();
 
             return View(viewModel);
         }
-
+        
         // POST: Admin/RegistreraNyMedlem
         [HttpPost]
         [AllowAnonymous]
-        //public ActionResult RegistreraNyMedlem(string fnamn, string enamn)
-        public ActionResult RegistreraNyMedlem(NyMedlemViewModel viewModel)
+        public ActionResult RegistreraNyMedlem(AdminMedlemshanteringViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -40,14 +41,16 @@ namespace Golf_6.Controllers
 
             Admin admin = new Admin();
 
-            admin.RegistreraNyMedlem(viewModel.RegistreraNyMedlem.Fornamn, viewModel.RegistreraNyMedlem.Efternamn,
-                viewModel.RegistreraNyMedlem.Adress, viewModel.RegistreraNyMedlem.Postnummer, viewModel.RegistreraNyMedlem.Ort,
-                viewModel.RegistreraNyMedlem.Email, viewModel.RegistreraNyMedlem.Kon, viewModel.RegistreraNyMedlem.Handikapp,
-                viewModel.RegistreraNyMedlem.GolfID, viewModel.RegistreraNyMedlem.MedlemsKategori, 
-                viewModel.RegistreraNyMedlem.Telefonnummer);
+            admin.RegistreraNyMedlem(viewModel.AdminMedlemshantering.Fornamn, viewModel.AdminMedlemshantering.Efternamn,
+                viewModel.AdminMedlemshantering.Adress, viewModel.AdminMedlemshantering.Postnummer, viewModel.AdminMedlemshantering.Ort,
+                viewModel.AdminMedlemshantering.Email, viewModel.AdminMedlemshantering.Kon, viewModel.AdminMedlemshantering.Handikapp,
+                viewModel.AdminMedlemshantering.GolfID, viewModel.AdminMedlemshantering.MedlemsKategori, 
+                viewModel.AdminMedlemshantering.Telefonnummer);
             return View("Index");
         }
+        #endregion
 
+        #region Redigera medlem /GET: /POST:
         // GET: Admin/RedigeraMedlem
         [AllowAnonymous]
         public ActionResult RedigeraMedlem()
@@ -58,9 +61,30 @@ namespace Golf_6.Controllers
             List<Admin> medlemsLista = new List<Admin>();
             medlemsLista = admin.GetMedlemmen("Maria", "Rodriguez");
             return View();
-            
         }
 
+        // POST: Admin/RedigeraMedlem
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult RedigeraMedlem(AdminMedlemshanteringViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                //TO-DO:
+                //RegistreraNyMedlem(model.Fornamn);
+            }
+
+            Admin admin = new Admin();
+
+            admin.RedigeraMedlem(viewModel.AdminMedlemshantering.Fornamn, viewModel.AdminMedlemshantering.Efternamn,
+                viewModel.AdminMedlemshantering.Adress, viewModel.AdminMedlemshantering.Postnummer, viewModel.AdminMedlemshantering.Ort,
+                viewModel.AdminMedlemshantering.Email,viewModel.AdminMedlemshantering.Handikapp, viewModel.AdminMedlemshantering.MedlemsKategori,
+                viewModel.AdminMedlemshantering.Telefonnummer);
+            return View("Index");
+        }
+        #endregion
+
+        #region Hantera säsong /GET: /POST:
         //GET: Admin/HanteraSasong
         [AllowAnonymous]
         public ActionResult HanteraSasong()
@@ -87,6 +111,7 @@ namespace Golf_6.Controllers
 
             return View("Index");
         }
+        #endregion
 
     }
 }
