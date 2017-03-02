@@ -71,18 +71,8 @@ namespace Golf_6.Models
             return Lista;
         }
 
-        //public List<Tidsbokning> GetSchema(string psql, DateTime d)        /*Ska hämta en lista med bokade tider, ej klar*/
-        //{
-        //    Postgres x = new Postgres();
-        //    x.SqlFrågaParameters(psql, Postgres.lista = new List<Npgsql.NpgsqlParameter>()
-        //    {
-        //        new Npgsql.NpgsqlParameter("@par1", d)
-        //    });
-        //    List<Tidsbokning> y = new List<Tidsbokning>();
-        //    foreach (DataRow dr in x._tabell.Rows)
-        //    {
-        //        string bokningsID, tid, bokareID;
-        public List<Tidsbokning> GetSchema(string psql, DateTime d)        /*Ska hämta en lista med bokade tider, ej klar*/
+   
+        public List<Tidsbokning> GetSchema(string psql, DateTime d)       /* Hämtar en lista med bokade tider*/
         {
             Postgres x = new Postgres();
             x.SqlFrågaParameters(psql, Postgres.lista = new List<Npgsql.NpgsqlParameter>()
@@ -158,6 +148,8 @@ namespace Golf_6.Models
                 new NpgsqlParameter("@par4", d)
             });
         }
+        
+
 
 
 

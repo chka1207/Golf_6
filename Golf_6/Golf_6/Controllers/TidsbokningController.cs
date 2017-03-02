@@ -39,16 +39,17 @@ namespace Golf_6.Controllers
         [AllowAnonymous]
         public ActionResult Create()
         {
-            Tidsbokning t = new Tidsbokning(); 
-            List<Tidsbokning> l = new List<Tidsbokning>();
-            l = t.GetSchema("select * from schema where datum = @par1", DateTime.Today);
+            //Tidsbokning t = new Tidsbokning();
+            //List<Tidsbokning> l = new List<Tidsbokning>();
+            //l = t.GetSchema("select * from schema where datum = @par1", DateTime.Today);
 
             //t.BokaTid(2, DateTime.Today, Convert.ToDateTime("09:00"), "1");
 
             //Medlem m = new Medlem();
             //m.GetMedlem("select * from medlemmar where id = @par1", 1);
 
-            return View(l);
+           
+            return View();
         }
 
         // POST: Tidsbokning/Create
