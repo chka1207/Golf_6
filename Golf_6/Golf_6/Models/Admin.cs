@@ -11,34 +11,109 @@ namespace Golf_6.Models
 {
     public class Admin
     {
+        public string Medlem { get; set; }
+
         public void RegistreraNyMedlem(string fornamn, string efternamn, string adress, string postnummer, string ort, string email,
             string kon, double handikapp, string golfid, int medlemskategori, string telefonnummer)
         {
-            //string sql = ;
-
+            
             Postgres db = new Postgres();
 
             db.SqlParameters("INSERT INTO medlemmar(fornamn, efternamn, adress, postnummer, ort, email, kon, handikapp, " +
                 "golfid, medlemskategori, telefonnummer) VALUES(@fornamn, @efternamn, @adress, @postnummer, @ort, @email, " +
                 "@kon, @handikapp, @golfid, @medlemskategori, @telefonnummer)", Postgres.lista = new List<NpgsqlParameter>()
-        {
-            new NpgsqlParameter("@fornamn", fornamn),
-            new NpgsqlParameter("@efternamn", efternamn),
-            new NpgsqlParameter("@adress", adress),
-            new NpgsqlParameter("@postnummer", postnummer),
-            new NpgsqlParameter("@ort", ort),
-            new NpgsqlParameter("@email", email),
-            new NpgsqlParameter("@kon", kon),
-            new NpgsqlParameter("@handikapp", handikapp),
-            new NpgsqlParameter("@golfid", golfid),
-            new NpgsqlParameter("@medlemskategori", medlemskategori),
-            new NpgsqlParameter("@telefonnummer", telefonnummer)
-        });
+            {
+                new NpgsqlParameter("@fornamn", fornamn),
+                new NpgsqlParameter("@efternamn", efternamn),
+                new NpgsqlParameter("@adress", adress),
+                new NpgsqlParameter("@postnummer", postnummer),
+                new NpgsqlParameter("@ort", ort),
+                new NpgsqlParameter("@email", email),
+                new NpgsqlParameter("@kon", kon),
+                new NpgsqlParameter("@handikapp", handikapp),
+                new NpgsqlParameter("@golfid", golfid),
+                new NpgsqlParameter("@medlemskategori", medlemskategori),
+                new NpgsqlParameter("@telefonnummer", telefonnummer)
+            });
 
         }
-    }
 
-    public class RegistreraNyMedlem
+        public void RedigeraMedlem(string fornamn, string efternamn, string adress, string postnummer, string ort, string email,
+            double handikapp, int medlemskategori, string telefonnummer)
+        {
+
+            Postgres db = new Postgres();
+
+            db.SqlParameters("INSERT INTO medlemmar(fornamn, efternamn, adress, postnummer, ort, email, handikapp, " +
+                "medlemskategori, telefonnummer) VALUES(@fornamn, @efternamn, @adress, @postnummer, @ort, @email, " +
+                "@handikapp, @medlemskategori, @telefonnummer)", Postgres.lista = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@fornamn", fornamn),
+                new NpgsqlParameter("@efternamn", efternamn),
+                new NpgsqlParameter("@adress", adress),
+                new NpgsqlParameter("@postnummer", postnummer),
+                new NpgsqlParameter("@ort", ort),
+                new NpgsqlParameter("@email", email),
+                new NpgsqlParameter("@handikapp", handikapp),
+                new NpgsqlParameter("@medlemskategori", medlemskategori),
+                new NpgsqlParameter("@telefonnummer", telefonnummer)
+            });
+
+        }
+
+        public List<Admin> GetMedlemmen(string fornamn, string efternamn)
+        {
+            //SokFornamn = fornamn;
+            //SokEfternamn = efternamn;
+            
+            string adress = "";
+            string golfid = "";
+
+
+            List<Admin> Lista = new List<Admin>();
+            Postgres db = new Postgres();
+
+            db.SqlFrågaParameters("select golfid, adress from medlemmar where fornamn =@par1 and efternamn =@par2", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@par1", fornamn),
+                    new Npgsql.NpgsqlParameter("@par2", efternamn)
+                });
+
+            if (db._tabell != null)
+            {
+                foreach (DataRow row in db._tabell.Rows)
+                {
+                    Admin admin = new Admin();
+                    adress = row["adress"].ToString();
+                    golfid = row["golfid"].ToString();
+                    admin.Medlem = adress + " " + golfid;
+                    Lista.Add(admin);
+                }
+            }
+            else
+            {
+                Admin a1 = new Admin();
+                a1.Medlem = "Finns ingen medlem med det namnet.";
+                Lista.Add(a1);
+            }
+
+            return Lista;
+        }
+
+        public void HanteraSasong(DateTime sasongStart, DateTime sasongSlut)
+        {
+            Postgres db = new Postgres();
+
+            db.SqlParameters("UPDATE Sasong SET startdatum = @start, slutdatum = @slut WHERE ID = 1", Postgres.lista = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@start", sasongStart),
+                new NpgsqlParameter("@slut", sasongSlut)
+            });
+        }
+
+    }
+    
+    public class AdminMedlemshantering
     {
         [Required]
         [Display(Name = "Förnamn")]
@@ -67,6 +142,17 @@ namespace Golf_6.Models
         public int MedlemsKategori { get; set; }
         [Required]
         public string Telefonnummer { get; set; }
+    }
+    
+    public class HanteraSasong
+    {
+        [Required]
+        [Display(Name = "När startar säsongen? (yyyy-mm-dd)")]
+        public DateTime SasongStart { get; set; }
+
+        [Required]
+        [Display(Name = "När avslutas säsongen? (yyyy-mm-dd)")]
+        public DateTime SasongSlut { get; set; }
     }
 
     

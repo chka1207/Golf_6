@@ -2,5 +2,48 @@
     Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
 }
 
+<div class="center-block">
+    <h1>
+        Mina bokade tider
+    </h1>
 
-<p>Sida för mina bokningar</p>
+    <table class="table table-striped table-responsive table-bordered">
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Tid</th>
+                <th>Spelare</th>
+                <th>Avboka</th>
+            </tr>
+        </thead>
+
+            <tr>
+                <td><strong>2017-06-15</strong></td>
+                <td><strong>10.30</strong></td>
+                <td>
+                    <button type="button" class="btn btn-link" data-toggle="popover" title="Ändra" data-content="Ta bort eller ändra spelare">Anna Larsson</button><br />
+                    <button type="button" class="btn btn-link" data-toggle="popover" title="Ändra" data-content="Ta bort eller ändra spelare">Stig Berg</button><br />
+                    <button type="button" class="btn btn-link" data-toggle="popover" title="Ändra" data-content="Ta bort eller ändra spelare">Maria Andersson</button><br />
+                    <button type="button" class="btn btn-link" data-toggle="popover" title="Ändra" data-content="Ta bort eller ändra spelare">Sven Svensson</button>
+                </td>
+                <td><a type="button"class="btn btn-danger btn-lg" href="#">Avboka</a></td>
+
+</tr>
+            <tr>
+                <td><strong>2017-06-16</strong></td>
+                <td><strong>09.00</strong></td>
+                <td>
+                    <button type="button" class="btn btn-link" data-toggle="popover" title="Ändra" data-content="Ta bort eller ändra spelare">Mats Matsson</button><br />
+                    <button type="button" class="btn btn-link" data-toggle="popover" title="Ändra" data-content="Ta bort eller ändra spelare">Harry Boy</button><br />
+                    <button type="button" class="btn btn-link" data-toggle="popover" title="Ändra" data-content="Ta bort eller ändra spelare">Lo Lofoten</button><br />
+                    
+                </td>
+                <td><a type="button" class="btn btn-danger btn-lg" href="#">Avboka</a></td>
+
+            </tr>
+
+
+    </table>
+
+
+</div>
