@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data;
+using Npgsql;
 
 namespace Golf_6.Controllers
 {
@@ -38,6 +39,19 @@ namespace Golf_6.Controllers
         [AllowAnonymous]
         public ActionResult Bokningsschema()
         {
+            DataTable dt = new DataTable();
+            {
+                Postgres x = new Postgres();
+                {
+                    dt = x.SqlFrågaParameters("select kon, handikapp from medlemmar where id in (select medlem_id from deltar where reservation_id = (select bokning_id from reservation where datum = @par1 and tid = @par2));", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@par1", "2017-02-28"),
+                    new Npgsql.NpgsqlParameter("@par2", "08:00")
+                });
+                   
+                }
+            }
+            ViewData.Model = dt.AsEnumerable();
             return View();
         }
 

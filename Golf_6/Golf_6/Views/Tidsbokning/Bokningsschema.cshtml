@@ -1,15 +1,22 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
-     
+
 }
 <h2>Bokningsschema</h2>
+<div>
+    @foreach (var item in ViewData.Model)
+    {
+        @item["kon"]
+        @item["handikapp"]
+    }
+</div>
 <div class="center-block">
-    
-    
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
-            <table class="table-responsive table-bordered" id="tableMedlemBokar">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+    <table class="table-responsive table-bordered" id="tableMedlemBokar">
         <thead>
             <tr>
                 <th>Tid</th>
@@ -84,288 +91,345 @@
                 <td></td>
                 <td></td>
                 <td></td>
-            </tr><tr>
+            </tr>
+            <tr>
                 <th scope="row">08.50</th>
                 <td></td>
                 <td></td>
                 <td></td>
-            </tr><tr>
+            </tr>
+            <tr>
                 <th scope="row">09.00</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
 
             <tr>
                 <th scope="row">09.10</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
 
             <tr>
                 <th scope="row">09.20</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">09.30</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">09.40</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
 
             <tr>
                 <th scope="row">09.50</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
 
             <tr>
                 <th scope="row">10.00</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
 
             <tr>
                 <th scope="row">10.10</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">10.20</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">10.30</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">10.40</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">10.50</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
 
             <tr>
                 <th scope="row">11.00</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">11.10</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">11.20</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">11.30</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">11.40</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">11.50</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">12.00</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">12.10</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">12.20</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">12.30</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">12.40</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">12.50</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">13.00</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">13.10</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">13.20</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">13.30</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">13.40</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">13.50</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">14.00</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">14.10</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">14.20</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">14.30</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">14.40</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">14.50</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">15.00</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">15.10</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">15.20</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">15.30</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">15.40</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">15.50</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">16.00</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">16.10</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">16.20</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">16.30</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">16.40</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">16.50</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">17.00</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
 
             <tr>
                 <th scope="row">17.10</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">17.20</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">17.30</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">17.40</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">17.50</th>
                 <td></td>
                 <td></td>
-                <td></td></tr>
+                <td></td>
+            </tr>
         </tbody>
     </table>
-    </div>
+</div>
+
