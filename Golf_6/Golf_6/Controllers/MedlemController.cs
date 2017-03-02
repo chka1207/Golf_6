@@ -8,7 +8,28 @@ namespace Golf_6.Controllers
 {
     public class MedlemController : Controller
     {
+
+        // Logga ut och kom till index
+        [AllowAnonymousAttribute]
+        public ActionResult LoggaUt()
+        {
+            
+            return RedirectToAction("Index", "Home", "Home");
+        }
+        // Visa Mina bokningar
+        [AllowAnonymousAttribute]
+        public ActionResult MinaBokningar()
+        {
+            return View();
+        }
+        // Visa personuppgifter
+        [AllowAnonymousAttribute]
+        public ActionResult Personuppgifter()
+        {
+            return View();
+        }
         // GET: Medlem
+        [AllowAnonymousAttribute]
         public ActionResult Index()
         {
             return View();

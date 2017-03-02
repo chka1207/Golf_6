@@ -5,7 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title Medlemssidor</title>
     @Styles.Render("~/Content/css")
+
     @Scripts.Render("~/bundles/modernizr")
+
+    <script type="text/javascript">
+        $(function () {
+            // This will make every element with the class "date-picker" into a DatePicker element
+            $('.date-picker').datepicker();
+        })
+    </script>
 
 </head>
 <body>
@@ -17,19 +25,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Hålslaget", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Mina sidor", "Index", "Medlem", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Golfbanan", "Golfbanan", "Home")</li>
-                    <li>@Html.ActionLink("Bokning", "BokningPriser", "Home")</li>
-                    <li>@Html.ActionLink("Tävlingar", "Tävlingar", "Home")</li>
-                    <li>@Html.ActionLink("Restauranger", "Restauranger", "Home")</li>
-                    <li>@Html.ActionLink("Om", "About", "Home")</li>
-                    <li>@Html.ActionLink("Kontakta oss", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Boka", "Bokningsschema", "Tidsbokning")</li>
+                    <li>@Html.ActionLink("Mina bokningar", "MinaBokningar", "Medlem")</li>
+                    <li>@Html.ActionLink("Personuppgifter", "Personuppgifter", "Medlem")</li>
+
 
                 </ul>
-                @Html.Partial("_LoginPartial")
+                <a class="btn btn-primary btn-lg pull-right" @Html.ActionLink("Logga ut", "LoggaUt", "Medlem")</a>
             </div>
         </div>
     </div>
@@ -48,6 +54,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/JavaScript.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
+}
+
+
+<div class="jumbotron">
+    <h1><img src="~/Content/Images/logo18.png" title="Hålslaget golfklubb logo" alt="logo" /></h1>
+    <p class="lead">Välkommen till in! Se lediga tider och boka redan nu.</p>
+    <p><a class="btn btn-info btn-lg" href="/Tidsbokning/Bokningsschema/">Boka</a></p>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="clearfix">
+            <a href="/Medlem/MinaBokningar/"><img src="~/Content/Images/booking.png" class="img-responsive pull-left" title="Bokningar" alt="Bokningar" style="max-height:200px" /></a>
+        </div>
+            <h2>Mina bokningar</h2>
+            <p>
+                Här kan du få en överblick och hantera dina bokade tider.
+            </p>
+            <p><a class="btn btn-primary" href="/Medlem/MinaBokningar/">Mina bokningar &raquo;</a></p>
+        </div>
+    <div class="col-md-4">
+        <div class="clearfix">
+            <a href="/Medlem/Personuppgifter/"><img src="~/Content/Images/person11.svg" class="img-circle img-responsive pull-left" title="Person" alt="Person" style="max-height:200px" /></a>
+            </div>
+            <h2>Personuppgifter</h2>
+            <p>Flyttat?Ny mailadress? Här kan du uppdatera dina personuppgifter?</p>
+            <p><a class="btn btn-primary" href="/Medlem/Personuppgifter/">Ändra personuppgifter &raquo;</a></p>
+        </div>
+    <div class="col-md-4">
+        <div class="clearfix">
+            <a href="/Tidsbokning/Bokningsschema/"><img src="~/Content/Images/golf-ball-549228_960_720square.jpg" class="img-circle img-responsive pull-left" title="Boka" alt="Boka" style="max-height:200px" /></a>
+            </div>
+            <h2>Boka tid nu!</h2>
+            <p>Sugen på golf?<br /> Se lediga tider och boka nu!</p>
+            <p><a class="btn btn-primary" href="/Tidsbokning/Bokningsschema/">Boka &raquo;</a></p>
+        </div>
+</div>
