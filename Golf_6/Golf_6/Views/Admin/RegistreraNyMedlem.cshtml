@@ -8,7 +8,7 @@
 <h2>Registrera ny medlem</h2>
 
 
-@using (Html.BeginForm("RegistreraNyMedlem", "Admin", FormMethod.Post@*, new { @Admin.Fornamn = @Model.Fornamn, enamn = @Admin.Efternamn }*@))
+@using (Html.BeginForm("RegistreraNyMedlem", "Admin", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 

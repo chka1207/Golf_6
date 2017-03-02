@@ -52,7 +52,13 @@ namespace Golf_6.Controllers
         [AllowAnonymous]
         public ActionResult RedigeraMedlem()
         {
+            //DENNA METOD SKA LIGGA I VYN FÖR ATT SÖKA EFTER GOLFID
+            //MÅSTE ÄNDRA DE HÅRDKODADE NAMNEN SOM PARAMETRAR SEN
+            Admin admin = new Admin();
+            List<Admin> medlemsLista = new List<Admin>();
+            medlemsLista = admin.GetMedlemmen("Maria", "Rodriguez");
             return View();
+            
         }
 
     }
