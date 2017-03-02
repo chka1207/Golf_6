@@ -1,8 +1,11 @@
-﻿@using Golf_6.Models
+﻿
+
+@using Golf_6.Models
 @model Golf_6.ViewModels.HanteraSasongViewModel
 @{
     ViewBag.Title = "HanteraSasong";
 }
+
 @using (Html.BeginForm("HanteraSasong", "Admin", FormMethod.Post))
 {
     @Html.AntiForgeryToken()

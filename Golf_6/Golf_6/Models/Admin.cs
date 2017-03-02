@@ -89,12 +89,7 @@ namespace Golf_6.Models
         }
 
     }
-
-    //public class SasongsHantering
-    //{
-        
-    //}
-
+    
     public class RegistreraNyMedlem
     {
         [Required]
@@ -129,11 +124,11 @@ namespace Golf_6.Models
     public class HanteraSasong
     {
         [Required]
-        [Display(Name = "När startar säsongen?")]
+        [Display(Name = "När startar säsongen? (yyyy-mm-dd)")]
         public DateTime SasongStart { get; set; }
 
         [Required]
-        [Display(Name = "När avslutas säsongen?")]
+        [Display(Name = "När avslutas säsongen? (yyyy-mm-dd)")]
         public DateTime SasongSlut { get; set; }
     }
 
