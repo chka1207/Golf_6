@@ -217,6 +217,7 @@
     <Compile Include="Models\Tidsbokning.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\HanteraSasongViewModel.cs" />
     <Compile Include="ViewModels\NyMedlemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

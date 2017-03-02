@@ -76,7 +76,24 @@ namespace Golf_6.Models
 
             return Lista;
         }
+
+        public void HanteraSasong(DateTime sasongStart, DateTime sasongSlut)
+        {
+            Postgres db = new Postgres();
+
+            db.SqlParameters("UPDATE Sasong SET startdatum = @start, slutdatum = @slut WHERE ID = 1", Postgres.lista = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@start", sasongStart),
+                new NpgsqlParameter("@slut", sasongSlut)
+            });
+        }
+
     }
+
+    //public class SasongsHantering
+    //{
+        
+    //}
 
     public class RegistreraNyMedlem
     {
@@ -107,21 +124,18 @@ namespace Golf_6.Models
         public int MedlemsKategori { get; set; }
         [Required]
         public string Telefonnummer { get; set; }
-
-        
     }
 
-    public class SasongsHantering
+    public class HanteraSasong
     {
-        public void HanteraSasong(DateTime sasongStart, DateTime sasongSlut)
-        {
-            Postgres db = new Postgres();
+        [Required]
+        [Display(Name = "När startar säsongen?")]
+        public DateTime SasongStart { get; set; }
 
-            db.SqlParameters("UPDATE Sasong SET startdatum = @par1, slutdatum = @par2 WHERE ID = 1", Postgres.lista = new List<NpgsqlParameter>()
-            {
-                new NpgsqlParameter("@par1", sasongStart),
-                new NpgsqlParameter("@par2", sasongSlut)
-            });
-        }
+        [Required]
+        [Display(Name = "När avslutas säsongen?")]
+        public DateTime SasongSlut { get; set; }
     }
+
+    
 }

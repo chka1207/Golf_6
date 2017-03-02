@@ -1,14 +1,42 @@
-﻿
+﻿@using Golf_6.Models
+@model Golf_6.ViewModels.HanteraSasongViewModel
 @{
     ViewBag.Title = "HanteraSasong";
 }
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>HanteraSasong</title>
-</head>
-<body>
-    <div>
+@using (Html.BeginForm("HanteraSasong", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h3>Hantera säsong</h3>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.HanteraSasong.SasongStart, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HanteraSasong.SasongStart, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HanteraSasong.SasongStart, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.HanteraSasong.SasongSlut, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HanteraSasong.SasongSlut, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HanteraSasong.SasongSlut, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Uppdatera datum för säsong" class="btn btn-primary" />
+            </div>
+        </div>
     </div>
-</body>
-</html>
+}
+
+<div>
+    @Html.ActionLink("Tillbaka", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -61,5 +61,32 @@ namespace Golf_6.Controllers
             
         }
 
+        //GET: Admin/HanteraSasong
+        [AllowAnonymous]
+        public ActionResult HanteraSasong()
+        {
+            var viewModel = new HanteraSasongViewModel();
+
+            return View(viewModel);
+        }
+
+        // POST: Admin/HanteraSasong
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult HanteraSasong(HanteraSasongViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                //TO-DO:
+                //RegistreraNyMedlem(model.Fornamn);
+            }
+
+            Admin admin = new Admin();
+
+            admin.HanteraSasong(viewModel.HanteraSasong.SasongStart, viewModel.HanteraSasong.SasongSlut);
+
+            return View("Index");
+        }
+
     }
 }
