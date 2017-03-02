@@ -43,16 +43,16 @@ namespace Golf_6.Controllers
             {
                 Postgres x = new Postgres();
                 {
-                    dt = x.SqlFrågaParameters("select kon, handikapp from medlemmar where id in (select medlem_id from deltar where reservation_id = (select bokning_id from reservation where datum = @par1 and tid = @par2));", Postgres.lista = new List<NpgsqlParameter>()
+                    dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
                 {
-                    new Npgsql.NpgsqlParameter("@par1", "2017-02-28"),
-                    new Npgsql.NpgsqlParameter("@par2", "08:00")
+                    new Npgsql.NpgsqlParameter("@par1", "2017-02-28")  /*Hårdkodat datum för test*/
                 });
-                   
+                                  
                 }
+
             }
-            ViewData.Model = dt.AsEnumerable();
-            return View();
+            //ViewData.Model = dt.AsEnumerable();
+            return View(dt);
         }
 
         
