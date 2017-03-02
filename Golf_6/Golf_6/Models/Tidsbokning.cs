@@ -23,9 +23,11 @@ namespace Golf_6.Models
         public DateTime Tid { get; set; }
 
         [Display(Name ="GolfID för medspelare")]
+        public string Spelare1ID { get; set; }
+        [Display(Name = "GolfID för medspelare")]
         public string Spelare2ID { get; set; }
         [Display(Name = "GolfID för medspelare")]
-        public string Spelare3ID { get; set; }
+        public String Spelare3ID { get; set; }
         [Display(Name = "GolfID för medspelare")]
         public String Spelare4ID { get; set; }
 
@@ -103,28 +105,28 @@ namespace Golf_6.Models
                 
                 if (dr["guest1"] == null)
                 {
+                    t.Spelare1ID = "";
+                }
+                else
+                {
+                    t.Spelare1ID = dr["guest2"].ToString();
+                                    
+                }
+                if (dr["guest2"] == null)
+                {
                     t.Spelare2ID = "";
                 }
                 else
                 {
                     t.Spelare2ID = dr["guest2"].ToString();
-                                    
                 }
-                if (dr["guest2"] == null)
+                if (dr["guest3"] == null)
                 {
                     t.Spelare3ID = "";
                 }
                 else
                 {
                     t.Spelare3ID = dr["guest2"].ToString();
-                }
-                if (dr["guest3"] == null)
-                {
-                    t.Spelare4ID = "";
-                }
-                else
-                {
-                    t.Spelare4ID = dr["guest2"].ToString();
                 }
                
                 t.BokningsID = Convert.ToUInt16(bokningsID);
@@ -142,12 +144,12 @@ namespace Golf_6.Models
             BokareID = bokare_id;
             Datum = datum;
             Tid = tid;
-            Spelare2ID = guestID;
+            Spelare1ID = guestID;
 
             string a = Convert.ToString(BokareID);
             string b = Convert.ToString(Datum);
             string c = Convert.ToString(Tid);
-            string d = Spelare2ID;
+            string d = Spelare1ID;
 
             Postgres x = new Postgres();
             x.SqlParameters("insert into schema (bokare_id, datum, tid, guest1) values (@par1, @par2, @par3, @par4);", Postgres.lista = new List<NpgsqlParameter>()
@@ -159,8 +161,65 @@ namespace Golf_6.Models
             });
         }
 
+        //Metod påbörjad för att kontrollera om spelarna som ska bokas i en tid redan finns i samma datum
+        //EJ KLAR då det blir ett felmeddelande när vissa kolumner i databasen är tomma.
+        public List<string> HämtaGolfId()
+        {
+            List<string> list = new List<string> ();
+           
+            Postgres p1 = new Postgres();
+            p1.sqlFragaTable("select guest1, guest2, guest3, guest4 from schema where datum ='2017-03-01'");
 
+            foreach (DataRow dr in p1._tabell.Rows)
+            {
+                string id1, id2, id3, id4;
 
-
+                if ( dr["guest1"] == null)
+                {
+                    Spelare1ID = "";
+                }
+                else
+                {
+                    Spelare1ID = dr["guest1"].ToString();
+                    id1 = Spelare1ID;
+                    list.Add(id1);
+                }
+              
+                if (dr["guest2"] == null)
+                {
+                    Spelare2ID = "";
+                }
+                else
+                {
+                    Spelare2ID = dr["guest2"].ToString();
+                    id2 = Spelare2ID;
+                    list.Add(id2);
+                }
+             
+                if (dr["guest3"] == null)
+                {
+                    Spelare3ID = "";
+                }
+                else
+                {
+                    Spelare3ID = dr["guest3"].ToString();
+                    id3 = Spelare3ID;
+                    list.Add(id3);
+                }
+             
+                if (dr["guest4"] == null)
+                {
+                    Spelare4ID = "";
+                }
+                else
+                {
+                    Spelare4ID = dr["guest4"].ToString();
+                    id4 = Spelare4ID;
+                    list.Add(id4);        
+                }
+               
+            }
+            return list;
+        }
     }
 }
