@@ -80,7 +80,7 @@ namespace Golf_6.Models
             try
             {
                 _cmd = new NpgsqlCommand(sql, _conn);
-
+                
                 _dr = _cmd.ExecuteReader();
                 _tabell.Load(_dr);
                 return _tabell;
