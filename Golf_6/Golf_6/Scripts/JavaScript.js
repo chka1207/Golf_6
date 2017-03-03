@@ -4,4 +4,6 @@ $(document).ready(function(){
 });
 $(document).ready(function () {
     $('#table_id').DataTable();
+    $('#datepicker1').datepicker();
 });
+
