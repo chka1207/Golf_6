@@ -1,100 +1,42 @@
 ﻿@using Golf_6.Models
-@model Golf_6.ViewModels.AdminMedlemshanteringViewModel
+@using Golf_6.ViewModels
+@model IEnumerable<Golf_6.Models.Medlem>
 
 @{
     ViewBag.Title = "RedigeraMedlem";
 }
 
-<h2>Registrera ny medlem</h2>
-
+<h2>Redigera befintlig medlem</h2>
+@if (!Model.Any())
+{
+    <p>Finns inga medlemmar med det namnet än.</p>
+}
 
 @using (Html.BeginForm("RedigeraMedlem", "Admin", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Registrera ny medlem</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.AdminMedlemshantering.Fornamn, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AdminMedlemshantering.Fornamn, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AdminMedlemshantering.Fornamn, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.AdminMedlemshantering.Efternamn, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AdminMedlemshantering.Efternamn, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AdminMedlemshantering.Efternamn, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.AdminMedlemshantering.Adress, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AdminMedlemshantering.Adress, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AdminMedlemshantering.Adress, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.AdminMedlemshantering.Postnummer, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AdminMedlemshantering.Postnummer, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AdminMedlemshantering.Postnummer, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.AdminMedlemshantering.Ort, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AdminMedlemshantering.Ort, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AdminMedlemshantering.Ort, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.AdminMedlemshantering.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AdminMedlemshantering.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AdminMedlemshantering.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.AdminMedlemshantering.Kon, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AdminMedlemshantering.Kon, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AdminMedlemshantering.Kon, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.AdminMedlemshantering.Handikapp, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AdminMedlemshantering.Handikapp, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AdminMedlemshantering.Handikapp, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.AdminMedlemshantering.GolfID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AdminMedlemshantering.GolfID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AdminMedlemshantering.GolfID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.AdminMedlemshantering.MedlemsKategori, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AdminMedlemshantering.MedlemsKategori, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AdminMedlemshantering.MedlemsKategori, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.AdminMedlemshantering.Telefonnummer, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AdminMedlemshantering.Telefonnummer, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AdminMedlemshantering.Telefonnummer, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Förnamn</th>
+                <th>Efternamn</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var medlem in Model)
+            {
+                <tr>
+                    <td>@medlem.Förnamn</td>
+                    <td>@medlem.Efternamn</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+       
+        
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Lägg till medlem" class="btn btn-primary" />

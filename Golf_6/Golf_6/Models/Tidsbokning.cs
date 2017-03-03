@@ -13,7 +13,7 @@ namespace Golf_6.Models
         public int BokningsID { get; set; }
 
         public int BokareID { get; set; }
-
+        
         [Required()]
         [DataType(DataType.Date)]
         public DateTime Datum { get; set; }
@@ -159,7 +159,7 @@ namespace Golf_6.Models
         public string HämtaGolfId(string golfare1, string golfare2, string golfare3, string golfare4)
         {
             List<string> list = new List<string> ();
-           
+            
             Postgres p1 = new Postgres();
             p1.sqlFragaTable("select guest1, guest2, guest3, guest4 from schema where datum ='2017-03-01'");
 
@@ -191,7 +191,7 @@ namespace Golf_6.Models
              
                 if (dr["guest3"] == null)
                 {
-                    Spelare3ID = "";
+                    Spelare3ID = "spelare3";
                 }
                 else
                 {
@@ -202,7 +202,7 @@ namespace Golf_6.Models
              
                 if (dr["guest4"] == null)
                 {
-                    Spelare4ID = "";
+                    Spelare4ID = "spelare4";
                 }
                 else
                 {
