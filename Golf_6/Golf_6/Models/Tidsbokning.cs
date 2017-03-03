@@ -152,6 +152,39 @@ namespace Golf_6.Models
         }
 
 
+        public string KontrolleraHcp()
+        {
+            double hcpSkaBokas = 100;
+            string fråga = "SELECT sum(medlemmar.handikapp) FROM reservation, medlemmar, deltar WHERE medlemmar.id = deltar.medlem_id AND reservation.datum = '2017-03-01' and reservation.tid = '09:00:00' and deltar.reservation_id = reservation.bokning_id;";
+            double totaltHcpNu = 0;
+            string meddelande ="";
+
+            Postgres p1 = new Postgres();
+            p1.sqlFragaTable(fråga);
+
+            //Lägger den totala summan av hcp till totaltHcpNu
+            foreach (DataRow dr in p1._tabell.Rows)
+            {
+                string hcp;
+                hcp = dr["sum"].ToString();
+                totaltHcpNu = Convert.ToDouble(hcp);
+            }
+
+            double totalt1 = totaltHcpNu + hcpSkaBokas;
+            
+
+            if (totaltHcpNu + hcpSkaBokas > 120)
+            {
+                meddelande = "Totalt hcp i bokningen får inte överstiga 120.";
+            }
+            else
+            {
+                meddelande = "Det går bra att boka.";
+            }
+
+            return meddelande;
+        }
+
         public string HämtaGolfIDt(List<string> golfidLista, string datum)
         {
             //Lista med golfidn som matas in av användaren
@@ -160,11 +193,11 @@ namespace Golf_6.Models
 
             //Lista med golfidn hämtade från databasen från bokade dagens datum
             List<string> hämtadeGolfare = new List<string>();
+            string frågan = "SELECT DISTINCT medlemmar.golfid FROM medlemmar, deltar, reservation WHERE medlemmar.id = deltar.medlem_id AND reservation.datum ='" + datum + "' and deltar.reservation_id = reservation.bokning_id;";
 
             Postgres p1 = new Postgres();
-            p1.sqlFragaTable("SELECT DISTINCT medlemmar.golfid FROM medlemmar, deltar, reservation WHERE medlemmar.id = deltar.medlem_id AND reservation.datum ='"+ datum + "' and deltar.reservation_id = reservation.bokning_id;");
+            p1.sqlFragaTable(frågan);
            
-            
             //Lägger hämtade golfid från databasen i listan hämtadeGolfare
             foreach (DataRow dr in p1._tabell.Rows)
             {

@@ -31,7 +31,9 @@ namespace Golf_6.Controllers
             string datum = "2017-03-01";
             
             meddelande = t1.HämtaGolfIDt(listan, datum);
-
+            string meddelandet = "";
+            Tidsbokning t2 = new Tidsbokning();
+            meddelandet = t2.KontrolleraHcp();
             return View();
         }
 
