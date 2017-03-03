@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.Web.Mvc;
 using Golf_6.Models;
 using Golf_6.ViewModels;
+using Npgsql;
 
 namespace Golf_6.Controllers
 {
@@ -17,6 +19,28 @@ namespace Golf_6.Controllers
         {
             return View();
         }
+
+        #region Hämta alla medlemmar
+        //GET: Admin/Medlemmar
+        [AllowAnonymous]
+        public ActionResult AllaMedlemmar()
+        {
+            DataTable dt = new DataTable();
+            {
+                Postgres x = new Postgres();
+                {
+                    dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@par1", "2017-02-28")  /*Hårdkodat datum för test*/
+                });
+
+                }
+
+            }
+            //ViewData.Model = dt.AsEnumerable();
+            return View(dt);
+        }
+        #endregion
 
         #region Registrera ny medlem /GET: /POST:
 
@@ -50,6 +74,8 @@ namespace Golf_6.Controllers
             return View("Index");
         }
         #endregion
+
+
 
         #region Redigera medlem /GET: /POST:
         // GET: Admin/RedigeraMedlem

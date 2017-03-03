@@ -63,43 +63,38 @@ namespace Golf_6.Models
 
         }
         
-        public List<Admin> GetMedlemmen(string fornamn, string efternamn)
-        {
-            //SokFornamn = fornamn;
-            //SokEfternamn = efternamn;
-            
-            string adress = "";
-            string golfid = "";
+        public List<string> HämtaMedlemmar()
+        {  
+            List<string> list = new List<string>();
 
-
-            List<Admin> Lista = new List<Admin>();
+            //DataTable dt = new DataTable();
             Postgres db = new Postgres();
 
-            db.SqlFrågaParameters("select golfid, adress from medlemmar where fornamn=@par1 and efternamn=@par2", Postgres.lista = new List<NpgsqlParameter>()
-                {
-                    new Npgsql.NpgsqlParameter("@par1", fornamn),
-                    new Npgsql.NpgsqlParameter("@par2", efternamn)
-                });
+            db.sqlFragaTable("SELECT fornamn, efternamn FROM medlemmar");
 
-            if (db._tabell != null)
+            foreach (DataRow dr in db._tabell.Rows)
             {
-                foreach (DataRow row in db._tabell.Rows)
+                string fnamn, enamn;
+
+                if (dr["fornamn"] == null)
+                    fnamn = "";
+                else
                 {
-                    Admin admin = new Admin();
-                    adress = row["adress"].ToString();
-                    golfid = row["golfid"].ToString();
-                    admin.Medlem = adress + " " + golfid;
-                    Lista.Add(admin);
+                    fnamn = dr["fornamn"].ToString();
+                    //id1 = Spelare1ID;
+                    list.Add(fnamn);
+                }
+
+                if (dr["efternamn"] == null)
+                    enamn = "";
+                else
+                {
+                    enamn = dr["efternamn"].ToString();
+                    //id1 = Spelare1ID;
+                    list.Add(enamn);
                 }
             }
-            else
-            {
-                Admin a1 = new Admin();
-                a1.Medlem = "Finns ingen medlem med det namnet.";
-                Lista.Add(a1);
-            }
-
-            return Lista;
+            return list;
         }
 
         public void HanteraSasong(DateTime sasongStart, DateTime sasongSlut)

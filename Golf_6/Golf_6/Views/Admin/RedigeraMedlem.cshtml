@@ -1,49 +1,37 @@
-﻿@using Golf_6.Models
-@using Golf_6.ViewModels
-@model IEnumerable<Golf_6.Models.Medlem>
+﻿@model System.Data.DataTable
+@using System.Data;
+
+@*@{
+    ViewBag.Title = "AllaMedlemmar";
+}*@
 
 @{
-    ViewBag.Title = "RedigeraMedlem";
+    Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
 }
 
 <h2>Redigera befintlig medlem</h2>
-@if (!Model.Any())
-{
-    <p>Finns inga medlemmar med det namnet än.</p>
-}
-
-@using (Html.BeginForm("RedigeraMedlem", "Admin", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <hr />
-        <table class="table table-bordered table-hover">
-            <thead>
-            <tr>
-                <th>Förnamn</th>
-                <th>Efternamn</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var medlem in Model)
+<table>
+    //Test för att läsa in bokade tider för ett datum, kön och hcp för samtliga deltagare på varje tid hämtas också
+    <thead>
+        <tr>
+            @foreach (DataColumn x in Model.Columns)
             {
-                <tr>
-                    <td>@medlem.Förnamn</td>
-                    <td>@medlem.Efternamn</td>
-                </tr>
+                <th>@x.ColumnName</th>
             }
-            </tbody>
-        </table>
-       
-        
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Lägg till medlem" class="btn btn-primary" />
-            </div>
-        </div>
-    </div>
-}
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (DataRow row in Model.Rows)
+            {
+            <tr>
+                @foreach (DataColumn x in Model.Columns)
+                {
+                    <td>@row[x.ColumnName]</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
 
 <div>
     @Html.ActionLink("Tillbaka", "Index")
