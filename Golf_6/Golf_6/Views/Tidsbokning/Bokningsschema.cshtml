@@ -15,7 +15,28 @@
 
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-    
+    <table>
+        //Test för att läsa in bokade tider för ett datum, kön och hcp för samtliga deltagare på varje tid hämtas också
+        <thead>
+            <tr>
+                @foreach (DataColumn x in Model.Columns)
+            {
+                    <th>@x.ColumnName</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataRow row in Model.Rows)
+            {
+                <tr>
+                    @foreach (DataColumn x in Model.Columns)
+                {
+                        <td>@row[x.ColumnName]</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
 
   
         <input type="button"class="btn btn-info btn-lg pull-left" id="datepicker1" value="Välj datum" style="margin-bottom:25px">

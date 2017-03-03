@@ -62,40 +62,78 @@ namespace Golf_6.Models
             });
 
         }
-        
-        public List<string> HämtaMedlemmar()
-        {  
-            List<string> list = new List<string>();
 
-            //DataTable dt = new DataTable();
+
+        public List<AdminMedlemshantering> HämtaMedlemmar()       /* Hämtar en lista med medlemmar*/
+        {
             Postgres db = new Postgres();
+            DataTable dt = new DataTable();
+            //List<Admin> medlemsLista = new List<Admin>();
+            List<AdminMedlemshantering> medlemmar = new List<AdminMedlemshantering>();
 
-            db.sqlFragaTable("SELECT fornamn, efternamn FROM medlemmar");
+            string sql = "SELECT fornamn, efternamn FROM medlemmar WHERE efternamn = 'Banan'";
 
-            foreach (DataRow dr in db._tabell.Rows)
-            {
-                string fnamn, enamn;
+            dt = db.sqlFragaTable(sql);
 
-                if (dr["fornamn"] == null)
-                    fnamn = "";
-                else
-                {
-                    fnamn = dr["fornamn"].ToString();
-                    //id1 = Spelare1ID;
-                    list.Add(fnamn);
-                }
 
-                if (dr["efternamn"] == null)
-                    enamn = "";
-                else
-                {
-                    enamn = dr["efternamn"].ToString();
-                    //id1 = Spelare1ID;
-                    list.Add(enamn);
-                }
-            }
-            return list;
+            medlemmar = (from DataRow row in dt.Rows select new AdminMedlemshantering
+                            {
+                                Fornamn = row["fornamn"].ToString(),
+                                Efternamn = row["efternamn"].ToString()
+                            }).ToList();
+
+            return medlemmar;
+            //foreach (DataRow dr in db._tabell.Rows)
+            //{
+            //    string fnamn, enamn;
+
+            //    Admin medlem = new Admin();
+            //    fnamn = dr["fornamn"].ToString();
+            //    enamn = dr["efternamn"].ToString();
+
+            //    medlemmar.Fornamn = fnamn;
+            //    medlemmar.Efternamn = enamn;
+
+            //    medlemsLista.Add(medlem);
+            //}
+
+
+
         }
+
+        //public List<string> HämtaMedlemmar()
+        //{  
+        //    List<string> list = new List<string>();
+
+        //    //DataTable dt = new DataTable();
+        //    Postgres db = new Postgres();
+
+        //    db.sqlFragaTable("SELECT fornamn, efternamn FROM medlemmar");
+
+        //    foreach (DataRow dr in db._tabell.Rows)
+        //    {
+        //        string fnamn, enamn;
+
+        //        if (dr["fornamn"] == null)
+        //            fnamn = "";
+        //        else
+        //        {
+        //            fnamn = dr["fornamn"].ToString();
+        //            //id1 = Spelare1ID;
+        //            list.Add(fnamn);
+        //        }
+
+        //        if (dr["efternamn"] == null)
+        //            enamn = "";
+        //        else
+        //        {
+        //            enamn = dr["efternamn"].ToString();
+        //            //id1 = Spelare1ID;
+        //            list.Add(enamn);
+        //        }
+        //    }
+        //    return list;
+        //}
         //Uppdaterar data gällande start- samt slutdag 
         public void HanteraSasong(DateTime sasongStart, DateTime sasongSlut)
         {
