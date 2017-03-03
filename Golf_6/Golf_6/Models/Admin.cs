@@ -96,16 +96,23 @@ namespace Golf_6.Models
             }
             return list;
         }
-
+        //Uppdaterar data gällande start- samt slutdag 
         public void HanteraSasong(DateTime sasongStart, DateTime sasongSlut)
         {
             Postgres db = new Postgres();
 
-            db.SqlParameters("UPDATE Sasong SET startdatum = @start, slutdatum = @slut WHERE ID = 1", Postgres.lista = new List<NpgsqlParameter>()
+            db.SqlParameters("UPDATE sasong SET startdatum = @start, slutdatum = @slut WHERE sasong.id = 1", Postgres.lista = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@start", sasongStart),
                 new NpgsqlParameter("@slut", sasongSlut)
             });
+        }
+        //Hämtar start- samt slutdatum från databasen
+        public void HamtaSasong()
+        {
+            Postgres db = new Postgres();
+
+            db.sqlFragaTable("SELECT startdatum, slutdatum FROM sasong WHERE sasong.id = 1");
         }
 
     }
