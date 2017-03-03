@@ -39,14 +39,15 @@ namespace Golf_6.Models
         }
 
         public void RedigeraMedlem(string fornamn, string efternamn, string adress, string postnummer, string ort, string email,
-            double handikapp, int medlemskategori, string telefonnummer)
+            double handikapp, int medlemskategori, string telefonnummer, string golfid)
         {
 
             Postgres db = new Postgres();
 
-            db.SqlParameters("INSERT INTO medlemmar(fornamn, efternamn, adress, postnummer, ort, email, handikapp, " +
-                "medlemskategori, telefonnummer) VALUES(@fornamn, @efternamn, @adress, @postnummer, @ort, @email, " +
-                "@handikapp, @medlemskategori, @telefonnummer)", Postgres.lista = new List<NpgsqlParameter>()
+            db.SqlParameters("UPDATE medlemmar SET fornamn=@fornamn, efternamn=@efternamn, adress=@adress, " +
+                "postnummer=@postnummer, ort=@ort, email=@email, medlemskategori=@medlemskategori, handikapp=@handikapp " +
+                "WHERE golfid=@golfid", 
+                Postgres.lista = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@fornamn", fornamn),
                 new NpgsqlParameter("@efternamn", efternamn),
@@ -56,11 +57,12 @@ namespace Golf_6.Models
                 new NpgsqlParameter("@email", email),
                 new NpgsqlParameter("@handikapp", handikapp),
                 new NpgsqlParameter("@medlemskategori", medlemskategori),
-                new NpgsqlParameter("@telefonnummer", telefonnummer)
+                new NpgsqlParameter("@telefonnummer", telefonnummer),
+                new NpgsqlParameter("@golfid", golfid)
             });
 
         }
-
+        
         public List<Admin> GetMedlemmen(string fornamn, string efternamn)
         {
             //SokFornamn = fornamn;
@@ -73,7 +75,7 @@ namespace Golf_6.Models
             List<Admin> Lista = new List<Admin>();
             Postgres db = new Postgres();
 
-            db.SqlFrågaParameters("select golfid, adress from medlemmar where fornamn =@par1 and efternamn =@par2", Postgres.lista = new List<NpgsqlParameter>()
+            db.SqlFrågaParameters("select golfid, adress from medlemmar where fornamn=@par1 and efternamn=@par2", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new Npgsql.NpgsqlParameter("@par1", fornamn),
                     new Npgsql.NpgsqlParameter("@par2", efternamn)
@@ -99,16 +101,23 @@ namespace Golf_6.Models
 
             return Lista;
         }
-
+        //Uppdaterar data gällande start- samt slutdag 
         public void HanteraSasong(DateTime sasongStart, DateTime sasongSlut)
         {
             Postgres db = new Postgres();
 
-            db.SqlParameters("UPDATE Sasong SET startdatum = @start, slutdatum = @slut WHERE ID = 1", Postgres.lista = new List<NpgsqlParameter>()
+            db.SqlParameters("UPDATE sasong SET startdatum = @start, slutdatum = @slut WHERE sasong.id = 1", Postgres.lista = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@start", sasongStart),
                 new NpgsqlParameter("@slut", sasongSlut)
             });
+        }
+        //Hämtar start- samt slutdatum från databasen
+        public void HamtaSasong()
+        {
+            Postgres db = new Postgres();
+
+            db.sqlFragaTable("SELECT startdatum, slutdatum FROM sasong WHERE sasong.id = 1");
         }
 
     }
@@ -142,6 +151,8 @@ namespace Golf_6.Models
         public int MedlemsKategori { get; set; }
         [Required]
         public string Telefonnummer { get; set; }
+
+        public List<String> medlemsLista { get; set; }
     }
     
     public class HanteraSasong

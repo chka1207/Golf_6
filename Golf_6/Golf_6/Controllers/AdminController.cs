@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 using System.Web.Mvc;
 using Golf_6.Models;
 using Golf_6.ViewModels;
@@ -9,7 +10,7 @@ using Golf_6.ViewModels;
 namespace Golf_6.Controllers
 {
     public class AdminController : Controller
-    {
+    {   
         // GET: Admin
         [AllowAnonymous]
         public ActionResult Index()
@@ -53,14 +54,18 @@ namespace Golf_6.Controllers
         #region Redigera medlem /GET: /POST:
         // GET: Admin/RedigeraMedlem
         [AllowAnonymous]
-        public ActionResult RedigeraMedlem()
+        public ActionResult RedigeraMedlem(AdminMedlemshantering medlemshantering)
         {
             //DENNA METOD SKA LIGGA I VYN FÖR ATT SÖKA EFTER GOLFID
             //MÅSTE ÄNDRA DE HÅRDKODADE NAMNEN SOM PARAMETRAR SEN
-            Admin admin = new Admin();
-            List<Admin> medlemsLista = new List<Admin>();
-            medlemsLista = admin.GetMedlemmen("Maria", "Rodriguez");
-            return View();
+            //Admin admin = new Admin();
+            //List<Admin> medlemsLista = new List<Admin>();
+            //medlemsLista = admin.GetMedlemmen("Maria", "Rodriguez");
+            var Medlemmar = HämtaMedlemmar();
+
+            return View(Medlemmar);
+            
+            //return View(medlemsLista);
         }
 
         // POST: Admin/RedigeraMedlem
@@ -79,8 +84,18 @@ namespace Golf_6.Controllers
             admin.RedigeraMedlem(viewModel.AdminMedlemshantering.Fornamn, viewModel.AdminMedlemshantering.Efternamn,
                 viewModel.AdminMedlemshantering.Adress, viewModel.AdminMedlemshantering.Postnummer, viewModel.AdminMedlemshantering.Ort,
                 viewModel.AdminMedlemshantering.Email,viewModel.AdminMedlemshantering.Handikapp, viewModel.AdminMedlemshantering.MedlemsKategori,
-                viewModel.AdminMedlemshantering.Telefonnummer);
+                viewModel.AdminMedlemshantering.Telefonnummer, viewModel.AdminMedlemshantering.GolfID);
             return View("Index");
+        }
+
+        //Testar mig fram
+        private IEnumerable<Medlem> HämtaMedlemmar()
+        {
+            return new List<Medlem>
+            {
+                new Medlem() {Förnamn = "testing", Efternamn = "johnson"},
+                new Medlem() {Förnamn = "johnson", Efternamn = "testing"}
+            };
         }
         #endregion
 
