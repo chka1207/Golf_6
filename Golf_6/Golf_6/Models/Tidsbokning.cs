@@ -13,7 +13,7 @@ namespace Golf_6.Models
         public int BokningsID { get; set; }
 
         public int BokareID { get; set; }
-        
+
         [Required()]
         [DataType(DataType.Date)]
         public DateTime Datum { get; set; }
@@ -22,7 +22,7 @@ namespace Golf_6.Models
         [DataType(DataType.Time)]
         public DateTime Tid { get; set; }
 
-        [Display(Name ="GolfID för medspelare")]
+        [Display(Name = "GolfID för medspelare")]
         public string Spelare1ID { get; set; }
         [Display(Name = "GolfID för medspelare")]
         public string Spelare2ID { get; set; }
@@ -41,39 +41,39 @@ namespace Golf_6.Models
             SokEfternamn = efternamn;
             string adress = "";
             string golfid = "";
-            
+
 
             List<Tidsbokning> Lista = new List<Tidsbokning>();
             Postgres p = new Postgres();
 
-            p.SqlFrågaParameters("select golfid, adress from medlemmar where fornamn =@par1 and efternamn =@par2", Postgres.lista = new List<NpgsqlParameter> ()
+            p.SqlFrågaParameters("select golfid, adress from medlemmar where fornamn =@par1 and efternamn =@par2", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new Npgsql.NpgsqlParameter("@par1", fornamn),
                     new Npgsql.NpgsqlParameter("@par2", efternamn)
                 });
-            
+
             if (p._tabell != null)
             {
-                 foreach (DataRow row in p._tabell.Rows)
-                    {
-                        Tidsbokning t = new Tidsbokning();
-                        adress = row["adress"].ToString();
-                        golfid = row["golfid"].ToString();
-                        t.Medlem = adress + " " + golfid;
-                        Lista.Add(t);
-                     }
+                foreach (DataRow row in p._tabell.Rows)
+                {
+                    Tidsbokning t = new Tidsbokning();
+                    adress = row["adress"].ToString();
+                    golfid = row["golfid"].ToString();
+                    t.Medlem = adress + " " + golfid;
+                    Lista.Add(t);
+                }
             }
             else
-                {
-                    Tidsbokning t1 = new Tidsbokning();
-                    t1.Medlem = "Finns ingen medlem med det namnet.";
-                    Lista.Add(t1);
-                }
-           
+            {
+                Tidsbokning t1 = new Tidsbokning();
+                t1.Medlem = "Finns ingen medlem med det namnet.";
+                Lista.Add(t1);
+            }
+
             return Lista;
         }
 
-   
+
         public List<Tidsbokning> GetSchema(string psql, DateTime d)       /* Hämtar en lista med bokade tider*/
         {
             Postgres x = new Postgres();
@@ -82,7 +82,7 @@ namespace Golf_6.Models
                 new Npgsql.NpgsqlParameter("@par1", d)
             });
             List<Tidsbokning> y = new List<Tidsbokning>();
-            
+
             foreach (DataRow dr in x._tabell.Rows)
             {
                 string bokningsID, tid, bokareID;
@@ -92,7 +92,7 @@ namespace Golf_6.Models
                 tid = dr["tid"].ToString();
                 bokareID = dr["bokare_id"].ToString();
                 t.BokareID = Convert.ToUInt16(bokareID);
-                
+
                 if (dr["guest1"] == null)
                 {
                     t.Spelare1ID = "";
@@ -100,7 +100,7 @@ namespace Golf_6.Models
                 else
                 {
                     t.Spelare1ID = dr["guest2"].ToString();
-                                    
+
                 }
                 if (dr["guest2"] == null)
                 {
@@ -118,11 +118,11 @@ namespace Golf_6.Models
                 {
                     t.Spelare3ID = dr["guest2"].ToString();
                 }
-               
+
                 t.BokningsID = Convert.ToUInt16(bokningsID);
                 t.Datum = d;
                 t.Tid = Convert.ToDateTime(tid);
-                
+
                 y.Add(t);
             }
             return y;
@@ -150,99 +150,45 @@ namespace Golf_6.Models
                 new NpgsqlParameter("@par4", d)
             });
         }
-        
 
 
-        //Metod påbörjad för att kontrollera om spelarna som ska bokas i en tid redan finns i samma datum
-        //EJ KLAR då det blir ett felmeddelande när vissa kolumner i databasen är tomma.
-        //Denna metod ska tas bort och göras om eftersom vi uppdaterade databasen, behåller det så länge bara :)
-        public string HämtaGolfId(string golfare1, string golfare2, string golfare3, string golfare4)
+        public string HämtaGolfIDt(List<string> golfidLista, string datum)
         {
-            List<string> list = new List<string> ();
-            
-            Postgres p1 = new Postgres();
-            p1.sqlFragaTable("select guest1, guest2, guest3, guest4 from schema where datum ='2017-03-01'");
+            //Lista med golfidn som matas in av användaren
+            List<string> listan = new List<string>();
+            listan = golfidLista;
 
+            //Lista med golfidn hämtade från databasen från bokade dagens datum
+            List<string> hämtadeGolfare = new List<string>();
+
+            Postgres p1 = new Postgres();
+            p1.sqlFragaTable("SELECT DISTINCT medlemmar.golfid FROM medlemmar, deltar, reservation WHERE medlemmar.id = deltar.medlem_id AND reservation.datum ='"+ datum + "' and deltar.reservation_id = reservation.bokning_id;");
+           
+            
+            //Lägger hämtade golfid från databasen i listan hämtadeGolfare
             foreach (DataRow dr in p1._tabell.Rows)
             {
-                string id1, id2, id3, id4;
-
-                if ( dr["guest1"] == null)
-                {
-                    Spelare1ID = "";                    
-                }
-                else
-                {
-                    Spelare1ID = dr["guest1"].ToString();
-                    id1 = Spelare1ID;
-                    list.Add(id1);
-                }
-              
-                if (dr["guest2"] == null)
-                {
-                    Spelare2ID = "";
-                }
-                else
-                {
-                    Spelare2ID = dr["guest2"].ToString();
-                    id2 = Spelare2ID;
-                    list.Add(id2);
-                }
-             
-                if (dr["guest3"] == null)
-                {
-                    Spelare3ID = "spelare3";
-                }
-                else
-                {
-                    Spelare3ID = dr["guest3"].ToString();
-                    id3 = Spelare3ID;
-                    list.Add(id3);
-                }
-             
-                if (dr["guest4"] == null)
-                {
-                    Spelare4ID = "spelare4";
-                }
-                else
-                {
-                    Spelare4ID = dr["guest4"].ToString();
-                    id4 = Spelare4ID;
-                    list.Add(id4);        
-                }
-               
+                string id1;
+                id1 = dr["golfid"].ToString();
+                hämtadeGolfare.Add(id1);
             }
-            
-            List<string> meddelandeLista = new List<string>();
 
-            for (int i = 0; i < list.Count; i++)
+            string meddelande = "";
+
+            //Kontrollerar om golfid från listan med inmatade golfare finns med i listan med redan bokade golfare
+            //Skickar i så fall ut dessa i ett meddelande
+            foreach (string item in listan)
             {
-                if (golfare1 == list[i])
+                for (int i = 0; i < hämtadeGolfare.Count; i++)
                 {
-                    meddelandeLista.Add(golfare1);
-                }
-                else if (golfare2 == list[i])
-                {
-                    meddelandeLista.Add(golfare2);
-                }
-                else if (golfare3 == list[i])
-                {
-                    meddelandeLista.Add(golfare3);
-                }
-                else if (golfare4 == list[i])
-                {
-                    meddelandeLista.Add(golfare4);
+                    if (item == hämtadeGolfare[i])
+                    {
+                        meddelande = meddelande + " " + item;
+                    }
                 }
             }
-           string meddelande = "";
-            for (int i = 0; i < meddelandeLista.Count; i++)
-            {
-                
-                meddelande = meddelande + ", " + meddelandeLista[i];
-            }
 
-
-            return "Det finns redan spelare du angett bokade denna dag: " + meddelande;
+            return "Ett eller fler golfIDn finns redan bokade denna dag, dessa är: " + meddelande;
         }
     }
 }
