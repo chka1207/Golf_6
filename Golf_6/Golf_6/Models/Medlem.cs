@@ -21,6 +21,8 @@ namespace Golf_6.Models
         public string GolfID { get; set; }
         public int Kategori { get; set; }
         public string Telefonnummer { get; set; }
+        public DateTime Tid { get; set; }
+        public virtual List<Tidsbokning> Bokningar {get; set;}
 
         public List<Medlem> GetMedlem(string psql, int medlemID)
         {

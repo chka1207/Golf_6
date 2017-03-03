@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data;
+using Npgsql;
 
 namespace Golf_6.Controllers
 {
@@ -24,21 +25,34 @@ namespace Golf_6.Controllers
             //List<string> li = new List<string>();
             //string datum = "2017-02-28";
 
-           
+            
 
             //li = t1.KontrolleraGolfID("10956-019", "11115-033", "10477-086", "10623-085");
 
             Tidsbokning t1 = new Tidsbokning();
-            List<string> li = new List<string>();
+            string meddelande;
             //string datum = "2017-02-28";"10956-019", "11115-033", "10477-086", "10623-085"
-            li = t1.HämtaGolfId("10356-144", "10336-149", "10114-136", "");
+            meddelande = t1.HämtaGolfId("10356-144", "10336-149", "10114-136", "");
             return View();
         }
 
         [AllowAnonymous]
         public ActionResult Bokningsschema()
         {
-            return View();
+            DataTable dt = new DataTable();
+            {
+                Postgres x = new Postgres();
+                {
+                    dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@par1", "2017-02-28")  /*Hårdkodat datum för test*/
+                });
+                                  
+                }
+
+            }
+            //ViewData.Model = dt.AsEnumerable();
+            return View(dt);
         }
 
         
@@ -59,16 +73,17 @@ namespace Golf_6.Controllers
         [AllowAnonymous]
         public ActionResult Create()
         {
-            Tidsbokning t = new Tidsbokning(); 
-            List<Tidsbokning> l = new List<Tidsbokning>();
-            l = t.GetSchema("select * from schema where datum = @par1", DateTime.Today);
+            //Tidsbokning t = new Tidsbokning();
+            //List<Tidsbokning> l = new List<Tidsbokning>();
+            //l = t.GetSchema("select * from schema where datum = @par1", DateTime.Today);
 
             //t.BokaTid(2, DateTime.Today, Convert.ToDateTime("09:00"), "1");
 
             //Medlem m = new Medlem();
             //m.GetMedlem("select * from medlemmar where id = @par1", 1);
 
-            return View(l);
+           
+            return View();
         }
 
         // POST: Tidsbokning/Create
