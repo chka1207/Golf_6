@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title Medlemssidor</title>
     @Styles.Render("~/Content/css")
-
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/modernizr")
 
     @*<script type="text/javascript">
@@ -52,10 +52,9 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
+  
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/JavaScript.js")
-    @Scripts.Render("~/Content/themes/base/datepicker.css")
     @RenderSection("scripts", required: false)
 </body>
 </html>

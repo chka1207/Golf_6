@@ -5,6 +5,9 @@
     Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
 
 }
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <h2>Bokningsschema</h2>
 
 <div class="center-block">
@@ -34,12 +37,10 @@
             </tbody>
         </table>*@
 
-    <div class='ui-datepicker' id='datepicker1'>
-        <input type='text' class="form-control" />
+  
+        <input type='text' id='datepicker1' />
 
-        <span class="glyphicon glyphicon-calendar"></span>
 
-    </div>
     <table class="table table-striped table-responsive table-bordered" id="tableMedlemBokar">
         <thead>
             <tr>
@@ -466,3 +467,28 @@
 
 
     </div>
+<script type="text/javascript">
+    $(function () {
+        $('#datepicker1').datepicker();
+      
+    });
+    var currentDate = $(".selector").datepicker("getDate");
+    $.datepicker.regional['sv'] = {
+        closeText: 'Stäng',
+        prevText: '< Föregående',
+        nextText: 'Nästa >',
+        currentText: 'Nu',
+        monthNames: ['Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'Oktober', 'November', 'December'],
+        monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+        dayNamesShort: ['Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör'],
+        dayNames: ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'],
+        dayNamesMin: ['Sö', 'Må', 'Ti', 'On', 'To', 'Fr', 'Lö'],
+        weekHeader: 'Не',
+        dateFormat: 'yy-mm-dd',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['sv']);
+</script>
