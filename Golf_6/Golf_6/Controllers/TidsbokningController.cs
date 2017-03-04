@@ -11,6 +11,13 @@ namespace Golf_6.Controllers
 {
     public class TidsbokningController : Controller
     {
+        //Visa bokningsschemat för admin
+        [AllowAnonymousAttribute]
+        public ActionResult BokningsschemaAdmin()
+        {
+            return View();
+        }
+
         // GET: Tidsbokning
         [AllowAnonymous]
         public ActionResult Index()
