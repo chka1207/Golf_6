@@ -593,6 +593,7 @@
     <Content Include="Views\Medlem\Index.cshtml" />
     <Content Include="Views\Medlem\MinaBokningar.cshtml" />
     <Content Include="Views\Admin\HanteraSasong.cshtml" />
+    <Content Include="Views\Tidsbokning\BokningsschemaAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

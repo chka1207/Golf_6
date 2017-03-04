@@ -1,8 +1,9 @@
-﻿@model System.Data.DataTable
+﻿
+@model System.Data.DataTable
 @using System.Data;
 
 @{
-    Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
+    Layout = null;
 
 }
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
@@ -11,34 +12,6 @@
 <h2>Bokningsschema</h2>
 
 <div class="center-block">
-
-
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-    @*<table>
-            //Test för att läsa in bokade tider för ett datum, kön och hcp för samtliga deltagare på varje tid hämtas också
-            <thead>
-                <tr>
-                    @foreach (DataColumn x in Model.Columns)
-                {
-                        <th>@x.ColumnName</th>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (DataRow row in Model.Rows)
-                {
-                    <tr>
-                        @foreach (DataColumn x in Model.Columns)
-                    {
-                            <td>@row[x.ColumnName]</td>
-                        }
-                    </tr>
-                }
-            </tbody>
-        </table>*@
-
-
     <input type="button" class="btn btn-info btn-lg pull-left" id="datepicker1" value="Välj datum" style="margin-bottom:25px">
 
 
@@ -466,58 +439,8 @@
         </tbody>
 
     </table>
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#bokningsModal">Boka</button>
-    <div id="bokningsModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Valt datum och tid</h4>
-                </div>
-                <div class="modal-body">
-                    <p><strong>Vänligen välj medspelare</strong></p>
-                    <div class="col-lg-6">
-                        <form>
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Sök">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                        </form>
-                        <div class="input-group" style="margin-top:20px">
-                           
-                            <input type="text" class="form-control" placeholder="Förnamn & Efternamn" style="margin-bottom:5px">
-                            <button type="button" class="btn btn-primary">Lägg till</button>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <ul class="list-group">
-                            <li class="list-group-item">Namnet på inloggad person</li>
-                            <li class="list-group-item">Maria Andersson</li>
-                            <li class="list-group-item">?</li>
-                            <li class="list-group-item">?</li>
-                        </ul>
-                    </div>
-
-                </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-lg" data-dismiss="modal">Avbryt</button>
-                        <button type="button" class="btn btn-lg btn-info" data-dismiss="modal">Boka</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-    <script type="text/javascript">
+  </div>
+<script type="text/javascript">
 
         $(function () {
             $('#datepicker1').datepicker();
@@ -544,4 +467,4 @@
         $.datepicker.setDefaults($.datepicker.regional['sv']);
 
 
-    </script>
+</script>
