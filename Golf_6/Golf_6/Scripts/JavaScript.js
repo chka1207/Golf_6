@@ -24,10 +24,3 @@ $(document).ready(function () { //Datatablen som visar alla medlemmar i Admin/Re
         }
     });
 });
-
-//$(document).ready(function () {
-//    $('#alla_medlemmar').DataTable();
-//});
-
-
-

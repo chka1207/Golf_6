@@ -25,42 +25,11 @@ namespace Golf_6.Controllers
         [AllowAnonymous]
         public ActionResult RedigeraMedlem()
         {
-            //DataTable dt = new DataTable();
-            //{
-            //    Postgres x = new Postgres();
-            //    {
-            //        dt = x.SqlFrågaParameters("SELECT fornamn, efternamn FROM medlemmar WHERE fornamn = @par1);", Postgres.lista = new List<NpgsqlParameter>()
-            //    {
-            //         new Npgsql.NpgsqlParameter("@par1", "Dorothy")  /*Hårdkodat namn för test*/
-            //    });
-
-            //    }
-
-            //}
-
-            List<Admin> medlemsLista = new List<Admin>();
-            List<AdminMedlemshantering> medlemsListan = new List<AdminMedlemshantering>();
             Admin medlemmarna = new Admin();
             DataTable dt = new DataTable("MyTable");
-            //dt.Columns.Add(new DataColumn("Förnamn", typeof(string)));
-            //dt.Columns.Add(new DataColumn("Efternamn", typeof(string)));
-            //medlemsLista.HämtaMedlemmar();
+           
             dt = medlemmarna.HämtaMedlemmar();
-            
-            //for (int i = 0; i < 2; i++)
-            //{
-            //    DataRow row = dt.NewRow();
-            //    row["Förnamn"] = medlemsListan;
-            //    row["Efternamn"] = "efternamn, rad " + i;
-            //    dt.Rows.Add(row);
-            //}
-
-            
-            
-            ////List<string> medlemslista = new List<string>();
-            //var medlemslista = medlemmar.HämtaMedlemmar();
-            ////ViewData.Model = dt.AsEnumerable();
-            //ViewBag.Medlemmar = medlemslista;
+           
             return View(dt);
         }
         #endregion
@@ -97,55 +66,10 @@ namespace Golf_6.Controllers
             return View("Index");
         }
         #endregion
-
-
-
+        
         #region Redigera medlem /GET: /POST:
         // GET: Admin/RedigeraMedlem
-        //[AllowAnonymous]
-        //public ActionResult RedigeraMedlem(AdminMedlemshantering medlemshantering)
-        //{
-        //    //DENNA METOD SKA LIGGA I VYN FÖR ATT SÖKA EFTER GOLFID
-        //    //MÅSTE ÄNDRA DE HÅRDKODADE NAMNEN SOM PARAMETRAR SEN
-        //    //Admin admin = new Admin();
-        //    //List<Admin> medlemsLista = new List<Admin>();
-        //    //medlemsLista = admin.GetMedlemmen("Maria", "Rodriguez");
-        //    var Medlemmar = HämtaMedlemmar();
-
-        //    return View(Medlemmar);
-            
-        //    //return View(medlemsLista);
-        //}
-
-        // POST: Admin/RedigeraMedlem
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public ActionResult RedigeraMedlem(AdminMedlemshanteringViewModel viewModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        //TO-DO:
-        //        //RegistreraNyMedlem(model.Fornamn);
-        //    }
-
-        //    Admin admin = new Admin();
-
-        //    admin.RedigeraMedlem(viewModel.AdminMedlemshantering.Fornamn, viewModel.AdminMedlemshantering.Efternamn,
-        //        viewModel.AdminMedlemshantering.Adress, viewModel.AdminMedlemshantering.Postnummer, viewModel.AdminMedlemshantering.Ort,
-        //        viewModel.AdminMedlemshantering.Email,viewModel.AdminMedlemshantering.Handikapp, viewModel.AdminMedlemshantering.MedlemsKategori,
-        //        viewModel.AdminMedlemshantering.Telefonnummer, viewModel.AdminMedlemshantering.GolfID);
-        //    return View("Index");
-        //}
-
-        ////Testar mig fram
-        //private IEnumerable<Medlem> HämtaMedlemmar()
-        //{
-        //    return new List<Medlem>
-        //    {
-        //        new Medlem() {Förnamn = "testing", Efternamn = "johnson"},
-        //        new Medlem() {Förnamn = "johnson", Efternamn = "testing"}
-        //    };
-        //}
+        
         #endregion
 
         #region Hantera säsong /GET: /POST:
