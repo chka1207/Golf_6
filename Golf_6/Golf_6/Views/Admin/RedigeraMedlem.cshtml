@@ -1,4 +1,4 @@
-﻿@model Golf_6.Models.AdminMedlemshantering
+﻿@model System.Data.DataTable
 @using System.Data;
 
 @*@{
@@ -11,14 +11,8 @@
 
 <h2>Redigera befintlig medlem</h2>
 
-@foreach (var med in ViewBag.Medlemmar)
-{
-    <li>@med</li>
-}
-
-
-@*<table>
-    //Test för att läsa in bokade tider för ett datum, kön och hcp för samtliga deltagare på varje tid hämtas också
+<table>
+    
     <thead>
         <tr>
             @foreach (DataColumn x in Model.Columns)
@@ -38,7 +32,7 @@
             </tr>
         }
     </tbody>
-</table>*@
+</table>
 
 <div>
     @Html.ActionLink("Tillbaka", "Index")

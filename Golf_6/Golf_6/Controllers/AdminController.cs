@@ -37,14 +37,31 @@ namespace Golf_6.Controllers
             //    }
 
             //}
-            DataTable dt = new DataTable();
-            Admin medlemmar = new Admin();
+
+            List<Admin> medlemsLista = new List<Admin>();
+            List<AdminMedlemshantering> medlemsListan = new List<AdminMedlemshantering>();
+            Admin medlemmarna = new Admin();
+            DataTable dt = new DataTable("MyTable");
+            //dt.Columns.Add(new DataColumn("Förnamn", typeof(string)));
+            //dt.Columns.Add(new DataColumn("Efternamn", typeof(string)));
+            //medlemsLista.HämtaMedlemmar();
+            dt = medlemmarna.HämtaMedlemmar();
             
-            //List<string> medlemslista = new List<string>();
-            var medlemslista = medlemmar.HämtaMedlemmar();
-            //ViewData.Model = dt.AsEnumerable();
-            ViewBag.Medlemmar = medlemslista;
-            return View();
+            //for (int i = 0; i < 2; i++)
+            //{
+            //    DataRow row = dt.NewRow();
+            //    row["Förnamn"] = medlemsListan;
+            //    row["Efternamn"] = "efternamn, rad " + i;
+            //    dt.Rows.Add(row);
+            //}
+
+            
+            
+            ////List<string> medlemslista = new List<string>();
+            //var medlemslista = medlemmar.HämtaMedlemmar();
+            ////ViewData.Model = dt.AsEnumerable();
+            //ViewBag.Medlemmar = medlemslista;
+            return View(dt);
         }
         #endregion
 

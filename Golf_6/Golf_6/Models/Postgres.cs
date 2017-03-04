@@ -80,7 +80,9 @@ namespace Golf_6.Models
             try
             {
                 _cmd = new NpgsqlCommand(sql, _conn);
-                
+                DataSet ds = new DataSet();
+                ds.Tables.Add(_tabell);
+                ds.EnforceConstraints = false;
                 _dr = _cmd.ExecuteReader();
                 _tabell.Load(_dr);
                 return _tabell;
@@ -139,6 +141,6 @@ namespace Golf_6.Models
             }
 
         }
-        
+
     }
 }

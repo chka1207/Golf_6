@@ -5,6 +5,7 @@ using System.Web;
 using System.Data;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
+using System.Reflection;
 using Npgsql;
 
 namespace Golf_6.Models
@@ -62,78 +63,49 @@ namespace Golf_6.Models
             });
 
         }
-
-
-        public List<AdminMedlemshantering> HämtaMedlemmar()       /* Hämtar en lista med medlemmar*/
+        
+        public DataTable HämtaMedlemmar()       /* Hämtar en lista med medlemmar*/
         {
             Postgres db = new Postgres();
             DataTable dt = new DataTable();
-            //List<Admin> medlemsLista = new List<Admin>();
-            List<AdminMedlemshantering> medlemmar = new List<AdminMedlemshantering>();
-
-            string sql = "SELECT fornamn, efternamn FROM medlemmar WHERE efternamn = 'Banan'";
+            
+            //HÅRDKODAT "SÖKNINGEN"
+            string sql = "SELECT fornamn, efternamn, adress, postnummer, ort, email, kon, handikapp, medlemskategori, golfid, telefonnummer FROM medlemmar";
 
             dt = db.sqlFragaTable(sql);
-
-
-            medlemmar = (from DataRow row in dt.Rows select new AdminMedlemshantering
-                            {
-                                Fornamn = row["fornamn"].ToString(),
-                                Efternamn = row["efternamn"].ToString()
-                            }).ToList();
-
-            return medlemmar;
-            //foreach (DataRow dr in db._tabell.Rows)
-            //{
-            //    string fnamn, enamn;
-
-            //    Admin medlem = new Admin();
-            //    fnamn = dr["fornamn"].ToString();
-            //    enamn = dr["efternamn"].ToString();
-
-            //    medlemmar.Fornamn = fnamn;
-            //    medlemmar.Efternamn = enamn;
-
-            //    medlemsLista.Add(medlem);
-            //}
-
-
-
+            
+            return dt;
         }
 
-        //public List<string> HämtaMedlemmar()
-        //{  
-        //    List<string> list = new List<string>();
+        //http://stackoverflow.com/questions/18100783/how-to-convert-a-list-into-data-table
+        //Konvertera lista till datatable
+        public static DataTable ToDataTable<T>(List<T> items)
+        {
+            DataTable dataTable = new DataTable(typeof(T).Name);
 
-        //    //DataTable dt = new DataTable();
-        //    Postgres db = new Postgres();
+            //Get all the properties
+            PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo prop in Props)
+            {
+                //Defining type of data column gives proper data table 
+                var type = (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>) ? Nullable.GetUnderlyingType(prop.PropertyType) : prop.PropertyType);
+                //Setting column names as Property names
+                dataTable.Columns.Add(prop.Name, type);
+            }
+            foreach (T item in items)
+            {
+                var values = new object[Props.Length];
+                for (int i = 0; i < Props.Length; i++)
+                {
+                    //inserting property values to datatable rows
+                    values[i] = Props[i].GetValue(item, null);
+                }
+                dataTable.Rows.Add(values);
+            }
+            //put a breakpoint here and check datatable
+            return dataTable;
+        }
 
-        //    db.sqlFragaTable("SELECT fornamn, efternamn FROM medlemmar");
-
-        //    foreach (DataRow dr in db._tabell.Rows)
-        //    {
-        //        string fnamn, enamn;
-
-        //        if (dr["fornamn"] == null)
-        //            fnamn = "";
-        //        else
-        //        {
-        //            fnamn = dr["fornamn"].ToString();
-        //            //id1 = Spelare1ID;
-        //            list.Add(fnamn);
-        //        }
-
-        //        if (dr["efternamn"] == null)
-        //            enamn = "";
-        //        else
-        //        {
-        //            enamn = dr["efternamn"].ToString();
-        //            //id1 = Spelare1ID;
-        //            list.Add(enamn);
-        //        }
-        //    }
-        //    return list;
-        //}
         //Uppdaterar data gällande start- samt slutdag 
         public void HanteraSasong(DateTime sasongStart, DateTime sasongSlut)
         {
