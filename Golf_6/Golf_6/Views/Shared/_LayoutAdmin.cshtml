@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title Medlemssidor</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @*<script type="text/javascript">
+        $(function () {
+            // This will make every element with the class "date-picker" into a DatePicker element
+            $('.ui-datepicker').ui-datepicker();
+        })*@
+    @*</script>*@
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Mina sidor", "Index", "Medlem", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Boka/Avboka", "BokningsschemaAdmin", "Tidsbokning")</li>
+                    <li>@Html.ActionLink("Mina bokningar", "MinaBokningar", "Medlem")</li>
+                    <li>@Html.ActionLink("Personuppgifter", "Personuppgifter", "Medlem")</li>
+
+
+                </ul>
+                <a class="btn btn-primary btn-lg pull-right" @Html.ActionLink("Logga ut", "LoggaUt", "Medlem")</a>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <address>
+                Hålslagets golfbana<br />
+                Gatan 23, Orten<br /><br />
+                <abbr title="Phone"><strong>Vid frågor, ring oss på:</strong></abbr>
+                070-12 34 567
+            </address>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/JavaScript.js")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
