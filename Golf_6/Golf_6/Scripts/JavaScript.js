@@ -11,9 +11,10 @@ $(document).ready(function () { //Datatablen som visar alla medlemmar i Admin/Al
     $('#alla_medlemmar').DataTable({
         dom: 'Bfrtip',
         buttons: [
-            'colvis'
+            //'colvis' //Dropdown för att välja kolumner
+            'columnsToggle' //Varje kolumn får en egen knapp att välja (show/hide)
         ],
-        pagingType: "simple",
+        pagingType: "simple", //Går attt ändra för att se pagenumbers mm
         columnDefs: [
         {
             targets: [2], //Gömmer adress
