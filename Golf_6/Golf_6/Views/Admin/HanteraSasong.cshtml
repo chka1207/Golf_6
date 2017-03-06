@@ -2,9 +2,11 @@
 @using Golf_6.Models
 @model Golf_6.ViewModels.HanteraSasongViewModel
 @{
-    ViewBag.Title = "HanteraSasong";
+    ViewBag.Title = "HanteraSasongen";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<br /><br /><br /><br /><br />
+@Html.Raw(@ViewBag.AktuellaDatum) @* @Html.Raw hanterar <br /> som ligger i koden.*@
 
 @using (Html.BeginForm("HanteraSasong", "Admin", FormMethod.Post))
 {

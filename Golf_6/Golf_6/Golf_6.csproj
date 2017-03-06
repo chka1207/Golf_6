@@ -227,6 +227,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\HanteraSasong.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Medlem.cs" />
@@ -593,9 +594,9 @@
     <Content Include="Views\Medlem\Personuppgifter.cshtml" />
     <Content Include="Views\Medlem\Index.cshtml" />
     <Content Include="Views\Medlem\MinaBokningar.cshtml" />
-    <Content Include="Views\Admin\HanteraSasong.cshtml" />
     <Content Include="Views\Tidsbokning\BokningsschemaAdmin.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Admin\HanteraSasong.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -69,7 +69,7 @@ namespace Golf_6.Controllers
             }
 
             Admin admin = new Admin();
-
+            
             admin.RegistreraNyMedlem(viewModel.AdminMedlemshantering.Fornamn, viewModel.AdminMedlemshantering.Efternamn,
                 viewModel.AdminMedlemshantering.Adress, viewModel.AdminMedlemshantering.Postnummer, viewModel.AdminMedlemshantering.Ort,
                 viewModel.AdminMedlemshantering.Email, viewModel.AdminMedlemshantering.Kon, viewModel.AdminMedlemshantering.Handikapp,
@@ -78,20 +78,22 @@ namespace Golf_6.Controllers
             return View("Index");
         }
         #endregion
-        
+
         #region Redigera medlem /GET: /POST:
         // GET: Admin/RedigeraMedlem
-        
+
         #endregion
 
         #region Hantera säsong /GET: /POST:
-        //GET: Admin/HanteraSasong
+        // GET: HanteraSasong
         [AllowAnonymous]
         public ActionResult HanteraSasong()
         {
-            var viewModel = new HanteraSasongViewModel();
+            HanteraSasong hs = new HanteraSasong();
 
-            return View(viewModel);
+            ViewBag.AktuellaDatum = hs.HamtaSasong();
+
+            return View();
         }
 
         // POST: Admin/HanteraSasong
@@ -99,15 +101,9 @@ namespace Golf_6.Controllers
         [AllowAnonymous]
         public ActionResult HanteraSasong(HanteraSasongViewModel viewModel)
         {
-            if (ModelState.IsValid)
-            {
-                //TO-DO:
-                //RegistreraNyMedlem(model.Fornamn);
-            }
+            HanteraSasong hs = new HanteraSasong();
 
-            Admin admin = new Admin();
-
-            admin.HanteraSasong(viewModel.HanteraSasong.SasongStart, viewModel.HanteraSasong.SasongSlut);
+            hs.ÄndraSäsongen(viewModel.HanteraSasong.SasongStart, viewModel.HanteraSasong.SasongSlut);
 
             return View("Index");
         }

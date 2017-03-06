@@ -35,7 +35,7 @@ namespace Golf_6.Models
             _tabell = new DataTable();
         }
         //ExempelMetod för sqlFråga utan paramterar
-        private NpgsqlDataReader sqlFraga(string sql)
+        public NpgsqlDataReader sqlFraga(string sql)
         {
             try
             {
