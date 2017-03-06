@@ -21,15 +21,27 @@ namespace Golf_6.Controllers
         }
 
         #region Hämta alla medlemmar
-        //GET: Admin/Medlemmar
+        //GET: Admin/AllaMedlemmar
         [AllowAnonymous]
-        public ActionResult RedigeraMedlem()
+        public ActionResult AllaMedlemmar()
         {
             Admin medlemmarna = new Admin();
             DataTable dt = new DataTable("MyTable");
            
             dt = medlemmarna.HämtaMedlemmar();
-           
+
+            dt.Columns[0].ColumnName = "Förnamn";
+            dt.Columns[1].ColumnName = "Efternamn";
+            dt.Columns[2].ColumnName = "Adress";
+            dt.Columns[3].ColumnName = "Postnummer";
+            dt.Columns[4].ColumnName = "Ort";
+            dt.Columns[5].ColumnName = "E-mail";
+            dt.Columns[6].ColumnName = "Kön";
+            dt.Columns[7].ColumnName = "Handikapp";
+            dt.Columns[8].ColumnName = "Medlemskategori";
+            dt.Columns[9].ColumnName = "GolfID";
+            dt.Columns[10].ColumnName = "Tele";
+
             return View(dt);
         }
         #endregion

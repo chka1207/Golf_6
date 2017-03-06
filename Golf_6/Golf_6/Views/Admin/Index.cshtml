@@ -1,5 +1,8 @@
 ﻿@model Golf_6.Models.Admin
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 
+}
 @{
     ViewBag.Title = "Index";
 }
@@ -30,7 +33,7 @@
 </div>
 
 <div>
-    @Html.ActionLink("Redigera befintlig medlem", "RedigeraMedlem")
+    @Html.ActionLink("Redigera befintlig medlem", "AllaMedlemmar")
 </div>
 <div>
     @Html.ActionLink("Hantera säsong", "HanteraSasong")
