@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using Npgsql;
 
@@ -25,6 +27,7 @@ namespace Golf_6.Models
         //Hämtar start- samt slutdatum från databasen
         public string HamtaSasong()
         {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("sv-SE");
             Postgres db = new Postgres();
             db.sqlFragaTable("SELECT startdatum, slutdatum FROM sasong WHERE id = 1");
             
@@ -33,9 +36,13 @@ namespace Golf_6.Models
                 SasongenStartar = dr["startdatum"].ToString();
                 SasongenSlutar = dr["slutdatum"].ToString();
             }
+            int startMånad = Convert.ToInt32(SasongenStartar.Substring(5, 2));
+            int slutMånad = Convert.ToInt32(SasongenSlutar.Substring(5, 2));
+            int startDatum = Convert.ToInt32(SasongenStartar.Substring(8, 2));
+            int sluttDatum = Convert.ToInt32(SasongenSlutar.Substring(8, 2));
 
-            return "Säsongen börjar " + SasongenStartar.Substring(0,10) + 
-                "<br />Säsongen slutar " + SasongenSlutar.Substring(0,10);
+            return "Säsongen börjar " + startDatum + " " + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(startMånad) +
+                "<br />Säsongen avslutas " + sluttDatum + " " + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(slutMånad);
         }
 
         //Uppdaterar data gällande start- samt slutdag 
@@ -50,7 +57,6 @@ namespace Golf_6.Models
                     new NpgsqlParameter("@slut", sasongSlut)
                 });
         }
-
 
     }
 }
