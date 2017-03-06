@@ -21,9 +21,9 @@ namespace Golf_6.Controllers
         }
 
         #region Hämta alla medlemmar
-        //GET: Admin/Medlemmar
+        //GET: Admin/AllaMedlemmar
         [AllowAnonymous]
-        public ActionResult RedigeraMedlem()
+        public ActionResult AllaMedlemmar()
         {
             Admin medlemmarna = new Admin();
             DataTable dt = new DataTable("MyTable");
