@@ -51,14 +51,15 @@ namespace Golf_6.Controllers
         {
             Tidsbokning t = new Tidsbokning();
             DataTable dt = new DataTable();
-            DateTime idag = DateTime.Today;
+            DateTime dag = DateTime.Today;
+            string idag = dag.ToShortDateString();
             
             {
                 Postgres x = new Postgres();
                 {
                     dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
                 {
-                    new Npgsql.NpgsqlParameter("@par1", idag)  
+                    new Npgsql.NpgsqlParameter("@par1","'2017-03-06'")
                 });
                                   
                 }
