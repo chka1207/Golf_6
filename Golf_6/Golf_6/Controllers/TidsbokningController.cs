@@ -55,11 +55,10 @@ namespace Golf_6.Controllers
         [AllowAnonymous]
         public ActionResult Bokningsschema()
         {
-            Tidsbokning t = new Tidsbokning();
+            Tidsbokning bokning = new Tidsbokning();
             DataTable dt = new DataTable();
             DateTime dag = DateTime.Today;
-            string idag = dag.ToShortDateString();
-            
+                        
             {
                 Postgres x = new Postgres();
                 {
@@ -72,20 +71,22 @@ namespace Golf_6.Controllers
                 List<Tidsbokning> bokningslista = new List<Tidsbokning>();
                 foreach (DataRow dr in dt.Rows)
                 {
+                    Tidsbokning t = new Tidsbokning();
                     t.Tid = Convert.ToDateTime(dr["tid"]);
                     t.MedlemKön = dr["kon"].ToString();
                     t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
-                    bokningslista.Add(t);                                  //Lagrar senaste objeket på samtliga rader
+                    bokningslista.Add(t);                                  
                 }
                 ViewBag.List = bokningslista;
 
             }
-            t.Datepicker = DateTime.Now.Date.ToShortDateString();
-            return View(t);
+            bokning.Datepicker = DateTime.Now.Date.ToShortDateString();
+            return View(bokning);
         }
 
         // POST: Ändra dag
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult Bokningsschema(FormCollection collection)
         {
             string datum = collection["datepicker"];
