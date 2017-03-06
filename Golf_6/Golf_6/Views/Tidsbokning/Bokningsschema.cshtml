@@ -24,12 +24,12 @@
    
 
 
-    <input type="button" class="btn btn-info btn-lg pull-left" id="datepicker1" value="Välj datum" style="margin-bottom:25px">
+    <input type="text" name="datepicker" class="btn btn-info btn-lg pull-left" id="datepicker" value="Välj datum" style="margin-bottom:25px">
 
     <script type="text/javascript">
 
         $(function () {
-            $('#datepicker1').datepicker();
+            $('#datepicker').datepicker();
 
         });
         var currentDate = $(".selector").datepicker("getDate");
@@ -49,8 +49,8 @@
             isRTL: false,
             showMonthAfterYear: false,
             yearSuffix: '',
-            onSelect: function () {
-                $.post("#/Bokningsschema");
+            onSelect: function (dateText, inst) {
+                 $('form').submit();
             }
         };
         $.datepicker.setDefaults($.datepicker.regional['sv']);
