@@ -11,6 +11,9 @@
     @Styles.Render("~/Content/DataTables/css/jquery.dataTables.css")
     @Styles.Render("~/Content/DataTables/css/dataTables.bootstrap.min.css")
     @Styles.Render("~/Content/DataTables/css/responsive.bootstrap.min.css")
+
+    @*Ev kommande funktion behöver dessa*@
+    @Styles.Render("~/Content/DataTables/css/responsive.dataTables.min.css")
     @Styles.Render("~/Content/DataTables/css/buttons.dataTables.min.css")
 
 
@@ -19,15 +22,16 @@
 <h2>Redigera befintlig medlem</h2>
 
 <div width="90%">
-    <table id="alla_medlemmar" class="display responsive nowrap" cellspacing="0" width="100%">
+    <table id="alla_medlemmar" class="display responsive nowrap" cellspacing="0">
     
         <thead>
-            <tr>
-                @foreach (DataColumn x in Model.Columns)
-                {
-                    <th>@x.ColumnName</th>
-                }
-            </tr>
+        <tr>
+            @foreach (DataColumn x in Model.Columns)
+            {
+                <th>@x.ColumnName</th>
+            }
+            
+        </tr>
         </thead>
         <tbody>
             @foreach (DataRow row in Model.Rows)
@@ -53,4 +57,8 @@
     @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap.min.js")
     @Scripts.Render("~/Scripts/DataTables/dataTables.responsive.min.js")
     @Scripts.Render("~/Scripts/DataTables/responsive.bootstrap.min.js")
+    
+    @*Testar ny funktion*@
+    @Scripts.Render("~/Scripts/DataTables/dataTables.buttons.min.js")
+    @Scripts.Render("~/Scripts/DataTables/buttons.colVis.min.js")
 }
