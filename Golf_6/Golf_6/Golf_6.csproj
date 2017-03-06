@@ -236,6 +236,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\HanteraSasongViewModel.cs" />
     <Compile Include="ViewModels\AdminMedlemshanteringViewModel.cs" />
+    <Compile Include="ViewModels\SearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
