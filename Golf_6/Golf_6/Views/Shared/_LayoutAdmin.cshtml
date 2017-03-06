@@ -8,12 +8,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/modernizr")
 
-    @*<script type="text/javascript">
-        $(function () {
-            // This will make every element with the class "date-picker" into a DatePicker element
-            $('.ui-datepicker').ui-datepicker();
-        })*@
-    @*</script>*@
 
 </head>
 <body>
@@ -25,13 +19,24 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Mina sidor", "Index", "Medlem", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Index", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Boka/Avboka", "BokningsschemaAdmin", "Tidsbokning")</li>
-                    <li>@Html.ActionLink("Mina bokningar", "MinaBokningar", "Medlem")</li>
-                    <li>@Html.ActionLink("Personuppgifter", "Personuppgifter", "Medlem")</li>
+
+                    
+                        @*<a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                        </ul>*@
+                   
+                    <li class="dropdown-menu">Medlemmar
+                    <li>@Html.ActionLink("Medlemmar", "AllaMedlemmar", "Admin")</li>
+
+
+                    <li>@Html.ActionLink("Säsong", "HanteraSasong", "Admin")</li>
 
 
                 </ul>
