@@ -155,27 +155,41 @@ namespace Golf_6.Models
         public string KontrolleraHcp()
         {
             double hcpSkaBokas = 100;
-            string fråga = "SELECT sum(medlemmar.handikapp) FROM reservation, medlemmar, deltar WHERE medlemmar.id = deltar.medlem_id AND reservation.datum = '2017-03-01' and reservation.tid = '09:00:00' and deltar.reservation_id = reservation.bokning_id;";
+            //string fråga = "SELECT sum(medlemmar.handikapp) FROM reservation, medlemmar, deltar WHERE medlemmar.id = deltar.medlem_id AND reservation.datum ='2017-03-01' and reservation.tid ='09:00:00' and deltar.reservation_id = reservation.bokning_id;";
             double totaltHcpNu = 0;
             string meddelande ="";
 
             Postgres p1 = new Postgres();
-            p1.sqlFragaTable(fråga);
+            //p1.sqlFragaTable(fråga);
+            p1.SqlFrågaParameters("SELECT sum(medlemmar.handikapp) FROM reservation, medlemmar, deltar WHERE medlemmar.id = deltar.medlem_id AND reservation.datum =@datum and reservation.tid =@tid and deltar.reservation_id = reservation.bokning_id;", Postgres.lista = new List<NpgsqlParameter>()
+            {
+                new Npgsql.NpgsqlParameter("@datum", "2017-03-01"),
+                new Npgsql.NpgsqlParameter("@tid", "09:00:00")
+            });
 
             //Lägger den totala summan av hcp till totaltHcpNu
             foreach (DataRow dr in p1._tabell.Rows)
             {
-                string hcp;
-                hcp = dr["sum"].ToString();
-                totaltHcpNu = Convert.ToDouble(hcp);
-            }
+                    string hcp;
+                    hcp = dr["sum"].ToString();
+
+                    if (hcp == "")
+                    {
+                        totaltHcpNu = 0.0;
+                    }
+                    else
+                    {
+                        totaltHcpNu = Convert.ToDouble(hcp);
+                    }
+                }
 
             double totalt1 = totaltHcpNu + hcpSkaBokas;
             
 
-            if (totaltHcpNu + hcpSkaBokas > 120)
+            if (totalt1 > 120)
             {
-                meddelande = "Totalt hcp i bokningen får inte överstiga 120.";
+                totalt1.ToString();
+                meddelande = "Totalt hcp i bokningen får inte överstiga 120. Ert totala hcp ligger på: " + totalt1 + ".";
             }
             else
             {
