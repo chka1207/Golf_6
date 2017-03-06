@@ -155,7 +155,7 @@ namespace Golf_6.Models
             });
         }
 
-
+        //Metod för kontroll av handikapp - OBS hårdkodade värden för tillfället i testsyfte. 
         public string KontrolleraHcp()
         {
             double hcpSkaBokas = 100;
@@ -217,6 +217,13 @@ namespace Golf_6.Models
 
             Postgres p1 = new Postgres();
             p1.sqlFragaTable(frågan);
+
+            //Uppdaterad sql.
+            //p1.SqlFrågaParameters("SELECT DISTINCT medlemmar.golfid FROM medlemmar, deltar, reservation WHERE medlemmar.id = deltar.medlem AND reseravtion.datum = DATE(@datum) AND deltar.reservation_id = reservation.bokning_id", Postgres.lista = new List<NpgsqlParameter>()
+            //{
+            //    new NpgsqlParameter("@datum", ange datum parameter här)
+            //});
+
 
             //Lägger hämtade golfid från databasen i listan hämtadeGolfare
             foreach (DataRow dr in p1._tabell.Rows)
