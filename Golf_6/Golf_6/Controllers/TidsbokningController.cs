@@ -65,7 +65,7 @@ namespace Golf_6.Controllers
                 {
                     dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
                 {
-                    new Npgsql.NpgsqlParameter("@par1","'2017-03-06'")
+                    new Npgsql.NpgsqlParameter("@par1", dag)
                 });
                                   
                 }
@@ -75,7 +75,7 @@ namespace Golf_6.Controllers
                     t.Tid = Convert.ToDateTime(dr["tid"]);
                     t.MedlemKön = dr["kon"].ToString();
                     t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
-                    bokningslista.Add(t);
+                    bokningslista.Add(t);                                  //Lagrar senaste objeket på samtliga rader
                 }
                 ViewBag.List = bokningslista;
 
