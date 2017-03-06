@@ -159,9 +159,11 @@ namespace Golf_6.Models
             double totaltHcpNu = 0;
             string meddelande ="";
 
+
+
             Postgres p1 = new Postgres();
             //p1.sqlFragaTable(fråga);
-            p1.SqlFrågaParameters("SELECT sum(medlemmar.handikapp) FROM reservation, medlemmar, deltar WHERE medlemmar.id = deltar.medlem_id AND reservation.datum =@datum and reservation.tid =@tid and deltar.reservation_id = reservation.bokning_id;", Postgres.lista = new List<NpgsqlParameter>()
+            p1.SqlFrågaParameters("SELECT sum(medlemmar.handikapp) FROM reservation, medlemmar, deltar WHERE medlemmar.id = deltar.medlem_id AND reservation.datum = DATE(@datum) and reservation.tid = cast(@tid as TIME) and deltar.reservation_id = reservation.bokning_id;", Postgres.lista = new List<NpgsqlParameter>()
             {
                 new Npgsql.NpgsqlParameter("@datum", "2017-03-01"),
                 new Npgsql.NpgsqlParameter("@tid", "09:00:00")
