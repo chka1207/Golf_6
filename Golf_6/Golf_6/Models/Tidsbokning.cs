@@ -31,7 +31,9 @@ namespace Golf_6.Models
         [Display(Name = "GolfID för medspelare")]
         public String Spelare4ID { get; set; }
 
+        [Display(Name = "Förnamn")]
         public string SokFornamn { get; set; }
+        [Display(Name = "Efternamn")]
         public string SokEfternamn { get; set; }
         public string Medlem { get; set; }
         public int Användare { get; set; }
@@ -39,18 +41,18 @@ namespace Golf_6.Models
         public string MedlemKön { get; set; }
         public double MedlemHCP { get; set; }
 
-        public List<Tidsbokning> GetMedlemmen(string fornamn, string efternamn)
+        public List<string> GetMedlemmen(string fornamn, string efternamn)
         {
             SokFornamn = fornamn;
             SokEfternamn = efternamn;
             string adress = "";
             string golfid = "";
+            string medlem = "";
 
-
-            List<Tidsbokning> Lista = new List<Tidsbokning>();
+            List<string> Lista = new List<string>();
             Postgres p = new Postgres();
 
-            p.SqlFrågaParameters("select golfid, adress from medlemmar where fornamn =@par1 and efternamn =@par2", Postgres.lista = new List<NpgsqlParameter>()
+            p.SqlFrågaParameters("select golfid, adress from medlemmar where lower(fornamn) =lower(@par1) and lower(efternamn) =lower(@par2)", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new Npgsql.NpgsqlParameter("@par1", fornamn),
                     new Npgsql.NpgsqlParameter("@par2", efternamn)
@@ -60,18 +62,18 @@ namespace Golf_6.Models
             {
                 foreach (DataRow row in p._tabell.Rows)
                 {
-                    Tidsbokning t = new Tidsbokning();
+                    //Tidsbokning t = new Tidsbokning();
                     adress = row["adress"].ToString();
                     golfid = row["golfid"].ToString();
-                    t.Medlem = adress + " " + golfid;
-                    Lista.Add(t);
+                    medlem = "GolfID: " + golfid + " " + "Adress: " + adress;
+                    Lista.Add(medlem);
                 }
             }
             else
             {
-                Tidsbokning t1 = new Tidsbokning();
-                t1.Medlem = "Finns ingen medlem med det namnet.";
-                Lista.Add(t1);
+                
+                medlem = "Finns ingen medlem med det namnet.";
+                Lista.Add(medlem);
             }
 
             return Lista;

@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data;
 using Npgsql;
+using Golf_6.ViewModels;
 
 namespace Golf_6.Controllers
 {
@@ -24,24 +25,29 @@ namespace Golf_6.Controllers
         {  
             //DENNA METOD SKA LIGGA I VYN FÖR ATT SÖKA EFTER GOLFID
             //MÅSTE ÄNDRA DE HÅRDKODADE NAMNEN SOM PARAMETRAR SEN
-            Tidsbokning t = new Tidsbokning();
-            List<Tidsbokning> lista = new List<Tidsbokning>();
-            lista = t.GetMedlemmen("Maria", "Rodriguez");
+            //Tidsbokning t = new Tidsbokning();
+            //List<string> lista = new List<string>();
+            //lista = t.GetMedlemmen("Maria", "Rodriguez");
 
+            //ViewBag.Lista = lista;
 
-            Tidsbokning t1 = new Tidsbokning();
-            string meddelande;
-            List<string> listan = new List<string>();
-            listan.Add("10356-144");
-            listan.Add("11155-011");
-            listan.Add("10818-088");
-            string datum = "2017-03-01";
-            
-            meddelande = t1.HämtaGolfIDt(listan, datum);
-            string meddelandet = "";
-            Tidsbokning t2 = new Tidsbokning();
-            meddelandet = t2.KontrolleraHcp();
-            return View();
+            //Tidsbokning t1 = new Tidsbokning();
+            //string meddelande;
+            //List<string> listan = new List<string>();
+            //listan.Add("10356-144");
+            //listan.Add("11155-011");
+            //listan.Add("10818-088");
+            //string datum = "2017-03-01";
+
+           
+           
+            //meddelande = t1.HämtaGolfIDt(listan, datum);
+            //string meddelandet = "";
+            //Tidsbokning t2 = new Tidsbokning();
+            //meddelandet = t2.KontrolleraHcp();
+
+            var viewmodel = new SearchViewModel();
+            return View(viewmodel);
         }
 
         // GET: Alla bokningar för en dag
@@ -110,11 +116,27 @@ namespace Golf_6.Controllers
             return View(valtDatum);
         }
 
-        
-        public ActionResult Search()
-        {
-            
-            return View();
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Search(SearchViewModel collection)
+        { 
+            List<string> lista = new List<string>();
+
+            Tidsbokning t = new Tidsbokning();
+            lista = t.GetMedlemmen(collection.Search.SokFornamn, collection.Search.SokEfternamn);
+
+            ViewBag.Lista = lista;
+
+            //string fornamn;
+            //string efternamn;
+
+            //foreach (string key in collection.AllKeys)
+            //{
+            //    Response.Write("Key: " + key);
+            //    Response.Write(collection[key]);
+            //}
+
+            return View("Index");
         }
 
         // GET: Tidsbokning/Details/5
