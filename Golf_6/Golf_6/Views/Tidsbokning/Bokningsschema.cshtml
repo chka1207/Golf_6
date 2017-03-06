@@ -79,18 +79,25 @@
                 string hcp = " ";
                 for (int i = 0; i <= 10; i++)
                 {
-                    <td id=@allt.ToString("HHmm")>
+                    int räknare = 0;
+                    string columnFärg = "columnGreen";
+                    foreach (Tidsbokning t in ViewBag.List)
+                    {
+                        if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                        {
+                            räknare++;
+                            kön += t.MedlemKön + " ";
+                            hcp += t.MedlemHCP.ToString() + " ";
+                        }
+                        if (räknare == 4)
+                        {
+                            columnFärg = "columnRed";
+                        }
+                    }
+
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@kön">
                         :00
-                        @foreach (Tidsbokning t in ViewBag.List)
-                        {
-                            if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                            {
-                                kön += t.MedlemKön + " ";
-                                hcp += t.MedlemHCP.ToString() + " ";
-                            }
-                        }
-                        @kön
-                        @hcp
+                        @räknare.ToString()/4
                     </td>
                     kön = " ";
                     hcp = " ";
@@ -98,29 +105,37 @@
                 }
             }
         </tr>
+
         <tr>
             @{
                 allt = allt.AddHours(-11);
                 allt = allt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
-                    <td id=@allt.ToString("HHmm")>
+                    int räknare = 0;
+                    string columnFärg = "columnGreen";
+                    foreach (Tidsbokning t in ViewBag.List)
+                    {
+                        if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                        {
+                            räknare++;
+                            kön += t.MedlemKön + " ";
+                            hcp += t.MedlemHCP.ToString() + " ";
+                        }
+                        if (räknare == 4)
+                        {
+                            columnFärg = "columnRed";
+                        }
+                    }
+
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@kön">
                         :10
-                        @foreach (Tidsbokning t in ViewBag.List)
-                        {
-                            if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                            {
-                                kön += t.MedlemKön;
-                                hcp += t.MedlemHCP.ToString();
-                            }
-                        }
-                        @kön
-                        @hcp
+                        @räknare.ToString()/4
                     </td>
-                    kön = " ";
-                    hcp = " ";
-                    allt = allt.AddHours(1);
-                }
+        kön = " ";
+        hcp = " ";
+        allt = allt.AddHours(1);
+    }
 
             }
         </tr>
@@ -130,23 +145,30 @@
                 allt = allt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
-                    <td id=@allt.ToString("HHmm")>
+                    int räknare = 0;
+                    string columnFärg = "columnGreen";
+                    foreach (Tidsbokning t in ViewBag.List)
+                    {
+                        if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                        {
+                            räknare++;
+                            kön += t.MedlemKön + " ";
+                            hcp += t.MedlemHCP.ToString() + " ";
+                        }
+                        if (räknare == 4)
+                        {
+                            columnFärg = "columnRed";
+                        }
+                    }
+
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@kön">
                         :20
-                        @foreach (Tidsbokning t in ViewBag.List)
-                        {
-                            if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                            {
-                                kön += t.MedlemKön;
-                                hcp += t.MedlemHCP.ToString();
-                            }
-                        }
-                        @kön
-                        @hcp
+                        @räknare.ToString()/4
                     </td>
-                    kön = " ";
-                    hcp = " ";
-                    allt = allt.AddHours(1);
-                }
+        kön = " ";
+        hcp = " ";
+        allt = allt.AddHours(1);
+    }
 
             }
         </tr>
@@ -156,23 +178,30 @@
                 allt = allt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
-                    <td id=@allt.ToString("HHmm")>
+                    int räknare = 0;
+                    string columnFärg = "columnGreen";
+                    foreach (Tidsbokning t in ViewBag.List)
+                    {
+                        if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                        {
+                            räknare++;
+                            kön += t.MedlemKön + " ";
+                            hcp += t.MedlemHCP.ToString() + " ";
+                        }
+                        if (räknare == 4)
+                        {
+                            columnFärg = "columnRed";
+                        }
+                    }
+
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@kön">
                         :30
-                        @foreach (Tidsbokning t in ViewBag.List)
-                        {
-                            if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                            {
-                                kön += t.MedlemKön;
-                                hcp += t.MedlemHCP.ToString();
-                            }
-                        }
-                        @kön
-                        @hcp
+                        @räknare.ToString()/4
                     </td>
-                    kön = " ";
-                    hcp = " ";
-                    allt = allt.AddHours(1);
-                }
+        kön = " ";
+        hcp = " ";
+        allt = allt.AddHours(1);
+    }
 
             }
         </tr>
@@ -182,23 +211,30 @@
                 allt = allt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
-                    <td id=@allt.ToString("HHmm")>
+                    int räknare = 0;
+                    string columnFärg = "columnGreen";
+                    foreach (Tidsbokning t in ViewBag.List)
+                    {
+                        if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                        {
+                            räknare++;
+                            kön += t.MedlemKön + " ";
+                            hcp += t.MedlemHCP.ToString() + " ";
+                        }
+                        if (räknare == 4)
+                        {
+                            columnFärg = "columnRed";
+                        }
+                    }
+
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@kön">
                         :40
-                        @foreach (Tidsbokning t in ViewBag.List)
-                        {
-                            if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                            {
-                                kön += t.MedlemKön;
-                                hcp += t.MedlemHCP.ToString();
-                            }
-                        }
-                        @kön
-                        @hcp
+                        @räknare.ToString()/4
                     </td>
-                    kön = " ";
-                    hcp = " ";
-                    allt = allt.AddHours(1);
-                }
+        kön = " ";
+        hcp = " ";
+        allt = allt.AddHours(1);
+    }
 
             }
         </tr>
@@ -208,23 +244,30 @@
                 allt = allt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
-                    <td id=@allt.ToString("HHmm")>
-                        :50
-                        @foreach (Tidsbokning t in ViewBag.List)
+                    int räknare = 0;
+                    string columnFärg = "columnGreen";
+                    foreach (Tidsbokning t in ViewBag.List)
+                    {
+                        if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
                         {
-                            if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                            {
-                                kön += t.MedlemKön;
-                                hcp += t.MedlemHCP.ToString();
-                            }
+                            räknare++;
+                            kön += t.MedlemKön + " ";
+                            hcp += t.MedlemHCP.ToString() + " ";
                         }
-                        @kön
-                        @hcp
+                        if (räknare == 4)
+                        {
+                            columnFärg = "columnRed";
+                        }
+                    }
+
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@kön">
+                        :50
+                        @räknare.ToString()/4
                     </td>
-                    kön = " ";
-                    hcp = " ";
-                    allt = allt.AddHours(1);
-                }
+        kön = " ";
+        hcp = " ";
+        allt = allt.AddHours(1);
+    }
 
             }
         </tr>

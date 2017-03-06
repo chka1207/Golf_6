@@ -7025,3 +7025,10 @@ a.list-group-item-danger.active:focus {
 .popover {
   color: #2c3e50;
 }
+.columnRed{
+    background-color: #e78080;
+}
+
+.columnGreen{
+    background-color: #93e780;
+}
