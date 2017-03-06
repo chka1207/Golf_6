@@ -211,7 +211,7 @@ namespace Golf_6.Models
 
             Postgres p1 = new Postgres();
             p1.sqlFragaTable(frågan);
-           
+
             //Lägger hämtade golfid från databasen i listan hämtadeGolfare
             foreach (DataRow dr in p1._tabell.Rows)
             {
@@ -224,18 +224,24 @@ namespace Golf_6.Models
 
             //Kontrollerar om golfid från listan med inmatade golfare finns med i listan med redan bokade golfare
             //Skickar i så fall ut dessa i ett meddelande
-            foreach (string item in listan)
+            if (hämtadeGolfare.Count != 0)
             {
-                for (int i = 0; i < hämtadeGolfare.Count; i++)
+                foreach (string item in listan)
                 {
-                    if (item == hämtadeGolfare[i])
+                    for (int i = 0; i < hämtadeGolfare.Count; i++)
                     {
-                        meddelande = meddelande + " " + item;
+                        if (item == hämtadeGolfare[i])
+                        {
+                            meddelande = meddelande + " " + item;
+                        }
                     }
                 }
             }
-
-            return "Ett eller fler golfIDn finns redan bokade denna dag, dessa är: " + meddelande;
+            else
+            {
+                meddelande = "De golfare som ska bokas finns inte bokade denna dag.";
+            }
+            return meddelande;
         }
     }
 }
