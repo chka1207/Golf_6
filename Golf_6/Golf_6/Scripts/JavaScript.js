@@ -7,7 +7,7 @@ $(document).ready(function () {
     
 });
 
-//$(document).ready(function () { //Datatablen som visar alla medlemmar i Admin/RedigeraMedlem
+//$(document).ready(function () { //Datatablen som visar alla medlemmar i Admin/AllaMedlemmar
 //    $('#alla_medlemmar').DataTable({
 //        responsive: { 
 //            details: {
@@ -25,8 +25,12 @@ $(document).ready(function () {
 //    });
 //});
 
-$(document).ready(function () { //Datatablen som visar alla medlemmar i Admin/RedigeraMedlem
+$(document).ready(function () { //Datatablen som visar alla medlemmar i Admin/AllaMedlemmar
     $('#alla_medlemmar').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'colvis'
+        ],
         responsive: {
             details: {
                 display: $.fn.dataTable.Responsive.display.modal({
@@ -42,3 +46,4 @@ $(document).ready(function () { //Datatablen som visar alla medlemmar i Admin/Re
         }
     });
 });
+
