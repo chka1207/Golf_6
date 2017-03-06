@@ -34,6 +34,10 @@ namespace Golf_6.Models
         public string SokFornamn { get; set; }
         public string SokEfternamn { get; set; }
         public string Medlem { get; set; }
+        public int Användare { get; set; }
+        public string Datepicker { get; set; }
+        public string MedlemKön { get; set; }
+        public double MedlemHCP { get; set; }
 
         public List<Tidsbokning> GetMedlemmen(string fornamn, string efternamn)
         {

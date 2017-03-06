@@ -44,23 +44,70 @@ namespace Golf_6.Controllers
             return View();
         }
 
+        // GET: Alla bokningar för en dag
+        [HttpGet]
         [AllowAnonymous]
         public ActionResult Bokningsschema()
         {
+            Tidsbokning t = new Tidsbokning();
             DataTable dt = new DataTable();
+            DateTime idag = DateTime.Today;
+            
             {
                 Postgres x = new Postgres();
                 {
                     dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
                 {
-                    new Npgsql.NpgsqlParameter("@par1", "2017-02-28")  /*Hårdkodat datum för test*/
+                    new Npgsql.NpgsqlParameter("@par1", idag)  
                 });
                                   
                 }
+                List<Tidsbokning> bokningslista = new List<Tidsbokning>();
+                foreach (DataRow dr in dt.Rows)
+                {
+                    t.Tid = Convert.ToDateTime(dr["tid"]);
+                    t.MedlemKön = dr["kon"].ToString();
+                    t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
+                    bokningslista.Add(t);
+                }
+                ViewBag.List = bokningslista;
 
             }
-            //ViewData.Model = dt.AsEnumerable();
-            return View(dt);
+            t.Datepicker = DateTime.Now.Date.ToShortDateString();
+            return View(t);
+        }
+
+        // POST: Ändra dag
+        [HttpPost]
+        public ActionResult Bokningsschema(FormCollection collection)
+        {
+            string datum = collection["datepicker"];
+            DataTable dt = new DataTable();
+
+            {
+                Postgres x = new Postgres();
+                {
+                    dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@par1", Convert.ToDateTime(datum))
+                });
+
+                }
+                List<Tidsbokning> bokningslistaPost = new List<Tidsbokning>();
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Tidsbokning t = new Tidsbokning();
+                    t.Tid = Convert.ToDateTime(dr["tid"]);
+                    t.MedlemKön = dr["kon"].ToString();
+                    t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
+                    bokningslistaPost.Add(t);
+                }
+                ViewBag.List = bokningslistaPost;
+
+            }
+            Tidsbokning valtDatum = new Tidsbokning();
+            valtDatum.Datepicker = datum;
+            return View(valtDatum);
         }
 
         
