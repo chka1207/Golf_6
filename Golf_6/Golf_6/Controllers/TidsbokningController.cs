@@ -150,21 +150,20 @@ namespace Golf_6.Controllers
             return View();
         }
 
-        // GET: Tidsbokning/Create
+        // GET: Tidsbokning/Create i befintlig tid
         [AllowAnonymous]
-        public ActionResult Create()
+        public ActionResult Create(int bokningsID)
         {
-            //Tidsbokning t = new Tidsbokning();
-            //List<Tidsbokning> l = new List<Tidsbokning>();
-            //l = t.GetSchema("select * from schema where datum = @par1", DateTime.Today);
+                      
+            return View("Index");
+        }
 
-            //t.BokaTid(2, DateTime.Today, Convert.ToDateTime("09:00"), "1");
+        // GET: Tidsbokning/Create ny tid
+        [AllowAnonymous]
+        public ActionResult Create(DateTime datum, DateTime tid)
+        {
 
-            //Medlem m = new Medlem();
-            //m.GetMedlem("select * from medlemmar where id = @par1", 1);
-
-           
-            return View();
+            return View("Index");
         }
 
         // POST: Tidsbokning/Create
