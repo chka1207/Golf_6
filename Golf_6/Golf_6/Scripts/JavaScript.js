@@ -6,6 +6,21 @@ $(document).ready(function () {
     $('#table_id').DataTable();
     
 });
+//$(document).ready(function () {
+//    $('#hämtaMedlemmar').DataTable();
+
+//});
+
+$(document).ready(function () {
+    $('#hamtaMedlemmar').DataTable({
+        "pagingType": "full_numbers"
+    });
+});
+    //$(document).ready(function () {
+    //    $('#btnSök').click(function () {
+    //        $('#divSök').load('@Url.Action("Tidsbokning", "Search")');
+    //    });
+    //});
 
 $(document).ready(function () { //Datatablen som visar alla medlemmar i Admin/AllaMedlemmar
         $('#alla_medlemmar').DataTable({
