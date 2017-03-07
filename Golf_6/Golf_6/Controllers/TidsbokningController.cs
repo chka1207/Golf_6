@@ -54,7 +54,6 @@ namespace Golf_6.Controllers
          [AllowAnonymous]
         public ActionResult GetgolfID()
         {
-
             Tidsbokning medlemmarna = new Tidsbokning();
             DataTable dt = new DataTable("MyTable");
             dt = medlemmarna.HämtaMedlemmar();

@@ -81,6 +81,63 @@ namespace Golf_6.Controllers
 
         #region Redigera medlem /GET: /POST:
         // GET: Admin/RedigeraMedlem
+        [AllowAnonymous]
+        public ActionResult RedigeraMedlem()
+        {
+            var viewModel = new AdminMedlemshanteringViewModel();
+
+            return View(viewModel);
+        }
+
+        // POST: Admin/RegistreraNyMedlem
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult RedigeraMedlem(AdminMedlemshanteringViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                //TO-DO:
+                //RegistreraNyMedlem(model.Fornamn);
+            }
+
+            Admin admin = new Admin();
+
+            admin.RedigeraMedlem(viewModel.Admin.Fornamn, viewModel.Admin.Efternamn,
+                viewModel.Admin.Adress, viewModel.Admin.Postnummer, viewModel.Admin.Ort,
+                viewModel.Admin.Email, viewModel.Admin.Kon, viewModel.Admin.Handikapp,
+                viewModel.Admin.GolfID, viewModel.Admin.MedlemsKategori,
+                viewModel.Admin.Telefonnummer);
+            return View("Index");
+        }
+
+        #endregion
+
+            #region Radera medlem /GET: /POST:
+            //GET: Admin/RaderaMedlem
+        [AllowAnonymous]
+        public ActionResult RaderaMedlem()
+        {
+            var viewModel = new AdminMedlemshanteringViewModel();
+
+            return View(viewModel);
+        }
+
+        // POST: Admin/RaderaMedlem
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult RaderaMedlem(AdminMedlemshanteringViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                //TO-DO:
+                //RegistreraNyMedlem(model.Fornamn);
+            }
+
+            Admin admin = new Admin();
+
+            admin.RaderaMedlem(viewModel.Admin.GolfID);
+            return View("Index");
+        }
 
         #endregion
 

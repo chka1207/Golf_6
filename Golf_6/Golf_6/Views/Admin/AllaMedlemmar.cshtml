@@ -22,8 +22,8 @@
 
 <h2>Redigera befintlig medlem</h2>
 
-<div width="90%">
-    <table id="alla_medlemmar" class="display responsive nowrap" cellspacing="0">
+<div>
+    <table id="alla_medlemmar" class="display responsive" cellspacing="0">
     
         <thead>
         <tr>
@@ -34,18 +34,27 @@
         </tr>
         </thead>
         <tbody>
-            @foreach (DataRow row in Model.Rows)
+        @foreach (DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn x in Model.Columns)
                 {
-                <tr>
-                    @foreach (DataColumn x in Model.Columns)
-                    {
-                        <td>@row[x.ColumnName]</td>
-                    }
-                </tr>
-            }
+                    <td>@row[x.ColumnName]</td>
+                }
+            </tr>
+        }
         </tbody>
     </table>
 </div>
+
+<div>
+    <button id="radera-medlem">Radera medlem</button>
+</div>
+
+<div>
+    <button id="redigera-medlem">Radera medlem</button>
+</div>
+
 <div>
     @Html.ActionLink("Tillbaka", "Index")
 </div>

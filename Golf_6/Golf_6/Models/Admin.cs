@@ -11,7 +11,7 @@ using Npgsql;
 
 namespace Golf_6.Models
 {
-    [Bind(Include = "Fornamn,Efternamn,Adress")]
+    
     public class Admin
     {
         [Required]
@@ -46,8 +46,7 @@ namespace Golf_6.Models
         public string Medlem { get; set; }
 
         public void RegistreraNyMedlem(string fornamn, string efternamn, string adress, string postnummer, string ort,
-            string email,
-            string kon, double handikapp, string golfid, int medlemskategori, string telefonnummer)
+            string email, string kon, double handikapp, string golfid, int medlemskategori, string telefonnummer)
         {
             Postgres db = new Postgres();
 
@@ -73,14 +72,15 @@ namespace Golf_6.Models
         }
 
         public void RedigeraMedlem(string fornamn, string efternamn, string adress, string postnummer, string ort,
-            string email,
-            double handikapp, int medlemskategori, string telefonnummer, string golfid)
+            string email, string kon, double handikapp, string golfid, int medlemskategori, string telefonnummer)
         {
             Postgres db = new Postgres();
 
-            db.SqlParameters("UPDATE medlemmar SET fornamn=@fornamn, efternamn=@efternamn, adress=@adress, " +
-                             "postnummer=@postnummer, ort=@ort, email=@email, medlemskategori=@medlemskategori, handikapp=@handikapp " +
-                             "WHERE golfid=@golfid",
+            db.SqlParameters(
+                "UPDATE medlemmar SET fornamn=@fornamn, efternamn=@efternamn, adress=@adress, " +
+                "postnummer=@postnummer, ort=@ort, email=@email, kon=@kon, medlemskategori=@medlemskategori, " +
+                "handikapp=@handikapp, telefonnummer=@telefonnummer " +
+                "WHERE golfid=@golfid;",
                 Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@fornamn", fornamn),
@@ -89,9 +89,22 @@ namespace Golf_6.Models
                     new NpgsqlParameter("@postnummer", postnummer),
                     new NpgsqlParameter("@ort", ort),
                     new NpgsqlParameter("@email", email),
+                    new NpgsqlParameter("@kon", kon),
                     new NpgsqlParameter("@handikapp", handikapp),
                     new NpgsqlParameter("@medlemskategori", medlemskategori),
                     new NpgsqlParameter("@telefonnummer", telefonnummer),
+                    new NpgsqlParameter("@golfid", golfid)
+        });
+
+        }
+
+        public void RaderaMedlem(string golfid)
+        {
+            Postgres db = new Postgres();
+
+            db.SqlParameters("DELETE FROM medlemmar WHERE golfid=@golfid",
+                Postgres.lista = new List<NpgsqlParameter>()
+                {
                     new NpgsqlParameter("@golfid", golfid)
                 });
 
