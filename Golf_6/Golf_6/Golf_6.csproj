@@ -600,6 +600,7 @@
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Admin\HanteraSasong.cshtml" />
     <Content Include="Views\Tidsbokning\PartialSearch.cshtml" />
+    <Content Include="Views\Tidsbokning\GetGolfID.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -39,15 +39,32 @@ namespace Golf_6.Controllers
             //listan.Add("10818-088");
             //string datum = "2017-03-01";
 
-           
-           
             //meddelande = t1.HämtaGolfIDt(listan, datum);
             //string meddelandet = "";
             //Tidsbokning t2 = new Tidsbokning();
             //meddelandet = t2.KontrolleraHcp();
 
-            var viewmodel = new SearchViewModel();
-            return View(viewmodel);
+            //var viewmodel = new SearchViewModel();
+            //return View(viewmodel);
+
+         
+            //dt.Columns[0].ColumnName = "Förnamn";
+            return View("Index");
+        }
+         [AllowAnonymous]
+        public ActionResult GetgolfID()
+        {
+
+            Tidsbokning medlemmarna = new Tidsbokning();
+            DataTable dt = new DataTable("MyTable");
+            dt = medlemmarna.HämtaMedlemmar();
+            dt.Columns[0].ColumnName = "GolfID";
+            dt.Columns[1].ColumnName = "Förnamn";
+            dt.Columns[2].ColumnName = "Efternamn";
+            dt.Columns[3].ColumnName = "Adress";
+            dt.Columns[4].ColumnName = "Handikapp";
+
+            return View(dt);
         }
 
         // GET: Alla bokningar för en dag
