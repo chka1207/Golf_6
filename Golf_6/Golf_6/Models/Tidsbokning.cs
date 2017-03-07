@@ -281,5 +281,11 @@ namespace Golf_6.Models
             }
             return meddelande;
         }
+
+        public class SkapaBokning
+        {
+            public int ID { get; set; }
+
+        }
     }
 }

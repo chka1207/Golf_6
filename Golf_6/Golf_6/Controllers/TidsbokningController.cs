@@ -139,7 +139,7 @@ namespace Golf_6.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Search(SearchViewModel collection)
+        public PartialViewResult Search(SearchViewModel collection)
         { 
             List<Tidsbokning> lista = new List<Tidsbokning>();
 
@@ -157,7 +157,7 @@ namespace Golf_6.Controllers
             //    Response.Write(collection[key]);
             //}
 
-            return View("PartialSearch", lista);
+            return PartialView("PartialSearch", lista);
         }
 
         // GET: Tidsbokning/Details/5
@@ -169,20 +169,30 @@ namespace Golf_6.Controllers
 
         // GET: Tidsbokning/Create i befintlig tid
         [AllowAnonymous]
-        public ActionResult Create(int bokningsID)
+        public ActionResult Create()
         {
-                      
-            return View("Index");
+            // Tar in vald datum/tid från bokningsschema och skickar in ett Tidsbokningsobjekt med det värdet till Index
+            // Test för att mata in en bokning i databasen, en hel del ska flyttas till POST-metoden senare
+            Tidsbokning t = new Tidsbokning();
+            DateTime dt  = Convert.ToDateTime(Request.QueryString["validate"]);
+            string tid = dt.ToShortTimeString();
+            string datum = dt.ToShortDateString();
+            t.Datum = Convert.ToDateTime(datum);
+            t.Tid = Convert.ToDateTime(tid);
+
+            {
+                Postgres x = new Postgres();
+                x.SqlParameters("insert into reservation (datum, tid) values (@datum, @tid);", Postgres.lista = new List<NpgsqlParameter>
+                {
+                    new NpgsqlParameter("@datum", t.Datum),
+                    new NpgsqlParameter("@tid", t.Tid)
+                });
+            }      
+
+            return View("Index", t);
         }
 
-        // GET: Tidsbokning/Create ny tid
-        [AllowAnonymous]
-        public ActionResult Create(DateTime datum, DateTime tid)
-        {
-
-            return View("Index");
-        }
-
+      
         // POST: Tidsbokning/Create
         [HttpPost]
         [AllowAnonymous]

@@ -6,19 +6,49 @@ using System.Data;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Reflection;
+using System.Web.Mvc;
 using Npgsql;
 
 namespace Golf_6.Models
 {
+    [Bind(Include = "Fornamn,Efternamn,Adress")]
     public class Admin
     {
+        [Required]
+        [Display(Name = "Förnamn")]
+        public string Fornamn { get; set; }
+        [Required]
+        [Display(Name = "Efternamn")]
+        public string Efternamn { get; set; }
+        [Required]
+        public string Adress { get; set; }
+        [Required]
+        public string Postnummer { get; set; }
+        [Required]
+        public string Ort { get; set; }
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        [Display(Name = "Kön")]
+        public string Kon { get; set; }
+        [Required]
+        public double Handikapp { get; set; }
+
+        [Display(Name = "Golf-ID (ska genereras automatiskt)")]
+        public string GolfID { get; set; }
+        [Required]
+        [Display(Name = "Medlemskategori")]
+        public int MedlemsKategori { get; set; }
+        [Required]
+        public string Telefonnummer { get; set; }
+
+        public List<String> medlemsLista { get; set; }
         public string Medlem { get; set; }
 
         public void RegistreraNyMedlem(string fornamn, string efternamn, string adress, string postnummer, string ort,
             string email,
             string kon, double handikapp, string golfid, int medlemskategori, string telefonnummer)
         {
-
             Postgres db = new Postgres();
 
             db.SqlParameters(
@@ -46,7 +76,6 @@ namespace Golf_6.Models
             string email,
             double handikapp, int medlemskategori, string telefonnummer, string golfid)
         {
-
             Postgres db = new Postgres();
 
             db.SqlParameters("UPDATE medlemmar SET fornamn=@fornamn, efternamn=@efternamn, adress=@adress, " +
@@ -85,38 +114,10 @@ namespace Golf_6.Models
 
     }
     
-    public class AdminMedlemshantering
-    {
-        [Required]
-        [Display(Name = "Förnamn")]
-        public string Fornamn { get; set; }
-        [Required]
-        [Display(Name = "Efternamn")]
-        public string Efternamn { get; set; }
-        [Required]
-        public string Adress { get; set; }
-        [Required]
-        public string Postnummer { get; set; }
-        [Required]
-        public string Ort { get; set; }
-        [Required]
-        public string Email { get; set; }
-        [Required]
-        [Display(Name = "Kön")]
-        public string Kon { get; set; }
-        [Required]
-        public double Handikapp { get; set; }
-
-        [Display(Name = "Golf-ID (ska genereras automatiskt)")]
-        public string GolfID { get; set; }
-        [Required]
-        [Display(Name = "Medlemskategori")]
-        public int MedlemsKategori { get; set; }
-        [Required]
-        public string Telefonnummer { get; set; }
-
-        public List<String> medlemsLista { get; set; }
-    }
+    //public class AdminMedlemshantering
+    //{
+        
+    //}
     
     //public class HanteraSasong
     //{
