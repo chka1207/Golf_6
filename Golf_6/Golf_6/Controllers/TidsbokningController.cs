@@ -124,7 +124,7 @@ namespace Golf_6.Controllers
         [AllowAnonymous]
         public ActionResult Search(SearchViewModel collection)
         { 
-            List<string> lista = new List<string>();
+            List<Tidsbokning> lista = new List<Tidsbokning>();
 
             Tidsbokning t = new Tidsbokning();
             lista = t.GetMedlemmen(collection.Search.SokFornamn, collection.Search.SokEfternamn);
@@ -140,7 +140,7 @@ namespace Golf_6.Controllers
             //    Response.Write(collection[key]);
             //}
 
-            return View("Index");
+            return View("PartialSearch", lista);
         }
 
         // GET: Tidsbokning/Details/5
