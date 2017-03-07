@@ -77,6 +77,7 @@
                 DateTime allt = datum.Date + intervall;
                 string kön = " ";
                 string hcp = " ";
+                string medlemsinfo = "";
                 for (int i = 0; i <= 10; i++)
                 {
                     int räknare = 0;
@@ -88,6 +89,9 @@
                             räknare++;
                             kön += t.MedlemKön + " ";
                             hcp += t.MedlemHCP.ToString() + " ";
+                            medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "<br />";
+                            kön = " ";
+                            hcp = " ";
                         }
                         if (räknare == 1)
                         {
@@ -99,12 +103,15 @@
                         }
                     }
 
-                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@kön">
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :00
                         @räknare.ToString()/4
+                        @if (räknare < 4)
+                        {
+                            @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
                     </td>
-                    kön = " ";
-                    hcp = " ";
+                    medlemsinfo = "";
                     allt = allt.AddHours(1);
                 }
             }
@@ -125,6 +132,9 @@
                             räknare++;
                             kön += t.MedlemKön + " ";
                             hcp += t.MedlemHCP.ToString() + " ";
+                            medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "<br />";
+                            kön = " ";
+                            hcp = " ";
                         }
                         if (räknare == 1)
                         {
@@ -136,12 +146,15 @@
                         }
                     }
 
-                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@kön">
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :10
                         @räknare.ToString()/4
+                        @if (räknare < 4)
+                        {
+                            @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
                     </td>
-                    kön = " ";
-                    hcp = " ";
+                    medlemsinfo = "";
                     allt = allt.AddHours(1);
                 }
 
@@ -162,6 +175,9 @@
                             räknare++;
                             kön += t.MedlemKön + " ";
                             hcp += t.MedlemHCP.ToString() + " ";
+                            medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "<br />";
+                            kön = " ";
+                            hcp = " ";
                         }
                         if (räknare == 1)
                         {
@@ -173,14 +189,17 @@
                         }
                     }
 
-                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@kön">
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :20
                         @räknare.ToString()/4
+                        @if (räknare < 4)
+                        {
+                            @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
                     </td>
-        kön = " ";
-        hcp = " ";
-        allt = allt.AddHours(1);
-    }
+                    medlemsinfo = "";
+                    allt = allt.AddHours(1);
+                }
 
             }
         </tr>
@@ -199,6 +218,9 @@
                             räknare++;
                             kön += t.MedlemKön + " ";
                             hcp += t.MedlemHCP.ToString() + " ";
+                            medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "<br />";
+                            kön = " ";
+                            hcp = " ";
                         }
                         if (räknare == 1)
                         {
@@ -210,14 +232,17 @@
                         }
                     }
 
-                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@kön">
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :30
                         @räknare.ToString()/4
+                        @if (räknare < 4)
+                        {
+                            @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
                     </td>
-        kön = " ";
-        hcp = " ";
-        allt = allt.AddHours(1);
-    }
+                    medlemsinfo = "";
+                    allt = allt.AddHours(1);
+                }
 
             }
         </tr>
@@ -236,6 +261,9 @@
                             räknare++;
                             kön += t.MedlemKön + " ";
                             hcp += t.MedlemHCP.ToString() + " ";
+                            medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "<br />";
+                            kön = " ";
+                            hcp = " ";
                         }
                         if (räknare == 1)
                         {
@@ -247,14 +275,17 @@
                         }
                     }
 
-                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@kön">
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :40
                         @räknare.ToString()/4
+                        @if (räknare < 4)
+                        {
+                            @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
                     </td>
-        kön = " ";
-        hcp = " ";
-        allt = allt.AddHours(1);
-    }
+                    medlemsinfo = "";
+                    allt = allt.AddHours(1);
+                }
 
             }
         </tr>
@@ -273,6 +304,9 @@
                             räknare++;
                             kön += t.MedlemKön + " ";
                             hcp += t.MedlemHCP.ToString() + " ";
+                            medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "<br />";
+                            kön = " ";
+                            hcp = " ";
                         }
                         if (räknare == 1)
                         {
@@ -284,17 +318,22 @@
                         }
                     }
 
-                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@kön">
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :50
                         @räknare.ToString()/4
+                        @if (räknare < 4)
+                        {
+                            @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+
                     </td>
-        kön = " ";
-        hcp = " ";
-        allt = allt.AddHours(1);
-    }
+                    medlemsinfo = "";
+                    allt = allt.AddHours(1);
+                }
 
             }
         </tr>
+        
     </table>
 
 
