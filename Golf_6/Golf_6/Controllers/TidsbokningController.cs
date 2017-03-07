@@ -39,15 +39,32 @@ namespace Golf_6.Controllers
             //listan.Add("10818-088");
             //string datum = "2017-03-01";
 
-           
-           
             //meddelande = t1.HämtaGolfIDt(listan, datum);
             //string meddelandet = "";
             //Tidsbokning t2 = new Tidsbokning();
             //meddelandet = t2.KontrolleraHcp();
 
-            var viewmodel = new SearchViewModel();
-            return View(viewmodel);
+            //var viewmodel = new SearchViewModel();
+            //return View(viewmodel);
+
+         
+            //dt.Columns[0].ColumnName = "Förnamn";
+            return View("Index");
+        }
+         [AllowAnonymous]
+        public ActionResult GetgolfID()
+        {
+
+            Tidsbokning medlemmarna = new Tidsbokning();
+            DataTable dt = new DataTable("MyTable");
+            dt = medlemmarna.HämtaMedlemmar();
+            dt.Columns[0].ColumnName = "GolfID";
+            dt.Columns[1].ColumnName = "Förnamn";
+            dt.Columns[2].ColumnName = "Efternamn";
+            dt.Columns[3].ColumnName = "Adress";
+            dt.Columns[4].ColumnName = "Handikapp";
+
+            return View(dt);
         }
 
         // GET: Alla bokningar för en dag
@@ -150,23 +167,32 @@ namespace Golf_6.Controllers
             return View();
         }
 
-        // GET: Tidsbokning/Create
+        // GET: Tidsbokning/Create i befintlig tid
         [AllowAnonymous]
         public ActionResult Create()
         {
-            //Tidsbokning t = new Tidsbokning();
-            //List<Tidsbokning> l = new List<Tidsbokning>();
-            //l = t.GetSchema("select * from schema where datum = @par1", DateTime.Today);
+            // Tar in vald datum/tid från bokningsschema och skickar in ett Tidsbokningsobjekt med det värdet till Index
+            // Test för att mata in en bokning i databasen, en hel del ska flyttas till POST-metoden senare
+            Tidsbokning t = new Tidsbokning();
+            DateTime dt  = Convert.ToDateTime(Request.QueryString["validate"]);
+            string tid = dt.ToShortTimeString();
+            string datum = dt.ToShortDateString();
+            t.Datum = Convert.ToDateTime(datum);
+            t.Tid = Convert.ToDateTime(tid);
 
-            //t.BokaTid(2, DateTime.Today, Convert.ToDateTime("09:00"), "1");
+            {
+                Postgres x = new Postgres();
+                x.SqlParameters("insert into reservation (datum, tid) values (@datum, @tid);", Postgres.lista = new List<NpgsqlParameter>
+                {
+                    new NpgsqlParameter("@datum", t.Datum),
+                    new NpgsqlParameter("@tid", t.Tid)
+                });
+            }      
 
-            //Medlem m = new Medlem();
-            //m.GetMedlem("select * from medlemmar where id = @par1", 1);
-
-           
-            return View();
+            return View("Index", t);
         }
 
+      
         // POST: Tidsbokning/Create
         [HttpPost]
         [AllowAnonymous]
