@@ -1,12 +1,18 @@
 ﻿
+@using System.Globalization
 @using Golf_6.Models
 @model Golf_6.ViewModels.HanteraSasongViewModel
 @{
     ViewBag.Title = "HanteraSasongen";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+
+@Styles.Render("~/Content/calendar.css")
+
 <br /><br /><br /><br /><br />
-@Html.Raw(@ViewBag.AktuellaDatum) @* @Html.Raw hanterar <br /> som ligger i koden.*@
+@*Hämtar kalender för säsongens start och slutdatum
+    ViewBag.AktuellaDatum hämtas från AdminController.*@
+@Html.Raw(@ViewBag.AktuellaDatum) @* @Html.Raw hanterar html som ligger i koden.*@
 
 @using (Html.BeginForm("HanteraSasong", "Admin", FormMethod.Post))
 {

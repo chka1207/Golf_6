@@ -49,3 +49,11 @@ $(document).ready(function () { //Datatablen som visar alla medlemmar i Admin/Al
     });
 });
 
+function whichDay(dateString) {
+    return ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag']
+        [new Date(dateString).getDay()];
+}
+window.onload = function () {
+    document.getElementById("startVeckodag").innerHTML = whichDay(document.getElementById("startVeckodag").innerHTML);
+    document.getElementById("slutVeckodag").innerHTML = whichDay(document.getElementById("slutVeckodag").innerHTML);
+};
