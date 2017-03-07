@@ -122,7 +122,7 @@ namespace Golf_6.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Search(SearchViewModel collection)
+        public PartialViewResult Search(SearchViewModel collection)
         { 
             List<Tidsbokning> lista = new List<Tidsbokning>();
 
@@ -140,7 +140,7 @@ namespace Golf_6.Controllers
             //    Response.Write(collection[key]);
             //}
 
-            return View("PartialSearch", lista);
+            return PartialView("PartialSearch", lista);
         }
 
         // GET: Tidsbokning/Details/5

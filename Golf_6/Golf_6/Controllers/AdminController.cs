@@ -70,11 +70,11 @@ namespace Golf_6.Controllers
 
             Admin admin = new Admin();
             
-            admin.RegistreraNyMedlem(viewModel.AdminMedlemshantering.Fornamn, viewModel.AdminMedlemshantering.Efternamn,
-                viewModel.AdminMedlemshantering.Adress, viewModel.AdminMedlemshantering.Postnummer, viewModel.AdminMedlemshantering.Ort,
-                viewModel.AdminMedlemshantering.Email, viewModel.AdminMedlemshantering.Kon, viewModel.AdminMedlemshantering.Handikapp,
-                viewModel.AdminMedlemshantering.GolfID, viewModel.AdminMedlemshantering.MedlemsKategori, 
-                viewModel.AdminMedlemshantering.Telefonnummer);
+            admin.RegistreraNyMedlem(viewModel.Admin.Fornamn, viewModel.Admin.Efternamn,
+                viewModel.Admin.Adress, viewModel.Admin.Postnummer, viewModel.Admin.Ort,
+                viewModel.Admin.Email, viewModel.Admin.Kon, viewModel.Admin.Handikapp,
+                viewModel.Admin.GolfID, viewModel.Admin.MedlemsKategori, 
+                viewModel.Admin.Telefonnummer);
             return View("Index");
         }
         #endregion

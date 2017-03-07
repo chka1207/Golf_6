@@ -57,3 +57,12 @@ window.onload = function () {
     document.getElementById("startVeckodag").innerHTML = whichDay(document.getElementById("startVeckodag").innerHTML);
     document.getElementById("slutVeckodag").innerHTML = whichDay(document.getElementById("slutVeckodag").innerHTML);
 };
+
+//$("#btnSök").on('click', function () {
+//    $.ajax({
+//        async: false,
+//        url: '/Tidsbokning/Search'
+//    }).success(function (partialView) {
+//        $('#partialViewSök').append(partialView);
+//    });
+//});
