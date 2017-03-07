@@ -601,6 +601,8 @@
     <Content Include="Views\Admin\HanteraSasong.cshtml" />
     <Content Include="Views\Tidsbokning\PartialSearch.cshtml" />
     <Content Include="Views\Tidsbokning\GetGolfID.cshtml" />
+    <Content Include="Views\Admin\RaderaMedlem.cshtml" />
+    <Content Include="Views\Admin\RedigeraMedlem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
