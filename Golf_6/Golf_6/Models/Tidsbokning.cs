@@ -45,6 +45,8 @@ namespace Golf_6.Models
         public string Datepicker { get; set; }
         public string MedlemKön { get; set; }
         public double MedlemHCP { get; set; }
+        public double TotaltHCP { get; set; } = 0;
+        public int AntalDeltagare { get; set; } = 0;
 
 
         public DataTable HämtaMedlemmar() /* Hämtar en lista med medlemmar*/
@@ -282,10 +284,24 @@ namespace Golf_6.Models
             return meddelande;
         }
 
-        public class SkapaBokning
+        public List<Tidsbokning> GetBokning (int bokningsID)
         {
-            public int ID { get; set; }
-
+            Postgres x = new Postgres();
+            x.SqlFrågaParameters("select golfid, kon, handikapp from medlemmar where id in (select medlem_id from deltar where reservation_id = @par1);", Postgres.lista = new List<Npgsql.NpgsqlParameter>()
+            {
+                new Npgsql.NpgsqlParameter("@par1", bokningsID)
+            });
+            List<Tidsbokning> y = new List<Tidsbokning>();
+            
+            foreach (DataRow dr in x._tabell.Rows)
+            {
+                Tidsbokning t = new Tidsbokning();
+                t.GolfID = dr["golfid"].ToString();
+                t.MedlemKön = dr["kon"].ToString();
+                t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
+                y.Add(t);
+            }
+            return y;
         }
     }
 }

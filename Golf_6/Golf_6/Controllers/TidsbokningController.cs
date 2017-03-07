@@ -174,22 +174,50 @@ namespace Golf_6.Controllers
             // Tar in vald datum/tid från bokningsschema och skickar in ett Tidsbokningsobjekt med det värdet till Index
             // Test för att mata in en bokning i databasen, en hel del ska flyttas till POST-metoden senare
             Tidsbokning t = new Tidsbokning();
+            DataTable tabell = new DataTable();
+            List<Tidsbokning> deltagare = new List<Tidsbokning>();
             DateTime dt  = Convert.ToDateTime(Request.QueryString["validate"]);
             string tid = dt.ToShortTimeString();
             string datum = dt.ToShortDateString();
             t.Datum = Convert.ToDateTime(datum);
             t.Tid = Convert.ToDateTime(tid);
+            int antalDeltagare = 0;
+            double totHcp = 0;
 
-            {
+            {// Kontrollerar om det finns tider bokade och hämtar bokningsID och bokade spelares golfID, kön och hcp
                 Postgres x = new Postgres();
-                x.SqlParameters("insert into reservation (datum, tid) values (@datum, @tid);", Postgres.lista = new List<NpgsqlParameter>
+                tabell = x.SqlFrågaParameters("select bokning_id from reservation where datum = @datum and tid = @tid;", Postgres.lista = new List<NpgsqlParameter>
                 {
                     new NpgsqlParameter("@datum", t.Datum),
                     new NpgsqlParameter("@tid", t.Tid)
                 });
-            }      
+                if (tabell != null)
+                {
+                    foreach (DataRow dr in tabell.Rows)
+                    {
+                        t.BokningsID = Convert.ToUInt16(dr["bokning_id"]);
+                    }
+                    
+                    deltagare = t.GetBokning(t.BokningsID); //All hämtning av data från en bokning fungerar, nästa steg är att få med värdet från räknare till Index tillsammans med deltagarlistan
+                    foreach(Tidsbokning tb in deltagare)
+                    {
+                        antalDeltagare++;
+                        totHcp += tb.MedlemHCP;
+                    }
+                }
 
-            return View("Index", t);
+            }
+
+            //{
+            //    Postgres x = new Postgres();
+            //    x.SqlParameters("insert into reservation (datum, tid) values (@datum, @tid);", Postgres.lista = new List<NpgsqlParameter>
+            //    {
+            //        new NpgsqlParameter("@datum", t.Datum),
+            //        new NpgsqlParameter("@tid", t.Tid)
+            //    });
+            //}      
+
+            return View("Index", deltagare);
         }
 
       
