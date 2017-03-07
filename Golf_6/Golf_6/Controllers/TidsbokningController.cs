@@ -72,7 +72,7 @@ namespace Golf_6.Controllers
                 foreach (DataRow dr in dt.Rows)
                 {
                     Tidsbokning t = new Tidsbokning();
-                    t.Tid = Convert.ToDateTime(dr["tid"]);
+                    t.Tid = Convert.ToDateTime(dr["tid"].ToString());
                     t.MedlemKön = dr["kon"].ToString();
                     t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
                     bokningslista.Add(t);                                  
