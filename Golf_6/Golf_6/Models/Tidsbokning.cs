@@ -46,6 +46,21 @@ namespace Golf_6.Models
         public string MedlemKön { get; set; }
         public double MedlemHCP { get; set; }
 
+
+        public DataTable HämtaMedlemmar() /* Hämtar en lista med medlemmar*/
+        {
+            Postgres db = new Postgres();
+            DataTable dt = new DataTable();
+
+            //HÅRDKODAT "SÖKNINGEN"
+            string sql =
+                "SELECT golfid, fornamn, efternamn, adress, handikapp FROM medlemmar";
+
+            dt = db.sqlFragaTable(sql);
+
+            return dt;
+        }
+
         public List<Tidsbokning> GetMedlemmen(string fornamn, string efternamn)
         {
             SokFornamn = fornamn;
