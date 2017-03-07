@@ -1,11 +1,11 @@
 ﻿@*@model Golf_6.Models.Tidsbokning*@
 @using Golf_6.Models
 @*@model Golf_6.ViewModels.SearchViewModel*@
-@*@model System.Data.DataTable*@
+@model System.Data.DataTable
 @using System.Data;
-@{
+@*@{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-}
+}*@
 @{
     ViewBag.Title = "Index";
 }
@@ -18,10 +18,10 @@
 @Styles.Render("~/Content/DataTables/css/responsive.dataTables.min.css")
 @Styles.Render("~/Content/DataTables/css/buttons.dataTables.min.css")
 
-<h2>Index</h2>
+<h2>Partial</h2>
 
 @*<div width="90%">*@
-<table id="hamtaMedlemmar" class="display" cellspacing="0" width=" 100%">
+*<table id="hamtaMedlemmar" class="display" cellspacing="0" width="100%">
 
     <thead>
         <tr>
@@ -47,112 +47,8 @@
 
 @*</div>*@
 
-
-@*@using (Html.BeginForm("Search", "Tidsbokning", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-            <h4>Sök</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Search.SokFornamn, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Search.SokFornamn, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Search.SokFornamn, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Search.SokEfternamn, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Search.SokEfternamn, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Search.SokEfternamn, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Sök" class="btn btn-default" />
-                </div>
-            </div>
-        </div>*@
-
-@*<div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <ul>
-                @foreach (string w in ViewBag.Lista)
-                {
-                    <li>@w</li>
-                }
-            </ul>
-        </div>
-    </div>*@
-
 @*}*@
-@*<div id="divSök"></div>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-            <h4>Tidsbokning</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Search.Datum, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Search.Datum, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Search.Datum, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Search.Tid, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Search.Tid, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Search.Tid, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Search.Spelare2ID, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Search.Spelare2ID, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Search.Spelare2ID, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Search.Spelare3ID, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Search.Spelare3ID, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Search.Spelare3ID, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Search.Spelare4ID, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Search.Spelare4ID, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Search.Spelare4ID, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>
-        </div>
-    }*@
 
 <div>
     @Html.ActionLink("Back to List", "Index")
