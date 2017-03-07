@@ -104,8 +104,10 @@ namespace Golf_6.Controllers
                 List<Tidsbokning> bokningslistaPost = new List<Tidsbokning>();
                 foreach (DataRow dr in dt.Rows)
                 {
+                    //Ändrat konverteringen av tid objektet. 
+                    //Kan ej konvertera objekt till datetime rakt av så måste åter konverteras till en sträng
                     Tidsbokning t = new Tidsbokning();
-                    t.Tid = Convert.ToDateTime(dr["tid"]);
+                    t.Tid = Convert.ToDateTime(dr["tid"].ToString());
                     t.MedlemKön = dr["kon"].ToString();
                     t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
                     bokningslistaPost.Add(t);
