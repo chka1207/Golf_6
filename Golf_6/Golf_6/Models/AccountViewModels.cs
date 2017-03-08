@@ -1,9 +1,95 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using Npgsql;
+using System;
+using System.Data;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web;
 
 namespace Golf_6.Models
 {
+
+    public class AccountModels
+    {
+        public class LoginViewModel
+        {
+            [Required]
+            [Display(Name = "Email")]
+            [EmailAddress]
+            public string Email { get; set; }
+
+            [Required]
+            [DataType(DataType.Password)]
+            [Display(Name = "Lösenord")]
+            public string Password { get; set; }
+
+            [Display(Name = "Remember me?")]
+            public bool RememberMe { get; set; }
+        }
+
+        public class NewUserViewModel
+        {
+            [Required]
+            [Display(Name = "UserID")]
+            public int UserID { get; set; }
+
+            [Required]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+            [DataType(DataType.Password)]
+            [Display(Name = "Password")]
+            public string Password { get; set; }
+
+            //[DataType(DataType.Password)]                        //Måste lösa Compare + Errormessage
+            //[Display(Name = "Confirm password")]
+            //[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            //public string ConfirmPassword { get; set; }
+        }
+
+        public Tuple<byte[],byte[]> GeneratePass(string password)
+        {
+            using (var deriveBytes = new Rfc2898DeriveBytes(password, 20))
+            {
+                byte[] salt = deriveBytes.Salt;
+                byte[] key = deriveBytes.GetBytes(20);
+
+                return Tuple.Create(salt, key);
+            }
+        }
+
+        public bool AuthenticationUser (string password, string userid)
+        {
+            byte[] salt = null, key = null;
+            Postgres x = new Postgres();
+
+            var tabell = x.SqlFrågaParameters("select salt, key from loginkonto where agare = @par1", Postgres.lista = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@par1", Convert.ToUInt16(userid))
+            });
+            foreach(DataRow dr in tabell.Rows)
+            {
+                salt = (byte[])dr["salt"];
+                key = (byte[])dr["key"];
+            }
+
+            using (var deriveBytes = new Rfc2898DeriveBytes(password, salt))
+            {
+                byte[] newKey = deriveBytes.GetBytes(20);
+                if(!newKey.SequenceEqual(key))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+    }
+
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
@@ -102,21 +188,7 @@ namespace Golf_6.Models
         public string Email { get; set; }
     }
 
-    public class LoginViewModel
-    {
-        [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
 
-        [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
-
-        [Display(Name = "Remember me?")]
-        public bool RememberMe { get; set; }
-    }
 
     public class RegisterViewModel
     {
