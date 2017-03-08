@@ -13,7 +13,19 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('#hamtaMedlemmar').DataTable({
-        "pagingType": "full_numbers"
+        "pagingType": "simple",
+        "language": {
+            "search": "Sök:",
+            "info": "",
+            "lengthMenu": "Visa _MENU_ åt gången",
+            "infoFiltered": "",
+            "zeroRecords": "Din sökning gav inga träffar",
+            "infoEmpty": "",
+            "paginate": {
+                "previous": "Föregående",
+                "next": "Nästa"
+            }
+        }
     });
 });
     //$(document).ready(function () {
