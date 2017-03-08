@@ -1,0 +1,36 @@
+﻿@using Golf_6.Models;
+@using System.Data;
+@{
+    Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
+}
+
+<h2>Scorekort</h2>
+
+<div class="center-block">
+    <table id="genereraScorekort" class="table table-striped table-responsive table-bordered" cellspacing="0">
+
+        <thead>
+            <tr>
+                @foreach (DataColumn x in Model.Columns)
+                {
+                    <th>@x.ColumnName</th>
+                }
+                
+            </tr>
+            
+
+        </thead>
+        <tbody>
+            @foreach (DataRow row in Model.Rows)
+            {
+                <tr>
+                    @foreach (DataColumn x in Model.Columns)
+                {
+                        <td>@row[x.ColumnName]</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

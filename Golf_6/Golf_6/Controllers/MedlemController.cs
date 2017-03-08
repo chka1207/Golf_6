@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Golf_6.Models;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using Golf_6.ViewModels;
 
 namespace Golf_6.Controllers
 {
@@ -105,6 +110,27 @@ namespace Golf_6.Controllers
             {
                 return View();
             }
+        }
+        ////Visa vy för scorekort
+        //[AllowAnonymousAttribute]
+        //public ActionResult Scorekort()
+        //{
+        //    return View();
+        //}
+        //
+        [AllowAnonymous]
+        public ActionResult Scorekort()
+        {
+            Medlem scorekort = new Medlem();
+            DataTable dt = new DataTable("ScoreCard");
+            dt = scorekort.hämtaScorekort();
+            dt.Columns[0].ColumnName = "Hål";
+            dt.Columns[1].ColumnName = "Gul";
+            dt.Columns[2].ColumnName = "Röd";
+            
+
+            return View(dt);
+            
         }
     }
 }
