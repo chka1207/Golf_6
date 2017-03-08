@@ -4,6 +4,10 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Golf_6;
 
 [assembly: OwinStartupAttribute(typeof(Golf_6.Startup))]
 namespace Golf_6
