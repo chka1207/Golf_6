@@ -64,7 +64,7 @@ namespace Golf_6.Models
             Postgres pg = new Postgres();
             DataTable dt = new DataTable();
 
-            string sql = "SELECT scorekort.hal, scorekort.gul, scorekort.rod FROM scorekort ";
+            string sql = "SELECT scorekort.hal, scorekort.gul, scorekort.rod, scorekort.par FROM scorekort ORDER BY scorekort.hal";
 
             dt = pg.sqlFragaTable(sql);
 

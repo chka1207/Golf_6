@@ -127,6 +127,7 @@ namespace Golf_6.Controllers
             dt.Columns[0].ColumnName = "Hål";
             dt.Columns[1].ColumnName = "Gul";
             dt.Columns[2].ColumnName = "Röd";
+            dt.Columns[3].ColumnName = "Par";
             
 
             return View(dt);
