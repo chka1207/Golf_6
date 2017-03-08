@@ -118,20 +118,64 @@ namespace Golf_6.Controllers
         //    return View();
         //}
         //
+        //[AllowAnonymous]
+        //public ActionResult Scorekort()
+        //{
+        //    Medlem scorekort = new Medlem();
+        //    DataTable dt = new DataTable("ScoreCard");
+        //    dt = scorekort.hämtaScorekort();
+
+        //    string html = "<table id='genereraScorekort' class='table table-striped table - responsive table - bordered' cellspacing='0' style='width: auto'>";
+        //    foreach(DataColumn dc in dt.Columns)
+        //    {
+                
+        //    }
+        //    for(int i  = 0; i < dt.Rows.Count; i++)
+        //    {
+        //        html += "<tr>";
+
+        //    }
+        //    dt.Columns[0].ColumnName = "Hål";
+        //    dt.Columns[1].ColumnName = "Gul";
+        //    dt.Columns[2].ColumnName = "Röd";
+        //    dt.Columns[3].ColumnName = "Par";
+            
+
+
+        //    return View(dt);
+            
+        //}
+        //Påbörjad lösning för att generera table automatiskt 
         [AllowAnonymous]
         public ActionResult Scorekort()
         {
             Medlem scorekort = new Medlem();
             DataTable dt = new DataTable("ScoreCard");
             dt = scorekort.hämtaScorekort();
-            dt.Columns[0].ColumnName = "Hål";
-            dt.Columns[1].ColumnName = "Gul";
-            dt.Columns[2].ColumnName = "Röd";
-            dt.Columns[3].ColumnName = "Par";
-            
 
-            return View(dt);
-            
+            string html = "<table id='genereraScorekort' class='table table-striped table - responsive table - bordered' cellspacing='0' style='width: auto'><thead></thead><tbody>";
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                html += "<tr>";
+                for (int j = 0; j < dt.Columns.Count; j++)
+                
+                    html += "<td>" + dt.Rows[i][j].ToString() + "</td>";
+                    html += "</tr>";   
+            }
+            html += "</tbody></table>";
+            //HtmlGenericControl div = new HtmlGenericControl("div");
+            //div.InnerHtml = html;
+            //dt.Columns[0].ColumnName = "Hål";
+            //dt.Columns[1].ColumnName = "Gul";
+            //dt.Columns[2].ColumnName = "Röd";
+            //dt.Columns[3].ColumnName = "Par";
+
+            ViewBag.Test = html;
+
+
+            return View(html);
+
         }
     }
 }
