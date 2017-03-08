@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 using Npgsql;
 using System;
 using System.Data;
@@ -42,10 +41,10 @@ namespace Golf_6.Models
             [Display(Name = "Password")]
             public string Password { get; set; }
 
-            //[DataType(DataType.Password)]                        //Måste lösa Compare + Errormessage
-            //[Display(Name = "Confirm password")]
-            //[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-            //public string ConfirmPassword { get; set; }
+            [DataType(DataType.Password)]                        
+            [Display(Name = "Confirm password")]
+            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            public string ConfirmPassword { get; set; }
         }
 
         public Tuple<byte[],byte[]> GeneratePass(string password)
@@ -66,7 +65,7 @@ namespace Golf_6.Models
 
             var tabell = x.SqlFrågaParameters("select salt, key from loginkonto where agare = @par1", Postgres.lista = new List<NpgsqlParameter>()
             {
-                new NpgsqlParameter("@par1", Convert.ToUInt16(userid))
+                new NpgsqlParameter("@par1", Convert.ToInt16(userid))
             });
             foreach(DataRow dr in tabell.Rows)
             {
