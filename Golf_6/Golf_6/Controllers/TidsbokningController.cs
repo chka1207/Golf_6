@@ -233,6 +233,8 @@ namespace Golf_6.Controllers
         [AllowAnonymous]
         public ActionResult Boka(FormCollection collection)
         {
+            //Ska fortsätta här
+            string spelare1 = collection["myTextBox1"];
             try
             {
                 // TODO: Add insert logic here
