@@ -19,6 +19,11 @@ namespace Golf_6.Controllers
             return View();
         }
 
+        [AllowAnonymousAttribute]
+        public ActionResult BokningAdmin()
+        {
+            return View("BokningAdmin");
+        }
         // GET: Tidsbokning
         [AllowAnonymous]
         public ActionResult Index()
@@ -65,7 +70,73 @@ namespace Golf_6.Controllers
 
             return View(dt);
         }
+         // GET: Alla bokningar för en dag, ADMIN
+         [HttpGet]
+         [AllowAnonymous]
+         public ActionResult BokningsschematAdmin()
+         {
+             Tidsbokning bokning = new Tidsbokning();
+             DataTable dt = new DataTable();
+             DateTime dag = DateTime.Today;
 
+             {
+                 Postgres x = new Postgres();
+                 {
+                     dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@par1", dag)
+                });
+
+                 }
+                 List<Tidsbokning> bokningslista = new List<Tidsbokning>();
+                 foreach (DataRow dr in dt.Rows)
+                 {
+                     Tidsbokning t = new Tidsbokning();
+                     t.Tid = Convert.ToDateTime(dr["tid"].ToString());
+                     t.MedlemKön = dr["kon"].ToString();
+                     t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
+                     bokningslista.Add(t);
+                 }
+                 ViewBag.List = bokningslista;
+
+             }
+             bokning.Datepicker = DateTime.Now.Date.ToShortDateString();
+             return View(bokning);
+         }
+
+         // POST: Ändra dag, ADMIN
+         [HttpPost]
+         [AllowAnonymous]
+         public ActionResult BokningsschematAdmin(FormCollection collection)
+         {
+             string datum = collection["datepicker"];
+             DataTable dt = new DataTable();
+
+             {
+                 Postgres x = new Postgres();
+                 {
+                     dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@par1", Convert.ToDateTime(datum))
+                });
+
+                 }
+                 List<Tidsbokning> bokningslistaPost = new List<Tidsbokning>();
+                 foreach (DataRow dr in dt.Rows)
+                 {
+                     Tidsbokning t = new Tidsbokning();
+                     t.Tid = Convert.ToDateTime(dr["tid"].ToString());
+                     t.MedlemKön = dr["kon"].ToString();
+                     t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
+                     bokningslistaPost.Add(t);
+                 }
+                 ViewBag.List = bokningslistaPost;
+
+             }
+             Tidsbokning valtDatum = new Tidsbokning();
+             valtDatum.Datepicker = datum;
+             return View(valtDatum);
+         }
         // GET: Alla bokningar för en dag
         [HttpGet]
         [AllowAnonymous]
@@ -147,15 +218,6 @@ namespace Golf_6.Controllers
 
             ViewBag.Lista = lista;
 
-            //string fornamn;
-            //string efternamn;
-
-            //foreach (string key in collection.AllKeys)
-            //{
-            //    Response.Write("Key: " + key);
-            //    Response.Write(collection[key]);
-            //}
-
             return PartialView("PartialSearch", lista);
         }
 
@@ -164,6 +226,70 @@ namespace Golf_6.Controllers
         public ActionResult Details(int id)
         {
             return View();
+        }
+
+        // POST: Tidsbokning/Boka Admin
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Boka(FormCollection collection)
+        {
+            //Ska fortsätta här
+            string spelare1 = collection["myTextBox1"];
+            try
+            {
+                // TODO: Add insert logic here
+
+                return RedirectToAction("BokningAdmin");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+        // GET: Tidsbokning/Create i befintlig tid Admin
+        [AllowAnonymous]
+        public ActionResult Boka()
+        {
+            // Tar in vald datum/tid från bokningsschema och skickar in ett Tidsbokningsobjekt med det värdet till Index
+            // Test för att mata in en bokning i databasen, en hel del ska flyttas till POST-metoden senare
+            Tidsbokning t = new Tidsbokning();
+            DataTable tabell = new DataTable();
+            List<Tidsbokning> deltagare = new List<Tidsbokning>();
+            DateTime dt = Convert.ToDateTime(Request.QueryString["validate"]);
+            string tid = dt.ToShortTimeString();
+            string datum = dt.ToShortDateString();
+            t.Datum = Convert.ToDateTime(datum);
+            t.Tid = Convert.ToDateTime(tid);
+            int antalDeltagare = 0;
+            double totHcp = 0;
+
+            {// Kontrollerar om det finns tider bokade och hämtar bokningsID och bokade spelares golfID, kön och hcp
+                Postgres x = new Postgres();
+                tabell = x.SqlFrågaParameters("select bokning_id from reservation where datum = DATE(@datum) and tid = CAST(@tid as TIME);", Postgres.lista = new List<NpgsqlParameter>
+                {
+                    new NpgsqlParameter("@datum", datum),
+                    new NpgsqlParameter("@tid", tid)
+                });
+                if (tabell != null)
+                {
+                    foreach (DataRow dr in tabell.Rows)
+                    {
+                        t.BokningsID = Convert.ToUInt16(dr["bokning_id"]);
+                    }
+                    List<string> listan = new List<string>();
+                    deltagare = t.GetBokning(t.BokningsID); //All hämtning av data från en bokning fungerar, nästa steg är att få med värdet från räknare till Index tillsammans med deltagarlistan
+                    foreach (Tidsbokning tb in deltagare)
+                    {
+                        listan.Add(tb.GolfID.ToString());
+                    }
+                    ViewBag.Golfare = listan;
+                }
+                ViewBag.DatumAdmin = datum;
+                ViewBag.TidAdmin = tid;
+            } 
+            return View("BokningAdmin");
         }
 
         // GET: Tidsbokning/Create i befintlig tid

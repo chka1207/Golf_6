@@ -45,9 +45,9 @@ namespace Golf_6.Models
         public string Datepicker { get; set; }
         public string MedlemKön { get; set; }
         public double MedlemHCP { get; set; }
-        public double TotaltHCP { get; set; } = 0;
-        public int AntalDeltagare { get; set; } = 0;
-
+        public double TotaltHCP { get; set; } 
+        public int AntalDeltagare { get; set; } 
+        //public List<>
 
         public DataTable HämtaMedlemmar() /* Hämtar en lista med medlemmar*/
         {
