@@ -4,17 +4,21 @@
     Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
 }
 
+<h2>Scorekort</h2>
+
 <div class="center-block">
-    <table id="hamtaScorekort" class="display" cellspacing="0" width="100%">
+    <table id="genereraScorekort" class="table table-striped table-responsive table-bordered" cellspacing="0">
 
         <thead>
             <tr>
                 @foreach (DataColumn x in Model.Columns)
-            {
+                {
                     <th>@x.ColumnName</th>
                 }
-
+                
             </tr>
+            
+
         </thead>
         <tbody>
             @foreach (DataRow row in Model.Rows)
