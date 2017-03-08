@@ -185,10 +185,10 @@ namespace Golf_6.Controllers
 
             {// Kontrollerar om det finns tider bokade och hämtar bokningsID och bokade spelares golfID, kön och hcp
                 Postgres x = new Postgres();
-                tabell = x.SqlFrågaParameters("select bokning_id from reservation where datum = @datum and tid = @tid;", Postgres.lista = new List<NpgsqlParameter>
+                tabell = x.SqlFrågaParameters("select bokning_id from reservation where datum = DATE(@datum) and tid = CAST(@tid as TIME);", Postgres.lista = new List<NpgsqlParameter>
                 {
-                    new NpgsqlParameter("@datum", t.Datum),
-                    new NpgsqlParameter("@tid", t.Tid)
+                    new NpgsqlParameter("@datum", datum),
+                    new NpgsqlParameter("@tid", tid)
                 });
                 if (tabell != null)
                 {
