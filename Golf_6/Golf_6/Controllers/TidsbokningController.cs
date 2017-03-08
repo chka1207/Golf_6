@@ -265,10 +265,10 @@ namespace Golf_6.Controllers
 
             {// Kontrollerar om det finns tider bokade och hämtar bokningsID och bokade spelares golfID, kön och hcp
                 Postgres x = new Postgres();
-                tabell = x.SqlFrågaParameters("select bokning_id from reservation where datum = @datum and tid = @tid;", Postgres.lista = new List<NpgsqlParameter>
+                tabell = x.SqlFrågaParameters("select bokning_id from reservation where datum = DATE(@datum) and tid = CAST(@tid as TIME);", Postgres.lista = new List<NpgsqlParameter>
                 {
-                    new NpgsqlParameter("@datum", t.Datum),
-                    new NpgsqlParameter("@tid", t.Tid)
+                    new NpgsqlParameter("@datum", datum),
+                    new NpgsqlParameter("@tid", tid)
                 });
                 if (tabell != null)
                 {
@@ -276,16 +276,17 @@ namespace Golf_6.Controllers
                     {
                         t.BokningsID = Convert.ToUInt16(dr["bokning_id"]);
                     }
-
+                    List<string> listan = new List<string>();
                     deltagare = t.GetBokning(t.BokningsID); //All hämtning av data från en bokning fungerar, nästa steg är att få med värdet från räknare till Index tillsammans med deltagarlistan
                     foreach (Tidsbokning tb in deltagare)
                     {
-                        antalDeltagare++;
-                        totHcp += tb.MedlemHCP;
+                        listan.Add(tb.GolfID.ToString());
                     }
+                    ViewBag.Golfare = listan;
                 }
-
-            }
+                ViewBag.DatumAdmin = datum;
+                ViewBag.TidAdmin = tid;
+            } 
             return View("BokningAdmin");
         }
 
