@@ -1,0 +1,32 @@
+﻿@using Golf_6.Models;
+@using System.Data;
+@{
+    Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
+}
+
+<div class="center-block">
+    <table id="hamtaScorekort" class="display" cellspacing="0" width="100%">
+
+        <thead>
+            <tr>
+                @foreach (DataColumn x in Model.Columns)
+            {
+                    <th>@x.ColumnName</th>
+                }
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataRow row in Model.Rows)
+            {
+                <tr>
+                    @foreach (DataColumn x in Model.Columns)
+                {
+                        <td>@row[x.ColumnName]</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
