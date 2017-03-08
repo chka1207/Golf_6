@@ -167,8 +167,8 @@ namespace Golf_6.Controllers
         #endregion
 
 
-        [HttpGet]
-        public ActionResult HämtaSamtligaMedlemmar() /* Ny version av hämta medlemmar.*/
+        [AllowAnonymous]
+        public ActionResult HanteraMedlemmar() /* Ny version av hämta medlemmar.*/
         {
             Postgres db = new Postgres();
             DataTable dt = new DataTable();
