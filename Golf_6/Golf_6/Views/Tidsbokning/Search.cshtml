@@ -1,0 +1,111 @@
+﻿@model IEnumerable<Golf_6.Models.Tidsbokning>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BokningsID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BokareID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Datum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Spelare1ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Spelare2ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Spelare3ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Spelare4ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SokFornamn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SokEfternamn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Medlem)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Användare)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Datepicker)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MedlemKön)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MedlemHCP)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BokningsID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BokareID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Datum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Spelare1ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Spelare2ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Spelare3ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Spelare4ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SokFornamn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SokEfternamn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Medlem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Användare)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Datepicker)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MedlemKön)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MedlemHCP)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
