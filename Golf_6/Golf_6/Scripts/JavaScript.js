@@ -18,6 +18,9 @@ $(document).ready(function () {
             "search": "Sök:",
             "info": "",
             "lengthMenu": "Visa _MENU_ åt gången",
+            "infoFiltered": "",
+            "zeroRecords": "Din sökning gav inga träffar",
+            "infoEmpty": "",
             "paginate": {
                 "previous": "Föregående",
                 "next": "Nästa"
