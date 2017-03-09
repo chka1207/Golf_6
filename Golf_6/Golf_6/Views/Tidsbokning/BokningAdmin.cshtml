@@ -39,6 +39,8 @@
             String datum = ViewBag.DatumAdmin;
             String tid = ViewBag.TidAdmin;
             Tidsbokning t = new Tidsbokning();
+            t.BokningsID = ViewBag.BokningsId;
+            
             if (l != null)
             {
                 for (int i = 0; i <= l.Count; i++)
@@ -64,8 +66,14 @@
                         t.Spelare4ID = d;
                     }
 
-                } 
+                }
             }
+
+            @Html.Hidden("bokningsID", t.BokningsID);
+            @Html.Hidden("nySpelare1", t.Spelare1ID);
+            @Html.Hidden("nySpelare2", t.Spelare2ID);
+            @Html.Hidden("nySpelare3", t.Spelare3ID);
+            @Html.Hidden("nySpelare4", t.Spelare4ID);
                     }
         <div class="form-group">
 <style>
@@ -89,28 +97,67 @@
         
          <div class="col-md-10">
            <label>Spelare nr 1: </label>
-           @Html.TextBox("myTextBox1", t.Spelare1ID, new { @class = "form-control" })
+             @{
+                 if (t.Spelare1ID == null)
+                 {
+                      @Html.TextBox("myTextBox1", t.Spelare1ID, new { @class = "form-control" })
+                 }
+                 else
+                 {
+                      @Html.TextBox("myTextBox1", t.Spelare1ID, new { @class = "form-control", @readonly = "readonly" })
+                 }
+             }
+          
          </div>
      </div>
         <div class="form-group">
             
             <div class="col-md-10">
                 <label>Spelare nr 2: </label>   
-                @Html.TextBox("myTextBox2", t.Spelare2ID, new { @class = "form-control" })
+                @{
+                    if (t.Spelare2ID == null)
+                    {
+                        @Html.TextBox("myTextBox2", t.Spelare2ID, new { @class = "form-control" })
+                    }
+                    else
+                    {
+                        @Html.TextBox("myTextBox2", t.Spelare2ID, new { @class = "form-control", @readonly = "readonly" })
+                    }
+                }
             </div>
         </div>
         <div class="form-group">
             
             <div class="col-md-10">
                 <label>Spelare nr 3: </label>
-                @Html.TextBox("myTextBox3", t.Spelare3ID, new { @class = "form-control" })
+                @{
+                    if (t.Spelare3ID == null)
+                    {
+                        @Html.TextBox("myTextBox3", t.Spelare3ID, new { @class = "form-control" })
+                    }
+                    else
+                    {
+                        @Html.TextBox("myTextBox3", t.Spelare3ID, new { @class = "form-control", @readonly = "readonly" })
+                    }
+                }
             </div>
         </div>
         <div class="form-group">
             
             <div class="col-md-10">
                 <label>Spelare nr 4: </label>
-                @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control" })
+                @{
+                    if (t.Spelare4ID == null)
+                    {
+                        @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control" })
+                        
+                    }
+                    else
+                    {
+                        @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control", @readonly = "readonly" })
+                        
+                    }
+                }
             </div>
         </div>
      
