@@ -1,6 +1,7 @@
 ﻿@using Golf_6.Models;
 @using System.Data;
-@{
+@using (Html.BeginForm("Scorekort", "MedlemController", FormMethod.Post))
+{
     Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
 }
 
@@ -43,27 +44,61 @@
                 <th style="width: 60px">Poäng</th>
             </tr>
         <tbody>
-            @foreach (DataRow row in Model.Rows)
-            {
-                <tr>
-                    @foreach (DataColumn x in Model.Columns)
-                    {
-                        <td align="center">@row[x.ColumnName]</td>
-                    }
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                @{int count = 0; }
+                @foreach (DataRow row in Model.Rows)
+                {
+                    <tr>
+                        @foreach (DataColumn x in Model.Columns)
+                        {
+                            <td align="center">@row[x.ColumnName]</td>
+                        }
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    count++;
+            
+                }
             }
         </tbody>
 
     </table>
-    
-    
+        
 </div>
+
+@*
+
+<tr>                       
+    <td align="right" colspan="3">Ut</td>
+    <td>36</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>                     
+<tr>
+    <td align="right" colspan="3">In</td>
+    <td>36</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+*@
+
