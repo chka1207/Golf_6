@@ -16,6 +16,8 @@
 
 @using (Html.BeginForm("HanteraSasong", "Admin", FormMethod.Post))
 {
+    @ViewBag.bäggeDatum;
+
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">

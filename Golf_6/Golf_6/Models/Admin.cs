@@ -34,6 +34,9 @@ namespace Golf_6.Models
         [Required]
         public double Handikapp { get; set; }
 
+        public string SasongenStartar { get; set; }
+        public string SasongenSlutar { get; set; }
+
         [Display(Name = "Golf-ID (ska genereras automatiskt)")]
         public string GolfID { get; set; }
         [Required]
@@ -115,7 +118,7 @@ namespace Golf_6.Models
             Postgres db = new Postgres();
             DataTable dt = new DataTable();
 
-            //HÅRDKODAT "SÖKNINGEN"
+            
             string sql =
                 "SELECT fornamn, efternamn, adress, postnummer, ort, email, kon, handikapp, medlemskategori, golfid, telefonnummer FROM medlemmar";
 
