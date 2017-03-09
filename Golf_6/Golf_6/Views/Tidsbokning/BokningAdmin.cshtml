@@ -39,6 +39,8 @@
             String datum = ViewBag.DatumAdmin;
             String tid = ViewBag.TidAdmin;
             Tidsbokning t = new Tidsbokning();
+            t.BokningsID = ViewBag.BokningsId;
+            
             if (l != null)
             {
                 for (int i = 0; i <= l.Count; i++)
@@ -67,7 +69,7 @@
                 }
             }
 
-
+            @Html.Hidden("bokningsID", t.BokningsID);
             @Html.Hidden("nySpelare1", t.Spelare1ID);
             @Html.Hidden("nySpelare2", t.Spelare2ID);
             @Html.Hidden("nySpelare3", t.Spelare3ID);

@@ -233,7 +233,7 @@ namespace Golf_6.Controllers
         [AllowAnonymous]
         public ActionResult Boka(FormCollection collection)
         {
-            //Ska fortsätta här
+            
             string datum = collection["tbdatum"];
             string tid = collection["tbtid"];
             string spelare1 = collection["myTextBox1"];
@@ -248,6 +248,8 @@ namespace Golf_6.Controllers
             string golfare2 = "";
             string golfare3 = "";
             string golfare4 = "";
+            string bokningsId = collection["bokningsID"];
+
             List<string> parameterLista = new List<string>();
             if (spelare1 != ny1)
             {
@@ -267,7 +269,45 @@ namespace Golf_6.Controllers
                 golfare4 = spelare4;
                 parameterLista.Add(golfare4);
             }
+            DataTable dt = new DataTable();
+            List<string> medlemsIdLista = new List<string>();
+            string medlemsid = "";
+            for (int i = 0; i < parameterLista.Count; i++)
+			{
+			    Postgres p1 = new Postgres();
+                dt = p1.SqlFrågaParameters("select id from medlemmar where golfid = @golfid", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@golfid", parameterLista[i]),               
+                });
 
+                if (dt != null)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        medlemsid = dr["id"].ToString();
+                        medlemsIdLista.Add(medlemsid);
+                    }
+                }
+			}
+            //Ska fortsätta här med att skapa en reservation om det inte redan finns.
+            if(bokningsId == "0")
+            {
+
+            }
+      
+            if (bokningsId != "0")
+            { 
+                for (int i = 0; i < medlemsIdLista.Count; i++)
+                {
+                    Postgres p = new Postgres();
+
+                    p.SqlParameters("insert into deltar (medlem_id, reservation_id) VALUES (@medlemID, @bokningID);", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@medlemID", medlemsIdLista[i]),
+                    new Npgsql.NpgsqlParameter("@bokningID",Convert.ToUInt16(bokningsId))
+                });
+                }
+            }
             try
             {
                 // TODO: Add insert logic here
@@ -321,6 +361,7 @@ namespace Golf_6.Controllers
                 }
                 ViewBag.DatumAdmin = datum;
                 ViewBag.TidAdmin = tid;
+                ViewBag.BokningsId = t.BokningsID;
             } 
             return View("BokningAdmin");
         }
