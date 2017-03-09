@@ -7,22 +7,41 @@
 <h2>Scorekort</h2>
 
 <div class="center-block">
-    @*<table id="genereraScorekort" class="table table-striped table-responsive table-bordered" cellspacing="0" style="width: auto">        
+    <table id="genereraScorekort" class="table table-striped table-responsive table-bordered" cellspacing="0" style="width: auto">        
         
-        <thead align="center" valign="middle">
+        <thead>
             <tr>
-                @foreach (DataColumn x in Model.Columns)
-                {
-                    <th align="center" valign="middle">@x.ColumnName</th>
-                }
-                <th>HCP</th>
-                <th>Placeholder</th>
-                <th>Placeholder</th>
-                <th>Placeholder</th>
-                <th>Placeholder</th>
-
+                <th colspan="5" height="20px">Förnamn</th>
+                <th colspan="2" height="20px">Efternamn</th>
+                <th colspan="2" height="20px">Golf-ID</th>
             </tr>
-        </thead>
+            <tr>
+                <th colspan="5" height="20px">Datum</th>
+                <th colspan="2" height="20px">Starttid</th>
+                <th colspan="2" height="20px"></th>
+            </tr>
+            <tr>
+                <th colspan="5" scope="colgroup" align="center">Hålslaget GK</th>
+                <th colspan="2" scope="colgroup" height="20px"></th>
+                <th colspan="2" scope="colgroup" height="20px"></th>
+                <th colspan="2" scope="colgroup" height="20px"></th>
+                <th colspan="2" scope="colgroup" height="20px"></th>
+            </tr>
+            <tr>
+                <th>Hål</th>
+                <th>Gul</th>
+                <th>Röd</th>
+                <th>Par</th>
+                <th>hcp</th>
+                <th style="width: 60px">Slag</th>
+                <th style="width: 60px">Poäng</th>
+                <th style="width: 60px">Slag</th>
+                <th style="width: 60px">Poäng</th>
+                <th style="width: 60px">Slag</th>
+                <th style="width: 60px">Poäng</th>
+                <th style="width: 60px">Slag</th>
+                <th style="width: 60px">Poäng</th>
+            </tr>
         <tbody>
             @foreach (DataRow row in Model.Rows)
             {
@@ -36,10 +55,15 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             }
         </tbody>
 
-    </table>*@
+    </table>
+    
     
 </div>
