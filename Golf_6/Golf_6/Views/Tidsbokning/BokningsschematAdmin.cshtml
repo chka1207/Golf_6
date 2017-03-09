@@ -103,7 +103,11 @@
                         :00
                         @räknare.ToString()/4
                         <br />
-                        @if (räknare < 4)
+                        @if (räknare == 0)
+                        {
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        @if (räknare > 0 && räknare < 4)
                         {
                             @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, new { spelare1 = Model.Spelare1ID })
                             <br />
@@ -153,7 +157,11 @@
                         :10
                         @räknare.ToString()/4
                         <br />
-                        @if (räknare < 4)
+                        @if (räknare == 0)
+                        {
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        @if (räknare > 0 && räknare < 4)
                         {
                             @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
                             <br />
@@ -206,7 +214,11 @@
                         :20
                         @räknare.ToString()/4
                         <br />
-                        @if (räknare < 4)
+                        @if (räknare == 0)
+                        {
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        @if (räknare > 0 && räknare < 4)
                         {
                             @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
                             <br />                           
@@ -256,7 +268,11 @@
                         :30
                         @räknare.ToString()/4
                         <br />
-                        @if (räknare < 4)
+                        @if (räknare == 0)
+                        {
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        @if (räknare > 0 && räknare < 4)
                         {
                             @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
                             <br />
@@ -306,7 +322,11 @@
                         :40
                         @räknare.ToString()/4
                         <br />
-                        @if (räknare < 4)
+                        @if (räknare == 0)
+                        {
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        @if (räknare > 0 && räknare < 4)
                         {
                             @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
                             <br />
@@ -356,7 +376,12 @@
                         :50
                         @räknare.ToString()/4
                         <br />
-                        @if (räknare < 4)
+                        
+                        @if (räknare == 0)
+                        {
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        @if (räknare > 0 && räknare < 4)
                         {
                             @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
                             <br />
