@@ -117,7 +117,7 @@ namespace Golf_6.Controllers
         //{
         //    return View();
         //}
-
+        //Visa vy för scorekort
         [AllowAnonymous]
         public ActionResult Scorekort()
         {
@@ -128,10 +128,7 @@ namespace Golf_6.Controllers
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                if(i==9)
-                {
-                    //html+= "<tr><td align='right' colspan='3'>Ut</td><td>36</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
-                }
+
                 html += "<tr>";
 
             }
