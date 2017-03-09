@@ -47,7 +47,7 @@
     </table>
 </div>
 
-<!-- MODAL-->
+<!-- MODAL FÖR ATT REDIGERA OCH/ELLER RADERA MEDLEMMAR-->
 <div id="modal-hantera-medlem" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -92,13 +92,14 @@
                 <button type="button" class="btn btn-lg" data-dismiss="modal">Tillbaka</button>
                 <button type="button" id="btn-radera" class="btn btn-lg btn-danger" data-dismiss="modal">Radera medlem</button>
                 <button type="button" id="btn-redigera" class="btn btn-lg btn-info" data-dismiss="modal">Uppdatera medlem</button>
+                <button type="button" id="btn-acceptera-ny-medlem" class="btn btn-lg btn-info" data-dismiss="modal">Lägg till medlem</button>
             </div>
         </div>
 
     </div>
 </div>
 
-
+<button type="button" id="btn-ny-medlem-modal" class="btn btn-lg btn-info">Ny medlem</button>
 
 <div>
     @Html.ActionLink("Tillbaka", "Index")

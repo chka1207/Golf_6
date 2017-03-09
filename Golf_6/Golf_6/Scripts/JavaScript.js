@@ -82,6 +82,30 @@ $(document).ready(function () { //Denna laddar in värdena från varje cell till
         $('#medlemskategori').val(data[8]);
         $('#golfid').val(data[9]);
         $('#telefonnummer').val(data[10]);
+        $('#btn-radera').show();
+        $('#btn-redigera').show();
+        $('#btn-acceptera-ny-medlem').hide();
+    });
+});
+
+$(document).ready(function() { //Öppnar upp modal
+    $('#btn-ny-medlem-modal').on('click', function() {
+        $('#modal-hantera-medlem').modal();
+        $('#modal-namn-medlem').html("Lägga till ny medlem");
+        $('#fornamn').val("");
+        $('#efternamn').val("");
+        $('#adress').val("");
+        $('#postnummer').val("");
+        $('#ort').val("");
+        $('#email').val("");
+        $('#kon').val("");
+        $('#handikapp').val("");
+        $('#medlemskategori').val("");
+        $('#golfid').val("");
+        $('#telefonnummer').val("");
+        $('#btn-radera').hide();
+        $('#btn-redigera').hide();
+        $('#btn-acceptera-ny-medlem').show();
     });
 });
 
@@ -108,6 +132,19 @@ $('#btn-redigera').click(function () {
         formData,
         function (data) {
             $("#feedback-radera-medlem").html(data + "är nu redigerad");
+        });
+});
+
+// NyMedlemKnappen i Admin/AllaMedlemmar -> Modal
+$('#btn-acceptera-ny-medlem').click(function () {
+    $('#modal-form').attr('action', '/Admin/RegistreraNyMedlem');
+    var form = $("#modal-form");
+    var url = form.attr("action");
+    var formData = form.serialize();
+    $.post(url,
+        formData,
+        function (data) {
+            $("#feedback-radera-medlem").html(data + "är nu inlagd i systemet");
         });
 });
 

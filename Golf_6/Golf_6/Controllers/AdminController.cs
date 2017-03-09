@@ -60,7 +60,7 @@ namespace Golf_6.Controllers
         // POST: Admin/RegistreraNyMedlem
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult RegistreraNyMedlem(AdminMedlemshanteringViewModel viewModel)
+        public ActionResult RegistreraNyMedlem(Admin viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -70,11 +70,11 @@ namespace Golf_6.Controllers
 
             Admin admin = new Admin();
             
-            admin.RegistreraNyMedlem(viewModel.Admin.Fornamn, viewModel.Admin.Efternamn,
-                viewModel.Admin.Adress, viewModel.Admin.Postnummer, viewModel.Admin.Ort,
-                viewModel.Admin.Email, viewModel.Admin.Kon, viewModel.Admin.Handikapp,
-                viewModel.Admin.GolfID, viewModel.Admin.MedlemsKategori, 
-                viewModel.Admin.Telefonnummer);
+            admin.RegistreraNyMedlem(viewModel.Fornamn, viewModel.Efternamn,
+                viewModel.Adress, viewModel.Postnummer, viewModel.Ort,
+                viewModel.Email, viewModel.Kon, viewModel.Handikapp,
+                viewModel.GolfID, viewModel.MedlemsKategori, 
+                viewModel.Telefonnummer);
             return View("Index");
         }
         #endregion
