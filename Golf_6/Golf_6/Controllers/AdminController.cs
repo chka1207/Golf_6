@@ -13,7 +13,14 @@ using Npgsql;
 namespace Golf_6.Controllers
 {
     public class AdminController : Controller
-    {   
+    {
+        // Logga ut och kom till index
+        [AllowAnonymousAttribute]
+        public ActionResult LogOut()
+        {
+
+            return RedirectToAction("Index", "Home", "Home");
+        }
         // GET: Admin
         [AllowAnonymous]
         public ActionResult Index()
