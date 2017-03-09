@@ -102,9 +102,16 @@
                     <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :00
                         @räknare.ToString()/4
+                        <br />
                         @if (räknare < 4)
                         {
-                            @Html.ActionLink("Välj", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, new { spelare1 = Model.Spelare1ID })
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, new { spelare1 = Model.Spelare1ID })
+                            <br />
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        @if (räknare == 4)
+                        {
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
                         }
                     </td>
                     medlemsinfo = "";
@@ -145,10 +152,20 @@
                     <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :10
                         @räknare.ToString()/4
+                        <br />
                         @if (räknare < 4)
                         {
-                            @Html.ActionLink("Välj", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                            <br />
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
                         }
+                        @if (räknare == 4)
+                        {
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                           
+                            
+                        
                     </td>
                     medlemsinfo = "";
                     allt = allt.AddHours(1);
@@ -188,9 +205,16 @@
                     <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :20
                         @räknare.ToString()/4
+                        <br />
                         @if (räknare < 4)
                         {
-                            @Html.ActionLink("Välj", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                            <br />                           
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        @if (räknare == 4)
+                        {
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
                         }
                     </td>
                     medlemsinfo = "";
@@ -231,9 +255,16 @@
                     <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :30
                         @räknare.ToString()/4
+                        <br />
                         @if (räknare < 4)
                         {
-                            @Html.ActionLink("Välj", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                            <br />
+                             @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        @if (räknare == 4)
+                        {
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)                           
                         }
                     </td>
                     medlemsinfo = "";
@@ -274,9 +305,16 @@
                     <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :40
                         @räknare.ToString()/4
+                        <br />
                         @if (räknare < 4)
                         {
-                            @Html.ActionLink("Välj", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                            <br />
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        @if (räknare == 4)
+                        {
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
                         }
                     </td>
                     medlemsinfo = "";
@@ -317,9 +355,16 @@
                     <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :50
                         @räknare.ToString()/4
+                        <br />
                         @if (räknare < 4)
                         {
-                            @Html.ActionLink("Välj", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                            <br />
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        @if (räknare == 4)
+                        {
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
                         }
 
                     </td>

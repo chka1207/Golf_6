@@ -108,7 +108,7 @@ namespace Golf_6.Models
                 _cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
-            {
+            {//23505 vid dubbla primary keys
                 _error = ex.Message;
             }
 
