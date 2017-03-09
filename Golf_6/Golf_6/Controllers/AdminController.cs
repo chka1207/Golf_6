@@ -92,7 +92,7 @@ namespace Golf_6.Controllers
         // POST: Admin/RegistreraNyMedlem
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult RedigeraMedlem(AdminMedlemshanteringViewModel viewModel)
+        public ActionResult RedigeraMedlem(Admin viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -102,11 +102,11 @@ namespace Golf_6.Controllers
 
             Admin admin = new Admin();
 
-            admin.RedigeraMedlem(viewModel.Admin.Fornamn, viewModel.Admin.Efternamn,
-                viewModel.Admin.Adress, viewModel.Admin.Postnummer, viewModel.Admin.Ort,
-                viewModel.Admin.Email, viewModel.Admin.Kon, viewModel.Admin.Handikapp,
-                viewModel.Admin.GolfID, viewModel.Admin.MedlemsKategori,
-                viewModel.Admin.Telefonnummer);
+            admin.RedigeraMedlem(viewModel.Fornamn, viewModel.Efternamn,
+                viewModel.Adress, viewModel.Postnummer, viewModel.Ort,
+                viewModel.Email, viewModel.Kon, viewModel.Handikapp,
+                viewModel.GolfID, viewModel.MedlemsKategori, 
+                viewModel.Telefonnummer);
             return View("Index");
         }
 
@@ -123,9 +123,26 @@ namespace Golf_6.Controllers
         }
 
         // POST: Admin/RaderaMedlem
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public ActionResult RaderaMedlem(AdminMedlemshanteringViewModel viewModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        //TO-DO:
+        //        //RegistreraNyMedlem(model.Fornamn);
+        //    }
+
+        //    Admin admin = new Admin();
+
+        //    //admin.RaderaMedlem(viewModel.Admin.GolfID);
+        //    admin.RaderaMedlem(admin.GolfID);
+        //    return View("Index");
+        //}
+
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult RaderaMedlem(AdminMedlemshanteringViewModel viewModel)
+        public ActionResult RaderaMedlem(Admin viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -135,7 +152,7 @@ namespace Golf_6.Controllers
 
             Admin admin = new Admin();
 
-            admin.RaderaMedlem(viewModel.Admin.GolfID);
+            admin.RaderaMedlem(viewModel.GolfID);
             return View("Index");
         }
 

@@ -47,13 +47,58 @@
     </table>
 </div>
 
-<div>
-    <button id="radera-medlem">Radera medlem</button>
+<!-- MODAL-->
+<div id="modal-hantera-medlem" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="modal-namn-medlem"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="modal-form" action="" method="post">
+                    <div class="col-lg-12">
+                        Förnamn: @Html.TextBox("fornamn")
+                        <br />
+                        Efternamn: @Html.TextBox("efternamn")
+                        <br />
+                        @Html.TextBox("adress")
+                        <br />
+                        @Html.TextBox("postnummer")
+                        <br />
+                        @Html.TextBox("ort")
+                        <br />
+                        @Html.TextBox("email")
+                        <br />
+                        @Html.TextBox("kon")
+                        <br />
+                        @Html.TextBox("handikapp")
+                        <br />
+                        @Html.TextBox("medlemskategori")
+                        <br />
+                        @Html.TextBox("golfid")
+                        <br />
+                        @Html.TextBox("telefonnummer")
+                    </div>
+                </form>
+            </div>
+            
+
+            
+            <br /><br /><br /><br />
+            <div class="modal-footer">
+                <button type="button" class="btn btn-lg" data-dismiss="modal">Tillbaka</button>
+                <button type="button" id="btn-radera" class="btn btn-lg btn-danger" data-dismiss="modal">Radera medlem</button>
+                <button type="button" id="btn-redigera" class="btn btn-lg btn-info" data-dismiss="modal">Uppdatera medlem</button>
+            </div>
+        </div>
+
+    </div>
 </div>
 
-<div>
-    <button id="redigera-medlem">Radera medlem</button>
-</div>
+
 
 <div>
     @Html.ActionLink("Tillbaka", "Index")

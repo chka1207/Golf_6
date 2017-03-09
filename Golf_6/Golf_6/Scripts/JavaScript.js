@@ -35,13 +35,14 @@ $(document).ready(function () {
     //});
 
 $(document).ready(function () { //Datatablen som visar alla medlemmar i Admin/AllaMedlemmar
-        $('#alla_medlemmar').DataTable({
-            dom: 'Bfrtip',
+    $('#alla_medlemmar').DataTable({
+        dom: 'Bfrtip',
+        info: 'false',
             buttons: [
                 //'colvis' //Dropdown för att välja kolumner
                 'columnsToggle' //Varje kolumn får en egen knapp att välja (show/hide)
             ],
-            pagingType: "simple", //Går attt ändra för att se pagenumbers mm
+            pagingType: "simple", //Går att ändra för att se pagenumbers mm
             columnDefs: [
                 {
                     targets: [2], //Gömmer adress
@@ -59,28 +60,62 @@ $(document).ready(function () { //Datatablen som visar alla medlemmar i Admin/Al
                     targets: [10], //Gömmer tele
                     visible: false
                 }
-            ],
-            responsive: {
-                details: {
-                    display: $.fn.dataTable.Responsive.display.modal({
-                        header: function(row) {
-                            var data = row.data();
-                            return 'Utökade detaljer för ' + data[0] + ' ' + data[1];
-                        }
-                    }),
-                renderer: $.fn.dataTable.Responsive.renderer.tableAll({
-                    tableClass: 'table'
-                })
-            }
-        }
+            ]
     });
 });
 
-function whichDay(dateString) {
+$(document).ready(function () { //Denna laddar in värdena från varje cell till modal
+    var table = $('#alla_medlemmar').DataTable();
+
+    $('#alla_medlemmar').on('click', 'tr', function () {
+        $("#modal-hantera-medlem").modal();
+        var data = table.row(this).data();
+        $('#modal-namn-medlem').html("Hantera " + data[0] + " " + data[1]);
+        $('#fornamn').val(data[0]);
+        $('#efternamn').val(data[1]);
+        $('#adress').val(data[2]);
+        $('#postnummer').val(data[3]);
+        $('#ort').val(data[4]);
+        $('#email').val(data[5]);
+        $('#kon').val(data[6]);
+        $('#handikapp').val(data[7]);
+        $('#medlemskategori').val(data[8]);
+        $('#golfid').val(data[9]);
+        $('#telefonnummer').val(data[10]);
+    });
+});
+
+// Raderaknappen i Admin/AllaMedlemmar -> Modal
+$('#btn-radera').click(function () {
+    $('#modal-form').attr('action', '/Admin/RaderaMedlem');
+    var form = $("#modal-form");
+    var url = form.attr("action");
+    var formData = form.serialize();
+    $.post(url,
+        formData,
+        function (data) {
+            $("#feedback-radera-medlem").html(data + "är nu raderad");
+        });
+});
+
+// Redigeraknappen i Admin/AllaMedlemmar -> Modal
+$('#btn-redigera').click(function () {
+    $('#modal-form').attr('action', '/Admin/RedigeraMedlem');
+    var form = $("#modal-form");
+    var url = form.attr("action");
+    var formData = form.serialize();
+    $.post(url,
+        formData,
+        function (data) {
+            $("#feedback-radera-medlem").html(data + "är nu redigerad");
+        });
+});
+
+function whichDay(dateString) { //Funktion för att hämta dag på ett speciellt datum
     return ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag']
         [new Date(dateString).getDay()];
 }
-window.onload = function () {
+window.onload = function () { //Hämtar dag och visar upp detta i Admin/HanteraSasong
     document.getElementById("startVeckodag").innerHTML = whichDay(document.getElementById("startVeckodag").innerHTML);
     document.getElementById("slutVeckodag").innerHTML = whichDay(document.getElementById("slutVeckodag").innerHTML);
 };

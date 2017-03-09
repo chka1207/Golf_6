@@ -10,6 +10,7 @@ namespace Golf_6.ViewModels
     public class AdminMedlemshanteringViewModel
     {
         public Admin Admin { get; set; }
+        public Admin GolfID { get; set; }
 
         //[Required]
         //[Display(Name = "Förnamn")]
