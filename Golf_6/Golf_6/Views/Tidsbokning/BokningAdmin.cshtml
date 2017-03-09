@@ -64,8 +64,14 @@
                         t.Spelare4ID = d;
                     }
 
-                } 
+                }
             }
+
+
+            @Html.Hidden("nySpelare1", t.Spelare1ID);
+            @Html.Hidden("nySpelare2", t.Spelare2ID);
+            @Html.Hidden("nySpelare3", t.Spelare3ID);
+            @Html.Hidden("nySpelare4", t.Spelare4ID);
                     }
         <div class="form-group">
 <style>
@@ -142,10 +148,12 @@
                     if (t.Spelare4ID == null)
                     {
                         @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control" })
+                        
                     }
                     else
                     {
                         @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control", @readonly = "readonly" })
+                        
                     }
                 }
             </div>

@@ -240,7 +240,33 @@ namespace Golf_6.Controllers
             string spelare2 = collection["myTextBox2"];
             string spelare3 = collection["myTextBox3"];
             string spelare4 = collection["myTextBox4"];
-
+            string ny1 = collection["nySpelare1"];
+            string ny2 = collection["nySpelare2"];
+            string ny3 = collection["nySpelare3"];
+            string ny4 = collection["nySpelare4"];
+            string golfare1 = "";
+            string golfare2 = "";
+            string golfare3 = "";
+            string golfare4 = "";
+            List<string> parameterLista = new List<string>();
+            if (spelare1 != ny1)
+            {
+                golfare1 = spelare1;
+                parameterLista.Add(golfare1);
+            }
+            if (spelare2 != ny2)
+            {
+                golfare2 = spelare2;
+                parameterLista.Add(golfare2);
+            } if (spelare3 != ny3)
+            {
+                golfare3 = spelare3;
+                parameterLista.Add(golfare3);
+            } if (spelare4 != ny4)
+            {
+                golfare4 = spelare4;
+                parameterLista.Add(golfare4);
+            }
 
             try
             {
