@@ -130,7 +130,13 @@ namespace Golf_6.Controllers
             {
 
                 html += "<tr>";
-
+                if(i == 9)
+                {
+                    //Fortsätt med detta!!!
+                    DataRow r = dt.NewRow();
+                    dt.Rows.InsertAt(r, 9);
+                    
+                }
             }
             
             return View(dt);
