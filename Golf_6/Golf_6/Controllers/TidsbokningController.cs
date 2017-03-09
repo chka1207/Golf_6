@@ -234,7 +234,14 @@ namespace Golf_6.Controllers
         public ActionResult Boka(FormCollection collection)
         {
             //Ska fortsätta här
+            string datum = collection["tbdatum"];
+            string tid = collection["tbtid"];
             string spelare1 = collection["myTextBox1"];
+            string spelare2 = collection["myTextBox2"];
+            string spelare3 = collection["myTextBox3"];
+            string spelare4 = collection["myTextBox4"];
+
+
             try
             {
                 // TODO: Add insert logic here
