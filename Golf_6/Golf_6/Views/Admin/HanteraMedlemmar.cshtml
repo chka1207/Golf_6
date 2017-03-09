@@ -1,5 +1,37 @@
-﻿@{
+﻿
+@using Golf_6.Controllers;
+@using Golf_6.Models;
+
+@{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+<div class="table-responsive">
+    <table class="table" id="medlemstabell">
+        <thead>
+            <tr>
+                <th>GolfID</th>
+                <th>Förnamn</th>
+                <th>Efternamn</th>
+                <th>Adress</th>
+                <th>Postnummer</th>
+                <th>Ort</th>
+                <th>Email</th>
+                <th>Hcp</th>
+                <th>Tel</th>
+                <th>Kön</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @*@{
+                    foreach (Admin item in ViewBag.Medlemslista)
+                    {
 
+                    }
+                }*@
+
+            </tr>
+        </tbody>
+    </table>
+</div>
