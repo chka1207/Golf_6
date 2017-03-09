@@ -89,28 +89,65 @@
         
          <div class="col-md-10">
            <label>Spelare nr 1: </label>
-           @Html.TextBox("myTextBox1", t.Spelare1ID, new { @class = "form-control" })
+             @{
+                 if (t.Spelare1ID == null)
+                 {
+                      @Html.TextBox("myTextBox1", t.Spelare1ID, new { @class = "form-control" })
+                 }
+                 else
+                 {
+                      @Html.TextBox("myTextBox1", t.Spelare1ID, new { @class = "form-control", @readonly = "readonly" })
+                 }
+             }
+          
          </div>
      </div>
         <div class="form-group">
             
             <div class="col-md-10">
                 <label>Spelare nr 2: </label>   
-                @Html.TextBox("myTextBox2", t.Spelare2ID, new { @class = "form-control" })
+                @{
+                    if (t.Spelare2ID == null)
+                    {
+                        @Html.TextBox("myTextBox2", t.Spelare2ID, new { @class = "form-control" })
+                    }
+                    else
+                    {
+                        @Html.TextBox("myTextBox2", t.Spelare2ID, new { @class = "form-control", @readonly = "readonly" })
+                    }
+                }
             </div>
         </div>
         <div class="form-group">
             
             <div class="col-md-10">
                 <label>Spelare nr 3: </label>
-                @Html.TextBox("myTextBox3", t.Spelare3ID, new { @class = "form-control" })
+                @{
+                    if (t.Spelare3ID == null)
+                    {
+                        @Html.TextBox("myTextBox3", t.Spelare3ID, new { @class = "form-control" })
+                    }
+                    else
+                    {
+                        @Html.TextBox("myTextBox3", t.Spelare3ID, new { @class = "form-control", @readonly = "readonly" })
+                    }
+                }
             </div>
         </div>
         <div class="form-group">
             
             <div class="col-md-10">
                 <label>Spelare nr 4: </label>
-                @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control" })
+                @{
+                    if (t.Spelare4ID == null)
+                    {
+                        @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control" })
+                    }
+                    else
+                    {
+                        @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control", @readonly = "readonly" })
+                    }
+                }
             </div>
         </div>
      
