@@ -184,39 +184,39 @@ namespace Golf_6.Controllers
         #endregion
 
 
-        [AllowAnonymous]
-        public ActionResult HanteraMedlemmar() /* Ny version av hämta medlemmar.*/
-        {
-            Postgres db = new Postgres();
-            DataTable dt = new DataTable();
+        //[AllowAnonymous]
+        //public ActionResult HanteraMedlemmar() /* Ny version av hämta medlemmar.*/
+        //{
+        //    Postgres db = new Postgres();
+        //    DataTable dt = new DataTable();
 
-            string sql =
-                "SELECT fornamn, efternamn, adress, postnummer, ort, email, kon, handikapp, medlemskategori, golfid, telefonnummer FROM medlemmar";
+        //    string sql =
+        //        "SELECT fornamn, efternamn, adress, postnummer, ort, email, kon, handikapp, medlemskategori, golfid, telefonnummer FROM medlemmar";
 
-            dt = db.sqlFragaTable(sql);
+        //    dt = db.sqlFragaTable(sql);
 
-            List<Admin> medlemslistan = new List<Admin>();
-            foreach (DataRow r in db._tabell.Rows)
-            {
-                Admin a = new Admin();
-                a.Fornamn = r["fornamn"].ToString();
-                a.Efternamn = r["efternamn"].ToString();
-                a.Adress = r["adress"].ToString();
-                a.Postnummer = r["postnummer"].ToString();
-                a.Ort = r["ort"].ToString();
-                a.Email = r["postnummer"].ToString();
-                a.Kon = r["kon"].ToString();
-                a.Handikapp = Convert.ToDouble(r["handikapp"]);
-                a.MedlemsKategori = Convert.ToInt32(r["medlemskategori"]);
-                a.GolfID = r["golfid"].ToString();
-                a.Telefonnummer = r["telefonnummer"].ToString();
+        //    List<Admin> medlemslistan = new List<Admin>();
+        //    foreach (DataRow r in db._tabell.Rows)
+        //    {
+        //        Admin a = new Admin();
+        //        a.Fornamn = r["fornamn"].ToString();
+        //        a.Efternamn = r["efternamn"].ToString();
+        //        a.Adress = r["adress"].ToString();
+        //        a.Postnummer = r["postnummer"].ToString();
+        //        a.Ort = r["ort"].ToString();
+        //        a.Email = r["postnummer"].ToString();
+        //        a.Kon = r["kon"].ToString();
+        //        a.Handikapp = Convert.ToDouble(r["handikapp"]);
+        //        a.MedlemsKategori = Convert.ToInt32(r["medlemskategori"]);
+        //        a.GolfID = r["golfid"].ToString();
+        //        a.Telefonnummer = r["telefonnummer"].ToString();
 
-                medlemslistan.Add(a);
-            }
+        //        medlemslistan.Add(a);
+        //    }
 
-            ViewBag.Medlemslista = medlemslistan;
-            return View();
-        }
+        //    ViewBag.Medlemslista = medlemslistan;
+        //    return View();
+        //}
 
     }
 }
