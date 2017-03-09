@@ -289,30 +289,65 @@ namespace Golf_6.Controllers
                     }
                 }
 			}
-            //Ska fortsätta här med att skapa en reservation om det inte redan finns.
-            if(bokningsId == "0")
-            {
 
-            }
-      
             if (bokningsId != "0")
-            { 
+            {
                 for (int i = 0; i < medlemsIdLista.Count; i++)
                 {
                     Postgres p = new Postgres();
 
                     p.SqlParameters("insert into deltar (medlem_id, reservation_id) VALUES (@medlemID, @bokningID);", Postgres.lista = new List<NpgsqlParameter>()
                 {
-                    new Npgsql.NpgsqlParameter("@medlemID", medlemsIdLista[i]),
-                    new Npgsql.NpgsqlParameter("@bokningID",Convert.ToUInt16(bokningsId))
+                    new Npgsql.NpgsqlParameter("@medlemID", Convert.ToInt32(medlemsIdLista[i])),
+                    new Npgsql.NpgsqlParameter("@bokningID",Convert.ToInt32(bokningsId))
                 });
                 }
             }
+
+            //Ska fortsätta här med att skapa en reservation om det inte redan finns.
+            if (bokningsId == "0")
+            {
+                Postgres p2 = new Postgres();
+                p2.SqlParameters("insert into reservation (datum, tid) VALUES (DATE(@datum), CAST(@tid as TIME))", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@datum", Convert.ToDateTime(datum)),
+                    new Npgsql.NpgsqlParameter("@tid", Convert.ToDateTime(tid))
+                });
+
+                Postgres p3 = new Postgres();
+                dt = p3.SqlFrågaParameters("select bokning_id from reservation where datum = DATE(@datum) and tid = CAST(@tid as TIME);", Postgres.lista = new List<NpgsqlParameter>
+                {
+                    new NpgsqlParameter("@datum", Convert.ToDateTime(datum)),
+                    new NpgsqlParameter("@tid", Convert.ToDateTime(tid))
+                });
+             
+            DataTable dt2 = new DataTable();
+            if (dt2 != null)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    bokningsId = dr["bokning_id"].ToString();
+                }
+
+                for (int i = 0; i < medlemsIdLista.Count; i++)
+                {
+                    Postgres p4 = new Postgres();
+
+                    p4.SqlParameters("insert into deltar (medlem_id, reservation_id) VALUES (@medlemID, @bokningID);", Postgres.lista = new List<NpgsqlParameter>()
+                            {
+                                new Npgsql.NpgsqlParameter("@medlemID", Convert.ToInt32(medlemsIdLista[i])),
+                                new Npgsql.NpgsqlParameter("@bokningID", Convert.ToInt32(bokningsId))
+                            });
+                }
+            }
+
+            }
+      
             try
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction("BokningAdmin");
+                return RedirectToAction("BokningsschematAdmin");
             }
             catch
             {
@@ -361,7 +396,7 @@ namespace Golf_6.Controllers
                 }
                 ViewBag.DatumAdmin = datum;
                 ViewBag.TidAdmin = tid;
-                ViewBag.BokningsId = t.BokningsID;
+                ViewBag.BokningsId = t.BokningsID.ToString();
             } 
             return View("BokningAdmin");
         }
@@ -380,9 +415,7 @@ namespace Golf_6.Controllers
             string datum = dt.ToShortDateString();
             t.Datum = Convert.ToDateTime(datum);
             t.Tid = Convert.ToDateTime(tid);
-            int antalDeltagare = 0;
-            double totHcp = 0;
-
+            
             {// Kontrollerar om det finns tider bokade och hämtar bokningsID och bokade spelares golfID, kön och hcp
                 Postgres x = new Postgres();
                 tabell = x.SqlFrågaParameters("select bokning_id from reservation where datum = DATE(@datum) and tid = CAST(@tid as TIME);", Postgres.lista = new List<NpgsqlParameter>
@@ -392,6 +425,7 @@ namespace Golf_6.Controllers
                 });
                 if (tabell != null)
                 {
+                    List<string> listan = new List<string>();
                     foreach (DataRow dr in tabell.Rows)
                     {
                         t.BokningsID = Convert.ToUInt16(dr["bokning_id"]);
@@ -400,10 +434,12 @@ namespace Golf_6.Controllers
                     deltagare = t.GetBokning(t.BokningsID); //All hämtning av data från en bokning fungerar, nästa steg är att få med värdet från räknare till Index tillsammans med deltagarlistan
                     foreach(Tidsbokning tb in deltagare)
                     {
-                        antalDeltagare++;
-                        totHcp += tb.MedlemHCP;
+                        listan.Add(tb.GolfID.ToString());
                     }
+                    ViewBag.Golfare = listan;
                 }
+                ViewBag.Datum = datum;
+                ViewBag.Tid = tid;
 
             }
 
@@ -416,7 +452,7 @@ namespace Golf_6.Controllers
             //    });
             //}      
 
-            return View("Index", deltagare);
+            return View("Index");
         }
 
       
