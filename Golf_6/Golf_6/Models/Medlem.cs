@@ -57,7 +57,13 @@ namespace Golf_6.Models
             }
             return y;
         }
-
+        public class scoreKort
+        {
+            public int rows { get; set; }
+            public int col { get; set; }
+        }
+        
+        
         //Hämta värden för scorekort från databas
         public DataTable hämtaScorekort()
         {
