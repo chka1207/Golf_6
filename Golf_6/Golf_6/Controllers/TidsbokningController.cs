@@ -26,15 +26,21 @@ namespace Golf_6.Controllers
         }
         // GET: Tidsbokning
         [AllowAnonymous]
-        public ActionResult Index()
+        public ActionResult Index(FormCollection collection)
         {  
             //DENNA METOD SKA LIGGA I VYN FÖR ATT SÖKA EFTER GOLFID
             //MÅSTE ÄNDRA DE HÅRDKODADE NAMNEN SOM PARAMETRAR SEN
+            //string fornamn = "";
+            //string efternamn = "";
             //Tidsbokning t = new Tidsbokning();
-            //List<string> lista = new List<string>();
+            //List<Tidsbokning> lista = new List<Tidsbokning>();
             //lista = t.GetMedlemmen("Maria", "Rodriguez");
-
-            //ViewBag.Lista = lista;
+            //List<string> nylista = new List<string>();
+            //foreach (Tidsbokning item in lista)
+            //{
+            //    nylista.Add(item.ToString());
+            //}
+            //ViewBag.Lista = nylista;
 
             //Tidsbokning t1 = new Tidsbokning();
             //string meddelande;
@@ -244,14 +250,42 @@ namespace Golf_6.Controllers
         [AllowAnonymous]
         public PartialViewResult Search(SearchViewModel collection)
         { 
-            List<Tidsbokning> lista = new List<Tidsbokning>();
+        //    List<Tidsbokning> lista = new List<Tidsbokning>();
 
+        //    Tidsbokning t = new Tidsbokning();
+        //    lista = t.GetMedlemmen(collection.Search.SokFornamn, collection.Search.SokEfternamn);
+
+        //    ViewBag.Lista = lista;
+
+            //return PartialView("PartialSearch", lista);
+            return PartialView();
+        }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Sok(FormCollection collection)
+        {
+            //List<Tidsbokning> lista = new List<Tidsbokning>();
+
+            //Tidsbokning t = new Tidsbokning();
+            //lista = t.GetMedlemmen(collection.Search.SokFornamn, collection.Search.SokEfternamn);
+
+            //ViewBag.Lista = lista;
+
+            //return PartialView("PartialSearch", lista);
+            string fornamn = collection["fornamn"];
+            string efternamn = collection["efternamn"];
             Tidsbokning t = new Tidsbokning();
-            lista = t.GetMedlemmen(collection.Search.SokFornamn, collection.Search.SokEfternamn);
-
-            ViewBag.Lista = lista;
-
-            return PartialView("PartialSearch", lista);
+            List<string> lista = new List<string>();
+            lista = t.GetMedlemmen(fornamn, efternamn);
+            List<string> nylista = new List<string>();
+            foreach (string item in lista)
+            {
+                nylista.Add(item.ToString());
+            }
+            ViewBag.Lista = nylista;
+            return View("Index");
         }
 
         // GET: Tidsbokning/Details/5
