@@ -88,52 +88,94 @@
             }
             else
             {
-        <tr>
-            @{
-                DateTime datum = new DateTime();
-                TimeSpan intervall = new TimeSpan(07, 00, 00);
-                DateTime allt = datum.Date + intervall;
-                string kön = " ";
-                string hcp = " ";
-                string medlemsinfo = "";
-                for (int i = 0; i <= 10; i++)
-                {
-                    int räknare = 0;
-                    string columnFärg = "columnGreen";
-                    foreach (Tidsbokning t in ViewBag.List)
-                    {
-                        if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                <tr>
+                    @{
+                        DateTime datum = new DateTime();
+                        TimeSpan intervall = new TimeSpan(07, 00, 00);
+                        DateTime allt = datum.Date + intervall;
+                        string kön = " ";
+                        string hcp = " ";
+                        string medlemsinfo = "";
+                        DateTime start = new DateTime();
+                        DateTime slut = new DateTime();
+                        DateTime start2 = new DateTime();
+
+
+                        foreach (Tidsbokning tb in ViewBag.Tävlingslista)
                         {
-                            räknare++;
-                            kön += t.MedlemKön + " ";
-                            hcp += t.MedlemHCP.ToString() + " ";
-                            medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
-                            kön = " ";
-                            hcp = " ";
+                            start = tb.StarttidTävling;
+                            slut = tb.SluttidTävling;
+
                         }
-                        if (räknare == 1)
+                        start2 = start;
+
+                        for (int i = 0; i <= 10; i++)
                         {
-                            columnFärg = "columnYellow";
-                        }
-                        if (räknare == 4)
-                        {
-                            columnFärg = "columnRed";
+                            int räknare = 0;
+                            string columnFärg = "columnGreen";
+
+                            foreach (Tidsbokning tb in ViewBag.Tävlingslista)
+                            {
+
+                                string s = allt.ToShortTimeString();
+                                DateTime allt2 = Convert.ToDateTime(s);
+                                
+                                if(allt2 >= start && allt2 < slut)
+                                {
+                                    columnFärg = "columnRed";
+                                    räknare = -1;
+                                    medlemsinfo = "Stängt";
+                                
+                                }
+                                else
+                                {
+                                    foreach (Tidsbokning t in ViewBag.List)
+                                    {
+                                        if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                                        {
+                                            räknare++;
+                                            kön += t.MedlemKön + " ";
+                                            hcp += t.MedlemHCP.ToString() + " ";
+                                            medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                            kön = " ";
+                                            hcp = " ";
+                                        }
+                                        if (räknare == 1)
+                                        {
+                                            columnFärg = "columnYellow";
+                                        }
+                                        if (räknare == 4)
+                                        {
+                                            columnFärg = "columnRed";
+                                        }
+
+                                    }
+                                }
+                            }
+
+
+                            <td id=@allt.ToString("HHmm") class="column @columnFärg" data-toggle="popover" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
+                                :00
+                                @if (räknare != -1)
+                                {
+
+                                    if (räknare < 4)
+                                    {
+                                        <p>@räknare.ToString() /4</p>
+                                        @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                                    }
+                                }
+                                else
+                                {
+                                    <p>Stängt</p>
+                                }
+
+                            </td>
+                            medlemsinfo = "";
+                            allt = allt.AddHours(1);
                         }
                     }
-
-                    <td id=@allt.ToString("HHmm") class="column @columnFärg" data-toggle="popover" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
-                        :00
-                        @räknare.ToString()/4
-                        @if (räknare < 4)
-                        {
-                            @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
-                        }
-                    </td>
-                    medlemsinfo = "";
-                    allt = allt.AddHours(1);
-                }
-            }
-        </tr>
+                </tr>
 
         <tr>
             @{
@@ -143,34 +185,63 @@
                 {
                     int räknare = 0;
                     string columnFärg = "columnGreen";
-                    foreach (Tidsbokning t in ViewBag.List)
+
+                    foreach (Tidsbokning tb in ViewBag.Tävlingslista)
                     {
-                        if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                        {
-                            räknare++;
-                            kön += t.MedlemKön + " ";
-                            hcp += t.MedlemHCP.ToString() + " ";
-                            medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "<br />";
-                            kön = " ";
-                            hcp = " ";
-                        }
-                        if (räknare == 1)
-                        {
-                            columnFärg = "columnYellow";
-                        }
-                        if (räknare == 4)
+                        string s = allt.ToShortTimeString();
+                        DateTime allt2 = Convert.ToDateTime(s);
+
+                        if (allt2 >= start && allt2 < slut)
                         {
                             columnFärg = "columnRed";
+                            räknare = -1;
+                            medlemsinfo = "Stängt";
+                        
+
+                        }
+                        else
+                        {
+                            foreach (Tidsbokning t in ViewBag.List)
+                            {
+                                if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                                {
+                                    räknare++;
+                                    kön += t.MedlemKön + " ";
+                                    hcp += t.MedlemHCP.ToString() + " ";
+                                    medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                    kön = " ";
+                                    hcp = " ";
+                                }
+                                if (räknare == 1)
+                                {
+                                    columnFärg = "columnYellow";
+                                }
+                                if (räknare == 4)
+                                {
+                                    columnFärg = "columnRed";
+                                }
+
+                            }
                         }
                     }
+
 
                     <td id=@allt.ToString("HHmm") class="column @columnFärg" data-toggle="popover" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :10
-                        @räknare.ToString()/4
-                        @if (räknare < 4)
+                        @if (räknare != -1)
                         {
-                            @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+
+                            if (räknare < 4)
+                            {
+                                <p>@räknare.ToString() /4</p>
+                                        @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                            }
                         }
+                        else
+                        {
+                            <p>Stängt</p>
+                        }
+
                     </td>
                     medlemsinfo = "";
                     allt = allt.AddHours(1);
@@ -186,34 +257,63 @@
                 {
                     int räknare = 0;
                     string columnFärg = "columnGreen";
-                    foreach (Tidsbokning t in ViewBag.List)
+
+                    foreach (Tidsbokning tb in ViewBag.Tävlingslista)
                     {
-                        if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                        {
-                            räknare++;
-                            kön += t.MedlemKön + " ";
-                            hcp += t.MedlemHCP.ToString() + " ";
-                            medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "<br />";
-                            kön = " ";
-                            hcp = " ";
-                        }
-                        if (räknare == 1)
-                        {
-                            columnFärg = "columnYellow";
-                        }
-                        if (räknare == 4)
+                        string s = allt.ToShortTimeString();
+                        DateTime allt2 = Convert.ToDateTime(s);
+
+                        if (allt2 >= start && allt2 < slut)
                         {
                             columnFärg = "columnRed";
+                            räknare = -1;
+                            medlemsinfo = "Stängt";
+                   
+
+                        }
+                        else
+                        {
+                            foreach (Tidsbokning t in ViewBag.List)
+                            {
+                                if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                                {
+                                    räknare++;
+                                    kön += t.MedlemKön + " ";
+                                    hcp += t.MedlemHCP.ToString() + " ";
+                                    medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                    kön = " ";
+                                    hcp = " ";
+                                }
+                                if (räknare == 1)
+                                {
+                                    columnFärg = "columnYellow";
+                                }
+                                if (räknare == 4)
+                                {
+                                    columnFärg = "columnRed";
+                                }
+
+                            }
                         }
                     }
+
 
                     <td id=@allt.ToString("HHmm") class="column @columnFärg" data-toggle="popover" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :20
-                        @räknare.ToString()/4
-                        @if (räknare < 4)
+                        @if (räknare != -1)
                         {
-                            @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+
+                            if (räknare < 4)
+                            {
+                                <p>@räknare.ToString() /4</p>
+                                        @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                            }
                         }
+                        else
+                        {
+                            <p>Stängt</p>
+                        }
+
                     </td>
                     medlemsinfo = "";
                     allt = allt.AddHours(1);
@@ -229,34 +329,63 @@
                 {
                     int räknare = 0;
                     string columnFärg = "columnGreen";
-                    foreach (Tidsbokning t in ViewBag.List)
+
+                    foreach (Tidsbokning tb in ViewBag.Tävlingslista)
                     {
-                        if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                        {
-                            räknare++;
-                            kön += t.MedlemKön + " ";
-                            hcp += t.MedlemHCP.ToString() + " ";
-                            medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "<br />";
-                            kön = " ";
-                            hcp = " ";
-                        }
-                        if (räknare == 1)
-                        {
-                            columnFärg = "columnYellow";
-                        }
-                        if (räknare == 4)
+                        string s = allt.ToShortTimeString();
+                        DateTime allt2 = Convert.ToDateTime(s);
+
+                        if (allt2 >= start && allt2 < slut)
                         {
                             columnFärg = "columnRed";
+                            räknare = -1;
+                            medlemsinfo = "Stängt";
+                          
+
+                        }
+                        else
+                        {
+                            foreach (Tidsbokning t in ViewBag.List)
+                            {
+                                if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                                {
+                                    räknare++;
+                                    kön += t.MedlemKön + " ";
+                                    hcp += t.MedlemHCP.ToString() + " ";
+                                    medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                    kön = " ";
+                                    hcp = " ";
+                                }
+                                if (räknare == 1)
+                                {
+                                    columnFärg = "columnYellow";
+                                }
+                                if (räknare == 4)
+                                {
+                                    columnFärg = "columnRed";
+                                }
+
+                            }
                         }
                     }
+
 
                     <td id=@allt.ToString("HHmm") class="column @columnFärg" data-toggle="popover" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :30
-                        @räknare.ToString()/4
-                        @if (räknare < 4)
+                        @if (räknare != -1)
                         {
-                            @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+
+                            if (räknare < 4)
+                            {
+                                <p>@räknare.ToString() /4</p>
+                                        @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                            }
                         }
+                        else
+                        {
+                            <p>Stängt</p>
+                        }
+
                     </td>
                     medlemsinfo = "";
                     allt = allt.AddHours(1);
@@ -272,34 +401,63 @@
                 {
                     int räknare = 0;
                     string columnFärg = "columnGreen";
-                    foreach (Tidsbokning t in ViewBag.List)
+
+                    foreach (Tidsbokning tb in ViewBag.Tävlingslista)
                     {
-                        if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                        {
-                            räknare++;
-                            kön += t.MedlemKön + " ";
-                            hcp += t.MedlemHCP.ToString() + " ";
-                            medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "<br />";
-                            kön = " ";
-                            hcp = " ";
-                        }
-                        if (räknare == 1)
-                        {
-                            columnFärg = "columnYellow";
-                        }
-                        if (räknare == 4)
+                        string s = allt.ToShortTimeString();
+                        DateTime allt2 = Convert.ToDateTime(s);
+
+                        if (allt2 >= start && allt2 < slut)
                         {
                             columnFärg = "columnRed";
+                            räknare = -1;
+                            medlemsinfo = "Stängt";
+                           
+
+                        }
+                        else
+                        {
+                            foreach (Tidsbokning t in ViewBag.List)
+                            {
+                                if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                                {
+                                    räknare++;
+                                    kön += t.MedlemKön + " ";
+                                    hcp += t.MedlemHCP.ToString() + " ";
+                                    medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                    kön = " ";
+                                    hcp = " ";
+                                }
+                                if (räknare == 1)
+                                {
+                                    columnFärg = "columnYellow";
+                                }
+                                if (räknare == 4)
+                                {
+                                    columnFärg = "columnRed";
+                                }
+
+                            }
                         }
                     }
+
 
                     <td id=@allt.ToString("HHmm") class="column @columnFärg" data-toggle="popover" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :40
-                        @räknare.ToString()/4
-                        @if (räknare < 4)
+                        @if (räknare != -1)
                         {
-                            @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+
+                            if (räknare < 4)
+                            {
+                                <p>@räknare.ToString() /4</p>
+                                        @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                            }
                         }
+                        else
+                        {
+                            <p>Stängt</p>
+                        }
+
                     </td>
                     medlemsinfo = "";
                     allt = allt.AddHours(1);
@@ -315,33 +473,61 @@
                 {
                     int räknare = 0;
                     string columnFärg = "columnGreen";
-                    foreach (Tidsbokning t in ViewBag.List)
+
+                    foreach (Tidsbokning tb in ViewBag.Tävlingslista)
                     {
-                        if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                        {
-                            räknare++;
-                            kön += t.MedlemKön + " ";
-                            hcp += t.MedlemHCP.ToString() + " ";
-                            medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "<br />";
-                            kön = " ";
-                            hcp = " ";
-                        }
-                        if (räknare == 1)
-                        {
-                            columnFärg = "columnYellow";
-                        }
-                        if (räknare == 4)
+                        string s = allt.ToShortTimeString();
+                        DateTime allt2 = Convert.ToDateTime(s);
+
+                        if (allt2 >= start && allt2 < slut)
                         {
                             columnFärg = "columnRed";
+                            räknare = -1;
+                            medlemsinfo = "Stängt";
+                        
+
+                        }
+                        else
+                        {
+                            foreach (Tidsbokning t in ViewBag.List)
+                            {
+                                if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                                {
+                                    räknare++;
+                                    kön += t.MedlemKön + " ";
+                                    hcp += t.MedlemHCP.ToString() + " ";
+                                    medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                    kön = " ";
+                                    hcp = " ";
+                                }
+                                if (räknare == 1)
+                                {
+                                    columnFärg = "columnYellow";
+                                }
+                                if (räknare == 4)
+                                {
+                                    columnFärg = "columnRed";
+                                }
+
+                            }
                         }
                     }
 
+
                     <td id=@allt.ToString("HHmm") class="column @columnFärg" data-toggle="popover" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :50
-                        @räknare.ToString()/4
-                        @if (räknare < 4)
+                        @if (räknare != -1)
                         {
-                            @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+
+                            if (räknare < 4)
+                            {
+                                <p>@räknare.ToString() /4</p>
+                                        @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                            }
+                        }
+                        else
+                        {
+                            <p>Stängt</p>
                         }
 
                     </td>

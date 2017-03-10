@@ -8,6 +8,7 @@ using System.Data;
 using Npgsql;
 using Golf_6.ViewModels;
 
+
 namespace Golf_6.Controllers
 {
     public class TidsbokningController : Controller
@@ -148,6 +149,9 @@ namespace Golf_6.Controllers
             HanteraSasong säsong = new HanteraSasong();
             DateTime start = säsong.HamtaSasongsStart();
             DateTime slut = säsong.HamtaSasongsAvslut();
+            DateTime tävlingStart = new DateTime();
+            DateTime tävlingSlut = new DateTime();
+            DataTable tävling = new DataTable();
 
 
             if (dag >= start && dag <= slut)
@@ -162,6 +166,24 @@ namespace Golf_6.Controllers
                 });
 
                     }
+                    Postgres y = new Postgres();
+                    {
+                        tävling = y.SqlFrågaParameters("select starttid, sluttid, startdatum, slutdatum from stangning where startdatum = @par1;", Postgres.lista = new List<NpgsqlParameter>()
+                        {
+                            new NpgsqlParameter("@par1", dag)
+                        });
+                    }
+                    List<Tidsbokning> tävlingslista = new List<Tidsbokning>();
+                    foreach(DataRow dr in tävling.Rows)
+                    {
+                        Tidsbokning t = new Tidsbokning();
+                        t.StartDatumTävling = Convert.ToDateTime(dr["startdatum"].ToString());
+                        t.StarttidTävling = Convert.ToDateTime(dr["starttid"].ToString());
+                        t.SluttidTävling = Convert.ToDateTime(dr["sluttid"].ToString());
+                        t.SlutdatumTävling = Convert.ToDateTime(dr["slutdatum"].ToString());
+                        tävlingslista.Add(t);
+                    }
+
                     List<Tidsbokning> bokningslista = new List<Tidsbokning>();
                     foreach (DataRow dr in dt.Rows)
                     {
@@ -172,6 +194,7 @@ namespace Golf_6.Controllers
                         bokningslista.Add(t);
                     }
                     ViewBag.List = bokningslista;
+                    ViewBag.Tävlingslista = tävlingslista;
 
                 }
                 ViewBag.Stängd = false;
@@ -198,6 +221,7 @@ namespace Golf_6.Controllers
             DateTime dag = Convert.ToDateTime(datum);
             DateTime start = säsong.HamtaSasongsStart();
             DateTime slut = säsong.HamtaSasongsAvslut();
+            DataTable tävling = new DataTable();
             
 
 
@@ -212,6 +236,24 @@ namespace Golf_6.Controllers
                 });
 
                     }
+                    Postgres y = new Postgres();
+                    {
+                        tävling = y.SqlFrågaParameters("select starttid, sluttid, startdatum, slutdatum from stangning where startdatum = @par1;", Postgres.lista = new List<NpgsqlParameter>()
+                        {
+                            new NpgsqlParameter("@par1", dag)
+                        });
+                    }
+                    List<Tidsbokning> tävlingslista = new List<Tidsbokning>();
+                    foreach (DataRow dr in tävling.Rows)
+                    {
+                        Tidsbokning t = new Tidsbokning();
+                        t.StartDatumTävling = Convert.ToDateTime(dr["startdatum"].ToString());
+                        t.StarttidTävling = Convert.ToDateTime(dr["starttid"].ToString());
+                        t.SluttidTävling = Convert.ToDateTime(dr["sluttid"].ToString());
+                        t.SlutdatumTävling = Convert.ToDateTime(dr["slutdatum"].ToString());
+                        tävlingslista.Add(t);
+                    }
+
                     List<Tidsbokning> bokningslistaPost = new List<Tidsbokning>();
                     foreach (DataRow dr in dt.Rows)
                     {
@@ -224,6 +266,7 @@ namespace Golf_6.Controllers
                         bokningslistaPost.Add(t);
                     }
                     ViewBag.List = bokningslistaPost;
+                    ViewBag.Tävlingslista = tävlingslista;
 
                 }
                 Tidsbokning valtDatum = new Tidsbokning();

@@ -47,6 +47,10 @@ namespace Golf_6.Models
         public double MedlemHCP { get; set; }
         public double TotaltHCP { get; set; } 
         public int AntalDeltagare { get; set; } 
+        public DateTime StarttidTävling { get; set; }
+        public DateTime SluttidTävling { get; set; }
+        public DateTime StartDatumTävling { get; set; }
+        public DateTime SlutdatumTävling { get; set; }
         //public List<>
 
         public DataTable HämtaMedlemmar() /* Hämtar en lista med medlemmar*/
