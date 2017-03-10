@@ -12,17 +12,17 @@
         
         <thead>
             <tr>
-                <th colspan="5" height="20px">Förnamn</th>
-                <th colspan="2" height="20px">Efternamn</th>
-                <th colspan="2" height="20px">Golf-ID</th>
+                <th colspan="6" height="20px">Förnamn:</th>
+                <th colspan="4" height="20px">Efternamn:</th>
+                <th colspan="4" height="20px">Golf-ID:</th>
             </tr>
             <tr>
-                <th colspan="5" height="20px">Datum</th>
-                <th colspan="2" height="20px">Starttid</th>
-                <th colspan="2" height="20px"></th>
+                <th colspan="6" height="20px">Datum:</th>
+                <th colspan="4" height="20px">Starttid:</th>
+                <th colspan="4" height="20px"></th>
             </tr>
             <tr>
-                <th colspan="5" scope="colgroup" align="center">Hålslaget GK</th>
+                <th colspan="6" scope="colgroup" align="center">Hålslaget GK</th>
                 <th colspan="2" scope="colgroup" height="20px"></th>
                 <th colspan="2" scope="colgroup" height="20px"></th>
                 <th colspan="2" scope="colgroup" height="20px"></th>
@@ -34,6 +34,7 @@
                 <th>Röd</th>
                 <th>Par</th>
                 <th>hcp</th>
+                <th>Er-slag</th>
                 <th style="width: 60px">Slag</th>
                 <th style="width: 60px">Poäng</th>
                 <th style="width: 60px">Slag</th>
@@ -44,27 +45,53 @@
                 <th style="width: 60px">Poäng</th>
             </tr>
         <tbody>
-                @{int count = 0; }
-                @foreach (DataRow row in Model.Rows)
-                {
-                    <tr>
-                        @foreach (DataColumn x in Model.Columns)
+            @{int count = 0;}
+            @foreach (DataRow row in Model.Rows)
+            {
+                <tr>
+                    @if (count == 9)
+                    {
+                        <td align="right" colspan="3">Ut</td>
+                        <td>36</td>
+                        <td></td>
+                    }
+
+                    else if (count == 19)
+                    {
+                        <td align="right" colspan="3">In</td>
+                        <td>36</td>
+                        <td></td>
+                    }
+                    else if (count == 20)
+                    {
+                        <td></td>
+                        <td>5686</td>
+                        <td>5384</td>
+                        <td>72</td>
+                        <td>S:a</td>
+                    }
+                    else
+                    {                       
+                        foreach (DataColumn x in Model.Columns)
                         {
-                            <td align="center">@row[x.ColumnName]</td>
+
+                                <td align="center">@row[x.ColumnName]</td>
+
                         }
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    count++;
-            
-                }
+                    }
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>                 
+                </tr>
+                count++;
+            }
             
         </tbody>
 
@@ -102,3 +129,47 @@
 </tr>
 *@
 
+@*@{int count = 0;}
+@foreach (DataRow row in Model.Rows)
+            {
+    <tr>
+        @if (count == 9)
+        {
+            <td align="right" colspan="3">Ut</td>
+                        <td>36</td>
+        }
+        @if (count == 19)
+        {
+            <td align="right" colspan="3">In</td>
+                        <td>36</td>
+        }
+        @if (count == 20)
+        {
+            <td></td>
+                        <td>5686</td>
+                        <td>5384</td>
+                        <td>72</td>
+                        <td>S:a</td>
+        }
+        else
+        {
+            foreach (DataColumn x in Model.Columns)
+            {
+
+                <td align="center">@row[x.ColumnName]</td>
+
+            }
+        }
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    count++;
+}*@
