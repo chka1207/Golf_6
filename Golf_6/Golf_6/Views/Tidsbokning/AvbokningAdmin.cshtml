@@ -8,8 +8,11 @@
 @{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<h2>AvbokningAdmin</h2>
-
+<h2>Avbokning</h2>
+<br />
+<p>Avboka genom att låta spelarens GolfID stå kvar i textrutan.
+    <br />
+    Spelarna som fortfarande ska finnas kvar i bokningen ska suddas ut från textrutorna.</p>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -83,11 +86,16 @@
 
             <div class="col-md-10">
                 <label>Spelare nr 1: </label>
-                @{
+                @{if (t.Spelare1ID != null)
+                 {
+                      @Html.TextBox("myTextBox1", t.Spelare1ID, new { @class = "form-control" })
+                 }
+                 else
+                 {
+                      @Html.TextBox("myTextBox1", t.Spelare1ID, new { @class = "form-control", @readonly = "readonly" })
+                 }
   
-        @Html.TextBox("myTextBox1", t.Spelare1ID, new { @class = "form-control" })
-   
-                }
+                 }
 
             </div>
         </div>
@@ -95,10 +103,14 @@
 
             <div class="col-md-10">
                 <label>Spelare nr 2: </label>
-                @{
-
-        @Html.TextBox("myTextBox2", t.Spelare2ID, new { @class = "form-control" })
-    
+                @{if (t.Spelare2ID != null)
+                {
+                    @Html.TextBox("myTextBox2", t.Spelare2ID, new { @class = "form-control" })
+                }
+                else
+                {
+                    @Html.TextBox("myTextBox2", t.Spelare2ID, new { @class = "form-control", @readonly = "readonly" })
+                }
 
                 }
             </div>
@@ -107,9 +119,14 @@
 
             <div class="col-md-10">
                 <label>Spelare nr 3: </label>
-                @{
-
-        @Html.TextBox("myTextBox3", t.Spelare3ID, new { @class = "form-control" })
+                @{if (t.Spelare3ID != null)
+                {
+                    @Html.TextBox("myTextBox3", t.Spelare3ID, new { @class = "form-control" })
+                }
+                else
+                {
+                    @Html.TextBox("myTextBox3", t.Spelare3ID, new { @class = "form-control", @readonly = "readonly" })
+                }
 
                 }
             </div>
@@ -118,10 +135,14 @@
 
             <div class="col-md-10">
                 <label>Spelare nr 4: </label>
-                @{
-
-        @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control" })
-
+                @{if (t.Spelare4ID != null)
+                {
+                    @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control" })
+                }
+                else
+                {
+                    @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control", @readonly = "readonly" })
+                }
 
                 }
             </div>
