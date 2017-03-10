@@ -62,7 +62,7 @@ namespace Golf_6.Controllers
             //dt.Columns[0].ColumnName = "Förnamn";
             return View("Index");
         }
-         [AllowAnonymous]
+        [AllowAnonymous]
         public ActionResult GetgolfID()
         {
             Tidsbokning medlemmarna = new Tidsbokning();
@@ -249,15 +249,27 @@ namespace Golf_6.Controllers
         [HttpPost]
         [AllowAnonymous]
         public PartialViewResult Search(SearchViewModel collection)
-        { 
-        //    List<Tidsbokning> lista = new List<Tidsbokning>();
+        {
+            //List<Tidsbokning> lista = new List<Tidsbokning>();
 
-        //    Tidsbokning t = new Tidsbokning();
-        //    lista = t.GetMedlemmen(collection.Search.SokFornamn, collection.Search.SokEfternamn);
+            //Tidsbokning t = new Tidsbokning();
+            //lista = t.GetMedlemmen(collection.Search.SokFornamn, collection.Search.SokEfternamn);
 
-        //    ViewBag.Lista = lista;
+            //ViewBag.Lista = lista;
 
             //return PartialView("PartialSearch", lista);
+
+            //string fornamn = collection["fornamn"];
+            //string efternamn = collection["efternamn"];
+            //Tidsbokning t = new Tidsbokning();
+            //List<string> lista = new List<string>();
+            //lista = t.GetMedlemmen(fornamn, efternamn);
+            //List<string> nylista = new List<string>();
+            //foreach (string item in lista)
+            //{
+            //    nylista.Add(item.ToString());
+            //}
+            //ViewBag.Lista = nylista;
             return PartialView();
         }
 
