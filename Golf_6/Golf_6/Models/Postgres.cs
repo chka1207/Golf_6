@@ -99,8 +99,9 @@ namespace Golf_6.Models
 
         }
 
-        public void SqlParameters(string sqlfraga, List<NpgsqlParameter> parametrar)
+        public string SqlParameters(string sqlfraga, List<NpgsqlParameter> parametrar)
         {
+            string meddelande = "";
             try
             {
                 _cmd = new NpgsqlCommand(sqlfraga, _conn);
@@ -110,12 +111,14 @@ namespace Golf_6.Models
             catch (Exception ex)
             {//23505 vid dubbla primary keys
                 _error = ex.Message;
+                meddelande = _error;
             }
-
+               
             finally
             {
                 _conn.Close();
             }
+             return  meddelande;
         }
 
         public DataTable SqlFrågaParameters(string sqlfraga, List<NpgsqlParameter> parametrar)
