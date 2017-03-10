@@ -7,10 +7,10 @@
 
 
 
-{
-    Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
+    {
+        Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
 
-}
+    }
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -54,7 +54,19 @@
             }
         };
         $.datepicker.setDefaults($.datepicker.regional['sv']);
+
+
+        $(document).ready(function () {
+            $('td').popover({
+                html: true,
+                animation: true,
+                placement: "bottom",
+                trigger: "hover",
+                container: "body",
+            });
+        });
     </script>
+
 
     <table class="table table-striped table-responsive table-bordered" id="tableMedlemBokar">
         <tr>
@@ -70,6 +82,12 @@
             <td class="timme">16</td>
             <td class="timme">17</td>
         </tr>
+        @{ if (ViewBag.Stängd == true)
+            {
+<h3>Banan är stängd! Välj ett datum mellan @ViewBag.Start och @ViewBag.Slut för att boka tid.</h3>
+            }
+            else
+            {
         <tr>
             @{
                 DateTime datum = new DateTime();
@@ -89,7 +107,7 @@
                             räknare++;
                             kön += t.MedlemKön + " ";
                             hcp += t.MedlemHCP.ToString() + " ";
-                            medlemsinfo +=  "Kön: " + kön + "Hcp: " + hcp + "\n";
+                            medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
                             kön = " ";
                             hcp = " ";
                         }
@@ -103,7 +121,7 @@
                         }
                     }
 
-                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" data-toggle="popover" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :00
                         @räknare.ToString()/4
                         @if (räknare < 4)
@@ -146,7 +164,7 @@
                         }
                     }
 
-                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" data-toggle="popover" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :10
                         @räknare.ToString()/4
                         @if (räknare < 4)
@@ -189,7 +207,7 @@
                         }
                     }
 
-                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" data-toggle="popover" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :20
                         @räknare.ToString()/4
                         @if (räknare < 4)
@@ -232,7 +250,7 @@
                         }
                     }
 
-                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" data-toggle="popover" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :30
                         @räknare.ToString()/4
                         @if (räknare < 4)
@@ -275,7 +293,7 @@
                         }
                     }
 
-                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" data-toggle="popover" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :40
                         @räknare.ToString()/4
                         @if (räknare < 4)
@@ -318,7 +336,7 @@
                         }
                     }
 
-                    <td id=@allt.ToString("HHmm") class="column @columnFärg" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
+                    <td id=@allt.ToString("HHmm") class="column @columnFärg" data-toggle="popover" title="@allt.ToString("HHmm")" data-content="@medlemsinfo">
                         :50
                         @räknare.ToString()/4
                         @if (räknare < 4)
@@ -333,7 +351,8 @@
 
             }
         </tr>
-        
+                    }
+                }
     </table>
 
 
