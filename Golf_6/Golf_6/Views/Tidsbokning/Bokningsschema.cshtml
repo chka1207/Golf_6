@@ -7,10 +7,10 @@
 
 
 
-{
-    Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
+    {
+        Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
 
-}
+    }
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -56,6 +56,7 @@
         $.datepicker.setDefaults($.datepicker.regional['sv']);
     </script>
 
+
     <table class="table table-striped table-responsive table-bordered" id="tableMedlemBokar">
         <tr>
             <td class="timme">07</td>
@@ -70,6 +71,12 @@
             <td class="timme">16</td>
             <td class="timme">17</td>
         </tr>
+        @{ if (ViewBag.Stängd == true)
+            {
+<h3>Banan är stängd! Välj ett datum mellan @ViewBag.Start och @ViewBag.Slut för att boka tid.</h3>
+            }
+            else
+            {
         <tr>
             @{
                 DateTime datum = new DateTime();
@@ -89,7 +96,7 @@
                             räknare++;
                             kön += t.MedlemKön + " ";
                             hcp += t.MedlemHCP.ToString() + " ";
-                            medlemsinfo +=  "Kön: " + kön + "Hcp: " + hcp + "\n";
+                            medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
                             kön = " ";
                             hcp = " ";
                         }
@@ -333,7 +340,8 @@
 
             }
         </tr>
-        
+                    }
+                }
     </table>
 
 
