@@ -5,15 +5,25 @@
 @{
     ViewBag.Title = "BokningAdmin";
 }
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
 
-<h2>View1</h2>
+<h2>Boka tid</h2>
+<br />
+<br />
+<p>Boka tid genom att ange spelares golfID i textrutorna. 
+    <br />
+    <br />
+    Vid bokning av gäster ange en av siffrorna 1, 2, 3, eller 4 i varje textruta.<br />
+    En siffra motsvarar en gäst eftersom gäster inte har ett golfID.</p>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+  
     <div class="form-horizontal">
-        <h4>Tidsbokning</h4>
+        @*<h4>Tidsbokning</h4>*@
         <hr />
         @Html.ValidationSummary(true)
 
@@ -299,7 +309,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Boka" class="btn btn-default" />
             </div>
         </div>
     </div>

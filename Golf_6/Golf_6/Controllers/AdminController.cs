@@ -13,7 +13,14 @@ using Npgsql;
 namespace Golf_6.Controllers
 {
     public class AdminController : Controller
-    {   
+    {
+        // Logga ut och kom till index
+        [AllowAnonymousAttribute]
+        public ActionResult LogOut()
+        {
+
+            return RedirectToAction("Index", "Home", "Home");
+        }
         // GET: Admin
         [AllowAnonymous]
         public ActionResult Index()
@@ -165,34 +172,35 @@ namespace Golf_6.Controllers
         public ActionResult HanteraSasong()
         {
             HanteraSasong hs = new HanteraSasong();
-            string bäggeDatum = hs.HamtaSasongsStart().ToString() + " " + hs.HamtaSasongsAvslut().ToString();
+            string start = hs.HamtaSasongsStart().ToString();
+            string slut = hs.HamtaSasongsAvslut().ToString();
             //ViewBag.AktuellaDatum = hs.HamtaSasong();
 
-            //string shortStart = hs.SasongenStartar.Substring(0, 10); //Tid tas bort, endast Date
-            //string shortSlut = hs.SasongenSlutar.Substring(0, 10);
-            //int startÅr = Convert.ToInt32(hs.SasongenStartar.Substring(0, 4));
-            //int slutÅr = Convert.ToInt32(hs.SasongenSlutar.Substring(0, 4));
-            //int startMånad = Convert.ToInt32(hs.SasongenStartar.Substring(5, 2));
-            //int slutMånad = Convert.ToInt32(hs.SasongenSlutar.Substring(5, 2));
-            //int startDatum = Convert.ToInt32(hs.SasongenStartar.Substring(8, 2));
-            //int slutDatum = Convert.ToInt32(hs.SasongenSlutar.Substring(8, 2));
+            string shortStart = start.Substring(0, 10); //Tid tas bort, endast Date
+            string shortSlut = slut.Substring(0, 10);
+            int startÅr = Convert.ToInt32(start.Substring(0, 4));
+            int slutÅr = Convert.ToInt32(slut.Substring(0, 4));
+            int startMånad = Convert.ToInt32(start.Substring(5, 2));
+            int slutMånad = Convert.ToInt32(slut.Substring(5, 2));
+            int startDatum = Convert.ToInt32(start.Substring(8, 2));
+            int slutDatum = Convert.ToInt32(slut.Substring(8, 2));
 
             //Start och slutkalender för säsongen...
-            //var svar =  //STARTDATUM
-            //    "<div class=\"float-left\"><p class=\"center\"><strong>Säsongen börjar</strong></p><time datetime=\"" +
-            //    shortStart + "\" class=\"date-as-calendar position-em size3x\"><span class=\"weekday\">" +
-            //    "<p id=\"startVeckodag\">" + shortStart + "</p>" + "</span>" + "<span class=\"day\">" + startDatum +
-            //    "</span><span class=\"month\">" + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(startMånad) +
-            //    "</span><span class=\"year\">" + startÅr + "</span></time></div>" +
+            var svar =  //STARTDATUM
+                "<div class=\"float-left\"><p class=\"center\"><strong>Säsongen börjar</strong></p><time datetime=\"" +
+                shortStart + "\" class=\"date-as-calendar position-em size3x\"><span class=\"weekday\">" +
+                "<p id=\"startVeckodag\">" + shortStart + "</p>" + "</span>" + "<span class=\"day\">" + startDatum +
+                "</span><span class=\"month\">" + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(startMånad) +
+                "</span><span class=\"year\">" + startÅr + "</span></time></div>" +
 
-            //    //SLUTDATUM
-            //    "<div class=\"float-left\"><p class=\"center\"><strong>Säsongen slutar</strong></p><time datetime=\"" +
-            //    shortSlut + "\" class=\"date-as-calendar position-em size3x\"><span class=\"weekday\">" +
-            //    "<p id=\"slutVeckodag\">" + shortSlut + "</p>" + "</span>" + "<span class=\"day\">" + slutDatum +
-            //    "</span><span class=\"month\">" + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(slutMånad) +
-            //    "</span><span class=\"year\">" + slutÅr + "</span></time></div><div class=\"clear\"></div>";
+                //SLUTDATUM
+                "<div class=\"float-left\"><p class=\"center\"><strong>Säsongen slutar</strong></p><time datetime=\"" +
+                shortSlut + "\" class=\"date-as-calendar position-em size3x\"><span class=\"weekday\">" +
+                "<p id=\"slutVeckodag\">" + shortSlut + "</p>" + "</span>" + "<span class=\"day\">" + slutDatum +
+                "</span><span class=\"month\">" + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(slutMånad) +
+                "</span><span class=\"year\">" + slutÅr + "</span></time></div><div class=\"clear\"></div>";
             //Endast html/css. Vid missförstånd, fråga Toni :P
-            ViewBag.BäggeDatum = bäggeDatum;
+            ViewBag.Svar = svar;
             return View();
         }
 
