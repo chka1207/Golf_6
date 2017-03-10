@@ -384,7 +384,7 @@ namespace Golf_6.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction("BokningAdmin");
+                return RedirectToAction("BokningsschematAdmin");
             }
             catch
             {
@@ -596,7 +596,7 @@ namespace Golf_6.Controllers
                 {
                     Postgres p = new Postgres();
 
-                    meddelande = p.SqlParameters("FYLL PÅ HÄR deltar (medlem_id, reservation_id) VALUES (@medlemID, @bokningID);", Postgres.lista = new List<NpgsqlParameter>()
+                    meddelande = p.SqlParameters("delete from deltar where medlem_id = @medlemID and reservation_id = @bokningID;", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new Npgsql.NpgsqlParameter("@medlemID", Convert.ToInt32(medlemsIdLista[i])),
                     new Npgsql.NpgsqlParameter("@bokningID",Convert.ToInt32(bokningsId))
@@ -608,7 +608,7 @@ namespace Golf_6.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction("BokningAdmin");
+                return RedirectToAction("BokningsschematAdmin");
             }
             catch
             {
