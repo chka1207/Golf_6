@@ -608,6 +608,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\NewUser.cshtml" />
     <Content Include="Views\Tidsbokning\AvbokningAdmin.cshtml" />
+    <Content Include="Views\Tidsbokning\SokPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

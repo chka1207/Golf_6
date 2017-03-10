@@ -1,0 +1,57 @@
+﻿@model Golf_6.Models.Tidsbokning
+@using Golf_6.Controllers;
+@using Golf_6.Models;
+@using System.Collections.Generic;
+@*@model Golf_6.ViewModels.SearchViewModel*@
+
+@*@{
+    ViewBag.Title = "Index";
+}*@
+
+@using (Html.BeginForm("Sok", "Tidsbokning", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Sök</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SokFornamn, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("fornamn", null, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.SokEfternamn, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("efternamn", null, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="btnSök" value="Sök" class="btn btn-default" />
+            </div>
+        </div>
+        @{
+    List<string> l = new List<string>();
+    l = ViewBag.Lista;
+        }
+        @if (l != null)
+        {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <ul>
+                        @foreach (string w in l)
+                        {
+                            <li>@w</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+
+    </div>
+}
