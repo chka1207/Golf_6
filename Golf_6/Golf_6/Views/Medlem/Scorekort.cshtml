@@ -5,17 +5,13 @@
     Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
 }
 <head>
+    <style>
+ @@media only print
+{
+    footer, header, .sidebar, .printBut { display:none; }
+}  </style>
     <script language="javascript" type="text/javascript">
 
-        function printDiv() {
-
-            var divToPrint = document.getElementById('scorekort');
-            var newWin = window.open('', 'Print-Window', 'width=400,height=400');
-            newWin.document.open();
-            newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
-            newWin.document.close();
-            setTimeout(function () { newWin.close(); }, 10);
-        }
     </script>
 </head>
 <h2>Scorekort</h2>
@@ -111,4 +107,4 @@
     </table>
         
 </div>
-<input type="button" onclick="javascript:printDiv('center-block')" value="Skriv ut Scorekort" />
+<input class="printBut" type="button" onclick="javascript:window.print()" value="Skriv ut Scorekort" />
