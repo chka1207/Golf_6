@@ -1,5 +1,7 @@
 ﻿@model Golf_6.Models.Tidsbokning
-@using Golf_6.Models
+@using Golf_6.Controllers;
+@using Golf_6.Models;
+@using System.Collections.Generic;
 @*@model Golf_6.ViewModels.SearchViewModel*@
 
 @{
@@ -11,129 +13,203 @@
 
 
 <h2>Index</h2>
-<div>
-    <p>Behöver du ta reda på vilket golfID dina medspelare har? </p>
-    @Html.ActionLink("Sök golfID här", "GetGolfID")
-</div>
-    @*@using (Html.BeginForm("Search", "Tidsbokning", FormMethod.Post))
+@using (Html.BeginForm("Sok", "Tidsbokning", FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
+    
+     <div class="search">
+        <section id="Sök">
+            @Html.Partial("SokPartial")
+        </section>
+    </div>
+}
+   
+@*@using (Html.BeginForm("Sok", "Tidsbokning", FormMethod.Post))
+{
+ @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Sök</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <h4>Sök</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Search.SokFornamn, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Search.SokFornamn, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Search.SokFornamn, "", new { @class = "text-danger" })
-            </div>
+<div class="form-group">
+        @Html.LabelFor(model => model.SokFornamn, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+        @Html.TextBox("fornamn", null, new { @class = "form-control" })
         </div>
-
+    </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Search.SokEfternamn, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.SokFornamn, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Search.SokEfternamn, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Search.SokEfternamn, "", new { @class = "text-danger" })
+                @Html.TextBox("efternamn", null, new { @class = "form-control" })
             </div>
-        </div>
-
-
-        <div @*class="form-group"*@
-            @*<div class="col-md-offset-2 col-md-10">
-                <input type="submit" id="btnSök" value="Sök" class="btn btn-default" />
-            </div>*@
-
+        </div>*@
 
     @*<div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <ul>
-                @foreach (string w in ViewBag.Lista)
-                {
-                    <li>@w</li>
-                }
-            </ul>
+        @Html.LabelFor(model => model.SokFornamn, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SokFornamn, new { htmlAttributes = new { @class = "form-control" }})
+            @Html.ValidationMessageFor(model => model.SokFornamn, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SokEfternamn, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SokEfternamn, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SokEfternamn, "", new { @class = "text-danger" })
         </div>
     </div>*@
 
-    @*}*@
-   @*<div class="col-md-4">
-    <section id="medlemSök">
-        @Html.Partial("GetGolfID", Model)
-    </section>
-</div>*@
-
-@*<div id="partialViewSök">test</div>*@
-
-@ViewBag.Lista
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Tidsbokning</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-                @Html.LabelFor(model => model.Datum, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                    @Html.EditorFor(model => model.Datum, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Datum, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-                @Html.LabelFor(model => model.Tid, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                    @Html.EditorFor(model => model.Tid, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Tid, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-                @Html.LabelFor(model => model.Spelare2ID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                    @Html.EditorFor(model => model.Spelare2ID, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Spelare2ID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-                @Html.LabelFor(model => model.Spelare3ID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                    @Html.EditorFor(model => model.Spelare3ID, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Spelare3ID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-                @Html.LabelFor(model => model.Spelare4ID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                    @Html.EditorFor(model => model.Spelare4ID, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Spelare4ID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+    @*<div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" id="btnSök" value="Sök" class="btn btn-default" />
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+       @{
+    List<string> l = new List<string>();
+    l = ViewBag.Lista;
+       } 
+        @if (l != null)
+        {
+             <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <ul>
+                @foreach (string w in l)
+                {
+                <li>@w</li>
+                }
+            </ul>
+        </div>
+    </div>
+        }
+   
 </div>
+            }*@
+            @*<div>
+                <p>Behöver du ta reda på vilket golfID dina medspelare har? </p>
+                @Html.ActionLink("Sök golfID här", "GetGolfID")
+            </div>*@
+            @*@using (Html.BeginForm("Search", "Tidsbokning", FormMethod.Post))
+            {
+            @Html.AntiForgeryToken()
 
-@section Scripts {
-      
-    @Scripts.Render("~/bundles/jqueryval")
+            <div class="form-horizontal">
+                <h4>Sök</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-}
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Search.SokFornamn, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Search.SokFornamn, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Search.SokFornamn, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Search.SokEfternamn, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Search.SokEfternamn, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Search.SokEfternamn, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group"
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" id="btnSök" value="Sök" class="btn btn-default" />
+                    </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <ul>
+                        foreach (string w in ViewBag.Lista)
+                        {
+                            <li>w</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            }*@
+            @*<div class="col-md-4">
+                <section id="medlemSök">
+                    @Html.Partial("GetGolfID", Model)
+                </section>
+            </div>*@
+
+            @*<div id="partialViewSök">test</div>*@
+
+            @*@ViewBag.Lista*@
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4>Tidsbokning</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Datum, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Datum, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Datum, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Tid, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Tid, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Tid, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Spelare2ID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Spelare2ID, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Spelare2ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Spelare3ID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Spelare3ID, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Spelare3ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Spelare4ID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Spelare4ID, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Spelare4ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div>
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+
+            @section Scripts {
+
+                @Scripts.Render("~/bundles/jqueryval")
+
+            }
