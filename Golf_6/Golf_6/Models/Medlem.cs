@@ -72,7 +72,7 @@ namespace Golf_6.Models
             DataTable dt = new DataTable();
 
 
-            string sql = "SELECT scorekort.hal, scorekort.gul, scorekort.rod, scorekort.par FROM scorekort ORDER BY scorekort.hal";
+            string sql = "SELECT scorekort.hal, scorekort.gul, scorekort.rod, scorekort.par, scorekort.hcp FROM scorekort ORDER BY scorekort.hal";
 
             dt = pg.sqlFragaTable(sql);
 
