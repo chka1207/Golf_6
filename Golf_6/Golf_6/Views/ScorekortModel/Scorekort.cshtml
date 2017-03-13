@@ -1,0 +1,132 @@
+﻿@model Golf_6.Models.ScorekortModel
+@using Golf_6.Models;
+@using System.Data;
+    @{
+        ViewBag.Title = "Scorekort";
+    }
+<head>
+    <style>
+        @@media only print {
+           title, footer, header, .sidebar, .printBut {
+                display: none;
+            }
+        }
+    </style>
+
+</head>
+    <h2>Scorekort</h2>
+
+    <div class="center-block" id="scorekort">
+        <table id="genereraScorekort" class="table table-striped table-responsive table-bordered" cellspacing="0" style="width: auto">
+
+            <thead>
+                <tr>
+                    <th colspan="6" height="20px">Förnamn:</th>
+                    <th colspan="4" height="20px">Efternamn:</th>
+                    <th colspan="4" height="20px">Golf-ID:</th>
+                </tr>
+                <tr>
+                    <th colspan="6" height="20px">Datum:</th>
+                    <th colspan="4" height="20px">Starttid:</th>
+                    <th colspan="4" height="20px">Erhållna slag:</th>
+                </tr>
+                <tr>
+                    <th colspan="6" scope="colgroup" align="center">Hålslaget GK</th>
+                    <th colspan="2" scope="colgroup" height="20px"></th>
+                    <th colspan="2" scope="colgroup" height="20px"></th>
+                    <th colspan="2" scope="colgroup" height="20px"></th>
+                    <th colspan="2" scope="colgroup" height="20px"></th>
+                </tr>
+                <tr>
+                    <td>Hål</td>
+                    @foreach (DataRow row in Model.scoreKort.Rows)
+                    {
+                        if (Convert.ToInt16(row["halid"]) == 1)
+                        {
+                            <td>@row["namn"]</td>
+                        }
+                    }
+                    <td>Par</td>
+                    <td>Hcp</td>
+                    <td>Er-slag</td>
+                    @for (int i = 0; i < 4; i++)
+                    {
+                        <td>Slag</td>
+                        <td>Poäng</td>
+                    }
+                </tr>
+                @{ int id = 1;}
+                @{ DataRow previousRow = null;}
+                @foreach (DataRow row in Model.scoreKort.Rows)
+                {
+                    if (Convert.ToInt16(row["halid"]) == id)
+                    {
+                        if(previousRow !=null)
+                        { 
+                            <td>@previousRow["par"]</td>
+                            <td>@previousRow["hcp"]</td>
+
+                        for (int i = 0; i < 4; i++)
+                        {
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        }
+                            <td>&nbsp;</td>
+                        @:</tr>
+                        }
+                        if (id == 10)
+                        {
+                            <tr>
+                                @for (int i = 0; i < 5 + 8; i++)
+                                {
+                                    <td>&nbsp;</td>
+                                }
+                                <td>&nbsp;</td>
+                            </tr>
+                        }
+
+                            @:<tr>
+                        <td>@row["halid"]</td>
+                        id++;
+                    }
+                    <td>@row["meter"]</td>
+                    previousRow = row;
+                }
+                @if (previousRow != null)
+                {
+                    <td>@previousRow["hcp"]</td>
+                    <td>@previousRow["par"]</td>
+                    for (int i = 0; i < 4; i++)
+                    {
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    }
+                    <td>&nbsp;</td>
+                    @:</tr>
+                }
+            @if (id == 19)
+            {
+            <tr>
+                @for (int i = 0; i < 5 + 8; i++)
+                {
+                    <td>&nbsp;</td>
+                }
+                <td>&nbsp;</td>
+            </tr>
+                id++;
+            }
+            @if (id == 20)
+            {
+                <tr>
+                    @for (int i = 0; i < 5 + 8; i++)
+                {
+                        <td>&nbsp;</td>
+                    }
+                    <td>&nbsp;</td>
+                </tr>
+            }
+
+</table>
+
+</div>
+<input class="printBut" type="button" onclick="javascript:window.print()" value="Skriv ut Scorekort" />
