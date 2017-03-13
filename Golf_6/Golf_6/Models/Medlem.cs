@@ -52,7 +52,7 @@ namespace Golf_6.Models
 
         }
         public void UppdateraPersonuppgifter(string fornamn, string efternamn, string adress, string postnummer, string ort,
-    string email, string kon, double handikapp, string golfid, string telefonnummer)
+    string email, string kon, string handikapp, string medlemid, string telefonnummer)
         {
             Postgres db = new Postgres();
 
@@ -60,7 +60,7 @@ namespace Golf_6.Models
                 "UPDATE medlemmar SET fornamn=@fornamn, efternamn=@efternamn, adress=@adress, " +
                 "postnummer=@postnummer, ort=@ort, email=@email, kon=@kon," +
                 "handikapp=@handikapp, telefonnummer=@telefonnummer " +
-                "WHERE golfid=@golfid;",
+                "WHERE id=@id;",
                 Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@fornamn", fornamn),
@@ -72,7 +72,7 @@ namespace Golf_6.Models
                     new NpgsqlParameter("@kon", kon),
                     new NpgsqlParameter("@handikapp", handikapp),
                     new NpgsqlParameter("@telefonnummer", telefonnummer),
-                    new NpgsqlParameter("@golfid", golfid)
+                    new NpgsqlParameter("@id", medlemid)
         });
 
         }
