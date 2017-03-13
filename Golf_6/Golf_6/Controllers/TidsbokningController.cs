@@ -78,72 +78,72 @@ namespace Golf_6.Controllers
             return View(dt);
         }
          // GET: Alla bokningar för en dag, ADMIN
-         [HttpGet]
-         [AllowAnonymous]
-         public ActionResult BokningsschematAdmin()
-         {
-             Tidsbokning bokning = new Tidsbokning();
-             DataTable dt = new DataTable();
-             DateTime dag = DateTime.Today;
+         //[HttpGet]
+         //[AllowAnonymous]
+         //public ActionResult BokningsschematAdmin()
+         //{
+         //    Tidsbokning bokning = new Tidsbokning();
+         //    DataTable dt = new DataTable();
+         //    DateTime dag = DateTime.Today;
 
-             {
-                 Postgres x = new Postgres();
-                 {
-                     dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
-                {
-                    new Npgsql.NpgsqlParameter("@par1", dag)
-                });
+         //    {
+         //        Postgres x = new Postgres();
+         //        {
+         //            dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
+         //       {
+         //           new Npgsql.NpgsqlParameter("@par1", dag)
+         //       });
 
-                 }
-                 List<Tidsbokning> bokningslista = new List<Tidsbokning>();
-                 foreach (DataRow dr in dt.Rows)
-                 {
-                     Tidsbokning t = new Tidsbokning();
-                     t.Tid = Convert.ToDateTime(dr["tid"].ToString());
-                     t.MedlemKön = dr["kon"].ToString();
-                     t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
-                     bokningslista.Add(t);
-                 }
-                 ViewBag.List = bokningslista;
+         //        }
+         //        List<Tidsbokning> bokningslista = new List<Tidsbokning>();
+         //        foreach (DataRow dr in dt.Rows)
+         //        {
+         //            Tidsbokning t = new Tidsbokning();
+         //            t.Tid = Convert.ToDateTime(dr["tid"].ToString());
+         //            t.MedlemKön = dr["kon"].ToString();
+         //            t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
+         //            bokningslista.Add(t);
+         //        }
+         //        ViewBag.List = bokningslista;
 
-             }
-             bokning.Datepicker = DateTime.Now.Date.ToShortDateString();
-             return View(bokning);
-         }
+         //    }
+         //    bokning.Datepicker = DateTime.Now.Date.ToShortDateString();
+         //    return View(bokning);
+         //}
 
          // POST: Ändra dag, ADMIN
-         [HttpPost]
-         [AllowAnonymous]
-         public ActionResult BokningsschematAdmin(FormCollection collection)
-         {
-             string datum = collection["datepicker"];
-             DataTable dt = new DataTable();
+         //[HttpPost]
+         //[AllowAnonymous]
+         //public ActionResult BokningsschematAdmin(FormCollection collection)
+         //{
+         //    string datum = collection["datepicker"];
+         //    DataTable dt = new DataTable();
 
-             {
-                 Postgres x = new Postgres();
-                 {
-                     dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
-                {
-                    new Npgsql.NpgsqlParameter("@par1", Convert.ToDateTime(datum))
-                });
+         //    {
+         //        Postgres x = new Postgres();
+         //        {
+         //            dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
+         //       {
+         //           new Npgsql.NpgsqlParameter("@par1", Convert.ToDateTime(datum))
+         //       });
 
-                 }
-                 List<Tidsbokning> bokningslistaPost = new List<Tidsbokning>();
-                 foreach (DataRow dr in dt.Rows)
-                 {
-                     Tidsbokning t = new Tidsbokning();
-                     t.Tid = Convert.ToDateTime(dr["tid"].ToString());
-                     t.MedlemKön = dr["kon"].ToString();
-                     t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
-                     bokningslistaPost.Add(t);
-                 }
-                 ViewBag.List = bokningslistaPost;
+         //        }
+         //        List<Tidsbokning> bokningslistaPost = new List<Tidsbokning>();
+         //        foreach (DataRow dr in dt.Rows)
+         //        {
+         //            Tidsbokning t = new Tidsbokning();
+         //            t.Tid = Convert.ToDateTime(dr["tid"].ToString());
+         //            t.MedlemKön = dr["kon"].ToString();
+         //            t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
+         //            bokningslistaPost.Add(t);
+         //        }
+         //        ViewBag.List = bokningslistaPost;
 
-             }
-             Tidsbokning valtDatum = new Tidsbokning();
-             valtDatum.Datepicker = datum;
-             return View(valtDatum);
-         }
+         //    }
+         //    Tidsbokning valtDatum = new Tidsbokning();
+         //    valtDatum.Datepicker = datum;
+         //    return View(valtDatum);
+         //}
 
         //Get: Alla bokningar för en dag ADMIN
          [HttpGet]
@@ -671,7 +671,7 @@ namespace Golf_6.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction("BokningsschematAdmin");
+                return RedirectToAction("AdminBokningsschema");
             }
             catch
             {
@@ -890,7 +890,7 @@ namespace Golf_6.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction("BokningsschematAdmin");
+                return RedirectToAction("AdminBokningsschema");
             }
             catch
             {
