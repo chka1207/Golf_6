@@ -11,6 +11,8 @@ using System.Web;
 namespace Golf_6.Models
 {
 
+    //Hela lösningen för login och att tilldela en medlem ett lösenord har gjorts i samarbete med Nicklas Persson i grupp 4
+
     public class AccountModels
     {
         public class LoginViewModel

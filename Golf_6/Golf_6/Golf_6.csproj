@@ -611,6 +611,7 @@
     <Content Include="Views\Account\NewUser.cshtml" />
     <Content Include="Views\Tidsbokning\AvbokningAdmin.cshtml" />
     <Content Include="Views\Tidsbokning\SokPartial.cshtml" />
+    <Content Include="Views\Tidsbokning\AdminBokningsschema.cshtml" />
     <Content Include="Views\ScorekortModel\Scorekort.cshtml" />
   </ItemGroup>
   <ItemGroup>
