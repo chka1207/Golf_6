@@ -436,7 +436,7 @@ namespace Golf_6.Controllers
         ////
         // POST: /Account/LogOff
         
-        [HttpPost]
+        
         public ActionResult LogOff()
         {
             var ctx = Request.GetOwinContext();
