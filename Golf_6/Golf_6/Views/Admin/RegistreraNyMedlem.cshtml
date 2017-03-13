@@ -11,7 +11,7 @@
 
 @using (Html.BeginForm("RegistreraNyMedlem", "Admin", FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
+    @*@Html.AntiForgeryToken()*@
     @Html.ValidationMessageFor(model => model.Admin)
 
     <div class="form-horizontal">
