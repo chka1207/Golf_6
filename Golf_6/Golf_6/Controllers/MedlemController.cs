@@ -138,7 +138,7 @@ namespace Golf_6.Controllers
         }
 
         // GET: Tidsbokning/Create i befintlig tid Admin
-        [Authorize(Roles = "2")]
+        [Authorize(Roles = "1")]
         public ActionResult AvbokningMedlem()
         {
             //hämtar ut vem som är bokare för den tiden
@@ -233,7 +233,7 @@ namespace Golf_6.Controllers
         }
 
         // POST: Tidsbokning/Avboka Admin
-        [Authorize(Roles = "2")]
+        [Authorize(Roles = "1")]
         [HttpPost]
         public ActionResult AvbokningMedlem(FormCollection collection)
         {
