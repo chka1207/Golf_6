@@ -13,7 +13,15 @@ namespace Golf_6.Controllers
 {
     public class MedlemController : Controller
     {
+        //Uppdatera personuppgifter
+        [AllowAnonymousAttribute]
+        public ActionResult UppdateraPersonuppgifter()
+        {
+            Medlem m = new Medlem();
+            m.UppdateraPersonuppgifter();
 
+            return View(m);
+        }
         // Logga ut och kom till index
         [AllowAnonymousAttribute]
         public ActionResult LoggaUt()

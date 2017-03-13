@@ -33,6 +33,7 @@ namespace Golf_6.Models
             p.sqlFragaEnParameter(sql, parameter);
             while (p._dr.Read())
             {
+                m.GolfID = p._dr["golfid"].ToString();
                 m.Förnamn = p._dr["fornamn"].ToString();
                 m.Efternamn = p._dr["efternamn"].ToString();
                m.Adress = p._dr["adress"].ToString();
@@ -50,7 +51,31 @@ namespace Golf_6.Models
 
 
         }
+        public void UppdateraPersonuppgifter(string fornamn, string efternamn, string adress, string postnummer, string ort,
+    string email, string kon, double handikapp, string golfid, string telefonnummer)
+        {
+            Postgres db = new Postgres();
 
+            db.SqlParameters(
+                "UPDATE medlemmar SET fornamn=@fornamn, efternamn=@efternamn, adress=@adress, " +
+                "postnummer=@postnummer, ort=@ort, email=@email, kon=@kon," +
+                "handikapp=@handikapp, telefonnummer=@telefonnummer " +
+                "WHERE golfid=@golfid;",
+                Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@fornamn", fornamn),
+                    new NpgsqlParameter("@efternamn", efternamn),
+                    new NpgsqlParameter("@adress", adress),
+                    new NpgsqlParameter("@postnummer", postnummer),
+                    new NpgsqlParameter("@ort", ort),
+                    new NpgsqlParameter("@email", email),
+                    new NpgsqlParameter("@kon", kon),
+                    new NpgsqlParameter("@handikapp", handikapp),
+                    new NpgsqlParameter("@telefonnummer", telefonnummer),
+                    new NpgsqlParameter("@golfid", golfid)
+        });
+
+        }
         public List<Medlem> GetMedlem(string psql, int medlemID)
         {
             Postgres x = new Postgres();
