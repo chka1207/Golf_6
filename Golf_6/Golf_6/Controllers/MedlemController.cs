@@ -34,11 +34,11 @@ namespace Golf_6.Controllers
             return RedirectToAction("Index", "Home", "Home");
         }
         // Visa Mina bokningar
-        [AllowAnonymousAttribute]
-        public ActionResult MinaBokningar()
-        {
-            return View();
-        }
+        //[AllowAnonymousAttribute]
+        //public ActionResult MinaBokningar()
+        //{
+        //    return View();
+        //}
         // Visa personuppgifter
    
         [AllowAnonymousAttribute]
@@ -131,17 +131,18 @@ namespace Golf_6.Controllers
 
         // GET: Tidsbokning/Create i befintlig tid Admin
         [AllowAnonymous]
+      
         public ActionResult AvbokningMedlem()
         {
             //hämtar ut vem som är bokare för den tiden
             //select bokaren from bokare where tid = 1
-            string identitet = "993";//User.Identity.Name;
+            string identitet = "13";//User.Identity.Name;
             //DateTime dt = Convert.ToDateTime(Request.QueryString["validate"]);
             Tidsbokning t = new Tidsbokning();
             //string tid = dt.ToShortTimeString();
             //string datum = dt.ToShortDateString();
-            string datum = "2017-03-09";
-            string tid = "07:20:00";
+            string datum = "2017-03-10";
+            string tid = "10:00:00";
             t.Datum = Convert.ToDateTime(datum);
             t.Tid = Convert.ToDateTime(tid);
 
@@ -337,5 +338,24 @@ namespace Golf_6.Controllers
             return View(dt);
 
         } 
+
+        //Visar mina bokningar 
+        [AllowAnonymous]
+        public ActionResult MinaBokningar()
+        {
+            Medlem m = new Medlem();
+            DataTable data = new DataTable();
+            Postgres pg = new Postgres();
+            string id = User.Identity.Name;
+            m.MedlemID = Convert.ToInt16(id);
+
+            data = pg.SqlFrågaParameters("SELECT DISTINCT reservation.datum, reservation.tid FROM public.medlemmar, public.reservation, public.deltar WHERE deltar.reservation_id = reservation.bokning_id AND deltar.medlem_id = @medlem", Postgres.lista = new List<Npgsql.NpgsqlParameter>()
+            {
+                new Npgsql.NpgsqlParameter("@medlem", m.MedlemID)
+            });
+            m.bokningar = data;
+            
+            return View(m); 
+        }
     }
 }
