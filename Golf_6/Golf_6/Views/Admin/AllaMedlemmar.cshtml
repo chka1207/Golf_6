@@ -13,8 +13,13 @@
     @Styles.Render("~/Content/DataTables/css/dataTables.bootstrap.min.css")
     @Styles.Render("~/Content/DataTables/css/responsive.bootstrap.min.css")
     @Styles.Render("~/Content/calendar.css")
+    
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    @Styles.Render("~/Content/DataTables/css/responsive.dataTables.min.css")
+@Styles.Render("~/Content/DataTables/css/responsive.dataTables.min.css")
     @Styles.Render("~/Content/DataTables/css/buttons.dataTables.min.css")
 
 <h2>Redigera befintlig medlem</h2>
@@ -155,11 +160,23 @@
                         @Html.DropDownList("medlemskategori", new SelectList(medlemskategori, "Value", "Text"), new { style = "width: 168px;" })
                     </div>
                     <br/>
-                    <div class="text-left col-lg-3">
-                        Golf-ID:
+                    <div id="se-golfid">
+                        <div class="text-left col-lg-3">
+                            Golf-ID:
+                        </div>
+                        <div class="col-lg-7">
+                            @Html.TextBox("golfid")
+                        </div>
                     </div>
-                    <div class="col-lg-7">
-                        @Html.TextBox("golfid")
+                    
+                    <div id="välja-födelsedatum">
+                        <div class="text-left col-lg-3">
+                            Födelsedatum:
+                        </div>
+                        <div class="col-lg-7">
+                            <input type="text" name="datepickerFödelsedatum" id="datepickerFödelsedatum">
+                            @Html.Hidden("nyttGolfid")
+                        </div>
                     </div>
                     <br/>
                     <div class="text-left col-lg-3">
@@ -167,9 +184,6 @@
                     </div>
                     <div class="col-lg-7">
                         @Html.TextBox("telefonnummer")
-                    </div>
-                    <div class="col-lg-9">
-                        <input type="text" name="datepickerFödelsedatum" id="datepickerFödelsedatum">
                     </div>
                     <br/>
                 </form>
@@ -194,6 +208,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
+    
     @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.min.js")
     @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap.min.js")
     @Scripts.Render("~/Scripts/DataTables/dataTables.responsive.min.js")
@@ -202,5 +217,4 @@
     @*Testar ny funktion*@
     @Scripts.Render("~/Scripts/DataTables/dataTables.buttons.min.js")
     @Scripts.Render("~/Scripts/DataTables/buttons.colVis.min.js")
-    @Scripts.Render("~/scripts/jquery-ui-1.12.1.js")
 }
