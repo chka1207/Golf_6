@@ -79,7 +79,6 @@ $(document).ready(function () { //Denna laddar in värdena från varje cell till
         $('#email').val(data[5]);
         $('#kon').val(data[6]);
         $('#handikapp').val(data[7]);
-        //$('#medlemskategori').val(data[8]);
         if (data[8] === "Junior 0-12") {
             $('select#medlemskategori').val('1');
         }
@@ -105,7 +104,7 @@ $(document).ready(function () { //Denna laddar in värdena från varje cell till
 });
 
 $(document).ready(function() { //Öppnar upp modal
-    $('#btn-ny-medlem-modal').on('click', function() {
+    $('#btn-ny-medlem-modal').on('click', function () {
         $('#modal-hantera-medlem').modal();
         $('#modal-namn-medlem').html("Lägga till ny medlem");
         $('#fornamn').val("");
@@ -174,10 +173,12 @@ $(function () {
     $('#datepickerFödelsedatum').datepicker({
         onSelect: function (date) {
             $("#golfid").val(date);
+            var number = 100 + Math.floor(Math.random() * 999);
+            $('#golfid').val($('#golfid').val() + number);
         },
         changeYear: true,
         yearRange: "1900:2017",
-        dateFormat: 'ymmdd'
+        dateFormat: 'ymmdd-'
     });
 
     var currentDate = $(".selector").datepicker("getDate");
