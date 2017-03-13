@@ -114,7 +114,7 @@ namespace Golf_6.Controllers
 
                     if (User.IsInRole("1"))
                     {
-                        return RedirectToAction("Index", "Medlem");
+                        return RedirectToAction("MinaBokningar", "Medlem");
                     }
                     if (User.IsInRole("2"))
                     {
@@ -436,7 +436,7 @@ namespace Golf_6.Controllers
         ////
         // POST: /Account/LogOff
         
-        [HttpPost]
+        
         public ActionResult LogOff()
         {
             var ctx = Request.GetOwinContext();
