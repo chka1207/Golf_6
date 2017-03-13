@@ -17,12 +17,14 @@ namespace Golf_6.Controllers
         //Uppdatera personuppgifter
         [HttpPost]
         [AllowAnonymousAttribute]
-        public ActionResult UppdateraPersonuppgifter()
+        public ActionResult UppdateraPersonuppgifter(string fornamninput, string efternamninput, string adressinput, string ortinput, string postnummerinput, string emailinput, string telefonnummerinput, string hcpinput, string koninput )
         {
             Medlem m = new Medlem();
-           // m.UppdateraPersonuppgifter();
+            string identitet = User.Identity.Name;
+            
+            m.UppdateraPersonuppgifter(fornamninput, efternamninput, adressinput, postnummerinput, ortinput, emailinput, koninput, hcpinput, identitet, telefonnummerinput);
 
-            return View(m);
+            return RedirectToAction("Personuppgifter", "Medlem");
         }
         // Logga ut och kom till index
         [AllowAnonymousAttribute]

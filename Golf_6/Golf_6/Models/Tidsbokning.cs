@@ -308,5 +308,64 @@ namespace Golf_6.Models
             }
             return y;
         }
+
+        public bool BokningarIdag (List<string> golfIDLista, DateTime datum)
+        {
+            Postgres x = new Postgres();
+            DataTable dt = new DataTable();
+            int räknare = 0;
+            List<string> golfIDList = golfIDLista;
+            for(int i = 0; i < golfIDList.Count; i++)
+            {
+                dt = x.SqlFrågaParameters("select * from deltar where medlem_id = (select id from medlemmar where golfid = @golfid) and reservation_id in (select bokning_id from reservation where datum = DATE(@datum));", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@golfid", golfIDList[i]),
+                    new NpgsqlParameter("@datum", Convert.ToDateTime(datum))
+                });
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    int gäst1 = 1035, gäst2 = 1036, gäst3 = 1037, gäst4 = 1038, värde =0 ;
+                    foreach(DataRow dr in dt.Rows)
+                    {
+                        värde = Convert.ToInt32(dr["medlem_id"].ToString());
+                    }
+                    if (värde == gäst1 || värde == gäst2 || värde == gäst3 || värde == gäst4)
+                    {
+
+                    }
+                    else
+                    {
+                        räknare++;
+                    }
+                }
+            }
+            if(räknare > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool antalGäster (List<string> golfIDLista)
+        {
+            int räknare = 0;
+            for(int i = 0; i < golfIDLista.Count; i++)
+            {
+                if(golfIDLista[i] == "1")
+                {
+                    räknare++;
+                }
+            }
+            if(räknare > 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
