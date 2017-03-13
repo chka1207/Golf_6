@@ -35,79 +35,73 @@
 </p>
 
     @using (Html.BeginForm())
+
     {
-        <div class=" form-horizontal">
-            <hr />
-            @Html.ValidationSummary(true)
+        List<string> l = new List<string>();
+        string a, b, c, d = "";
+        l = ViewBag.Golfare;
+        String datum = ViewBag.Datum;
+        String tid = ViewBag.Tid;
+        Tidsbokning t = new Tidsbokning();
+        string bokningsID = ViewBag.BokningsID;
+        string bokareID = ViewBag.BokareID;
+        bool bokareInlagd = false;
+        string bokareGolfID = ViewBag.BokareGolfID;
 
-            @{
-                List<string> l = new List<string>();
-                string a, b, c, d = "";
-                l = ViewBag.Golfare;
-                String datum = ViewBag.Datum;
-                String tid = ViewBag.Tid;
-                Tidsbokning t = new Tidsbokning();
-                string bokningsID = ViewBag.BokningsID;
-            string bokareID = ViewBag.BokareID;
-            bool bokareInlagd = false;
-            string hcp1, hcp2, hcp3, hcp4 = "";
-            string bokareGolfID = ViewBag.BokareGolfID;
-
-                if (l != null)
+        if (l != null)
+        {
+            for (int i = 0; i <= l.Count; i++)
+            {
+                if (l.Count == 1 || l.Count > 1)
                 {
-                    for (int i = 0; i <= l.Count; i++)
-                    {
-                        if (l.Count == 1 || l.Count > 1)
-                        {
-                            a = l[0];
-                            t.Spelare1ID = a;
-                        }
-                        if (l.Count == 2 || l.Count > 2)
-                        {
-                            b = l[1];
-                            t.Spelare2ID = b;
-                        }
-                        if (l.Count == 3 || l.Count > 3)
-                        {
-                            c = l[2];
-                            t.Spelare3ID = c;
-                        }
-                        if (l.Count == 4 || l.Count > 4)
-                        {
-                            d = l[3];
-                            t.Spelare4ID = d;
-                        }
-
-                    }
+                    a = l[0];
+                    t.Spelare1ID = a;
                 }
-                @Html.Hidden("bokareID", t.BokareID);
-                @Html.Hidden("bokningsID", bokningsID);
-                @Html.Hidden("nySpelare1", t.Spelare1ID);
-                @Html.Hidden("nySpelare2", t.Spelare2ID);
-                @Html.Hidden("nySpelare3", t.Spelare3ID);
-                @Html.Hidden("nySpelare4", t.Spelare4ID);
+                if (l.Count == 2 || l.Count > 2)
+                {
+                    b = l[1];
+                    t.Spelare2ID = b;
+                }
+                if (l.Count == 3 || l.Count > 3)
+                {
+                    c = l[2];
+                    t.Spelare3ID = c;
+                }
+                if (l.Count == 4 || l.Count > 4)
+                {
+                    d = l[3];
+                    t.Spelare4ID = d;
+                }
 
             }
+        }
+            @Html.Hidden("bokareID", t.BokareID);
+            @Html.Hidden("bokningsID", bokningsID);
+            @Html.Hidden("nySpelare1", t.Spelare1ID);
+            @Html.Hidden("nySpelare2", t.Spelare2ID);
+            @Html.Hidden("nySpelare3", t.Spelare3ID);
+            @Html.Hidden("nySpelare4", t.Spelare4ID);
 
-            <div class="form-group">
-                <style>
+        
+
+        <div class="form-group">
+            <style>
                 #tbdatum {
-                    }
-                </style>
-                <div class="col-md-10">
-                    <label>Datum </label>
-                @Html.TextBox("tbdatum", datum, new { @class = "form-control", @readonly = "readonly" })
-                </div>
-            </div>
+                }
+            </style>
             <div class="col-md-10">
-                <label>Tid </label>
-            @Html.TextBox("tbtid", tid, new { @class = "form-control", @readonly = "readonly" })
+                <label>Datum </label>
+                @Html.TextBox("tbdatum", datum, new { @class = "form-control", @readonly = "readonly" })
             </div>
-
         </div>
+        <div class="col-md-10">
+            <label>Tid </label>
+            @Html.TextBox("tbtid", tid, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+                
         <div class="form-group">
 
-        <div class="col-md-10">
+            <div class="col-md-10">
                 <label>Spelare nr 1: </label>
                 @{
                     if (t.Spelare1ID == null)
@@ -121,7 +115,7 @@
                     }
                 }
 
-        </div>
+            </div>
         </div>
         <div class="form-group">
 
@@ -131,25 +125,20 @@
                     if (t.Spelare2ID == null && bokareInlagd)
                     {
                         @Html.TextBox("myTextBox2", t.Spelare2ID, new { @class = "form-control" })
-                }
-}
-                @using (Ajax.BeginForm(
-                    "SokId",
-                    "Tidsbokning",
-                    null,
-                    new AjaxOptions
-                    {
-                        UpdateTargetId = "lblResult",
-                        InsertionMode = InsertionMode.Replace,
-                        HttpMethod = "POST"
-                    },
-                    new { id = "SampleForm" }))
-                    {
-                        <span>Förnamn: </span> @Html.TextBox("sokfornamn")<br />
-                        <span>Efternamn: </span> @Html.TextBox("sokefternamn")<br />
-                        <span id="lblResult"></span>
-                        <button type="submit">Sök</button>
                     }
+                    else if (t.Spelare2ID == null && bokareInlagd == false)
+                    {
+                        @Html.TextBox("myTextBox2", bokareGolfID, new { @class = "form-control", @readonly = "readonly" })
+                        bokareInlagd = true;
+                    }
+                    else
+                    {
+                        @Html.TextBox("myTextBox2", t.Spelare2ID, new { @class = "form-control", @readonly = "readonly" })
+                    }
+                }
+            </div>
+        </div>
+        <div class="form-group">
 
             <div class="col-md-10">
                 <label>Spelare nr 3: </label>
@@ -169,7 +158,7 @@
                     }
                 }
             </div>
-                </div>
+        </div>
         <div class="form-group">
 
             <div class="col-md-10">
@@ -201,15 +190,15 @@
             </div>
         </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
 
-@section Scripts {
+        @section Scripts {
 
-    @Scripts.Render("~/bundles/jqueryval")
+            @Scripts.Render("~/bundles/jqueryval")
 
-}
+        }
 
                     }
 
@@ -220,7 +209,23 @@
     </div>*@
 
 
-
+            @*@using (Ajax.BeginForm(
+                        "SokId",
+                        "Tidsbokning",
+                        null,
+                        new AjaxOptions
+                        {
+                            UpdateTargetId = "lblResult",
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "POST"
+                        },
+                        new { id = "SampleForm" }))
+            {
+                <span>Förnamn: </span> @Html.TextBox("sokfornamn")<br />
+                        <span>Efternamn: </span> @Html.TextBox("sokefternamn")<br />
+                        <span id="lblResult"></span>
+                        <button type="submit">Sök</button>
+            }*@
 
 
 
