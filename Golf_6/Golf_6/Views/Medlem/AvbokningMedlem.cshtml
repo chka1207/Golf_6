@@ -1,0 +1,162 @@
+﻿@model Golf_6.Models.Tidsbokning
+@using Golf_6.Controllers;
+@using Golf_6.Models;
+@using System.Collections.Generic;
+@{
+    ViewBag.Title = "AvbokningMedlem";
+}
+@{
+    Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
+}
+<h2>Avbokning</h2>
+<br />
+<p>Avboka genom att låta spelarens GolfID stå kvar i textrutan.
+    <br />
+    Spelarna som fortfarande ska finnas kvar i bokningen ska suddas ut från textrutorna.</p>
+@using (Html.BeginForm())
+{
+    @*@Html.AntiForgeryToken()*@
+
+    <div class="form-horizontal">
+        @*<h4>Tidsbokning</h4>*@
+        <hr />
+        @Html.ValidationSummary(true)
+
+        @{
+            List<string> l = new List<string>();
+            string a, b, c, d = "";
+            l = ViewBag.Golfare;
+            String datum = ViewBag.DatumAdmin;
+            String tid = ViewBag.TidAdmin;
+            Tidsbokning t = new Tidsbokning();
+            string bokningsID = ViewBag.BokningsId;
+            string bokaren = ViewBag.Bokaren;
+            
+
+    if (l != null)
+    {
+        for (int i = 0; i <= l.Count; i++)
+        {
+            if (l.Count == 1 || l.Count > 1)
+            {
+                a = l[0];
+                t.Spelare1ID = a;
+            }
+            if (l.Count == 2 || l.Count > 2)
+            {
+                b = l[1];
+                t.Spelare2ID = b;
+            }
+            if (l.Count == 3 || l.Count > 3)
+            {
+                c = l[2];
+                t.Spelare3ID = c;
+            }
+            if (l.Count == 4 || l.Count > 4)
+            {
+                d = l[3];
+                t.Spelare4ID = d;
+            }
+
+        }
+    }
+
+            @Html.Hidden("bokningsID", bokningsID);
+            @Html.Hidden("nySpelare1", t.Spelare1ID);
+            @Html.Hidden("nySpelare2", t.Spelare2ID);
+            @Html.Hidden("nySpelare3", t.Spelare3ID);
+            @Html.Hidden("nySpelare4", t.Spelare4ID);
+        }
+        <div class="form-group">
+            <style>
+                #tbdatum {
+                }
+            </style>
+            <div class="col-md-10">
+                <label>Datum </label>
+                @Html.TextBox("tbdatum", datum, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-10">
+                <label>Tid </label>
+                @Html.TextBox("tbtid", tid, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-10">
+                <label>Spelare nr 1: </label>
+                @{
+                
+                if (t.Spelare1ID != null && l.Count != 1)
+                 {
+                      @Html.TextBox("myTextBox1", t.Spelare1ID, new { @class = "form-control" })
+                 }
+                 else 
+                 {
+                      @Html.TextBox("myTextBox1", t.Spelare1ID, new { @class = "form-control", @readonly = "readonly" })
+                 }
+  
+                 }
+
+            </div>
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-10">
+                <label>Spelare nr 2: </label>
+                @{if (t.Spelare2ID != null && l.Count != 1)
+                {
+                    @Html.TextBox("myTextBox2", t.Spelare2ID, new { @class = "form-control" })
+                }
+                else if (t.Spelare2ID == null)
+                {
+                    @Html.TextBox("myTextBox2", t.Spelare2ID, new { @class = "form-control", @readonly = "readonly" })
+                }
+
+                }
+            </div>
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-10">
+                <label>Spelare nr 3: </label>
+                @{if (t.Spelare3ID != null && l.Count != 1)
+                {
+                    @Html.TextBox("myTextBox3", t.Spelare3ID, new { @class = "form-control" })
+                }
+                else if (t.Spelare3ID == null)
+                {
+                    @Html.TextBox("myTextBox3", t.Spelare3ID, new { @class = "form-control", @readonly = "readonly" })
+                }
+
+                }
+            </div>
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-10">
+                <label>Spelare nr 4: </label>
+                @{if (t.Spelare4ID != null && l.Count != 1)
+                {
+                    @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control" })
+                }
+                else if (t.Spelare4ID == null)
+                {
+                    @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control", @readonly = "readonly" })
+                }
+
+                }
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Avboka" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

@@ -1141,7 +1141,7 @@ namespace Golf_6.Controllers
             return View("AvbokningAdmin");
         }
 
-        // POST: Tidsbokning/Boka Admin
+        // POST: Tidsbokning/Avboka Admin
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Avboka(FormCollection collection)
