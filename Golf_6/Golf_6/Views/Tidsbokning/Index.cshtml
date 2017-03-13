@@ -2,6 +2,7 @@
 @using Golf_6.Controllers;
 @using Golf_6.Models;
 @using System.Collections.Generic;
+@using System.Web.Mvc.Ajax;
 @*@model Golf_6.ViewModels.SearchViewModel*@
 
 @{
@@ -11,7 +12,10 @@
     ViewBag.Title = "Index";
 }
 
-
+@*<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.2/jquery.validate.unobtrusive.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.unobtrusive-ajax.min.js"></script>*@
 
 
 
@@ -42,7 +46,7 @@
                 String tid = ViewBag.Tid;
                 Tidsbokning t = new Tidsbokning();
                 string bokningsID = ViewBag.BokningsID;
-                int bokareID = ViewBag.BokareID;
+                //int bokareID = ViewBag.BokareID;
 
                 if (l != null)
                 {
@@ -104,13 +108,33 @@
 
         </div>
                 }
-
-                <div class="search">
+}
+                @using (Ajax.BeginForm(
+                    "SokId",
+                    "Tidsbokning",
+                    null,
+                    new AjaxOptions
+                    {
+                        UpdateTargetId = "lblResult",
+                        InsertionMode = InsertionMode.Replace,
+                        HttpMethod = "POST"
+                    },
+                    new { id = "SampleForm" }))
+                    {
+                        <span>Förnamn: </span> @Html.TextBox("sokfornamn")<br />
+                        <span>Efternamn: </span> @Html.TextBox("sokefternamn")<br />
+                        <span id="lblResult"></span>
+                        <button type="submit">Sök</button>
+                    }
+                
+                    
+                    
+                    <div class="search">
                     <section id="Sök">
                         @Html.Partial("SokPartial")
                     </section>
                 </div>
-                }
+                
 
 
 

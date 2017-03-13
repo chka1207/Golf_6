@@ -67,13 +67,14 @@ namespace Golf_6.Models
             return dt;
         }
 
-        public List<string> GetMedlemmen(string fornamn, string efternamn)
+        public string GetMedlemmen(string fornamn, string efternamn)
         {
             SokFornamn = fornamn;
             SokEfternamn = efternamn;
             string adress = "";
             string golfid = "";
             string medlem = "";
+            string medlemmar = "";
 
             List<string> Lista = new List<string>();
             Postgres p = new Postgres();
@@ -91,21 +92,21 @@ namespace Golf_6.Models
                     //Tidsbokning t = new Tidsbokning();
                     adress = row["adress"].ToString();
                     golfid = row["golfid"].ToString();
-                    medlem = "GolfID: " + golfid + " " + "Adress: " + adress;
+                    medlemmar += "GolfID: " + golfid + " " + "Adress: " + adress;
                     //t.Medlem = golfid + adress;
 
-                    Lista.Add(medlem);
+                    //Lista.Add(medlem);
                     //Lista.Add(t);
                 }
             }
             else
             {
                 //Tidsbokning t1 = new Tidsbokning();
-                medlem = "Finns ingen medlem med det namnet.";
-                Lista.Add(medlem);
+                medlemmar = "Finns ingen medlem med det namnet.";
+                //Lista.Add(medlem);
             }
 
-            return Lista;
+            return medlemmar;
         }
 
 
