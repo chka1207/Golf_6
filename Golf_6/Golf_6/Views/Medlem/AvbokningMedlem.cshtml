@@ -30,7 +30,8 @@
             String tid = ViewBag.TidAdmin;
             Tidsbokning t = new Tidsbokning();
             string bokningsID = ViewBag.BokningsId;
-            string bokaren = ViewBag.Bokaren;
+            string bokare = ViewBag.Bokare;
+            
             
 
     if (l != null)
@@ -60,7 +61,7 @@
 
         }
     }
-
+            @Html.Hidden("bokare", bokare);
             @Html.Hidden("bokningsID", bokningsID);
             @Html.Hidden("nySpelare1", t.Spelare1ID);
             @Html.Hidden("nySpelare2", t.Spelare2ID);
