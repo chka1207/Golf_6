@@ -324,7 +324,19 @@ namespace Golf_6.Models
                 });
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    räknare++;
+                    int gäst1 = 1035, gäst2 = 1036, gäst3 = 1037, gäst4 = 1038, värde =0 ;
+                    foreach(DataRow dr in dt.Rows)
+                    {
+                        värde = Convert.ToInt32(dr["medlem_id"].ToString());
+                    }
+                    if (värde == gäst1 || värde == gäst2 || värde == gäst3 || värde == gäst4)
+                    {
+
+                    }
+                    else
+                    {
+                        räknare++;
+                    }
                 }
             }
             if(räknare > 0)
