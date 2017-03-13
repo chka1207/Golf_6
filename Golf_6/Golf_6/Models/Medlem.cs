@@ -53,7 +53,7 @@ namespace Golf_6.Models
 
         }
         public void UppdateraPersonuppgifter(string fornamn, string efternamn, string adress, string postnummer, string ort,
-    string email, string kon, string handikapp, string medlemid, string telefonnummer)
+    string email, string kon, double handikapp, string medlemid, string telefonnummer)
         {
             Postgres db = new Postgres();
 
@@ -73,7 +73,7 @@ namespace Golf_6.Models
                     new NpgsqlParameter("@kon", kon),
                     new NpgsqlParameter("@handikapp", handikapp),
                     new NpgsqlParameter("@telefonnummer", telefonnummer),
-                    new NpgsqlParameter("@id", medlemid)
+                    new NpgsqlParameter("@id", Convert.ToInt16(medlemid))
         });
 
         }
