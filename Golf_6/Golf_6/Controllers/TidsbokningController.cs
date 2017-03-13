@@ -144,6 +144,152 @@ namespace Golf_6.Controllers
              valtDatum.Datepicker = datum;
              return View(valtDatum);
          }
+
+        //Get: Alla bokningar för en dag ADMIN
+         [HttpGet]
+         [AllowAnonymous]
+         public ActionResult AdminBokningsschema()
+         {
+             Tidsbokning bokning = new Tidsbokning();
+             DataTable dt = new DataTable();
+             DateTime dag = DateTime.Today;
+             HanteraSasong säsong = new HanteraSasong();
+             DateTime start = säsong.HamtaSasongsStart();
+             DateTime slut = säsong.HamtaSasongsAvslut();
+             DateTime tävlingStart = new DateTime();
+             DateTime tävlingSlut = new DateTime();
+             DataTable tävling = new DataTable();
+
+
+             if (dag >= start && dag <= slut)
+             {
+
+                 {
+                     Postgres x = new Postgres();
+                     {
+                         dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@par1", dag)
+                });
+
+                     }
+                     Postgres y = new Postgres();
+                     {
+                         tävling = y.SqlFrågaParameters("select starttid, sluttid, startdatum, slutdatum from stangning where startdatum = @par1;", Postgres.lista = new List<NpgsqlParameter>()
+                        {
+                            new NpgsqlParameter("@par1", dag)
+                        });
+                     }
+                     List<Tidsbokning> tävlingslista = new List<Tidsbokning>();
+                     foreach (DataRow dr in tävling.Rows)
+                     {
+                         Tidsbokning t = new Tidsbokning();
+                         t.StartDatumTävling = Convert.ToDateTime(dr["startdatum"].ToString());
+                         t.StarttidTävling = Convert.ToDateTime(dr["starttid"].ToString());
+                         t.SluttidTävling = Convert.ToDateTime(dr["sluttid"].ToString());
+                         t.SlutdatumTävling = Convert.ToDateTime(dr["slutdatum"].ToString());
+                         tävlingslista.Add(t);
+                     }
+
+                     List<Tidsbokning> bokningslista = new List<Tidsbokning>();
+                     foreach (DataRow dr in dt.Rows)
+                     {
+                         Tidsbokning t = new Tidsbokning();
+                         t.Tid = Convert.ToDateTime(dr["tid"].ToString());
+                         t.MedlemKön = dr["kon"].ToString();
+                         t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
+                         bokningslista.Add(t);
+                     }
+                     ViewBag.List = bokningslista;
+                     ViewBag.Tävlingslista = tävlingslista;
+
+                 }
+                 ViewBag.Stängd = false;
+                 bokning.Datepicker = DateTime.Now.Date.ToShortDateString();
+                 return View(bokning);
+             }
+             else
+             {
+                 ViewBag.Stängd = true;
+                 ViewBag.Start = start;
+                 ViewBag.slut = slut;
+                 return View();
+             }
+         }
+
+         // POST: Ändra dag ADMIN
+         [HttpPost]
+         [AllowAnonymous]
+         public ActionResult AdminBokningsschema(FormCollection collection)
+         {
+             string datum = collection["datepicker"];
+             DataTable dt = new DataTable();
+             HanteraSasong säsong = new HanteraSasong();
+             DateTime dag = Convert.ToDateTime(datum);
+             DateTime start = säsong.HamtaSasongsStart();
+             DateTime slut = säsong.HamtaSasongsAvslut();
+             DataTable tävling = new DataTable();
+
+
+
+             if (dag >= start && dag <= slut)
+             {
+                 {
+                     Postgres x = new Postgres();
+                     {
+                         dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@par1", Convert.ToDateTime(datum))
+                });
+
+                     }
+                     Postgres y = new Postgres();
+                     {
+                         tävling = y.SqlFrågaParameters("select starttid, sluttid, startdatum, slutdatum from stangning where startdatum = @par1;", Postgres.lista = new List<NpgsqlParameter>()
+                        {
+                            new NpgsqlParameter("@par1", dag)
+                        });
+                     }
+                     List<Tidsbokning> tävlingslista = new List<Tidsbokning>();
+                     foreach (DataRow dr in tävling.Rows)
+                     {
+                         Tidsbokning t = new Tidsbokning();
+                         t.StartDatumTävling = Convert.ToDateTime(dr["startdatum"].ToString());
+                         t.StarttidTävling = Convert.ToDateTime(dr["starttid"].ToString());
+                         t.SluttidTävling = Convert.ToDateTime(dr["sluttid"].ToString());
+                         t.SlutdatumTävling = Convert.ToDateTime(dr["slutdatum"].ToString());
+                         tävlingslista.Add(t);
+                     }
+
+                     List<Tidsbokning> bokningslistaPost = new List<Tidsbokning>();
+                     foreach (DataRow dr in dt.Rows)
+                     {
+                         //Ändrat konverteringen av tid objektet. 
+                         //Kan ej konvertera objekt till datetime rakt av så måste åter konverteras till en sträng
+                         Tidsbokning t = new Tidsbokning();
+                         t.Tid = Convert.ToDateTime(dr["tid"].ToString());
+                         t.MedlemKön = dr["kon"].ToString();
+                         t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
+                         bokningslistaPost.Add(t);
+                     }
+                     ViewBag.List = bokningslistaPost;
+                     ViewBag.Tävlingslista = tävlingslista;
+
+                 }
+                 Tidsbokning valtDatum = new Tidsbokning();
+                 ViewBag.Stängd = false;
+                 valtDatum.Datepicker = datum;
+                 return View(valtDatum);
+             }
+             else
+             {
+                 ViewBag.Stängd = true;
+                 ViewBag.Start = start;
+                 ViewBag.slut = slut;
+                 return View();
+             }
+         }
+
         // GET: Alla bokningar för en dag
         [HttpGet]
         [AllowAnonymous]
