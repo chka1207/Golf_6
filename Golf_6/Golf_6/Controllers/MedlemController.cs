@@ -21,8 +21,9 @@ namespace Golf_6.Controllers
         {
             Medlem m = new Medlem();
             string identitet = User.Identity.Name;
+            double hcp = Convert.ToDouble(hcpinput);
             
-            m.UppdateraPersonuppgifter(fornamninput, efternamninput, adressinput, postnummerinput, ortinput, emailinput, koninput, hcpinput, identitet, telefonnummerinput);
+            m.UppdateraPersonuppgifter(fornamninput, efternamninput, adressinput, postnummerinput, ortinput, emailinput, koninput, hcp, identitet, telefonnummerinput);
 
             return RedirectToAction("Personuppgifter", "Medlem");
         }
