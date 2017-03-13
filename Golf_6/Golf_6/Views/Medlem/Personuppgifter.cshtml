@@ -12,7 +12,7 @@
     <div class="row">
         <h2>Personuppgifter</h2>
 
-        <form class="form-horizontal">
+        <form id="personuppgifterForm"class="form-horizontal">
             <fieldset>
           
                 <legend>Uppdatera dina&nbsp;personuppgifter&nbsp;här:</legend>
@@ -21,7 +21,7 @@
                    
                     <div class="col-md-4">
                         <label>Förnamn</label>
-                        <input id="textinput" name="textinput" placeholder="@Html.DisplayFor(model => model.Förnamn)" class="form-control input-md" required="" type="text">
+                        <input name="fornamninput" placeholder="@Html.DisplayFor(model => model.Förnamn)" class="form-control input-md" required="" type="text">
                      
                         <span class="help-block"> </span>
                     </div>
@@ -31,7 +31,7 @@
                    
                     <div class="col-md-4">
                         <label>Efternamn</label>
-                        <input id="textinput" name="textinput" placeholder="@Html.DisplayFor(model => model.Efternamn)" class="form-control input-md" required="" type="text">
+                        <input name="efternamninput" placeholder="@Html.DisplayFor(model => model.Efternamn)" class="form-control input-md" required="" type="text">
                         <span class="help-block"> </span>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                
                     <div class="col-md-4">
                         <label>Adress</label>
-                        <input id="textinput" name="textinput" placeholder="@Html.DisplayFor(model => model.Adress)" class="form-control input-md" required="" type="text">
+                        <input name="adressinput"placeholder="@Html.DisplayFor(model => model.Adress)" class="form-control input-md" required="" type="text">
                         <span class="help-block"> </span>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                    
                     <div class="col-md-4">
                         <label>Ort</label>
-                        <input id="textinput" name="textinput" placeholder="@Html.DisplayFor(model => model.Ort)" class="form-control input-md" required="" type="text">
+                        <input name="ortinput" placeholder="@Html.DisplayFor(model => model.Ort)" class="form-control input-md" required="" type="text">
                         <span class="help-block"> </span>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                 <div class="form-group">
                     <div class="col-md-4">
                         <label>Postnummer</label>
-                        <input id="textinput" name="textinput" placeholder="@Html.DisplayFor(model => model.Postnummer)" class="form-control input-md" required="" type="text">
+                        <input name="postnummerinput" placeholder="@Html.DisplayFor(model => model.Postnummer)" class="form-control input-md" required="" type="text">
                         <span class="help-block"> </span>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                 <div class="form-group" >
                     <div class="col-md-4">
                         <label>Email</label>
-                        <input id="textinput" label="Förnamn" name="textinput" placeholder="@Html.DisplayFor(model => model.Email)" class="form-control input-md" required="" type="text">
+                        <input name="emailinput" placeholder="@Html.DisplayFor(model => model.Email)" class="form-control input-md" required="" type="text">
                         <span class="help-block"> </span>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                 <div class="form-group">
                     <div class="col-md-4">
                         <label>Telefonnummer</label>
-                        <input id="textinput" name="textinput" placeholder="@Html.DisplayFor(model => model.Telefonnummer)" class="form-control input-md" required="" type="text">
+                        <input name="telefonnummerinput" placeholder="@Html.DisplayFor(model => model.Telefonnummer)" class="form-control input-md" required="" type="text">
                         <span class="help-block"> </span>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                 <div class="form-group">
                     <div class="col-md-4">
                         <label>HCP</label>
-                        <input id="textinput" name="textinput" placeholder="@Html.DisplayFor(model => model.Hcp)" class="form-control input-md" required="" type="text">
+                        <input name="hcpinput" placeholder="@Html.DisplayFor(model => model.Hcp)" class="form-control input-md" required="" type="text">
                         <span class="help-block"> </span>
                     </div>
                 </div>
@@ -89,14 +89,14 @@
                 <div class="form-group">
                     <div class="col-md-4">
                         <label>Kön</label>
-                        <input id="textinput" name="textinput" placeholder="@Html.DisplayFor(model => model.Kön)" class="form-control input-md" required="" type="text">
+                        <input name="koninput" placeholder="@Html.DisplayFor(model => model.Kön)" class="form-control input-md" required="" type="text">
                         <span class="help-block"> </span>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-md-4">
-                        <button class="btn btn-primary">Uppdatera</button>
+                        <button type="submit" class="btn btn-primary">Uppdatera</button>
                     </div>
                 </div>
             </fieldset>
