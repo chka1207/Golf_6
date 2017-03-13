@@ -9,7 +9,7 @@
     Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
 }
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Bokning";
 }
 
 @*<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
@@ -19,7 +19,7 @@
 
 
 
-    <h2>Index</h2>
+    <h2>Bokning</h2>
     <br />
     <br />
     <p>
@@ -94,19 +94,19 @@
                 #tbdatum {
                 }
             </style>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <label>Datum </label>
                 @Html.TextBox("tbdatum", datum, new { @class = "form-control", @readonly = "readonly" })
             </div>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-12">
             <label>Tid </label>
             @Html.TextBox("tbtid", tid, new { @class = "form-control", @readonly = "readonly" })
         </div>
 
         <div class="form-group">
 
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <label>Spelare nr 1: </label>
                 @{
                     if (t.Spelare1ID == null)
@@ -124,7 +124,7 @@
         </div>
         <div class="form-group">
 
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <label>Spelare nr 2: </label>
                 @{
                     if (t.Spelare2ID == null && bokareInlagd)
@@ -145,7 +145,7 @@
         </div>
         <div class="form-group">
 
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <label>Spelare nr 3: </label>
                 @{
                     if (t.Spelare3ID == null && bokareInlagd)
@@ -166,7 +166,7 @@
         </div>
         <div class="form-group">
 
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <label>Spelare nr 4: </label>
                 @{
                     if (t.Spelare4ID == null)
@@ -190,14 +190,11 @@
 
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Boka" class="btn btn-default" />
+            <div class="col-md-12">
+                <input type="submit" style="margin-top:20px;" value="Boka" class="btn btn-primary btn-lg" />
             </div>
         </div>
 
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
 
         @section Scripts {
 
