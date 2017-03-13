@@ -98,6 +98,9 @@ $(document).ready(function () { //Denna laddar in värdena från varje cell till
         $('#btn-radera').show();
         $('#btn-redigera').show();
         $('#btn-acceptera-ny-medlem').hide();
+        $('#välja-födelsedatum').hide();
+        $('#se-golfid').show();
+        $("#golfid").prop("readonly", true);
     });
 });
 
@@ -119,6 +122,8 @@ $(document).ready(function() { //Öppnar upp modal
         $('#btn-radera').hide();
         $('#btn-redigera').hide();
         $('#btn-acceptera-ny-medlem').show();
+        $('#välja-födelsedatum').show();
+        $('#se-golfid').hide();
     });
 });
 
@@ -133,14 +138,6 @@ $('#btn-radera').click(function () {
         function (data) {
             $("#feedback-radera-medlem").html(data + "är nu raderad");
         });
-});
-
-$(function() {
-    $('#datepickerFödelsedatum').datepicker({
-        onSelect: function(date) {
-            $("#golfid").val(date);
-        }
-    });
 });
 
 // Redigeraknappen i Admin/AllaMedlemmar -> Modal
@@ -177,9 +174,13 @@ $(function () {
     $('#datepickerFödelsedatum').datepicker({
         onSelect: function (date) {
             $("#golfid").val(date);
-        }
+        },
+        changeYear: true,
+        yearRange: "1900:2017",
+        dateFormat: 'ymmdd'
     });
-var currentDate = $(".selector").datepicker("getDate");
+
+    var currentDate = $(".selector").datepicker("getDate");
 $.datepicker.regional['sv'] = {
     closeText: 'Stäng',
     prevText: '< Föregående',
