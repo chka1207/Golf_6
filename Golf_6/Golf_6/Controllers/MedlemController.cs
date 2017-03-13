@@ -133,7 +133,7 @@ namespace Golf_6.Controllers
         {
             //hämtar ut vem som är bokare för den tiden
             //select bokaren from bokare where tid = 1
-            string identitet = "988";//User.Identity.Name;
+            string identitet = "993";//User.Identity.Name;
             //DateTime dt = Convert.ToDateTime(Request.QueryString["validate"]);
             Tidsbokning t = new Tidsbokning();
             //string tid = dt.ToShortTimeString();
@@ -217,6 +217,84 @@ namespace Golf_6.Controllers
                 ViewBag.BokningsId = t.BokningsID.ToString();
 
                 return View("AvbokningMedlem");
+        }
+
+        // POST: Tidsbokning/Avboka Admin
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult AvbokningMedlem(FormCollection collection)
+        {
+
+            string datum = collection["tbdatum"];
+            string tid = collection["tbtid"];
+            string spelare1 = collection["myTextBox1"];
+            string spelare2 = collection["myTextBox2"];
+            string spelare3 = collection["myTextBox3"];
+            string spelare4 = collection["myTextBox4"];
+            List<string> golfare = new List<string>();
+            if (spelare1 != "")
+            {
+                golfare.Add(spelare1);
+            }
+            if (spelare2 != "")
+            {
+                golfare.Add(spelare2);
+            }
+            if (spelare3 != "")
+            {
+                golfare.Add(spelare3);
+            }
+            if (spelare4 != "")
+            {
+                golfare.Add(spelare4);
+            }
+
+            string bokningsId = collection["bokningsID"];
+
+            DataTable dt = new DataTable();
+            List<string> medlemsIdLista = new List<string>();
+            string medlemsid = "";
+            for (int i = 0; i < golfare.Count; i++)
+            {
+                Postgres p1 = new Postgres();
+                dt = p1.SqlFrågaParameters("select id from medlemmar where golfid = @golfid", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@golfid", golfare[i]),               
+                });
+
+                if (dt != null)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        medlemsid = dr["id"].ToString();
+                        medlemsIdLista.Add(medlemsid);
+                    }
+                }
+            }
+            string meddelande = "";
+            //Ta bort medlemmar från en bokning
+            for (int i = 0; i < medlemsIdLista.Count; i++)
+            {
+                Postgres p = new Postgres();
+
+                meddelande = p.SqlParameters("delete from deltar where medlem_id = @medlemID and reservation_id = @bokningID;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@medlemID", Convert.ToInt32(medlemsIdLista[i])),
+                    new Npgsql.NpgsqlParameter("@bokningID",Convert.ToInt32(bokningsId))
+                });
+            }
+
+
+            try
+            {
+                // TODO: Add insert logic here
+
+                return RedirectToAction("MinaBokningar");
+            }
+            catch
+            {
+                return View();
+            }
         }
         //Visa vy för scorekort
         //[AllowAnonymousAttribute]
