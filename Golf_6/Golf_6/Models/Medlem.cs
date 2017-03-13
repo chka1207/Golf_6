@@ -24,6 +24,33 @@ namespace Golf_6.Models
         public DateTime Tid { get; set; }
         public virtual List<Tidsbokning> Bokningar {get; set;}
 
+        public Medlem InloggadMedlem(string MedlemID)
+        {
+            Postgres p = new Postgres();
+            Medlem m = new Medlem();
+            string sql = "SELECT * FROM medlemmar WHERE id=@MedlemID";
+            NpgsqlParameter parameter = new NpgsqlParameter("@MedlemID", Convert.ToInt16(MedlemID));
+            p.sqlFragaEnParameter(sql, parameter);
+            while (p._dr.Read())
+            {
+                m.Förnamn = p._dr["fornamn"].ToString();
+                m.Efternamn = p._dr["efternamn"].ToString();
+               m.Adress = p._dr["adress"].ToString();
+                m.Postnummer = p._dr["postnummer"].ToString();
+                m.Ort = p._dr["ort"].ToString();
+                m.Email = p._dr["email"].ToString();
+               m.Kön = p._dr["kon"].ToString();
+               m.Hcp = Convert.ToDouble(p._dr["handikapp"]);
+               m.Telefonnummer = p._dr["telefonnummer"].ToString();
+
+
+            }
+            return m;
+
+
+
+        }
+
         public List<Medlem> GetMedlem(string psql, int medlemID)
         {
             Postgres x = new Postgres();
@@ -72,7 +99,7 @@ namespace Golf_6.Models
             DataTable dt = new DataTable();
 
 
-            string sql = "SELECT scorekort.hal, scorekort.gul, scorekort.rod, scorekort.par FROM scorekort ORDER BY scorekort.hal";
+            string sql = "SELECT scorekort.hal, scorekort.gul, scorekort.rod, scorekort.par, scorekort.hcp FROM scorekort ORDER BY scorekort.hal";
 
             dt = pg.sqlFragaTable(sql);
 

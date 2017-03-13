@@ -110,7 +110,7 @@ namespace Golf_6.Controllers
                     var ctx = Request.GetOwinContext();
                     var authManager = ctx.Authentication;
                     authManager.SignIn(identity);
-                    int i = Convert.ToUInt16(User.Identity.Name);  //Exempel på hur man får fram UserID 
+                    //int i = Convert.ToUInt16(User.Identity.Name);  //Exempel på hur man får fram UserID 
                     
                     return RedirectToAction("Index", "Medlem");
                     

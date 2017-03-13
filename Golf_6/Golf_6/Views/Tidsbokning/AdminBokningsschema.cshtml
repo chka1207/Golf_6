@@ -1,19 +1,14 @@
-﻿@*Inspiration till färgkodning och loopa ut tider har hämtats från Nicklas Persson i grupp 4*@
-
-
-@model Golf_6.Models.Tidsbokning
+﻿@model Golf_6.Models.Tidsbokning
 @using Golf_6.Controllers;
 @using Golf_6.Models;
 @using System.Collections.Generic;
-@using (Html.BeginForm("Bokningsschema", "Tidsbokning", FormMethod.Post))
+@using (Html.BeginForm("AdminBokningsschema", "Tidsbokning", FormMethod.Post))
 {
 
-
-
-    {
-        Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
-
-    }
+{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link href="~/Content/Site.css" rel="stylesheet" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -22,7 +17,10 @@
 <div class="center-block">
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+   
+
 
     <input type="text" name="datepicker" class="btn btn-info btn-lg pull-left" id="datepicker" value="Välj datum" style="margin-bottom:25px">
 
@@ -30,6 +28,7 @@
 
         $(function () {
             $('#datepicker').datepicker();
+
         });
         var currentDate = $(".selector").datepicker("getDate");
         $.datepicker.regional['sv'] = {
@@ -185,12 +184,22 @@
                                 :00
                                 @if (räknare != -1)
                                 {
-
-                                    if (räknare < 4)
-                                    {
-                                        <p>@räknare.ToString() /4</p>
-                                        @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
-                                    }
+                                                     if (räknare == 0)
+                        {
+                            <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        if (räknare > 0 && räknare < 4)
+                        {   <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, new { spelare1 = Model.Spelare1ID })
+                            <br />
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        if (räknare == 4)
+                        {   <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                                    
                                 }
                                 else
                                 {
@@ -285,12 +294,21 @@
                         :10
                         @if (räknare != -1)
                         {
-
-                            if (räknare < 4)
-                            {
-                                <p>@räknare.ToString() /4</p>
-                                        @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
-                            }
+                                         if (räknare == 0)
+                        {
+                            <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        if (räknare > 0 && räknare < 4)
+                        {   <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, new { spelare1 = Model.Spelare1ID })
+                            <br />
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        if (räknare == 4)
+                        {   <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
                         }
                         else
                         {
@@ -385,12 +403,21 @@
                         :20
                         @if (räknare != -1)
                         {
-
-                            if (räknare < 4)
-                            {
-                                <p>@räknare.ToString() /4</p>
-                                        @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
-                            }
+                 if (räknare == 0)
+                        {
+                            <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        if (räknare > 0 && räknare < 4)
+                        {   <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, new { spelare1 = Model.Spelare1ID })
+                            <br />
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        if (räknare == 4)
+                        {   <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
                         }
                         else
                         {
@@ -486,11 +513,21 @@
                         @if (räknare != -1)
                         {
 
-                            if (räknare < 4)
-                            {
-                                <p>@räknare.ToString() /4</p>
-                                        @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
-                            }
+                                             if (räknare == 0)
+                        {
+                            <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        if (räknare > 0 && räknare < 4)
+                        {   <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, new { spelare1 = Model.Spelare1ID })
+                            <br />
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        if (räknare == 4)
+                        {   <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
                         }
                         else
                         {
@@ -585,12 +622,21 @@
                         :40
                         @if (räknare != -1)
                         {
-
-                            if (räknare < 4)
-                            {
-                                <p>@räknare.ToString() /4</p>
-                                        @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
-                            }
+                 if (räknare == 0)
+                        {
+                            <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        if (räknare > 0 && räknare < 4)
+                        {   <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, new { spelare1 = Model.Spelare1ID })
+                            <br />
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        if (räknare == 4)
+                        {   <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
                         }
                         else
                         {
@@ -685,12 +731,21 @@
                         :50
                         @if (räknare != -1)
                         {
-
-                            if (räknare < 4)
-                            {
-                                <p>@räknare.ToString() /4</p>
-                                @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
-                            }
+                 if (räknare == 0)
+                        {
+                            <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        if (räknare > 0 && räknare < 4)
+                        {   <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Boka", "Boka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, new { spelare1 = Model.Spelare1ID })
+                            <br />
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
+                        if (räknare == 4)
+                        {   <p>@räknare.ToString() /4</p>
+                            @Html.ActionLink("Avboka", "Avboka", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                        }
                         }
                         else
                         {

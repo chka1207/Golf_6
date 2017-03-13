@@ -213,6 +213,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MedlemController.cs" />
+    <Compile Include="Controllers\ScorekortModelController.cs" />
     <Compile Include="Controllers\TidsbokningController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -233,6 +234,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Medlem.cs" />
     <Compile Include="Models\Postgres.cs" />
+    <Compile Include="Models\ScorekortModel.cs" />
     <Compile Include="Models\Tidsbokning.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -608,6 +610,9 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\NewUser.cshtml" />
     <Content Include="Views\Tidsbokning\AvbokningAdmin.cshtml" />
+    <Content Include="Views\Tidsbokning\SokPartial.cshtml" />
+    <Content Include="Views\Tidsbokning\AdminBokningsschema.cshtml" />
+    <Content Include="Views\ScorekortModel\Scorekort.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

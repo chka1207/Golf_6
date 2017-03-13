@@ -23,4 +23,10 @@ textarea {
     max-width: 280px;
 }
 
-
+div.felmeddelande{
+    background-color:#ff0000;
+    width:auto;
+    padding-bottom: 100px;
+    padding-top: 100px;
+    text-align: center;
+}

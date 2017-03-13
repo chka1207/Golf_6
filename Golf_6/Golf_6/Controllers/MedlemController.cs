@@ -28,10 +28,15 @@ namespace Golf_6.Controllers
             return View();
         }
         // Visa personuppgifter
+   
         [AllowAnonymousAttribute]
         public ActionResult Personuppgifter()
         {
-            return View();
+            Medlem m = new Medlem();
+            string identitet = User.Identity.Name;
+           m = m.InloggadMedlem(identitet);
+        
+            return View(m);
         }
         // GET: Medlem
         [AllowAnonymousAttribute]
@@ -126,16 +131,24 @@ namespace Golf_6.Controllers
             dt = scorekort.hämtaScorekort();
             string html = "";
 
-            for (int i = 0; i < dt.Rows.Count; i++)
+            for (int i = 0; i < dt.Rows.Count+2; i++)
             {
 
                 html += "<tr>";
                 if(i == 9)
                 {
-                    //Fortsätt med detta!!!
                     DataRow r = dt.NewRow();
-                    dt.Rows.InsertAt(r, 9);
-                    
+                    dt.Rows.InsertAt(r, 9);                 
+                }
+                else if(i== 19)
+                {
+                    DataRow r = dt.NewRow();
+                    dt.Rows.InsertAt(r, 19);
+                }
+                else if(i == 20)
+                {
+                    DataRow r = dt.NewRow();
+                    dt.Rows.InsertAt(r, 20);
                 }
             }
             
