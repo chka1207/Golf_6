@@ -13,8 +13,8 @@
 
 
 
-@using (Html.BeginForm("Sok", "Tidsbokning", FormMethod.Post))
-{
+
+
     <h2>Index</h2>
     <br />
     <br />
@@ -25,14 +25,92 @@
         Du kan boka in max en anonym gäst.<br />
         Max en bokning per dag.<br />
         Det totala handikappet för bollen får ej överstiga 120.<br />
-        Bokningen måste </p>
+        Bokningen måste vara inom 30 dagar från dagens datum.
+    </p>
 
-    <div class="search">
-        <section id="Sök">
-            @Html.Partial("SokPartial")
-        </section>
-    </div>
-}
+    @using (Html.BeginForm())
+    {
+        <div class=" form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true)
+
+            @{
+                List<string> l = new List<string>();
+                string a, b, c, d = "";
+                l = ViewBag.Golfare;
+                String datum = ViewBag.Datum;
+                String tid = ViewBag.Tid;
+                Tidsbokning t = new Tidsbokning();
+                string bokningsID = ViewBag.BokningsID;
+                int bokareID = ViewBag.BokareID;
+
+                if (l != null)
+                {
+                    for (int i = 0; i <= l.Count; i++)
+                    {
+                        if (l.Count == 1 || l.Count > 1)
+                        {
+                            a = l[0];
+                            t.Spelare1ID = a;
+                        }
+                        if (l.Count == 2 || l.Count > 2)
+                        {
+                            b = l[1];
+                            t.Spelare2ID = b;
+                        }
+                        if (l.Count == 3 || l.Count > 3)
+                        {
+                            c = l[2];
+                            t.Spelare3ID = c;
+                        }
+                        if (l.Count == 4 || l.Count > 4)
+                        {
+                            d = l[3];
+                            t.Spelare4ID = d;
+                        }
+
+                    }
+                }
+                @Html.Hidden("bokareID", t.BokareID);
+                @Html.Hidden("bokningsID", bokningsID);
+                @Html.Hidden("nySpelare1", t.Spelare1ID);
+                @Html.Hidden("nySpelare2", t.Spelare2ID);
+                @Html.Hidden("nySpelare3", t.Spelare3ID);
+                @Html.Hidden("nySpelare4", t.Spelare4ID);
+
+            }
+
+            <div class="form-group">
+                <style>
+                    #tbdatum{
+
+                    }
+                </style>
+                <div class="col-md-10">
+                    <label>Datum </label>
+                    @Html.TextBox("tbdatum", datum, new {@class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="col-md-10">
+                <label>Tid </label>
+                @Html.TextBox("tbtid", tid, new {@class = "form-control", @readonly="readonly" })
+            </div>
+
+        </div>
+        <div class="form-group">
+
+        </div>
+        <div class="col-md-10">
+
+        </div>
+                }
+
+                <div class="search">
+                    <section id="Sök">
+                        @Html.Partial("SokPartial")
+                    </section>
+                </div>
+                }
 
 
 
