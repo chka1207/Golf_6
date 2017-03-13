@@ -739,11 +739,12 @@ namespace Golf_6.Controllers
             string datum = dt.ToShortDateString();
             t.Datum = Convert.ToDateTime(datum);
             t.Tid = Convert.ToDateTime(tid);
-            int id = Convert.ToUInt16(User.Identity.Name);
+            string id = User.Identity.Name;
+            
             
             {// Kontrollerar om det finns tider bokade och hämtar bokningsID och bokade spelares golfID, kön och hcp
                 Postgres x = new Postgres();
-                tabell = x.SqlFrågaParameters("select bokning_id from reservation where datum = DATE(@datum) and tid = CAST(@tid as TIME);", Postgres.lista = new List<NpgsqlParameter>
+                tabell = x.SqlFrågaParameters("select bokning_id from reservation where datum = DATE(@datum) and tid = CAST(@tid as TIME);", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@datum", datum),
                     new NpgsqlParameter("@tid", tid)
@@ -762,6 +763,21 @@ namespace Golf_6.Controllers
                         listan.Add(tb.GolfID.ToString());
                     }
                     ViewBag.Golfare = listan;
+                }
+                if (id != null)
+                {
+                    Tidsbokning bokare = new Tidsbokning();
+                    Postgres y = new Postgres();
+                    DataTable bokGolfID = y.SqlFrågaParameters("select golfid from medlemmar where id =@par1;", Postgres.lista = new List<NpgsqlParameter>()
+                    {
+                        new NpgsqlParameter("@par1", Convert.ToInt16(id))
+                    });
+                    foreach(DataRow rad in bokGolfID.Rows)
+                    {
+                        bokare.GolfID = Convert.ToString(rad["golfid"]);
+                    }
+                    ViewBag.BokareGolfID = bokare.GolfID;
+
                 }
                 ViewBag.Datum = datum;
                 ViewBag.Tid = tid;
