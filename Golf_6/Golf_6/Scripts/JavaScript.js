@@ -64,6 +64,21 @@ $(document).ready(function () { //Datatablen som visar alla medlemmar i Admin/Al
     });
 });
 
+//if (data[8] === 1) {
+//    $('#medlemskategori').val("Junior 0-12");
+//}
+//else if (data[8] === 2) {
+//    $('#medlemskategori').val("Junior 13-18");
+//}
+//else if (data[8] === 2) {
+//    $('#medlemskategori').val("Student");
+//}
+//else if (data[8] === 2) {
+//    $('#medlemskategori').val("Senior");
+//} else {
+//    $('#medlemskategori').val("Ingen medlemskategori");
+//}
+
 $(document).ready(function () { //Denna laddar in värdena från varje cell till modal
     var table = $('#alla_medlemmar').DataTable();
 
@@ -79,7 +94,20 @@ $(document).ready(function () { //Denna laddar in värdena från varje cell till
         $('#email').val(data[5]);
         $('#kon').val(data[6]);
         $('#handikapp').val(data[7]);
-        $('#medlemskategori').val(data[8]);
+        //$('#medlemskategori').val(data[8]);
+        if (data[8] === "Junior 0-12") {
+            $('select#medlemskategori').val('1');
+        }
+        else if (data[8] === "Junior 13-18") {
+            $('select#medlemskategori').val('2');
+        }
+        else if (data[8] === "Studerande") {
+            $('select#medlemskategori').val('3');
+        }
+        else if (data[8] === "Senior") {
+            $('select#medlemskategori').val('4');
+        }
+        $('#medlemskategori').val();
         $('#golfid').val(data[9]);
         $('#telefonnummer').val(data[10]);
         $('#btn-radera').show();
