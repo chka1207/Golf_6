@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using Golf_6.ViewModels;
+using Npgsql;
 
 namespace Golf_6.Controllers
 {
@@ -124,6 +125,98 @@ namespace Golf_6.Controllers
             {
                 return View();
             }
+        }
+
+        // GET: Tidsbokning/Create i befintlig tid Admin
+        [AllowAnonymous]
+        public ActionResult AvbokningMedlem()
+        {
+            //hämtar ut vem som är bokare för den tiden
+            //select bokaren from bokare where tid = 1
+            string identitet = "988";//User.Identity.Name;
+            //DateTime dt = Convert.ToDateTime(Request.QueryString["validate"]);
+            Tidsbokning t = new Tidsbokning();
+            //string tid = dt.ToShortTimeString();
+            //string datum = dt.ToShortDateString();
+            string datum = "2017-03-09";
+            string tid = "07:20:00";
+            t.Datum = Convert.ToDateTime(datum);
+            t.Tid = Convert.ToDateTime(tid);
+
+            //Hämtar reservationsid för den tid som medlemmen är bokad.
+            DataTable tabell = new DataTable();
+            Postgres p = new Postgres();
+
+                tabell = p.SqlFrågaParameters("select bokning_id from reservation where datum = DATE(@datum) and tid = CAST(@tid as TIME);", Postgres.lista = new List<NpgsqlParameter>
+                {
+                    new NpgsqlParameter("@datum", datum),
+                    new NpgsqlParameter("@tid", tid)
+                });
+                if (tabell != null)
+                {
+                    foreach (DataRow dr in tabell.Rows)
+                    {
+                        t.BokningsID = Convert.ToUInt16(dr["bokning_id"]);
+                    }
+                }
+
+                //Hämtar golfidt för den som är bokaren för den tiden
+                DataTable tabell2 = new DataTable();
+                Postgres p1 = new Postgres();
+                string bokare = "";
+                tabell2 = p1.SqlFrågaParameters("SELECT DISTINCT medlemmar.golfid FROM public.medlemmar, public.bokare, public.deltar WHERE medlemmar.id = bokare.bokaren AND deltar.reservation_id = @bokningsid and deltar.reservation_id = bokare.tid;", Postgres.lista = new List<NpgsqlParameter>
+                {
+                    new NpgsqlParameter("@bokningsid", t.BokningsID)
+                });
+                if (tabell2 != null)
+                {
+                    foreach (DataRow dr in tabell2.Rows)
+                    {
+                        bokare = dr["golfid"].ToString();
+                    }
+                }
+                
+                //Hämtar den inloggade medlemmens golfid
+                DataTable tabell3 = new DataTable();
+                Postgres p2 = new Postgres();
+                string inloggadGolfId = "";
+                tabell3 = p2.SqlFrågaParameters("select golfid from medlemmar where id = @medlem", Postgres.lista = new List<NpgsqlParameter>
+                {
+                    new NpgsqlParameter("@medlem", Convert.ToInt32(identitet))
+                });
+                if (tabell3 != null)
+                {
+                    foreach (DataRow dr in tabell3.Rows)
+                    {
+                        inloggadGolfId = dr["golfid"].ToString();
+                    }
+                }
+                List<string> listan = new List<string>();
+                List<Tidsbokning> t1 = new List<Tidsbokning>();
+                if(bokare == inloggadGolfId)
+                {
+                    
+                    t1 = t.GetBokning(t.BokningsID);
+                    foreach (Tidsbokning tb in t1)
+                    {
+                        listan.Add(tb.GolfID.ToString());
+                    }
+                    ViewBag.Golfare = listan;
+                }
+                else
+                {
+                    listan.Add(inloggadGolfId);
+                }
+                    ViewBag.Bokare = bokare;
+                    ViewBag.InloggadGolfID = identitet;
+
+                ViewBag.Golfare = listan;
+            
+                ViewBag.DatumAdmin = datum;
+                ViewBag.TidAdmin = tid;
+                ViewBag.BokningsId = t.BokningsID.ToString();
+
+                return View("AvbokningMedlem");
         }
         //Visa vy för scorekort
         //[AllowAnonymousAttribute]
