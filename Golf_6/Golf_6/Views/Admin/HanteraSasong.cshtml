@@ -7,49 +7,118 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 @Styles.Render("~/Content/calendar.css")
+@Scripts.Render("~/scripts/jquery-ui-1.12.1.js")
 
 <br /><br /><br /><br /><br />
-@*Hämtar kalender för säsongens start och slutdatum
-    ViewBag.AktuellaDatum hämtas från AdminController.*@
-@Html.Raw(@ViewBag.AktuellaDatum) @* @Html.Raw hanterar html som ligger i koden.*@
 
-@using (Html.BeginForm("HanteraSasong", "Admin", FormMethod.Post))
-{
-    @Html.Raw(@ViewBag.svar);
+@*Hämtar kalender för säsongens start och slutdatum*@
+@Html.Raw(@ViewBag.svar)
+<br />
 
-    @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h3>Hantera säsong</h3>
-        <hr />
-        <div>
-            <input type="text" name="datepicker" class="btn btn-info btn-lg pull-left" id="datepickerStart" value="Välj datum" style="margin-bottom:25px">
-            <input type="text" name="datepicker" class="btn btn-info btn-lg pull-left" id="datepickerSlut" value="Välj datum" style="margin-bottom:25px">
-        </div>
-        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.HanteraSasong.SasongStart, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HanteraSasong.SasongStart, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HanteraSasong.SasongStart, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.HanteraSasong.SasongSlut, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HanteraSasong.SasongSlut, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HanteraSasong.SasongSlut, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Uppdatera datum för säsong" class="btn btn-primary" />
-            </div>
-        </div>
+<h3 class="col-lg-offset-5">Hantera säsong</h3>
+<hr />
+<br /><br /><br />
+<div class="col-lg-12 center-block">
+    <div class="col-lg-4">
+        <input type="text" name="datepickerStart" class="btn btn-info col-lg-offset-7" id="datepickerStart" value="Välj när säsongen startar" style="margin-bottom: 25px">
     </div>
-}
+    <div class="col-lg-4">
+        <input type="text" name="datepickerSlut" class="btn btn-info col-lg-offset-8" id="datepickerSlut" value="Välj när säsongen slutar" style="margin-bottom: 25px">
+    </div>
+</div>
+<script type="text/javascript">
+ 
+    $(function () {
+        $('#datepickerStart').datepicker({
+            onSelect: function (date) {
+                $("#startDatum").val(date);
+                //alert(startDatum);
+            }
+            //startDate: hämta från databas
+        });
+    });
 
+    $(function () {
+        $('#datepickerSlut').datepicker({
+            onSelect: function (date) {
+                $("#slutDatum").val(date);
+                //alert(slutDatum);
+            }
+            //startDate: hämta från databas
+        });
+    });
+
+    var currentDate = $(".selector").datepicker("getDate");
+    $.datepicker.regional['sv'] = {
+        closeText: 'Stäng',
+        prevText: '< Föregående',
+        nextText: 'Nästa >',
+        currentText: 'Idag',
+        monthNames: [
+            'Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'Oktober',
+            'November', 'December'
+        ],
+        monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+        dayNamesShort: ['Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör'],
+        dayNames: ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'],
+        dayNamesMin: ['Sö', 'Må', 'Ti', 'On', 'To', 'Fr', 'Lö'],
+        weekHeader: 'Не',
+        dateFormat: 'yy-mm-dd',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        onSelect: function (dateText, inst) {
+            //    //$('form').submit();
+            //    $('form:first').submit();
+        }
+    };
+    $.datepicker.setDefaults($.datepicker.regional['sv']);
+    
+</script>
+<br/><br /><br /><br /><br /><br />
+<button type="button" id="knappen" class="btn btn-primary btn-lg center-block">Spara nya datumen</button>
+
+    <form id="säsong" action="" method="post">
+        <div class="form-horizontal">
+            
+            @Html.Hidden("startDatum")
+            @Html.Hidden("slutDatum")
+
+            <script>
+                $('#knappen').click(function () {
+                    var inputStart = $("#startDatum").val();
+                    var inputSlut = $("#slutDatum").val();
+
+                    if (jQuery.trim(inputStart).length > 0 && jQuery.trim(inputSlut).length > 0)
+                    {
+                        $('#säsong').attr('action', '/Admin/HanteraSasong');
+
+                        var form = $("#säsong");
+                        var url = form.attr("action");
+                        var formData = form.serialize();
+                        $.post(url,
+                            formData,
+                            function () {
+                                window.location = '/Admin/HanteraSasong/';
+                                //$("#feedback-säsong").html("är nu uppdaterad");
+                        });
+                    } else {
+                        alert("Du måste fylla i både startdatum och slutdatum för säsongen");
+                    }
+                });
+
+            </script>
+
+
+        </div>
+    </form>
+
+<div id="feedback-säsong"></div>
+<br/><br /><br />
 <div>
     @Html.ActionLink("Tillbaka", "Index")
 </div>

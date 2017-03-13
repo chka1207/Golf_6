@@ -25,6 +25,25 @@ namespace Golf_6.Controllers
         {
             return View("BokningAdmin");
         }
+        [HttpPost]
+        [AllowAnonymous]
+        public string SokId(string sokfornamn, string sokefternamn)
+        {
+           
+            //List<string> lista = new List<string>();
+           
+            //lista = t.GetMedlemmen(sokfornamn, sokefternamn);
+            //List<string> nylista = new List<string>();
+            //foreach (string item in lista)
+            //{
+            //    nylista.Add(item.ToString());
+            //}
+            
+            Tidsbokning t = new Tidsbokning();
+            string m = "";
+            m = t.GetMedlemmen(sokfornamn, sokefternamn);
+            return m;
+        }
         // GET: Tidsbokning
         [AllowAnonymous]
         public ActionResult Index(FormCollection collection)
@@ -479,7 +498,7 @@ namespace Golf_6.Controllers
             string efternamn = collection["efternamn"];
             Tidsbokning t = new Tidsbokning();
             List<string> lista = new List<string>();
-            lista = t.GetMedlemmen(fornamn, efternamn);
+            //lista = t.GetMedlemmen(fornamn, efternamn);
             List<string> nylista = new List<string>();
             foreach (string item in lista)
             {

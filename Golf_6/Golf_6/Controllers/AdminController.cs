@@ -204,16 +204,26 @@ namespace Golf_6.Controllers
             return View();
         }
 
-        // POST: Admin/HanteraSasong
+        
+        // POST: HanteraSasong
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult HanteraSasong(HanteraSasongViewModel viewModel)
-        {
-            HanteraSasong hs = new HanteraSasong();
+        public ActionResult HanteraSasong(FormCollection collection)
+        {   
+            string sasongStart = collection["startDatum"];
+            string sasongSlut = collection["slutDatum"];
+            DateTime startDatum = Convert.ToDateTime(sasongStart);
+            DateTime slutDatum = Convert.ToDateTime(sasongSlut);
+            Postgres db = new Postgres();
 
-            hs.ÄndraSäsongen(viewModel.HanteraSasong.SasongStart, viewModel.HanteraSasong.SasongSlut);
+            db.SqlParameters("UPDATE sasong SET startdatum = @start, slutdatum = @slut WHERE sasong.id = 1",
+                Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@start", startDatum),
+                    new NpgsqlParameter("@slut", slutDatum)
+                });
 
-            return View("Index");
+            return View();
         }
         #endregion
 
