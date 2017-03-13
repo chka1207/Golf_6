@@ -129,17 +129,18 @@ namespace Golf_6.Controllers
 
         // GET: Tidsbokning/Create i befintlig tid Admin
         [AllowAnonymous]
+      
         public ActionResult AvbokningMedlem()
         {
             //hämtar ut vem som är bokare för den tiden
             //select bokaren from bokare where tid = 1
-            string identitet = "993";//User.Identity.Name;
+            string identitet = "13";//User.Identity.Name;
             //DateTime dt = Convert.ToDateTime(Request.QueryString["validate"]);
             Tidsbokning t = new Tidsbokning();
             //string tid = dt.ToShortTimeString();
             //string datum = dt.ToShortDateString();
-            string datum = "2017-03-09";
-            string tid = "07:20:00";
+            string datum = "2017-03-10";
+            string tid = "10:00:00";
             t.Datum = Convert.ToDateTime(datum);
             t.Tid = Convert.ToDateTime(tid);
 
