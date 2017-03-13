@@ -457,6 +457,7 @@ namespace Golf_6.Controllers
                 if (Convert.ToInt32(antaliBokningen) == 4)
                 {
                     m = "Starttiden består redan av 4 spelare. Var god välj en annan tid.";
+                    TempData["notice"] = m;
                 }
                 else if (antalMedlemmar + Convert.ToInt32(antaliBokningen) <= 4)
                 {
@@ -473,7 +474,9 @@ namespace Golf_6.Controllers
                 }
                 else
                 {
-                    m = "Antalet spelare kommer överstiga 4 i denna starttid.";
+                    
+                    m = "Någon annan har precis bokat den här tiden. Antalet spelare kommer därför överstiga 4 i denna starttid. Välj en annan starttid.";
+                    TempData["notice"] = m;
                 }
                 //ViewBag.message = meddelande;
                 
