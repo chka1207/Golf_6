@@ -593,6 +593,7 @@ namespace Golf_6.Controllers
             string datum = dt.ToShortDateString();
             t.Datum = Convert.ToDateTime(datum);
             t.Tid = Convert.ToDateTime(tid);
+            int id = Convert.ToUInt16(User.Identity.Name);
             
             {// Kontrollerar om det finns tider bokade och hämtar bokningsID och bokade spelares golfID, kön och hcp
                 Postgres x = new Postgres();
@@ -619,11 +620,12 @@ namespace Golf_6.Controllers
                 ViewBag.Datum = datum;
                 ViewBag.Tid = tid;
                 ViewBag.BokningsID = t.BokningsID.ToString();
+                ViewBag.BokareID = id;
 
             }
 
         
-            return View();
+            return View("Index");
         }
 
 

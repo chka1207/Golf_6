@@ -114,42 +114,70 @@
                             int räknare = 0;
                             string columnFärg = "columnGreen";
 
-                            foreach (Tidsbokning tb in ViewBag.Tävlingslista)
-                            {
 
-                                string s = allt.ToShortTimeString();
-                                DateTime allt2 = Convert.ToDateTime(s);
-                                
-                                if(allt2 >= start && allt2 < slut)
+                            if (ViewBag.Tävlingslista.Count > 0)
+                            {
+                                foreach (Tidsbokning tb in ViewBag.Tävlingslista)
                                 {
-                                    columnFärg = "columnRed";
-                                    räknare = -1;
-                                    medlemsinfo = "Stängt";
-                                
-                                }
-                                else
-                                {
-                                    foreach (Tidsbokning t in ViewBag.List)
+
+                                    string s = allt.ToShortTimeString();
+                                    DateTime allt2 = Convert.ToDateTime(s);
+
+                                    if (allt2 >= start && allt2 < slut)
                                     {
-                                        if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                                        {
-                                            räknare++;
-                                            kön += t.MedlemKön + " ";
-                                            hcp += t.MedlemHCP.ToString() + " ";
-                                            medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
-                                            kön = " ";
-                                            hcp = " ";
-                                        }
-                                        if (räknare == 1)
-                                        {
-                                            columnFärg = "columnYellow";
-                                        }
-                                        if (räknare == 4)
-                                        {
-                                            columnFärg = "columnRed";
-                                        }
+                                        columnFärg = "columnRed";
+                                        räknare = -1;
+                                        medlemsinfo = "Stängt";
 
                                     }
+                                    else
+                                    {
+                                        foreach (Tidsbokning t in ViewBag.List)
+                                        {
+                                            if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                                            {
+                                                räknare++;
+                                                kön += t.MedlemKön + " ";
+                                                hcp += t.MedlemHCP.ToString() + " ";
+                                                medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                                kön = " ";
+                                                hcp = " ";
+                                            }
+                                            if (räknare == 1)
+                                            {
+                                                columnFärg = "columnYellow";
+                                            }
+                                            if (räknare == 4)
+                                            {
+                                                columnFärg = "columnRed";
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                foreach (Tidsbokning t in ViewBag.List)
+                                {
+                                    if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                                    {
+                                        räknare++;
+                                        kön += t.MedlemKön + " ";
+                                        hcp += t.MedlemHCP.ToString() + " ";
+                                        medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                        kön = " ";
+                                        hcp = " ";
+                                    }
+                                    if (räknare == 1)
+                                    {
+                                        columnFärg = "columnYellow";
+                                    }
+                                    if (räknare == 4)
+                                    {
+                                        columnFärg = "columnRed";
+                                    }
+
                                 }
                             }
 
@@ -186,42 +214,70 @@
                     int räknare = 0;
                     string columnFärg = "columnGreen";
 
-                    foreach (Tidsbokning tb in ViewBag.Tävlingslista)
+
+                    if (ViewBag.Tävlingslista.Count > 0)
                     {
-                        string s = allt.ToShortTimeString();
-                        DateTime allt2 = Convert.ToDateTime(s);
-
-                        if (allt2 >= start && allt2 < slut)
+                        foreach (Tidsbokning tb in ViewBag.Tävlingslista)
                         {
-                            columnFärg = "columnRed";
-                            räknare = -1;
-                            medlemsinfo = "Stängt";
-                        
 
-                        }
-                        else
-                        {
-                            foreach (Tidsbokning t in ViewBag.List)
+                            string s = allt.ToShortTimeString();
+                            DateTime allt2 = Convert.ToDateTime(s);
+
+                            if (allt2 >= start && allt2 < slut)
                             {
-                                if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                                {
-                                    räknare++;
-                                    kön += t.MedlemKön + " ";
-                                    hcp += t.MedlemHCP.ToString() + " ";
-                                    medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
-                                    kön = " ";
-                                    hcp = " ";
-                                }
-                                if (räknare == 1)
-                                {
-                                    columnFärg = "columnYellow";
-                                }
-                                if (räknare == 4)
-                                {
-                                    columnFärg = "columnRed";
-                                }
+                                columnFärg = "columnRed";
+                                räknare = -1;
+                                medlemsinfo = "Stängt";
 
                             }
+                            else
+                            {
+                                foreach (Tidsbokning t in ViewBag.List)
+                                {
+                                    if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                                    {
+                                        räknare++;
+                                        kön += t.MedlemKön + " ";
+                                        hcp += t.MedlemHCP.ToString() + " ";
+                                        medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                        kön = " ";
+                                        hcp = " ";
+                                    }
+                                    if (räknare == 1)
+                                    {
+                                        columnFärg = "columnYellow";
+                                    }
+                                    if (räknare == 4)
+                                    {
+                                        columnFärg = "columnRed";
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (Tidsbokning t in ViewBag.List)
+                        {
+                            if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                            {
+                                räknare++;
+                                kön += t.MedlemKön + " ";
+                                hcp += t.MedlemHCP.ToString() + " ";
+                                medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                kön = " ";
+                                hcp = " ";
+                            }
+                            if (räknare == 1)
+                            {
+                                columnFärg = "columnYellow";
+                            }
+                            if (räknare == 4)
+                            {
+                                columnFärg = "columnRed";
+                            }
+
                         }
                     }
 
@@ -258,42 +314,70 @@
                     int räknare = 0;
                     string columnFärg = "columnGreen";
 
-                    foreach (Tidsbokning tb in ViewBag.Tävlingslista)
+
+                    if (ViewBag.Tävlingslista.Count > 0)
                     {
-                        string s = allt.ToShortTimeString();
-                        DateTime allt2 = Convert.ToDateTime(s);
-
-                        if (allt2 >= start && allt2 < slut)
+                        foreach (Tidsbokning tb in ViewBag.Tävlingslista)
                         {
-                            columnFärg = "columnRed";
-                            räknare = -1;
-                            medlemsinfo = "Stängt";
-                   
 
-                        }
-                        else
-                        {
-                            foreach (Tidsbokning t in ViewBag.List)
+                            string s = allt.ToShortTimeString();
+                            DateTime allt2 = Convert.ToDateTime(s);
+
+                            if (allt2 >= start && allt2 < slut)
                             {
-                                if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                                {
-                                    räknare++;
-                                    kön += t.MedlemKön + " ";
-                                    hcp += t.MedlemHCP.ToString() + " ";
-                                    medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
-                                    kön = " ";
-                                    hcp = " ";
-                                }
-                                if (räknare == 1)
-                                {
-                                    columnFärg = "columnYellow";
-                                }
-                                if (räknare == 4)
-                                {
-                                    columnFärg = "columnRed";
-                                }
+                                columnFärg = "columnRed";
+                                räknare = -1;
+                                medlemsinfo = "Stängt";
 
                             }
+                            else
+                            {
+                                foreach (Tidsbokning t in ViewBag.List)
+                                {
+                                    if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                                    {
+                                        räknare++;
+                                        kön += t.MedlemKön + " ";
+                                        hcp += t.MedlemHCP.ToString() + " ";
+                                        medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                        kön = " ";
+                                        hcp = " ";
+                                    }
+                                    if (räknare == 1)
+                                    {
+                                        columnFärg = "columnYellow";
+                                    }
+                                    if (räknare == 4)
+                                    {
+                                        columnFärg = "columnRed";
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (Tidsbokning t in ViewBag.List)
+                        {
+                            if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                            {
+                                räknare++;
+                                kön += t.MedlemKön + " ";
+                                hcp += t.MedlemHCP.ToString() + " ";
+                                medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                kön = " ";
+                                hcp = " ";
+                            }
+                            if (räknare == 1)
+                            {
+                                columnFärg = "columnYellow";
+                            }
+                            if (räknare == 4)
+                            {
+                                columnFärg = "columnRed";
+                            }
+
                         }
                     }
 
@@ -330,42 +414,70 @@
                     int räknare = 0;
                     string columnFärg = "columnGreen";
 
-                    foreach (Tidsbokning tb in ViewBag.Tävlingslista)
+
+                    if (ViewBag.Tävlingslista.Count > 0)
                     {
-                        string s = allt.ToShortTimeString();
-                        DateTime allt2 = Convert.ToDateTime(s);
-
-                        if (allt2 >= start && allt2 < slut)
+                        foreach (Tidsbokning tb in ViewBag.Tävlingslista)
                         {
-                            columnFärg = "columnRed";
-                            räknare = -1;
-                            medlemsinfo = "Stängt";
-                          
 
-                        }
-                        else
-                        {
-                            foreach (Tidsbokning t in ViewBag.List)
+                            string s = allt.ToShortTimeString();
+                            DateTime allt2 = Convert.ToDateTime(s);
+
+                            if (allt2 >= start && allt2 < slut)
                             {
-                                if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                                {
-                                    räknare++;
-                                    kön += t.MedlemKön + " ";
-                                    hcp += t.MedlemHCP.ToString() + " ";
-                                    medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
-                                    kön = " ";
-                                    hcp = " ";
-                                }
-                                if (räknare == 1)
-                                {
-                                    columnFärg = "columnYellow";
-                                }
-                                if (räknare == 4)
-                                {
-                                    columnFärg = "columnRed";
-                                }
+                                columnFärg = "columnRed";
+                                räknare = -1;
+                                medlemsinfo = "Stängt";
 
                             }
+                            else
+                            {
+                                foreach (Tidsbokning t in ViewBag.List)
+                                {
+                                    if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                                    {
+                                        räknare++;
+                                        kön += t.MedlemKön + " ";
+                                        hcp += t.MedlemHCP.ToString() + " ";
+                                        medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                        kön = " ";
+                                        hcp = " ";
+                                    }
+                                    if (räknare == 1)
+                                    {
+                                        columnFärg = "columnYellow";
+                                    }
+                                    if (räknare == 4)
+                                    {
+                                        columnFärg = "columnRed";
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (Tidsbokning t in ViewBag.List)
+                        {
+                            if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                            {
+                                räknare++;
+                                kön += t.MedlemKön + " ";
+                                hcp += t.MedlemHCP.ToString() + " ";
+                                medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                kön = " ";
+                                hcp = " ";
+                            }
+                            if (räknare == 1)
+                            {
+                                columnFärg = "columnYellow";
+                            }
+                            if (räknare == 4)
+                            {
+                                columnFärg = "columnRed";
+                            }
+
                         }
                     }
 
@@ -402,42 +514,70 @@
                     int räknare = 0;
                     string columnFärg = "columnGreen";
 
-                    foreach (Tidsbokning tb in ViewBag.Tävlingslista)
+
+                    if (ViewBag.Tävlingslista.Count > 0)
                     {
-                        string s = allt.ToShortTimeString();
-                        DateTime allt2 = Convert.ToDateTime(s);
-
-                        if (allt2 >= start && allt2 < slut)
+                        foreach (Tidsbokning tb in ViewBag.Tävlingslista)
                         {
-                            columnFärg = "columnRed";
-                            räknare = -1;
-                            medlemsinfo = "Stängt";
-                           
 
-                        }
-                        else
-                        {
-                            foreach (Tidsbokning t in ViewBag.List)
+                            string s = allt.ToShortTimeString();
+                            DateTime allt2 = Convert.ToDateTime(s);
+
+                            if (allt2 >= start && allt2 < slut)
                             {
-                                if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                                {
-                                    räknare++;
-                                    kön += t.MedlemKön + " ";
-                                    hcp += t.MedlemHCP.ToString() + " ";
-                                    medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
-                                    kön = " ";
-                                    hcp = " ";
-                                }
-                                if (räknare == 1)
-                                {
-                                    columnFärg = "columnYellow";
-                                }
-                                if (räknare == 4)
-                                {
-                                    columnFärg = "columnRed";
-                                }
+                                columnFärg = "columnRed";
+                                räknare = -1;
+                                medlemsinfo = "Stängt";
 
                             }
+                            else
+                            {
+                                foreach (Tidsbokning t in ViewBag.List)
+                                {
+                                    if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                                    {
+                                        räknare++;
+                                        kön += t.MedlemKön + " ";
+                                        hcp += t.MedlemHCP.ToString() + " ";
+                                        medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                        kön = " ";
+                                        hcp = " ";
+                                    }
+                                    if (räknare == 1)
+                                    {
+                                        columnFärg = "columnYellow";
+                                    }
+                                    if (räknare == 4)
+                                    {
+                                        columnFärg = "columnRed";
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (Tidsbokning t in ViewBag.List)
+                        {
+                            if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                            {
+                                räknare++;
+                                kön += t.MedlemKön + " ";
+                                hcp += t.MedlemHCP.ToString() + " ";
+                                medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                kön = " ";
+                                hcp = " ";
+                            }
+                            if (räknare == 1)
+                            {
+                                columnFärg = "columnYellow";
+                            }
+                            if (räknare == 4)
+                            {
+                                columnFärg = "columnRed";
+                            }
+
                         }
                     }
 
@@ -474,42 +614,70 @@
                     int räknare = 0;
                     string columnFärg = "columnGreen";
 
-                    foreach (Tidsbokning tb in ViewBag.Tävlingslista)
+
+                    if (ViewBag.Tävlingslista.Count > 0)
                     {
-                        string s = allt.ToShortTimeString();
-                        DateTime allt2 = Convert.ToDateTime(s);
-
-                        if (allt2 >= start && allt2 < slut)
+                        foreach (Tidsbokning tb in ViewBag.Tävlingslista)
                         {
-                            columnFärg = "columnRed";
-                            räknare = -1;
-                            medlemsinfo = "Stängt";
-                        
 
-                        }
-                        else
-                        {
-                            foreach (Tidsbokning t in ViewBag.List)
+                            string s = allt.ToShortTimeString();
+                            DateTime allt2 = Convert.ToDateTime(s);
+
+                            if (allt2 >= start && allt2 < slut)
                             {
-                                if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
-                                {
-                                    räknare++;
-                                    kön += t.MedlemKön + " ";
-                                    hcp += t.MedlemHCP.ToString() + " ";
-                                    medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
-                                    kön = " ";
-                                    hcp = " ";
-                                }
-                                if (räknare == 1)
-                                {
-                                    columnFärg = "columnYellow";
-                                }
-                                if (räknare == 4)
-                                {
-                                    columnFärg = "columnRed";
-                                }
+                                columnFärg = "columnRed";
+                                räknare = -1;
+                                medlemsinfo = "Stängt";
 
                             }
+                            else
+                            {
+                                foreach (Tidsbokning t in ViewBag.List)
+                                {
+                                    if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                                    {
+                                        räknare++;
+                                        kön += t.MedlemKön + " ";
+                                        hcp += t.MedlemHCP.ToString() + " ";
+                                        medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                        kön = " ";
+                                        hcp = " ";
+                                    }
+                                    if (räknare == 1)
+                                    {
+                                        columnFärg = "columnYellow";
+                                    }
+                                    if (räknare == 4)
+                                    {
+                                        columnFärg = "columnRed";
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (Tidsbokning t in ViewBag.List)
+                        {
+                            if (t.Tid.ToString("HHmm") == allt.ToString("HHmm"))
+                            {
+                                räknare++;
+                                kön += t.MedlemKön + " ";
+                                hcp += t.MedlemHCP.ToString() + " ";
+                                medlemsinfo += "Kön: " + kön + "Hcp: " + hcp + "\n";
+                                kön = " ";
+                                hcp = " ";
+                            }
+                            if (räknare == 1)
+                            {
+                                columnFärg = "columnYellow";
+                            }
+                            if (räknare == 4)
+                            {
+                                columnFärg = "columnRed";
+                            }
+
                         }
                     }
 
@@ -522,7 +690,7 @@
                             if (räknare < 4)
                             {
                                 <p>@räknare.ToString() /4</p>
-                                        @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
+                                @Html.ActionLink("Boka", "create", "Tidsbokning", new { validate = Model.Datepicker + " " + allt.ToLongTimeString() }, null)
                             }
                         }
                         else
