@@ -15,14 +15,14 @@ namespace Golf_6.Controllers
     public class AdminController : Controller
     {
         // Logga ut och kom till index
-        [AllowAnonymousAttribute]
+        [Authorize(Roles ="2")]
         public ActionResult LogOut()
         {
 
             return RedirectToAction("Index", "Home", "Home");
         }
         // GET: Admin
-        [AllowAnonymous]
+        [Authorize(Roles ="2")]
         public ActionResult Index()
         {
             return View();
@@ -30,7 +30,7 @@ namespace Golf_6.Controllers
 
         #region Hämta alla medlemmar
         //GET: Admin/AllaMedlemmar
-        [AllowAnonymous]
+        [Authorize(Roles ="2")]
         public ActionResult AllaMedlemmar()
         {
             Admin medlemmarna = new Admin();
@@ -78,17 +78,17 @@ namespace Golf_6.Controllers
         #region Registrera ny medlem /GET: /POST:
 
         //GET: Admin/RegistreraNyMedlem
-        [AllowAnonymous]
+        [Authorize(Roles ="2")]
         public ActionResult RegistreraNyMedlem()
         {
             var viewModel = new AdminMedlemshanteringViewModel();
 
             return View(viewModel);
         }
-        
+
         // POST: Admin/RegistreraNyMedlem
+        [Authorize(Roles ="2")]
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult RegistreraNyMedlem(Admin viewModel)
         {
             if (ModelState.IsValid)
@@ -110,7 +110,7 @@ namespace Golf_6.Controllers
 
         #region Redigera medlem /GET: /POST:
         // GET: Admin/RedigeraMedlem
-        [AllowAnonymous]
+        [Authorize(Roles ="2")]
         public ActionResult RedigeraMedlem()
         {
             var viewModel = new AdminMedlemshanteringViewModel();
@@ -119,8 +119,8 @@ namespace Golf_6.Controllers
         }
 
         // POST: Admin/RegistreraNyMedlem
+        [Authorize(Roles ="2")]
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult RedigeraMedlem(Admin viewModel)
         {
             if (ModelState.IsValid)
@@ -143,7 +143,7 @@ namespace Golf_6.Controllers
 
         #region Radera medlem /GET: /POST:
             //GET: Admin/RaderaMedlem
-        [AllowAnonymous]
+        [Authorize(Roles ="2")]
         public ActionResult RaderaMedlem()
         {
             var viewModel = new AdminMedlemshanteringViewModel();
@@ -169,8 +169,8 @@ namespace Golf_6.Controllers
         //    return View("Index");
         //}
 
+        [Authorize(Roles ="2")]
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult RaderaMedlem(Admin viewModel)
         {
             if (ModelState.IsValid)
@@ -189,7 +189,7 @@ namespace Golf_6.Controllers
 
         #region Hantera säsong /GET: /POST:
         // GET: HanteraSasong
-        [AllowAnonymous]
+        [Authorize(Roles ="2")]
         public ActionResult HanteraSasong()
         {
             HanteraSasong hs = new HanteraSasong();
@@ -227,8 +227,8 @@ namespace Golf_6.Controllers
 
         
         // POST: HanteraSasong
+        [Authorize(Roles ="2")]
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult HanteraSasong(FormCollection collection)
         {   
             string sasongStart = collection["startDatum"];

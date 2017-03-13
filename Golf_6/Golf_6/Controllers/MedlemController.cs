@@ -15,8 +15,8 @@ namespace Golf_6.Controllers
     public class MedlemController : Controller
     {
         //Uppdatera personuppgifter
+        [Authorize(Roles ="1")]
         [HttpPost]
-        [AllowAnonymousAttribute]
         public ActionResult UppdateraPersonuppgifter(string fornamninput, string efternamninput, string adressinput, string ortinput, string postnummerinput, string emailinput, string telefonnummerinput, string hcpinput, string koninput )
         {
             Medlem m = new Medlem();
@@ -27,7 +27,7 @@ namespace Golf_6.Controllers
             return RedirectToAction("Personuppgifter", "Medlem");
         }
         // Logga ut och kom till index
-        [AllowAnonymousAttribute]
+        [Authorize(Roles ="1")]
         public ActionResult LoggaUt()
         {
             
@@ -40,8 +40,8 @@ namespace Golf_6.Controllers
         //    return View();
         //}
         // Visa personuppgifter
-   
-        [AllowAnonymousAttribute]
+
+        [Authorize(Roles = "1")]
         public ActionResult Personuppgifter()
         {
             Medlem m = new Medlem();
@@ -51,25 +51,28 @@ namespace Golf_6.Controllers
             return View(m);
         }
         // GET: Medlem
-        [AllowAnonymousAttribute]
+        [Authorize(Roles = "1")]
         public ActionResult Index()
         {
             return View();
         }
 
         // GET: Medlem/Details/5
+        [Authorize(Roles = "1")]
         public ActionResult Details(int id)
         {
             return View();
         }
 
         // GET: Medlem/Create
+        [Authorize(Roles = "1")]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Medlem/Create
+        [Authorize(Roles = "1")]
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -86,12 +89,14 @@ namespace Golf_6.Controllers
         }
 
         // GET: Medlem/Edit/5
+        [Authorize(Roles = "1")]
         public ActionResult Edit(int id)
         {
             return View();
         }
 
         // POST: Medlem/Edit/5
+        [Authorize(Roles = "1")]
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -108,12 +113,14 @@ namespace Golf_6.Controllers
         }
 
         // GET: Medlem/Delete/5
+        [Authorize(Roles = "1")]
         public ActionResult Delete(int id)
         {
             return View();
         }
 
         // POST: Medlem/Delete/5
+        [Authorize(Roles = "1")]
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
@@ -130,8 +137,7 @@ namespace Golf_6.Controllers
         }
 
         // GET: Tidsbokning/Create i befintlig tid Admin
-        [AllowAnonymous]
-      
+        [Authorize(Roles = "2")]
         public ActionResult AvbokningMedlem()
         {
             //hämtar ut vem som är bokare för den tiden
@@ -226,8 +232,8 @@ namespace Golf_6.Controllers
         }
 
         // POST: Tidsbokning/Avboka Admin
+        [Authorize(Roles = "2")]
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult AvbokningMedlem(FormCollection collection)
         {
 
@@ -351,10 +357,10 @@ namespace Golf_6.Controllers
             
             return View(dt);
 
-        } 
+        }
 
         //Visar mina bokningar 
-        [AllowAnonymous]
+        [Authorize(Roles = "1")]
         public ActionResult MinaBokningar()
         {
             Medlem m = new Medlem();
