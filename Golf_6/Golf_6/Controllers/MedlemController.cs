@@ -292,7 +292,7 @@ namespace Golf_6.Controllers
 
             {
                 Postgres p2 = new Postgres();
-
+                //Tar bort medlemmar om från bokare om de är bokare.
                 meddelande = p2.SqlParameters("delete from bokare where bokare.bokaren = @medlemID and bokare.tid = @bokningID;", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new Npgsql.NpgsqlParameter("@medlemID", Convert.ToInt32(medlemsIdLista[i])),
@@ -300,9 +300,6 @@ namespace Golf_6.Controllers
                 });
             }
             }
-
-            //if(bokare != "")
-      
 
 
             try
