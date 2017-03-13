@@ -566,19 +566,12 @@ namespace Golf_6.Controllers
                 }
                 ViewBag.Datum = datum;
                 ViewBag.Tid = tid;
+                ViewBag.BokningsID = t.BokningsID.ToString();
 
             }
 
-            //{
-            //    Postgres x = new Postgres();
-            //    x.SqlParameters("insert into reservation (datum, tid) values (@datum, @tid);", Postgres.lista = new List<NpgsqlParameter>
-            //    {
-            //        new NpgsqlParameter("@datum", t.Datum),
-            //        new NpgsqlParameter("@tid", t.Tid)
-            //    });
-            //}      
-
-            return View("Index");
+        
+            return View();
         }
 
 
