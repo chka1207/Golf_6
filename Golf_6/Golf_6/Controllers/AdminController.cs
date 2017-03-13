@@ -34,23 +34,44 @@ namespace Golf_6.Controllers
         public ActionResult AllaMedlemmar()
         {
             Admin medlemmarna = new Admin();
-            DataTable dt = new DataTable("MyTable");
-           
+            DataTable dt = new DataTable();
+
             dt = medlemmarna.HämtaMedlemmar();
 
-            dt.Columns[0].ColumnName = "Förnamn";
-            dt.Columns[1].ColumnName = "Efternamn";
-            dt.Columns[2].ColumnName = "Adress";
-            dt.Columns[3].ColumnName = "Postnummer";
-            dt.Columns[4].ColumnName = "Ort";
-            dt.Columns[5].ColumnName = "E-mail";
-            dt.Columns[6].ColumnName = "Kön";
-            dt.Columns[7].ColumnName = "Handikapp";
-            dt.Columns[8].ColumnName = "Medlemskategori";
-            dt.Columns[9].ColumnName = "GolfID";
-            dt.Columns[10].ColumnName = "Tele";
+            DataTable dtCloned = dt.Clone();
+            dtCloned.Columns[8].DataType = typeof(String);
 
-            return View(dt);
+            foreach (DataRow row in dt.Rows)
+            {
+                dtCloned.ImportRow(row);
+            }
+
+            int columnNumber = 8; //Put your column X number here
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                if (dtCloned.Rows[i][columnNumber].ToString() == "1")
+                { dtCloned.Rows[i][columnNumber] = "Junior 0-12"; }
+                else if (dtCloned.Rows[i][columnNumber].ToString() == "2")
+                { dtCloned.Rows[i][columnNumber] = "Junior 13-18"; }
+                else if (dtCloned.Rows[i][columnNumber].ToString() == "3")
+                { dtCloned.Rows[i][columnNumber] = "Studerande"; }
+                else if (dtCloned.Rows[i][columnNumber].ToString() == "4")
+                { dtCloned.Rows[i][columnNumber] = "Senior"; }
+            }
+            
+            dtCloned.Columns[0].ColumnName = "Förnamn";
+            dtCloned.Columns[1].ColumnName = "Efternamn";
+            dtCloned.Columns[2].ColumnName = "Adress";
+            dtCloned.Columns[3].ColumnName = "Postnummer";
+            dtCloned.Columns[4].ColumnName = "Ort";
+            dtCloned.Columns[5].ColumnName = "E-mail";
+            dtCloned.Columns[6].ColumnName = "Kön";
+            dtCloned.Columns[7].ColumnName = "Handikapp";
+            dtCloned.Columns[8].ColumnName = "Medlemskategori";
+            dtCloned.Columns[9].ColumnName = "GolfID";
+            dtCloned.Columns[10].ColumnName = "Tele";
+
+            return View(dtCloned);
         }
         #endregion
 
@@ -120,7 +141,7 @@ namespace Golf_6.Controllers
 
         #endregion
 
-            #region Radera medlem /GET: /POST:
+        #region Radera medlem /GET: /POST:
             //GET: Admin/RaderaMedlem
         [AllowAnonymous]
         public ActionResult RaderaMedlem()
@@ -226,41 +247,7 @@ namespace Golf_6.Controllers
             return View();
         }
         #endregion
-
-
-        //[AllowAnonymous]
-        //public ActionResult HanteraMedlemmar() /* Ny version av hämta medlemmar.*/
-        //{
-        //    Postgres db = new Postgres();
-        //    DataTable dt = new DataTable();
-
-        //    string sql =
-        //        "SELECT fornamn, efternamn, adress, postnummer, ort, email, kon, handikapp, medlemskategori, golfid, telefonnummer FROM medlemmar";
-
-        //    dt = db.sqlFragaTable(sql);
-
-        //    List<Admin> medlemslistan = new List<Admin>();
-        //    foreach (DataRow r in db._tabell.Rows)
-        //    {
-        //        Admin a = new Admin();
-        //        a.Fornamn = r["fornamn"].ToString();
-        //        a.Efternamn = r["efternamn"].ToString();
-        //        a.Adress = r["adress"].ToString();
-        //        a.Postnummer = r["postnummer"].ToString();
-        //        a.Ort = r["ort"].ToString();
-        //        a.Email = r["postnummer"].ToString();
-        //        a.Kon = r["kon"].ToString();
-        //        a.Handikapp = Convert.ToDouble(r["handikapp"]);
-        //        a.MedlemsKategori = Convert.ToInt32(r["medlemskategori"]);
-        //        a.GolfID = r["golfid"].ToString();
-        //        a.Telefonnummer = r["telefonnummer"].ToString();
-
-        //        medlemslistan.Add(a);
-        //    }
-
-        //    ViewBag.Medlemslista = medlemslistan;
-        //    return View();
-        //}
+        
 
     }
 }
