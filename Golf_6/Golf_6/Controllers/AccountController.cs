@@ -114,7 +114,7 @@ namespace Golf_6.Controllers
 
                     if (User.IsInRole("1"))
                     {
-                        return RedirectToAction("Index", "Medlem");
+                        return RedirectToAction("MinaBokningar", "Medlem");
                     }
                     if (User.IsInRole("2"))
                     {
