@@ -42,6 +42,7 @@ namespace Golf_6.Models
         [Required]
         [Display(Name = "Medlemskategori")]
         public int MedlemsKategori { get; set; }
+        //public IEnumerable<SelectListItem> MedlemsKategori { get; set; }
         [Required]
         public string Telefonnummer { get; set; }
 

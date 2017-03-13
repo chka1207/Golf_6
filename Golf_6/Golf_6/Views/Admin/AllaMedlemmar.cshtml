@@ -48,132 +48,137 @@
     </table>
 </div>
 
+@{
+    List<SelectListItem> medlemskategori = new List<SelectListItem>();
+    medlemskategori.Add(new SelectListItem
+    {
+        Text = "Junior 0-12",
+        Value = "1"
+    });
+    medlemskategori.Add(new SelectListItem
+    {
+        Text = "Junior 13-18",
+        Value = "2"
+    });
+    medlemskategori.Add(new SelectListItem
+    {
+        Text = "Student",
+        Value = "3"
+    });
+    medlemskategori.Add(new SelectListItem
+    {
+        Text = "Senior",
+        Value = "4"
+    });
+}
+
 <!-- MODAL FÖR ATT REDIGERA OCH/ELLER RADERA MEDLEMMAR-->
 <div id="modal-hantera-medlem" class="modal fade" role="dialog">
-<div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title" id="modal-namn-medlem"></h4>
-        </div>
-        <div class="modal-body">
-            <form id="modal-form" action="" method="post">
-                    
-            Förnamn: @Html.TextBox("fornamn")
-                <br />
-                Efternamn: @Html.TextBox("efternamn")
-                <br />
-                @Html.TextBox("adress")
-                <br />
-                @Html.TextBox("postnummer")
-                <br />
-                @Html.TextBox("ort")
-                <br />
-                @Html.TextBox("email")
-                <br />
-                @Html.TextBox("kon")
-                <br />
-                @Html.TextBox("handikapp")
-                <br />
-                @Html.TextBox("medlemskategori")
-                <br />
-                @Html.TextBox("golfid")
-                <br />
-                @Html.TextBox("telefonnummer")
-                @*@{
-                    Admin admin = new Admin();
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => admin.Fornamn, htmlAttributes: new {@class = "control-label col-md-2"})
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => admin.Fornamn, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => admin.Fornamn, "", new {@class = "text-danger"})
-                        </div>
+    <div class="modal-dialog">
+        
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="modal-namn-medlem"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="modal-form" action="" method="post">
+                    <div class="text-left col-lg-3">
+                        Förnamn:
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => admin.Efternamn, htmlAttributes: new {@class = "control-label col-md-2"})
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => admin.Efternamn, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => admin.Efternamn, "", new {@class = "text-danger"})
-                        </div>
+                    <div class="col-lg-7">
+                        @Html.TextBox("fornamn")
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => admin.Adress, htmlAttributes: new {@class = "control-label col-md-2"})
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => admin.Adress, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => admin.Adress, "", new {@class = "text-danger"})
-                        </div>
+                    <br/>
+                    <div class="text-left col-lg-3">
+                        Efternamn:
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => admin.Postnummer, htmlAttributes: new {@class = "control-label col-md-2"})
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => admin.Postnummer, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => admin.Postnummer, "", new {@class = "text-danger"})
-                        </div>
+                    <div class="col-lg-7">
+                        @Html.TextBox("efternamn")
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => admin.Ort, htmlAttributes: new {@class = "control-label col-md-2"})
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => admin.Ort, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => admin.Ort, "", new {@class = "text-danger"})
-                        </div>
+                    <br/>
+                    <div class="text-left col-lg-3">
+                        Adress:
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => admin.Email, htmlAttributes: new {@class = "control-label col-md-2"})
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => admin.Email, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => admin.Email, "", new {@class = "text-danger"})
-                        </div>
+                    <div class="col-lg-7">
+                        @Html.TextBox("adress")
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => admin.Kon, htmlAttributes: new {@class = "control-label col-md-2"})
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => admin.Kon, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => admin.Kon, "", new {@class = "text-danger"})
-                        </div>
+                    <br/>
+                    <div class="text-left col-lg-3">
+                        Postnummer:
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => admin.Handikapp, htmlAttributes: new {@class = "control-label col-md-2"})
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => admin.Handikapp, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => admin.Handikapp, "", new {@class = "text-danger"})
-                        </div>
+                    <div class="col-lg-7">
+                        @Html.TextBox("postnummer")
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => admin.GolfID, htmlAttributes: new {@class = "control-label col-md-2"})
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => admin.GolfID, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => admin.GolfID, "", new {@class = "text-danger"})
-                        </div>
+                    <br/>
+                    <div class="text-left col-lg-3">
+                        Ort:
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => admin.MedlemsKategori, htmlAttributes: new {@class = "control-label col-md-2"})
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => admin.MedlemsKategori, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => admin.MedlemsKategori, "", new {@class = "text-danger"})
-                        </div>
+                    <div class="col-lg-7">
+                        @Html.TextBox("ort")
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => admin.Telefonnummer, htmlAttributes: new {@class = "control-label col-md-2"})
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => admin.Telefonnummer, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => admin.Telefonnummer, "", new {@class = "text-danger"})
-                        </div>
+                    <br/>
+                    <div class="text-left col-lg-3">
+                        E-mail:
                     </div>
-                }*@  
-            </form>
-        </div>
-        <br /><br />
-        <div class="modal-footer">
-            <button type="button" class="btn btn-lg" data-dismiss="modal">Tillbaka</button>
-            <button type="button" id="btn-radera" class="btn btn-lg btn-danger" data-dismiss="modal">Radera medlem</button>
-            <button type="button" id="btn-redigera" class="btn btn-lg btn-info" data-dismiss="modal">Uppdatera medlem</button>
-            <button type="button" id="btn-acceptera-ny-medlem" class="btn btn-lg btn-info" data-dismiss="modal">Lägg till medlem</button>
+                    <div class="col-lg-7">
+                        @Html.TextBox("email")
+                    </div>
+                    <br/>
+                    <div class="text-left col-lg-3">
+                        Kön:
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBox("kon")
+                    </div>
+                    <br/>
+                    <div class="text-left col-lg-3">
+                        Handikapp:
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBox("handikapp")
+                    </div>
+                    <br/>
+                    <div class="text-left col-lg-3">
+                        Medlemskategori:
+                    </div>
+                    <div class="col-lg-7">
+                        @*@Html.TextBox("medlemskategori")*@
+                        @Html.DropDownList("medlemskategori", new SelectList(medlemskategori, "Value", "Text"), new { style = "width: 168px;" })
+                        @*@Html.DropDownList(<select name="medlemskategori">
+                            <option>Junior 0-12år</option>
+                            <option>Junior 13-21år</option>
+                            <option>Studerande</option>
+                            <option>Senior</option>
+                        </select>)*@
+                    </div>
+                    <br/>
+                    <div class="text-left col-lg-3">
+                        Golf-ID:
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBox("golfid")
+                    </div>
+                    <br/>
+                    <div class="text-left col-lg-3">
+                        Telefonnummer:
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBox("telefonnummer")
+                    </div>
+                    <br/>
+                </form>
+            </div>
+            <br/><br/>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-lg" data-dismiss="modal">Tillbaka</button>
+                <button type="button" id="btn-radera" class="btn btn-lg btn-danger" data-dismiss="modal">Radera medlem</button>
+                <button type="button" id="btn-redigera" class="btn btn-lg btn-info" data-dismiss="modal">Uppdatera medlem</button>
+                <button type="button" id="btn-acceptera-ny-medlem" class="btn btn-lg btn-info" data-dismiss="modal">Lägg till medlem</button>
+            </div>
         </div>
     </div>
-</div>
     </div>
 
 <button type="button" id="btn-ny-medlem-modal" class="btn btn-lg btn-info">Ny medlem</button>
