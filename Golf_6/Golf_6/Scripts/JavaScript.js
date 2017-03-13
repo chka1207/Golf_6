@@ -64,21 +64,6 @@ $(document).ready(function () { //Datatablen som visar alla medlemmar i Admin/Al
     });
 });
 
-//if (data[8] === 1) {
-//    $('#medlemskategori').val("Junior 0-12");
-//}
-//else if (data[8] === 2) {
-//    $('#medlemskategori').val("Junior 13-18");
-//}
-//else if (data[8] === 2) {
-//    $('#medlemskategori').val("Student");
-//}
-//else if (data[8] === 2) {
-//    $('#medlemskategori').val("Senior");
-//} else {
-//    $('#medlemskategori').val("Ingen medlemskategori");
-//}
-
 $(document).ready(function () { //Denna laddar in värdena från varje cell till modal
     var table = $('#alla_medlemmar').DataTable();
 
@@ -150,6 +135,14 @@ $('#btn-radera').click(function () {
         });
 });
 
+$(function() {
+    $('#datepickerFödelsedatum').datepicker({
+        onSelect: function(date) {
+            $("#golfid").val(date);
+        }
+    });
+});
+
 // Redigeraknappen i Admin/AllaMedlemmar -> Modal
 $('#btn-redigera').click(function () {
     $('#modal-form').attr('action', '/Admin/RedigeraMedlem');
@@ -180,6 +173,39 @@ $(function () {
     $("#datepicker").datepicker();
 });
 
+$(function () {
+    $('#datepickerFödelsedatum').datepicker({
+        onSelect: function (date) {
+            $("#golfid").val(date);
+        }
+    });
+var currentDate = $(".selector").datepicker("getDate");
+$.datepicker.regional['sv'] = {
+    closeText: 'Stäng',
+    prevText: '< Föregående',
+    nextText: 'Nästa >',
+    currentText: 'Idag',
+    monthNames: [
+        'Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'Oktober',
+        'November', 'December'
+    ],
+    monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+    dayNamesShort: ['Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör'],
+    dayNames: ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'],
+    dayNamesMin: ['Sö', 'Må', 'Ti', 'On', 'To', 'Fr', 'Lö'],
+    weekHeader: 'Не',
+    dateFormat: 'yy-mm-dd',
+    firstDay: 1,
+    isRTL: false,
+    showMonthAfterYear: false,
+    yearSuffix: '',
+    onSelect: function (dateText, inst) {
+        //    //$('form').submit();
+        //    $('form:first').submit();
+    }
+};
+$.datepicker.setDefaults($.datepicker.regional['sv']);
+});
 
 function whichDay(dateString) { //Funktion för att hämta dag på ett speciellt datum
     return ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag']
@@ -189,6 +215,8 @@ window.onload = function () { //Hämtar dag och visar upp detta i Admin/HanteraS
     document.getElementById("startVeckodag").innerHTML = whichDay(document.getElementById("startVeckodag").innerHTML);
     document.getElementById("slutVeckodag").innerHTML = whichDay(document.getElementById("slutVeckodag").innerHTML);
 };
+
+
 
 //$("#btnSök").on('click', function () {
 //    $.ajax({
