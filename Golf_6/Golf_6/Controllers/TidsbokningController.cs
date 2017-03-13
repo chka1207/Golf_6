@@ -370,7 +370,7 @@ namespace Golf_6.Controllers
             string golfare2 = "";
             string golfare3 = "";
             string golfare4 = "";
-            string bokningsId = collection["bokningsID"];
+            string bokningsId = "";// collection["bokningsID"];
             string meddelande = "";
 
             List<string> parameterLista = new List<string>();
@@ -392,9 +392,25 @@ namespace Golf_6.Controllers
                 golfare4 = spelare4;
                 parameterLista.Add(golfare4);
             }
-            DataTable dt = new DataTable();
+            DataTable table = new DataTable();
             List<string> medlemsIdLista = new List<string>();
             string medlemsid = "";
+
+            Postgres post = new Postgres();
+            table = post.SqlFrågaParameters("select bokning_id from reservation where datum = DATE(@datum) and tid = CAST(@tid as TIME);", Postgres.lista = new List<NpgsqlParameter>
+                {
+                    new NpgsqlParameter("@datum", Convert.ToDateTime(datum)),
+                    new NpgsqlParameter("@tid", Convert.ToDateTime(tid))
+                });
+
+            if (table != null)
+            {
+                foreach (DataRow dr in table.Rows)
+                {
+                    bokningsId = dr["bokning_id"].ToString();
+                }
+            }
+            DataTable dt = new DataTable();
             for (int i = 0; i < parameterLista.Count; i++)
 			{
 			    Postgres p1 = new Postgres();
@@ -412,26 +428,62 @@ namespace Golf_6.Controllers
                     }
                 }
 			}
-            
+            int antalMedlemmar = medlemsIdLista.Count;
+            string m = "";
+            DataTable dt3 = new DataTable();
             //Lägger till golfarna i deltar om det redan finns en reservation
-            if (bokningsId != "0")
+            if (bokningsId != "")
             {
-                for (int i = 0; i < medlemsIdLista.Count; i++)
-                {
+                //select count(medlem_id) from deltar where reservation_id = 14
+                string antaliBokningen = "";
+
+            
                     Postgres p = new Postgres();
 
-                  meddelande = p.SqlParameters("insert into deltar (medlem_id, reservation_id) VALUES (@medlemID, @bokningID);", Postgres.lista = new List<NpgsqlParameter>()
+                    dt3 = p.SqlFrågaParameters("select count(medlem_id) from deltar where reservation_id = @bokningID;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@bokningID",Convert.ToInt32(bokningsId))
+                });
+                      
+           
+            if (dt3 != null)
+            {
+                foreach (DataRow dr in dt3.Rows)
+                {
+                    antaliBokningen = dr["count"].ToString();
+                   
+                }
+            }
+                if (Convert.ToInt32(antaliBokningen) == 4)
+                {
+                    m = "Starttiden består redan av 4 spelare. Var god välj en annan tid.";
+                    TempData["notice"] = m;
+                }
+                else if (antalMedlemmar + Convert.ToInt32(antaliBokningen) <= 4)
+                {
+                    for (int i = 0; i < medlemsIdLista.Count; i++)
+                    {
+                        Postgres p5 = new Postgres();
+
+                        meddelande = p5.SqlParameters("insert into deltar (medlem_id, reservation_id) VALUES (@medlemID, @bokningID);", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new Npgsql.NpgsqlParameter("@medlemID", Convert.ToInt32(medlemsIdLista[i])),
                     new Npgsql.NpgsqlParameter("@bokningID",Convert.ToInt32(bokningsId))
                 });
+                    }
+                }
+                else
+                {
+                    
+                    m = "Någon annan har precis bokat den här tiden. Antalet spelare kommer därför överstiga 4 i denna starttid. Välj en annan starttid.";
+                    TempData["notice"] = m;
                 }
                 //ViewBag.message = meddelande;
                 
             }
-
+            DataTable dt2 = new DataTable();
             //Skapar en reservation om det inte redan finns.
-            if (bokningsId == "0")
+            if (bokningsId == "")
             {
                 Postgres p2 = new Postgres();
                 p2.SqlParameters("insert into reservation (datum, tid) VALUES (DATE(@datum), CAST(@tid as TIME))", Postgres.lista = new List<NpgsqlParameter>()
@@ -441,16 +493,16 @@ namespace Golf_6.Controllers
                 });
 
                 Postgres p3 = new Postgres();
-                dt = p3.SqlFrågaParameters("select bokning_id from reservation where datum = DATE(@datum) and tid = CAST(@tid as TIME);", Postgres.lista = new List<NpgsqlParameter>
+                dt2 = p3.SqlFrågaParameters("select bokning_id from reservation where datum = DATE(@datum) and tid = CAST(@tid as TIME);", Postgres.lista = new List<NpgsqlParameter>
                 {
                     new NpgsqlParameter("@datum", Convert.ToDateTime(datum)),
                     new NpgsqlParameter("@tid", Convert.ToDateTime(tid))
                 });
              
-            DataTable dt2 = new DataTable();
+            
             if (dt2 != null)
             {
-                foreach (DataRow dr in dt.Rows)
+                foreach (DataRow dr in dt2.Rows)
                 {
                     bokningsId = dr["bokning_id"].ToString();
                 }
