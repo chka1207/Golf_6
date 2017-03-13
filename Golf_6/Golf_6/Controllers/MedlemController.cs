@@ -134,15 +134,16 @@ namespace Golf_6.Controllers
         {
             //hämtar ut vem som är bokare för den tiden
             //select bokaren from bokare where tid = 1
-            string identitet = "13";//User.Identity.Name;
-            //DateTime dt = Convert.ToDateTime(Request.QueryString["validate"]);
+            string identitet = User.Identity.Name;
+            DateTime dt = Convert.ToDateTime(Request.QueryString["validate"]);
             Tidsbokning t = new Tidsbokning();
-            //string tid = dt.ToShortTimeString();
-            //string datum = dt.ToShortDateString();
-            string datum = "2017-03-10";
-            string tid = "10:00:00";
+            string tid = dt.ToShortTimeString();
+            string datum = dt.ToShortDateString();
+            //string datum = "2017-03-10";
+            //string tid = "10:00:00";
             t.Datum = Convert.ToDateTime(datum);
             t.Tid = Convert.ToDateTime(tid);
+            string harbokat = "";
 
             //Hämtar reservationsid för den tid som medlemmen är bokad.
             DataTable tabell = new DataTable();
@@ -165,7 +166,7 @@ namespace Golf_6.Controllers
                 DataTable tabell2 = new DataTable();
                 Postgres p1 = new Postgres();
                 string bokare = "";
-                tabell2 = p1.SqlFrågaParameters("SELECT DISTINCT medlemmar.golfid FROM public.medlemmar, public.bokare, public.deltar WHERE medlemmar.id = bokare.bokaren AND deltar.reservation_id = @bokningsid and deltar.reservation_id = bokare.tid;", Postgres.lista = new List<NpgsqlParameter>
+                tabell2 = p1.SqlFrågaParameters("SELECT DISTINCT medlemmar.golfid, bokare.bokaren FROM public.medlemmar, public.bokare, public.deltar WHERE medlemmar.id = bokare.bokaren AND deltar.reservation_id = @bokningsid and deltar.reservation_id = bokare.tid;", Postgres.lista = new List<NpgsqlParameter>
                 {
                     new NpgsqlParameter("@bokningsid", t.BokningsID)
                 });
@@ -174,6 +175,7 @@ namespace Golf_6.Controllers
                     foreach (DataRow dr in tabell2.Rows)
                     {
                         bokare = dr["golfid"].ToString();
+                        harbokat = dr["bokaren"].ToString();
                     }
                 }
                 
@@ -196,19 +198,20 @@ namespace Golf_6.Controllers
                 List<Tidsbokning> t1 = new List<Tidsbokning>();
                 if(bokare == inloggadGolfId)
                 {
-                    
+                    ViewBag.Bokare = harbokat;
                     t1 = t.GetBokning(t.BokningsID);
                     foreach (Tidsbokning tb in t1)
                     {
                         listan.Add(tb.GolfID.ToString());
                     }
                     ViewBag.Golfare = listan;
+                    
                 }
                 else
                 {
                     listan.Add(inloggadGolfId);
                 }
-                    ViewBag.Bokare = bokare;
+                    
                     ViewBag.InloggadGolfID = identitet;
 
                 ViewBag.Golfare = listan;
@@ -232,6 +235,7 @@ namespace Golf_6.Controllers
             string spelare2 = collection["myTextBox2"];
             string spelare3 = collection["myTextBox3"];
             string spelare4 = collection["myTextBox4"];
+            string bokare = collection["bokare"];
             List<string> golfare = new List<string>();
             if (spelare1 != "")
             {
@@ -283,7 +287,20 @@ namespace Golf_6.Controllers
                     new Npgsql.NpgsqlParameter("@medlemID", Convert.ToInt32(medlemsIdLista[i])),
                     new Npgsql.NpgsqlParameter("@bokningID",Convert.ToInt32(bokningsId))
                 });
+
+            {
+                Postgres p2 = new Postgres();
+
+                meddelande = p2.SqlParameters("delete from bokare where bokare.bokaren = @medlemID and bokare.tid = @bokningID;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@medlemID", Convert.ToInt32(medlemsIdLista[i])),
+                    new Npgsql.NpgsqlParameter("@bokningID", Convert.ToInt32(bokningsId))
+                });
             }
+            }
+
+            //if(bokare != "")
+      
 
 
             try

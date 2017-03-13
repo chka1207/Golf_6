@@ -24,7 +24,7 @@
                 <tr>
                 <td>@Convert.ToDateTime(@row["datum"]).ToShortDateString()</td>
                 <td>@row["tid"]</td>
-                <td align="right"><a type="button" class="btn btn-danger btn-lg" href="@Url.Action("AvbokningMedlem", "Medlem")">Avboka</a></td>
+                <td align="right">@Html.ActionLink("Avboka", "AvbokningMedlem", "Medlem", new { validate = Convert.ToDateTime(@row["datum"]).ToShortDateString() + " " + row["tid"] }, null)</td>
                 </tr>               
             }           
         </tr>
