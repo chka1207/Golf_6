@@ -28,10 +28,15 @@ namespace Golf_6.Controllers
             return View();
         }
         // Visa personuppgifter
+   
         [AllowAnonymousAttribute]
         public ActionResult Personuppgifter()
         {
-            return View();
+            Medlem m = new Medlem();
+            string identitet = User.Identity.Name;
+           m = m.InloggadMedlem(identitet);
+        
+            return View(m);
         }
         // GET: Medlem
         [AllowAnonymousAttribute]

@@ -24,12 +24,12 @@ namespace Golf_6.Models
         public DateTime Tid { get; set; }
         public virtual List<Tidsbokning> Bokningar {get; set;}
 
-        public Medlem InloggadMedlem(string golfID)
+        public Medlem InloggadMedlem(string MedlemID)
         {
             Postgres p = new Postgres();
             Medlem m = new Medlem();
-            string sql = "SELECT * FROM medlemmar WHERE golfid=@golfid";
-            NpgsqlParameter parameter = new NpgsqlParameter("@golfid", golfID);
+            string sql = "SELECT * FROM medlemmar WHERE id=@MedlemID";
+            NpgsqlParameter parameter = new NpgsqlParameter("@MedlemID", Convert.ToInt16(MedlemID));
             p.sqlFragaEnParameter(sql, parameter);
             while (p._dr.Read())
             {
