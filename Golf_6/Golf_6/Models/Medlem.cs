@@ -23,6 +23,7 @@ namespace Golf_6.Models
         public string Telefonnummer { get; set; }
         public DateTime Tid { get; set; }
         public virtual List<Tidsbokning> Bokningar {get; set;}
+        public DataTable bokningar { get; set; }
 
         public Medlem InloggadMedlem(string MedlemID)
         {
@@ -109,14 +110,7 @@ namespace Golf_6.Models
             }
             return y;
         }
-
-        //public class scoreKort
-        //{
-        //    public int rows { get; set; }
-        //    public int col { get; set; }
-        //}
-        
-        
+       
         //Hämta värden för scorekort från databas
         public DataTable hämtaScorekort()
         {
