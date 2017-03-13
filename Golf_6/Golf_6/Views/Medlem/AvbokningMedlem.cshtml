@@ -3,10 +3,10 @@
 @using Golf_6.Models;
 @using System.Collections.Generic;
 @{
-    ViewBag.Title = "AvbokningAdmin";
+    ViewBag.Title = "AvbokningMedlem";
 }
 @{
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
 }
 <h2>Avbokning</h2>
 <br />
@@ -23,13 +23,16 @@
         @Html.ValidationSummary(true)
 
         @{
-    List<string> l = new List<string>();
-    string a, b, c, d = "";
-    l = ViewBag.Golfare;
-    String datum = ViewBag.DatumAdmin;
-    String tid = ViewBag.TidAdmin;
-    Tidsbokning t = new Tidsbokning();
-    string bokningsID = ViewBag.BokningsId;
+            List<string> l = new List<string>();
+            string a, b, c, d = "";
+            l = ViewBag.Golfare;
+            String datum = ViewBag.DatumAdmin;
+            String tid = ViewBag.TidAdmin;
+            Tidsbokning t = new Tidsbokning();
+            string bokningsID = ViewBag.BokningsId;
+            string bokare = ViewBag.Bokare;
+            
+            
 
     if (l != null)
     {
@@ -58,8 +61,8 @@
 
         }
     }
-
-    @Html.Hidden("bokningsID", bokningsID);
+            @Html.Hidden("bokare", bokare);
+            @Html.Hidden("bokningsID", bokningsID);
             @Html.Hidden("nySpelare1", t.Spelare1ID);
             @Html.Hidden("nySpelare2", t.Spelare2ID);
             @Html.Hidden("nySpelare3", t.Spelare3ID);
@@ -86,11 +89,13 @@
 
             <div class="col-md-10">
                 <label>Spelare nr 1: </label>
-                @{if (t.Spelare1ID != null)
+                @{
+                
+                if (t.Spelare1ID != null && l.Count != 1)
                  {
                       @Html.TextBox("myTextBox1", t.Spelare1ID, new { @class = "form-control" })
                  }
-                 else
+                 else 
                  {
                       @Html.TextBox("myTextBox1", t.Spelare1ID, new { @class = "form-control", @readonly = "readonly" })
                  }
@@ -103,11 +108,11 @@
 
             <div class="col-md-10">
                 <label>Spelare nr 2: </label>
-                @{if (t.Spelare2ID != null)
+                @{if (t.Spelare2ID != null && l.Count != 1)
                 {
                     @Html.TextBox("myTextBox2", t.Spelare2ID, new { @class = "form-control" })
                 }
-                else
+                else if (t.Spelare2ID == null)
                 {
                     @Html.TextBox("myTextBox2", t.Spelare2ID, new { @class = "form-control", @readonly = "readonly" })
                 }
@@ -119,11 +124,11 @@
 
             <div class="col-md-10">
                 <label>Spelare nr 3: </label>
-                @{if (t.Spelare3ID != null)
+                @{if (t.Spelare3ID != null && l.Count != 1)
                 {
                     @Html.TextBox("myTextBox3", t.Spelare3ID, new { @class = "form-control" })
                 }
-                else
+                else if (t.Spelare3ID == null)
                 {
                     @Html.TextBox("myTextBox3", t.Spelare3ID, new { @class = "form-control", @readonly = "readonly" })
                 }
@@ -135,11 +140,11 @@
 
             <div class="col-md-10">
                 <label>Spelare nr 4: </label>
-                @{if (t.Spelare4ID != null)
+                @{if (t.Spelare4ID != null && l.Count != 1)
                 {
                     @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control" })
                 }
-                else
+                else if (t.Spelare4ID == null)
                 {
                     @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control", @readonly = "readonly" })
                 }

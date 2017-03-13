@@ -111,8 +111,20 @@ namespace Golf_6.Controllers
                     var authManager = ctx.Authentication;
                     authManager.SignIn(identity);
                     //int i = Convert.ToUInt16(User.Identity.Name);  //Exempel på hur man får fram UserID 
-                    
-                    return RedirectToAction("Index", "Medlem");
+
+                    if (User.IsInRole("1"))
+                    {
+                        return RedirectToAction("Index", "Medlem");
+                    }
+                    if (User.IsInRole("2"))
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Nu gick något på tok");
+                        return View(model);
+                    }
                     
                 }
                 else
