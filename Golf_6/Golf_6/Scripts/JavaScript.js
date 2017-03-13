@@ -148,6 +148,11 @@ $('#btn-acceptera-ny-medlem').click(function () {
         });
 });
 
+$(function () {
+    $("#datepicker").datepicker();
+});
+
+
 function whichDay(dateString) { //Funktion för att hämta dag på ett speciellt datum
     return ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag']
         [new Date(dateString).getDay()];
