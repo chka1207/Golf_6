@@ -15,8 +15,8 @@ namespace Golf_6.Controllers
     public class MedlemController : Controller
     {
         //Uppdatera personuppgifter
+        [Authorize(Roles ="1")]
         [HttpPost]
-        [AllowAnonymousAttribute]
         public ActionResult UppdateraPersonuppgifter(string fornamninput, string efternamninput, string adressinput, string ortinput, string postnummerinput, string emailinput, string telefonnummerinput, string hcpinput, string koninput )
         {
             Medlem m = new Medlem();
@@ -28,7 +28,7 @@ namespace Golf_6.Controllers
             return RedirectToAction("Personuppgifter", "Medlem");
         }
         // Logga ut och kom till index
-        [AllowAnonymousAttribute]
+        [Authorize(Roles ="1")]
         public ActionResult LoggaUt()
         {
             
@@ -41,8 +41,8 @@ namespace Golf_6.Controllers
         //    return View();
         //}
         // Visa personuppgifter
-   
-        [AllowAnonymousAttribute]
+
+        [Authorize(Roles = "1")]
         public ActionResult Personuppgifter()
         {
             Medlem m = new Medlem();
@@ -52,25 +52,28 @@ namespace Golf_6.Controllers
             return View(m);
         }
         // GET: Medlem
-        [AllowAnonymousAttribute]
+        [Authorize(Roles = "1")]
         public ActionResult Index()
         {
             return View();
         }
 
         // GET: Medlem/Details/5
+        [Authorize(Roles = "1")]
         public ActionResult Details(int id)
         {
             return View();
         }
 
         // GET: Medlem/Create
+        [Authorize(Roles = "1")]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Medlem/Create
+        [Authorize(Roles = "1")]
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -87,12 +90,14 @@ namespace Golf_6.Controllers
         }
 
         // GET: Medlem/Edit/5
+        [Authorize(Roles = "1")]
         public ActionResult Edit(int id)
         {
             return View();
         }
 
         // POST: Medlem/Edit/5
+        [Authorize(Roles = "1")]
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -109,12 +114,14 @@ namespace Golf_6.Controllers
         }
 
         // GET: Medlem/Delete/5
+        [Authorize(Roles = "1")]
         public ActionResult Delete(int id)
         {
             return View();
         }
 
         // POST: Medlem/Delete/5
+        [Authorize(Roles = "1")]
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
@@ -131,21 +138,21 @@ namespace Golf_6.Controllers
         }
 
         // GET: Tidsbokning/Create i befintlig tid Admin
-        [AllowAnonymous]
-      
+        [Authorize(Roles = "2")]
         public ActionResult AvbokningMedlem()
         {
             //hämtar ut vem som är bokare för den tiden
             //select bokaren from bokare where tid = 1
-            string identitet = "13";//User.Identity.Name;
-            //DateTime dt = Convert.ToDateTime(Request.QueryString["validate"]);
+            string identitet = User.Identity.Name;
+            DateTime dt = Convert.ToDateTime(Request.QueryString["validate"]);
             Tidsbokning t = new Tidsbokning();
-            //string tid = dt.ToShortTimeString();
-            //string datum = dt.ToShortDateString();
-            string datum = "2017-03-10";
-            string tid = "10:00:00";
+            string tid = dt.ToShortTimeString();
+            string datum = dt.ToShortDateString();
+            //string datum = "2017-03-10";
+            //string tid = "10:00:00";
             t.Datum = Convert.ToDateTime(datum);
             t.Tid = Convert.ToDateTime(tid);
+            string harbokat = "";
 
             //Hämtar reservationsid för den tid som medlemmen är bokad.
             DataTable tabell = new DataTable();
@@ -168,7 +175,7 @@ namespace Golf_6.Controllers
                 DataTable tabell2 = new DataTable();
                 Postgres p1 = new Postgres();
                 string bokare = "";
-                tabell2 = p1.SqlFrågaParameters("SELECT DISTINCT medlemmar.golfid FROM public.medlemmar, public.bokare, public.deltar WHERE medlemmar.id = bokare.bokaren AND deltar.reservation_id = @bokningsid and deltar.reservation_id = bokare.tid;", Postgres.lista = new List<NpgsqlParameter>
+                tabell2 = p1.SqlFrågaParameters("SELECT DISTINCT medlemmar.golfid, bokare.bokaren FROM public.medlemmar, public.bokare, public.deltar WHERE medlemmar.id = bokare.bokaren AND deltar.reservation_id = @bokningsid and deltar.reservation_id = bokare.tid;", Postgres.lista = new List<NpgsqlParameter>
                 {
                     new NpgsqlParameter("@bokningsid", t.BokningsID)
                 });
@@ -177,6 +184,7 @@ namespace Golf_6.Controllers
                     foreach (DataRow dr in tabell2.Rows)
                     {
                         bokare = dr["golfid"].ToString();
+                        harbokat = dr["bokaren"].ToString();
                     }
                 }
                 
@@ -199,19 +207,20 @@ namespace Golf_6.Controllers
                 List<Tidsbokning> t1 = new List<Tidsbokning>();
                 if(bokare == inloggadGolfId)
                 {
-                    
+                    ViewBag.Bokare = harbokat;
                     t1 = t.GetBokning(t.BokningsID);
                     foreach (Tidsbokning tb in t1)
                     {
                         listan.Add(tb.GolfID.ToString());
                     }
                     ViewBag.Golfare = listan;
+                    
                 }
                 else
                 {
                     listan.Add(inloggadGolfId);
                 }
-                    ViewBag.Bokare = bokare;
+                    
                     ViewBag.InloggadGolfID = identitet;
 
                 ViewBag.Golfare = listan;
@@ -224,8 +233,8 @@ namespace Golf_6.Controllers
         }
 
         // POST: Tidsbokning/Avboka Admin
+        [Authorize(Roles = "2")]
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult AvbokningMedlem(FormCollection collection)
         {
 
@@ -235,6 +244,7 @@ namespace Golf_6.Controllers
             string spelare2 = collection["myTextBox2"];
             string spelare3 = collection["myTextBox3"];
             string spelare4 = collection["myTextBox4"];
+            string bokare = collection["bokare"];
             List<string> golfare = new List<string>();
             if (spelare1 != "")
             {
@@ -286,6 +296,16 @@ namespace Golf_6.Controllers
                     new Npgsql.NpgsqlParameter("@medlemID", Convert.ToInt32(medlemsIdLista[i])),
                     new Npgsql.NpgsqlParameter("@bokningID",Convert.ToInt32(bokningsId))
                 });
+
+            {
+                Postgres p2 = new Postgres();
+                //Tar bort medlemmar om från bokare om de är bokare.
+                meddelande = p2.SqlParameters("delete from bokare where bokare.bokaren = @medlemID and bokare.tid = @bokningID;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@medlemID", Convert.ToInt32(medlemsIdLista[i])),
+                    new Npgsql.NpgsqlParameter("@bokningID", Convert.ToInt32(bokningsId))
+                });
+            }
             }
 
 
@@ -338,10 +358,10 @@ namespace Golf_6.Controllers
             
             return View(dt);
 
-        } 
+        }
 
         //Visar mina bokningar 
-        [AllowAnonymous]
+        [Authorize(Roles = "1")]
         public ActionResult MinaBokningar()
         {
             Medlem m = new Medlem();

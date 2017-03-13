@@ -14,19 +14,20 @@ namespace Golf_6.Controllers
     public class TidsbokningController : Controller
     {
         //Visa bokningsschemat för admin
-        [AllowAnonymousAttribute]
+        [Authorize(Roles = "2")]
         public ActionResult BokningsschemaAdmin()
         {
             return View();
         }
 
-        [AllowAnonymousAttribute]
+        [Authorize(Roles = "2")]
         public ActionResult BokningAdmin()
         {
             return View("BokningAdmin");
         }
+
+        [Authorize(Roles = "1")]
         [HttpPost]
-        [AllowAnonymous]
         public string SokId(string sokfornamn, string sokefternamn)
         {
            
@@ -45,7 +46,7 @@ namespace Golf_6.Controllers
             return m;
         }
         // GET: Tidsbokning
-        [AllowAnonymous]
+        [Authorize(Roles = "1")]
         public ActionResult Index(FormCollection collection)
         {  
             //DENNA METOD SKA LIGGA I VYN FÖR ATT SÖKA EFTER GOLFID
@@ -82,7 +83,7 @@ namespace Golf_6.Controllers
             //dt.Columns[0].ColumnName = "Förnamn";
             return View("Index");
         }
-        [AllowAnonymous]
+        [Authorize(Roles = "1")]
         public ActionResult GetgolfID()
         {
             Tidsbokning medlemmarna = new Tidsbokning();
@@ -96,77 +97,77 @@ namespace Golf_6.Controllers
 
             return View(dt);
         }
-         // GET: Alla bokningar för en dag, ADMIN
-         //[HttpGet]
-         //[AllowAnonymous]
-         //public ActionResult BokningsschematAdmin()
-         //{
-         //    Tidsbokning bokning = new Tidsbokning();
-         //    DataTable dt = new DataTable();
-         //    DateTime dag = DateTime.Today;
+        // GET: Alla bokningar för en dag, ADMIN
+        //[Authorize(Roles ="2")]
+        //[HttpGet]
+        //public ActionResult BokningsschematAdmin()
+        //{
+        //    Tidsbokning bokning = new Tidsbokning();
+        //    DataTable dt = new DataTable();
+        //    DateTime dag = DateTime.Today;
 
-         //    {
-         //        Postgres x = new Postgres();
-         //        {
-         //            dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
-         //       {
-         //           new Npgsql.NpgsqlParameter("@par1", dag)
-         //       });
+        //    {
+        //        Postgres x = new Postgres();
+        //        {
+        //            dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
+        //       {
+        //           new Npgsql.NpgsqlParameter("@par1", dag)
+        //       });
 
-         //        }
-         //        List<Tidsbokning> bokningslista = new List<Tidsbokning>();
-         //        foreach (DataRow dr in dt.Rows)
-         //        {
-         //            Tidsbokning t = new Tidsbokning();
-         //            t.Tid = Convert.ToDateTime(dr["tid"].ToString());
-         //            t.MedlemKön = dr["kon"].ToString();
-         //            t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
-         //            bokningslista.Add(t);
-         //        }
-         //        ViewBag.List = bokningslista;
+        //        }
+        //        List<Tidsbokning> bokningslista = new List<Tidsbokning>();
+        //        foreach (DataRow dr in dt.Rows)
+        //        {
+        //            Tidsbokning t = new Tidsbokning();
+        //            t.Tid = Convert.ToDateTime(dr["tid"].ToString());
+        //            t.MedlemKön = dr["kon"].ToString();
+        //            t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
+        //            bokningslista.Add(t);
+        //        }
+        //        ViewBag.List = bokningslista;
 
-         //    }
-         //    bokning.Datepicker = DateTime.Now.Date.ToShortDateString();
-         //    return View(bokning);
-         //}
+        //    }
+        //    bokning.Datepicker = DateTime.Now.Date.ToShortDateString();
+        //    return View(bokning);
+        //}
 
-         // POST: Ändra dag, ADMIN
-         //[HttpPost]
-         //[AllowAnonymous]
-         //public ActionResult BokningsschematAdmin(FormCollection collection)
-         //{
-         //    string datum = collection["datepicker"];
-         //    DataTable dt = new DataTable();
+        // POST: Ändra dag, ADMIN
+        //[Authorize(Roles ="2")]
+        //[HttpPost]
+        //public ActionResult BokningsschematAdmin(FormCollection collection)
+        //{
+        //    string datum = collection["datepicker"];
+        //    DataTable dt = new DataTable();
 
-         //    {
-         //        Postgres x = new Postgres();
-         //        {
-         //            dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
-         //       {
-         //           new Npgsql.NpgsqlParameter("@par1", Convert.ToDateTime(datum))
-         //       });
+        //    {
+        //        Postgres x = new Postgres();
+        //        {
+        //            dt = x.SqlFrågaParameters("select tid, kon, handikapp from reservation, medlemmar where id in (select medlem_id from deltar where reservation_id = bokning_id and datum = @par1) order by tid; ", Postgres.lista = new List<NpgsqlParameter>()
+        //       {
+        //           new Npgsql.NpgsqlParameter("@par1", Convert.ToDateTime(datum))
+        //       });
 
-         //        }
-         //        List<Tidsbokning> bokningslistaPost = new List<Tidsbokning>();
-         //        foreach (DataRow dr in dt.Rows)
-         //        {
-         //            Tidsbokning t = new Tidsbokning();
-         //            t.Tid = Convert.ToDateTime(dr["tid"].ToString());
-         //            t.MedlemKön = dr["kon"].ToString();
-         //            t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
-         //            bokningslistaPost.Add(t);
-         //        }
-         //        ViewBag.List = bokningslistaPost;
+        //        }
+        //        List<Tidsbokning> bokningslistaPost = new List<Tidsbokning>();
+        //        foreach (DataRow dr in dt.Rows)
+        //        {
+        //            Tidsbokning t = new Tidsbokning();
+        //            t.Tid = Convert.ToDateTime(dr["tid"].ToString());
+        //            t.MedlemKön = dr["kon"].ToString();
+        //            t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
+        //            bokningslistaPost.Add(t);
+        //        }
+        //        ViewBag.List = bokningslistaPost;
 
-         //    }
-         //    Tidsbokning valtDatum = new Tidsbokning();
-         //    valtDatum.Datepicker = datum;
-         //    return View(valtDatum);
-         //}
+        //    }
+        //    Tidsbokning valtDatum = new Tidsbokning();
+        //    valtDatum.Datepicker = datum;
+        //    return View(valtDatum);
+        //}
 
         //Get: Alla bokningar för en dag ADMIN
-         [HttpGet]
-         [AllowAnonymous]
+        [Authorize(Roles = "2")]
+        [HttpGet]
          public ActionResult AdminBokningsschema()
          {
              Tidsbokning bokning = new Tidsbokning();
@@ -236,9 +237,9 @@ namespace Golf_6.Controllers
              }
          }
 
-         // POST: Ändra dag ADMIN
-         [HttpPost]
-         [AllowAnonymous]
+        // POST: Ändra dag ADMIN
+        [Authorize(Roles = "2")]
+        [HttpPost]
          public ActionResult AdminBokningsschema(FormCollection collection)
          {
              string datum = collection["datepicker"];
@@ -310,8 +311,8 @@ namespace Golf_6.Controllers
          }
 
         // GET: Alla bokningar för en dag
+        [Authorize(Roles = "1")]
         [HttpGet]
-        [AllowAnonymous]
         public ActionResult Bokningsschema()
         {
             Tidsbokning bokning = new Tidsbokning();
@@ -382,8 +383,8 @@ namespace Golf_6.Controllers
         }
 
         // POST: Ändra dag
+        [Authorize(Roles = "1")]
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult Bokningsschema(FormCollection collection)
         {
             string datum = collection["datepicker"];
@@ -454,8 +455,8 @@ namespace Golf_6.Controllers
             }
         }
 
+        [Authorize(Roles = "1")]
         [HttpPost]
-        [AllowAnonymous]
         public PartialViewResult Search(SearchViewModel collection)
         {
             //List<Tidsbokning> lista = new List<Tidsbokning>();
@@ -481,9 +482,8 @@ namespace Golf_6.Controllers
             return PartialView();
         }
 
-
+        [Authorize(Roles = "1")]
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult Sok(FormCollection collection)
         {
             //List<Tidsbokning> lista = new List<Tidsbokning>();
@@ -509,15 +509,15 @@ namespace Golf_6.Controllers
         }
 
         // GET: Tidsbokning/Details/5
-        [AllowAnonymous]
+        [Authorize(Roles = "1")]
         public ActionResult Details(int id)
         {
             return View();
         }
 
         // POST: Tidsbokning/Boka Admin
+        [Authorize(Roles ="2")]
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult Boka(FormCollection collection)
         {
             
@@ -700,7 +700,7 @@ namespace Golf_6.Controllers
 
 
         // GET: Tidsbokning/Create i befintlig tid Admin
-        [AllowAnonymous]
+        [Authorize(Roles = "2")]
         public ActionResult Boka()
         {
             // Tar in vald datum/tid från bokningsschema och skickar in ett Tidsbokningsobjekt med det värdet till Index
@@ -745,6 +745,7 @@ namespace Golf_6.Controllers
         }
 
         // GET: Tidsbokning för medlem
+        [Authorize(Roles = "1")]
         public ActionResult Create()
         {
             // Tar in vald datum/tid från bokningsschema och skickar in ett Tidsbokningsobjekt med det värdet till Index
@@ -809,6 +810,7 @@ namespace Golf_6.Controllers
         }
 
         // POST: Tidsbokning för medlem
+        [Authorize(Roles = "1")]
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -1097,7 +1099,7 @@ namespace Golf_6.Controllers
 
 
         // GET: Tidsbokning/Create i befintlig tid Admin
-        [AllowAnonymous]
+        [Authorize(Roles = "2")]
         public ActionResult Avboka()
         {
             // Tar in vald datum/tid från bokningsschema och skickar in ett Tidsbokningsobjekt med det värdet till Index
@@ -1142,8 +1144,8 @@ namespace Golf_6.Controllers
         }
 
         // POST: Tidsbokning/Avboka Admin
+        [Authorize(Roles = "2")]
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult Avboka(FormCollection collection)
         {
 
@@ -1221,15 +1223,15 @@ namespace Golf_6.Controllers
 
 
         // GET: Tidsbokning/Edit/5
-        [AllowAnonymous]
+        [Authorize(Roles = "1")]
         public ActionResult Edit(int id)
         {
             return View();
         }
 
         // POST: Tidsbokning/Edit/5
+        [Authorize(Roles = "1")]
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult Edit(int id, FormCollection collection)
         {
             try
@@ -1245,15 +1247,15 @@ namespace Golf_6.Controllers
         }
 
         // GET: Tidsbokning/Delete/5
-        [AllowAnonymous]
+        [Authorize(Roles = "1")]
         public ActionResult Delete(int id)
         {
             return View();
         }
 
         // POST: Tidsbokning/Delete/5
+        [Authorize(Roles = "1")]
         [HttpPost]
-        [AllowAnonymous]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try
