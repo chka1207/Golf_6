@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Web;
+using Microsoft.Owin;
 using Newtonsoft.Json;
 using Npgsql;
 
@@ -107,5 +108,28 @@ namespace Golf_6.Models
                 });
         }
 
+        public void ÄndraSäsongStart(FormCollection collection)
+        {
+            string sasongStart = collection["datepickerStart"];
+
+            Postgres db = new Postgres();
+
+            db.SqlParameters("UPDATE sasong SET startdatum = @start WHERE sasong.id = 1",
+                Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@start", sasongStart)
+                });
+        }
+
+        public void ÄndraSäsongSlut(DateTime sasongSlut)
+        {
+            Postgres db = new Postgres();
+
+            db.SqlParameters("UPDATE sasong SET startdatum = @start WHERE sasong.id = 1",
+                Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@slut", sasongSlut)
+                });
+        }
     }
 }

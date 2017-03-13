@@ -117,7 +117,6 @@ namespace Golf_6.Models
         {
             Postgres db = new Postgres();
             DataTable dt = new DataTable();
-
             
             string sql =
                 "SELECT fornamn, efternamn, adress, postnummer, ort, email, kon, handikapp, medlemskategori, golfid, telefonnummer FROM medlemmar";

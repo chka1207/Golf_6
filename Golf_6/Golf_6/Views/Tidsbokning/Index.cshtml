@@ -25,7 +25,7 @@
     <p>
         Boka tid genom att ange spelares golfID i textrutorna.
         <br />
-        <br />Regler för bokning: <br />
+    <br /> <b>Regler för bokning:</b> <br />
         Du kan boka in max en anonym gäst.<br />
         Max en bokning per dag.<br />
         Det totala handikappet för bollen får ej överstiga 120.<br />
@@ -46,7 +46,10 @@
                 String tid = ViewBag.Tid;
                 Tidsbokning t = new Tidsbokning();
                 string bokningsID = ViewBag.BokningsID;
-                //int bokareID = ViewBag.BokareID;
+            string bokareID = ViewBag.BokareID;
+            bool bokareInlagd = false;
+            string hcp1, hcp2, hcp3, hcp4 = "";
+            string bokareGolfID = ViewBag.BokareGolfID;
 
                 if (l != null)
                 {
@@ -86,27 +89,46 @@
 
             <div class="form-group">
                 <style>
-                    #tbdatum{
-
+                #tbdatum {
                     }
                 </style>
                 <div class="col-md-10">
                     <label>Datum </label>
-                    @Html.TextBox("tbdatum", datum, new {@class = "form-control", @readonly = "readonly" })
+                @Html.TextBox("tbdatum", datum, new { @class = "form-control", @readonly = "readonly" })
                 </div>
             </div>
             <div class="col-md-10">
                 <label>Tid </label>
-                @Html.TextBox("tbtid", tid, new {@class = "form-control", @readonly="readonly" })
+            @Html.TextBox("tbtid", tid, new { @class = "form-control", @readonly = "readonly" })
             </div>
 
         </div>
         <div class="form-group">
 
-        </div>
         <div class="col-md-10">
+                <label>Spelare nr 1: </label>
+                @{
+                    if (t.Spelare1ID == null)
+                    {
+                        @Html.TextBox("myTextBox1", bokareGolfID, new { @class = "form-control", @readonly = "readonly" })
+                        bokareInlagd = true;
+                    }
+                    else
+                    {
+                        @Html.TextBox("myTextBox1", t.Spelare1ID, new { @class = "form-control", @readonly = "readonly" })
+                    }
+                }
 
         </div>
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-10">
+                <label>Spelare nr 2: </label>
+                @{
+                    if (t.Spelare2ID == null && bokareInlagd)
+                    {
+                        @Html.TextBox("myTextBox2", t.Spelare2ID, new { @class = "form-control" })
                 }
 }
                 @using (Ajax.BeginForm(
@@ -126,18 +148,56 @@
                         <span id="lblResult"></span>
                         <button type="submit">Sök</button>
                     }
-                
-                    
-                    
-                    <div class="search">
-                    <section id="Sök">
-                        @Html.Partial("SokPartial")
-                    </section>
+
+            <div class="col-md-10">
+                <label>Spelare nr 3: </label>
+                @{
+                    if (t.Spelare3ID == null && bokareInlagd)
+                    {
+                        @Html.TextBox("myTextBox3", t.Spelare3ID, new { @class = "form-control" })
+                    }
+                    else if (t.Spelare3ID == null && bokareInlagd == false)
+                    {
+                        @Html.TextBox("myTextBox3", bokareGolfID, new { @class = "form-control", @readonly = "readonly" })
+                        bokareInlagd = true;
+                    }
+                    else
+                    {
+                        @Html.TextBox("myTextBox3", t.Spelare3ID, new { @class = "form-control", @readonly = "readonly" })
+                    }
+                }
+            </div>
                 </div>
-                
+        <div class="form-group">
+
+            <div class="col-md-10">
+                <label>Spelare nr 4: </label>
+                @{
+                    if (t.Spelare4ID == null)
+                    {
+                        @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control" })
+
+                    }
+                    else if (t.Spelare4ID == null && bokareInlagd == false)
+                    {
+                        @Html.TextBox("myTextBox4", bokareGolfID, new { @class = "form-control", @readonly = "readonly" })
+                        bokareInlagd = true;
+                    }
+                    else
+                    {
+                        @Html.TextBox("myTextBox4", t.Spelare4ID, new { @class = "form-control", @readonly = "readonly" })
+
+                    }
+                }
+            </div>
+        </div>
 
 
-
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Boka" class="btn btn-default" />
+            </div>
+        </div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")
@@ -148,6 +208,20 @@
     @Scripts.Render("~/bundles/jqueryval")
 
 }
+
+                    }
+
+@*<div class="search">
+        <section id="Sök">
+            @Html.Partial("SokPartial")
+        </section>
+    </div>*@
+
+
+
+
+
+
 
 @*@using (Html.BeginForm("Sok", "Tidsbokning", FormMethod.Post))
     {

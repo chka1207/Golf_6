@@ -1,15 +1,18 @@
 ﻿@model Golf_6.Models.Medlem
 
+
 @{
     ViewBag.Title = "Personuppgifter";
     Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
 }
 
+
+
 <div class="container">
     <div class="row">
         <h2>Personuppgifter</h2>
 
-        <form class="form-horizontal">
+        <form id="personuppgifterForm"class="form-horizontal">
             <fieldset>
           
                 <legend>Uppdatera dina&nbsp;personuppgifter&nbsp;här:</legend>
@@ -17,7 +20,9 @@
                 <div class="form-group">
                    
                     <div class="col-md-4">
-                        <input id="textinput" name="textinput" placeholder="Förnamn" class="form-control input-md" required="" type="text">
+                        <label>Förnamn</label>
+                        <input id="fornamninput" name="textinput" placeholder="@Html.DisplayFor(model => model.Förnamn)" class="form-control input-md" required="" type="text">
+                     
                         <span class="help-block"> </span>
                     </div>
                 </div>
@@ -25,7 +30,8 @@
                 <div class="form-group">
                    
                     <div class="col-md-4">
-                        <input id="textinput" name="textinput" placeholder="Efternamn" class="form-control input-md" required="" type="text">
+                        <label>Efternamn</label>
+                        <input id="efternamninput" name="textinput" placeholder="@Html.DisplayFor(model => model.Efternamn)" class="form-control input-md" required="" type="text">
                         <span class="help-block"> </span>
                     </div>
                 </div>
@@ -33,7 +39,8 @@
                 <div class="form-group">
                
                     <div class="col-md-4">
-                        <input id="textinput" name="textinput" placeholder="Gatuadress" class="form-control input-md" required="" type="text">
+                        <label>Adress</label>
+                        <input id="adressinput" name="textinput" placeholder="@Html.DisplayFor(model => model.Adress)" class="form-control input-md" required="" type="text">
                         <span class="help-block"> </span>
                     </div>
                 </div>
@@ -41,35 +48,48 @@
                 <div class="form-group">
                    
                     <div class="col-md-4">
-                        <input id="textinput" name="textinput" placeholder="Postnummer" class="form-control input-md" required="" type="text">
+                        <label>Ort</label>
+                        <input id="ortinput" name="textinput" placeholder="@Html.DisplayFor(model => model.Ort)" class="form-control input-md" required="" type="text">
                         <span class="help-block"> </span>
                     </div>
                 </div>
          
                 <div class="form-group">
                     <div class="col-md-4">
-                        <input id="textinput" name="textinput" placeholder="Ort" class="form-control input-md" required="" type="text">
+                        <label>Postnummer</label>
+                        <input id="postnummerinput" name="textinput" placeholder="@Html.DisplayFor(model => model.Postnummer)" class="form-control input-md" required="" type="text">
                         <span class="help-block"> </span>
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" >
                     <div class="col-md-4">
-                        <input id="textinput" name="textinput" placeholder="Email" class="form-control input-md" required="" type="text">
+                        <label>Email</label>
+                        <input id="emailinput" label="Förnamn" name="textinput" placeholder="@Html.DisplayFor(model => model.Email)" class="form-control input-md" required="" type="text">
                         <span class="help-block"> </span>
                     </div>
                 </div>
                 <!-- Text input-->
                 <div class="form-group">
                     <div class="col-md-4">
-                        <input id="textinput" name="textinput" placeholder="Telefonnummer" class="form-control input-md" required="" type="text">
+                        <label>Telefonnummer</label>
+                        <input id="telefonnummerinput" name="textinput" placeholder="@Html.DisplayFor(model => model.Telefonnummer)" class="form-control input-md" required="" type="text">
                         <span class="help-block"> </span>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-md-4">
-                        <input id="textinput" name="textinput" placeholder="HCP" class="form-control input-md" required="" type="text">
+                        <label>HCP</label>
+                        <input id="hcpinput" name="textinput" placeholder="@Html.DisplayFor(model => model.Hcp)" class="form-control input-md" required="" type="text">
+                        <span class="help-block"> </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label>Kön</label>
+                        <input id="koninput" name="textinput" placeholder="@Html.DisplayFor(model => model.Kön)" class="form-control input-md" required="" type="text">
                         <span class="help-block"> </span>
                     </div>
                 </div>
