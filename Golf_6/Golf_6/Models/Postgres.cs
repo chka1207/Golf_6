@@ -48,6 +48,11 @@ namespace Golf_6.Models
                 _error = ex.Message;
                 return null;
             }
+
+            finally
+            {
+                _conn.Close();
+            }
         }
         //ExempelMetod för sqlFråga som tar emot paramterar
         public NpgsqlDataReader sqlFragaParams(string sql, params int[] p)
@@ -95,6 +100,8 @@ namespace Golf_6.Models
 
                 return null;
             }
+
+
 
         }
         public DataTable sqlFragaTable(string sql)

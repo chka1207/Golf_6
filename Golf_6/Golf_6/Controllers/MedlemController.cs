@@ -15,7 +15,7 @@ namespace Golf_6.Controllers
     public class MedlemController : Controller
     {
         //Uppdatera personuppgifter
-        [Authorize(Roles ="1")]
+        ////[Authorize(Roles ="1")]
         [HttpPost]
         public ActionResult UppdateraPersonuppgifter(string fornamninput, string efternamninput, string adressinput, string ortinput, string postnummerinput, string emailinput, string telefonnummerinput, string hcpinput, string koninput )
         {
@@ -42,7 +42,7 @@ namespace Golf_6.Controllers
         //}
         // Visa personuppgifter
 
-        [Authorize(Roles = "1")]
+        //[Authorize(Roles = "1")]
         public ActionResult Personuppgifter()
         {
             Medlem m = new Medlem();
