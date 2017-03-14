@@ -635,6 +635,10 @@ namespace Golf_6.Controllers
                     new Npgsql.NpgsqlParameter("@medlemID", Convert.ToInt32(medlemsIdLista[i])),
                     new Npgsql.NpgsqlParameter("@bokningID",Convert.ToInt32(bokningsId))
                 });
+                        if (meddelande.Contains("23505"))
+                        {
+                            TempData["notice"] = "Spelare du försökte boka fanns redan med i den angivna starttiden. Spelare som inte redan fanns med i starttiden har blivit bokade.";
+                        }
                     }
                 }
                 else

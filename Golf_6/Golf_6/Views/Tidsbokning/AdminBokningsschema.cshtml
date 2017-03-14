@@ -14,6 +14,20 @@
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <h2>Bokningsschema</h2>
 
+  if (TempData["notice"] != null) {
+           <div class="alert alert-warning alert-dismissable">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+    <strong>Varning! </strong> @TempData["notice"]
+  </div>
+    
+    if (TempData["success"] != null)
+    {
+         <div class="alert alert-success alert-dismissable">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+    <strong>Success! </strong> 
+  </div>
+    }
+}  
 <div class="center-block">
 
 
