@@ -971,7 +971,8 @@ namespace Golf_6.Controllers
                                 });
                                     }
 
-                          
+                                    m = "Nu är tiden bokad!";
+                                    TempData["bokad"] = m;
                                 }
                                 else
                                 {
@@ -1028,6 +1029,9 @@ namespace Golf_6.Controllers
                                 new Npgsql.NpgsqlParameter("@datum", Convert.ToDateTime(datum)),
                                 new Npgsql.NpgsqlParameter("@tid", Convert.ToDateTime(tid))
                              });
+
+                                m = "Nu är tiden bokad!";
+                                TempData["bokad"] = m;
 
                                 Postgres p3 = new Postgres();
                                 dt2 = p3.SqlFrågaParameters("select bokning_id from reservation where datum = DATE(@datum) and tid = CAST(@tid as TIME);", Postgres.lista = new List<NpgsqlParameter>
