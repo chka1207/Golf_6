@@ -218,7 +218,7 @@ $(function () {
     $('#datepickerFödelsedatum').datepicker({
         onSelect: function (date) {
             $("#golfid").val(date);
-            var number = 100 + Math.floor(Math.random() * 999);
+            var number =  Math.floor(Math.random() * 899) + 100 ;
             $('#golfid').val($('#golfid').val() + number);
         },
         changeYear: true,
