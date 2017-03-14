@@ -141,28 +141,73 @@ $('#btn-radera').click(function () {
 
 // Redigeraknappen i Admin/AllaMedlemmar -> Modal
 $('#btn-redigera').click(function () {
-    $('#modal-form').attr('action', '/Admin/RedigeraMedlem');
-    var form = $("#modal-form");
-    var url = form.attr("action");
-    var formData = form.serialize();
-    $.post(url,
-        formData,
-        function (data) {
-            $("#feedback-radera-medlem").html(data + "är nu redigerad");
-        });
+    var inputFornamn = $("#fornamn").val();
+    var inputEfternamn = $("#efternamn").val();
+    var inputAdress= $("#adress").val();
+    var inputPostnummer= $("#postnummer").val();
+    var inputOrt = $("#ort").val();
+    var inputEmail= $("#email").val();
+    var inputKon = $("#kon").val();
+    var inputHandikapp = $("#handikapp").val();
+    var inputMedlemskategori = $("#medlemskategori").val();
+    var inputGolfid = $("#golfid").val();
+    var inputTelefonnummer = $("#telefonnummer").val();
+
+    if ((jQuery.trim(inputFornamn).length > 0) &&
+        (jQuery.trim(inputEfternamn).length > 0) &&
+        (jQuery.trim(inputAdress).length > 0) &&
+        (jQuery.trim(inputPostnummer).length > 0) &&
+        (jQuery.trim(inputOrt).length > 0) &&
+        (jQuery.trim(inputEmail).length > 0) &&
+        (jQuery.trim(inputKon).length > 0) &&
+        (jQuery.trim(inputHandikapp).length > 0) &&
+        (jQuery.trim(inputMedlemskategori).length > 0) &&
+        (jQuery.trim(inputGolfid).length > 0) &&
+        (jQuery.trim(inputTelefonnummer).length > 0)) {
+        $('#modal-form').attr('action', '/Admin/RedigeraMedlem');
+        var form = $("#modal-form");
+        var url = form.attr("action");
+        var formData = form.serialize();
+        $.post(url,
+            formData,
+            function(data) {
+                $("#feedback-radera-medlem").html(data + "är nu redigerad");
+            });
+    } else {
+        alert("Du måste fylla i alla fält!");
+    }
 });
 
 // NyMedlemKnappen i Admin/AllaMedlemmar -> Modal
 $('#btn-acceptera-ny-medlem').click(function () {
-    $('#modal-form').attr('action', '/Admin/RegistreraNyMedlem');
-    var form = $("#modal-form");
-    var url = form.attr("action");
-    var formData = form.serialize();
-    $.post(url,
-        formData,
-        function (data) {
-            $("#feedback-radera-medlem").html(data + "är nu inlagd i systemet");
-        });
+    var inputFornamn = $("#fornamn").val();
+    var inputEfternamn = $("#efternamn").val();
+    var inputAdress= $("#adress").val();
+    var inputPostnummer= $("#postnummer").val();
+    var inputOrt = $("#ort").val();
+    var inputEmail= $("#email").val();
+    var inputKon = $("#kon").val();
+    var inputHandikapp = $("#handikapp").val();
+    var inputMedlemskategori = $("#medlemskategori").val();
+    var inputGolfid = $("#golfid").val();
+    var inputTelefonnummer = $("#telefonnummer").val();
+
+    if ((jQuery.trim(inputFornamn).length > 0) && (jQuery.trim(inputEfternamn).length > 0) && (jQuery.trim(inputAdress).length > 0) &&
+        (jQuery.trim(inputPostnummer).length > 0) && (jQuery.trim(inputOrt).length > 0) && (jQuery.trim(inputEmail).length > 0) &&
+        (jQuery.trim(inputKon).length > 0) && (jQuery.trim(inputHandikapp).length > 0) && (jQuery.trim(inputMedlemskategori).length > 0) &&
+        (jQuery.trim(inputGolfid).length > 0) && (jQuery.trim(inputTelefonnummer).length > 0)) {
+        $('#modal-form').attr('action', '/Admin/RegistreraNyMedlem');
+        var form = $("#modal-form");
+        var url = form.attr("action");
+        var formData = form.serialize();
+        $.post(url,
+            formData,
+            function(data) {
+                $("#feedback-radera-medlem").html(data + "är nu inlagd i systemet");
+            });
+    } else {
+        alert("Du måste fylla i alla fält!");
+    }
 });
 
 $(function () {
