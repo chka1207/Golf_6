@@ -42,7 +42,7 @@ namespace Golf_6.Controllers
         //}
         // Visa personuppgifter
 
-        //[Authorize(Roles = "1")]
+        [Authorize(Roles = "1")]
         public ActionResult Personuppgifter()
         {
             Medlem m = new Medlem();
