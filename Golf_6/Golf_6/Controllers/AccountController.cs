@@ -77,59 +77,75 @@ namespace Golf_6.Controllers
             {
                 return View(model);
             }
-
-            Postgres x = new Postgres();
-            var userID = x.SqlFrågaParameters("select agare, kontotyp, salt, key from loginkonto where agare = (select id from medlemmar where email = @par1);", Postgres.lista = new List<NpgsqlParameter>()
+            if (model.Email == null)
             {
-                new NpgsqlParameter("@par1", model.Email)
-            });
-            string id = null, type = null;
-            foreach (DataRow item in userID.Rows)
-            {
-                id = item["agare"].ToString();
-                type = item["kontotyp"].ToString();
-            }
-
-            if(id==null)
-            {
-                ModelState.AddModelError("", "Fel lösenord");
+                ModelState.AddModelError("", "Felaktigt användarnamn");
                 return View(model);
             }
             else
             {
-                AccountModels password = new AccountModels();
-                bool result = password.AuthenticationUser(model.Password, id);
-                if(result)
+                Postgres x = new Postgres();
+                var userID = x.SqlFrågaParameters("select agare, kontotyp, salt, key from loginkonto where agare = (select id from medlemmar where email = @par1);", Postgres.lista = new List<NpgsqlParameter>()
                 {
-                    var identity = new ClaimsIdentity(new[]
-                    {
-                        new Claim(ClaimTypes.Name, id),
-                        new Claim(ClaimTypes.Email, "test@testmail.test"),
-                        new Claim(ClaimTypes.Role, type)}, "ApplicationCookie");
+                new NpgsqlParameter("@par1", model.Email)
+                });
+                string id = null, type = null;
 
-                    var ctx = Request.GetOwinContext();
-                    var authManager = ctx.Authentication;
-                    authManager.SignIn(identity);
-                    //int i = Convert.ToUInt16(User.Identity.Name);  //Exempel på hur man får fram UserID 
-
-                    if (User.IsInRole("1"))
+                if (userID != null)
+                {
+                    foreach (DataRow item in userID.Rows)
                     {
-                        return RedirectToAction("MinaBokningar", "Medlem");
+                        id = item["agare"].ToString();
+                        type = item["kontotyp"].ToString();
                     }
-                    if (User.IsInRole("2"))
+
+
+                    if (id == null)
                     {
-                        return RedirectToAction("Index", "Admin");
+                        ModelState.AddModelError("", "Fel lösenord");
+                        return View(model);
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Nu gick något på tok");
-                        return View(model);
+                        AccountModels password = new AccountModels();
+                        bool result = password.AuthenticationUser(model.Password, id);
+                        if (result)
+                        {
+                            var identity = new ClaimsIdentity(new[]
+                            {
+                                new Claim(ClaimTypes.Name, id),
+                                new Claim(ClaimTypes.Email, "test@testmail.test"),
+                                new Claim(ClaimTypes.Role, type)}, "ApplicationCookie");
+
+                            var ctx = Request.GetOwinContext();
+                            var authManager = ctx.Authentication;
+                            authManager.SignIn(identity);
+                            
+                            if (User.IsInRole("1"))
+                            {
+                                return RedirectToAction("MinaBokningar", "Medlem");
+                            }
+                            if (User.IsInRole("2"))
+                            {
+                                return RedirectToAction("Index", "Admin");
+                            }
+                            else
+                            {
+                                ModelState.AddModelError("", "Nu gick något på tok");
+                                return View(model);
+                            }
+
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Fel lösenord");
+                            return View(model);
+                        }
                     }
-                    
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Fel lösenord");
+                    ModelState.AddModelError("", "Användaren har ej registrerats för inloggning, kontakta receptionen för hjälp.");
                     return View(model);
                 }
             }
