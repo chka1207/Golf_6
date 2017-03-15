@@ -247,7 +247,12 @@ namespace Golf_6.Controllers
             return View();
         }
         #endregion
-        
 
+        [Authorize(Roles = "2")]
+        public ActionResult TavlingAdmin()
+        { 
+
+            return View();
+        }
     }
 }
