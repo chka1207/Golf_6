@@ -321,7 +321,8 @@ namespace Golf_6.Controllers
         [HttpPost]
         public ActionResult Incheckning(FormCollection collection)
         {
-
+            Admin.Incheckning a = new Admin.Incheckning();
+            int bokningsID = Convert.ToInt32(collection["bokningsID"]);
             string s = Convert.ToString(collection["spelarlista"]);
             char[] tecken = new char[] { ',' };
             string[] array = s.Split(tecken, StringSplitOptions.None);
@@ -331,6 +332,7 @@ namespace Golf_6.Controllers
                 if(i == 0)
                 {
                     golfid1 = array[i];
+                    
                 }
                 if(i==1)
                 {

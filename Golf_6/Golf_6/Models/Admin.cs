@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Reflection;
 using System.Web.Mvc;
 using Npgsql;
+using Golf_6.Models;
 
 namespace Golf_6.Models
 {
@@ -183,6 +184,7 @@ namespace Golf_6.Models
          
             public string checkainSpelare (int medlem, int bokning)
             {
+                
                 Postgres x = new Postgres();
                 string meddelande = "";
 
@@ -226,6 +228,23 @@ namespace Golf_6.Models
                 bokningsID = a.BokningID;
                 
                 return listan;
+            }
+            public int getMedlemsID(string golfID)
+            {
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+                Medlem m = new Medlem();
+                int id;
+                dt = x.SqlFrågaParameters("select id from medlemmar where golfid = @par1;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", golfID)
+                });
+                foreach(DataRow dr in dt.Rows)
+                {
+                    m.MedlemID = Convert.ToInt32(dr["id"]);
+                }
+                id = m.MedlemID;
+                return id;
             }
         }
 
