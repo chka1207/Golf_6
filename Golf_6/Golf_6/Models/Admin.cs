@@ -180,10 +180,7 @@ namespace Golf_6.Models
             public bool Incheckad { get; set; }
             public int MedelmID { get; set; }
             public int BokningID { get; set; }
-            public string GolfID { get; set; }
-            public IEnumerable<string> ValdSpelare { get; set; }
-            public IEnumerable<SelectListItem> Spelare { get; set; }
-
+         
             public string checkainSpelare (int medlem, int bokning)
             {
                 Postgres x = new Postgres();
@@ -198,15 +195,14 @@ namespace Golf_6.Models
                 return meddelande;
             }
 
-            public List<SelectListItem> GetSpelare(DateTime datum, DateTime tid, ref int bokningsID, ref List<string> stränglista)
+            public List<string> GetSpelare(DateTime datum, DateTime tid, ref int bokningsID)
             {
                 Postgres x = new Postgres();
                 DataTable dt = new DataTable();
                 Tidsbokning t = new Tidsbokning();
                 List<Tidsbokning> deltagare = new List<Tidsbokning>();
                 Admin.Incheckning a = new Admin.Incheckning();
-                List<SelectListItem> valdSpelare = new List<SelectListItem>();
-
+               
                 dt = x.SqlFrågaParameters("select bokning_id from reservation where datum = DATE(@datum) and tid = CAST(@tid as TIME);", Postgres.lista = new List<NpgsqlParameter>
                 {
                     new NpgsqlParameter("@datum", datum),
@@ -224,12 +220,12 @@ namespace Golf_6.Models
                 foreach(Tidsbokning tb in deltagare)
                 {
                     listan.Add(tb.GolfID.ToString());
-                    valdSpelare.Add(new SelectListItem() { Text = tb.GolfID.ToString(), Value = tb.GolfID.ToString() });
+                    
                 }
                 
                 bokningsID = a.BokningID;
-                stränglista = listan;
-                return valdSpelare;
+                
+                return listan;
             }
         }
 

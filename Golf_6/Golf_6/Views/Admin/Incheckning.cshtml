@@ -9,6 +9,19 @@
 
 @using (Html.BeginForm())
 {
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('#spelarlista').multiselect();
+    });
+    </script>
+
+
+
     <h2>Incheckning</h2>
 
     <div class="form-horizontal">
@@ -66,7 +79,21 @@
             </style>
             <div class="col-md-10">
                 <label>Välj spelare att checka in</label>
-                @Html.ListBoxFor(m => m.GolfID, Model.GetSpelare(datum, tid, ref bokningsID, ref l))
+                <select id="spelarlista" multiple="multiple">
+                    <option value="@t.Spelare1ID">@t.Spelare1ID</option>
+                    @if (t.Spelare2ID != null)
+                    {
+                        <option value="@t.Spelare2ID">@t.Spelare2ID</option>
+                    }
+                    @if (t.Spelare3ID != null)
+                    {
+                        <option value="@t.Spelare3ID">@t.Spelare3ID</option>
+                    }
+                    @if (t.Spelare4ID != null)
+                    {
+                        <option value="@t.Spelare4ID">@t.Spelare4ID</option>
+                    }
+                </select>
             </div>
         </div>
 
