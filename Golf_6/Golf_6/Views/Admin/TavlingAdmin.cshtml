@@ -1,5 +1,91 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<p>Content.</p>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+
+
+<script type="text/javascript">
+
+            $(function () {
+                $('#datepickerTavling').datepicker();
+            });
+            var currentDate = $(".selector").datepicker("getDate");
+            $.datepicker.regional['sv'] = {
+                closeText: 'Stäng',
+                prevText: '< Föregående',
+                nextText: 'Nästa >',
+                currentText: 'Idag',
+                monthNames: ['Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'Oktober', 'November', 'December'],
+                monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+                dayNamesShort: ['Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör'],
+                dayNames: ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'],
+                dayNamesMin: ['Sö', 'Må', 'Ti', 'On', 'To', 'Fr', 'Lö'],
+                weekHeader: 'Не',
+                dateFormat: 'yy-mm-dd',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                onSelect: function (dateText, inst) {
+                    $('form').submit();
+                }
+            };
+            $.datepicker.setDefaults($.datepicker.regional['sv']);
+</script>
+
+<div class="container">
+    <div class="row">
+        <h2>Här kan du skapa en ny tävling</h2><br />
+
+
+
+        <form class="form-horizontal">
+<h3>Individuell poängbogey</h3><br />
+            <div class="form-group">
+                <div class="col-md-4">
+                    <input type="text" name="datepickerTavling" class="btn btn-info pull-left" id="datepickerTavling" value="Välj datum">
+                </div>
+            </div>
+            <div class="form-group">
+
+                <div class="col-md-4">
+                    <label></label>
+                    <input name="Starttidinput" placeholder="Starttid" class="form-control input-md" type="text">
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <div class="col-md-4">
+                    <input name="sluttidinput" placeholder="Sluttid" class="form-control input-md" type="text">
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <div class="col-md-4">
+                    <input name="deltagareinput" placeholder="Max antal deltagare" class="form-control input-md" type="text">
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <div class="col-md-4">
+                    <input name="senastinput" placeholder="Datum för sista anmälningsdag" class="form-control input-md" type="text">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary">Skapa tävling</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</div>
