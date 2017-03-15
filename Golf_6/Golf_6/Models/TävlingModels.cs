@@ -28,6 +28,9 @@ namespace Golf_6.Models
             [Required]
             public int MaxAntal { get; set; }
 
+            [Required]
+            public DateTime SistaAnmälan { get; set; }
+
             public string bokaTävling(DateTime datum, DateTime starttid, DateTime sluttid, int maxAntal, DateTime sistaAnmälan)
             {
                 Admin a = new Admin();
@@ -47,6 +50,12 @@ namespace Golf_6.Models
 
                 return meddelande;
             }
+
+        public class Anmälan
+        {
+            public string golfID { get; set; }
+        }
+
 
         
     }
