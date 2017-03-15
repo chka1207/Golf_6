@@ -128,6 +128,28 @@ namespace Golf_6.Models
         }
         
 
+        public class Tävling
+        {
+            public int TävlingID { get; set; }
+
+            [Required]
+            public DateTime Datum { get; set; }
+            
+            [Required]
+            public DateTime Starttid { get; set; }
+            
+            [Required]
+            public DateTime Sluttid { get; set; }
+
+            [Required]
+            public int MaxAntal { get; set; }
+
+            //public string bokaTävling(DateTime datum, DateTime starttid, DateTime sluttid, int maxAntal)
+            //{
+            //    Postgres x = new Postgres();
+            //    x.SqlParameters("")
+            //}
+        }
     }
     
     //public class AdminMedlemshantering
