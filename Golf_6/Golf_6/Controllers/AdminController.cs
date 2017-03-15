@@ -282,6 +282,15 @@ namespace Golf_6.Controllers
         [HttpGet]
         public ActionResult Incheckning()
         {
+            DateTime dt = Convert.ToDateTime(Request.QueryString["datum"]);
+            DateTime tid = Convert.ToDateTime(dt.ToShortTimeString());
+            DateTime datum = Convert.ToDateTime(dt.ToShortDateString());
+            int bokningID = 0;
+            Admin.Incheckning a = new Admin.Incheckning();
+            ViewBag.Spelare = a.GetSpelare(datum, tid, ref bokningID);
+            ViewBag.BokningID = bokningID;
+            ViewBag.Datum = datum;
+            ViewBag.Tid = tid;
             return View();
         }
 
