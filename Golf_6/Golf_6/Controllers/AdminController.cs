@@ -10,6 +10,7 @@ using Golf_6.Models;
 using Golf_6.ViewModels;
 using Npgsql;
 
+
 namespace Golf_6.Controllers
 {
     public class AdminController : Controller
@@ -254,7 +255,7 @@ namespace Golf_6.Controllers
         [HttpGet]
         public ActionResult Tävling()
         {
-            return View();
+            return View("TavlingAdmin");
         }
 
         //POST: Tävling
@@ -262,6 +263,14 @@ namespace Golf_6.Controllers
         [HttpPost]
         public ActionResult Tävling(FormCollection collection)
         {
+            TävlingModels t = new TävlingModels();
+            DateTime datum = Convert.ToDateTime(collection["datepicker"]);
+            DateTime starttid = Convert.ToDateTime(collection["starttid"]);
+            DateTime sluttid = Convert.ToDateTime(collection["sluttid"]);
+            DateTime sistaAnmälan = Convert.ToDateTime(collection["sistaAnmälan"]);
+            int maxAntal = Convert.ToInt32(collection["maxAntal"]);
+            string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
+
             return View("Index");
         }
     }
