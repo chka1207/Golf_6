@@ -175,6 +175,26 @@ namespace Golf_6.Models
             return meddelande;
         }
 
+        public class Incheckning
+        {
+            public bool Incheckad { get; set; }
+            public int MedelmID { get; set; }
+            public int BokningID { get; set; }
+
+            public string checkainSpelare (int medlem, int bokning)
+            {
+                Postgres x = new Postgres();
+                string meddelande = "";
+
+                meddelande = x.SqlParameters("update deltar set incheckad = true where medlem_id = @par1 and reservation_id = @par2;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", medlem),
+                    new NpgsqlParameter("@par2", bokning)
+                });
+
+                return meddelande;
+            }
+        }
 
 
 

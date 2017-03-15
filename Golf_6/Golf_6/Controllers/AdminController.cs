@@ -276,5 +276,21 @@ namespace Golf_6.Controllers
             TempData["tävling"] = "Du har skapat en ny tävling";
             return View("Index");
         }
+
+        //GET: Incheckning
+        [Authorize(Roles ="2")]
+        [HttpGet]
+        public ActionResult Incheckning()
+        {
+            return View();
+        }
+
+        //POST: Incheckning
+        [Authorize(Roles ="2")]
+        [HttpPost]
+        public ActionResult Incheckning(FormCollection collection)
+        {
+            return View("Index");
+        }
     }
 }
