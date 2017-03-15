@@ -264,6 +264,7 @@ namespace Golf_6.Controllers
         [HttpPost]
         public ActionResult Tävling(FormCollection collection)
         {
+            
             TävlingModels t = new TävlingModels();
             DateTime datum = Convert.ToDateTime(collection["datepickerTavling"]);
             DateTime starttid = Convert.ToDateTime(collection["Starttidinput"]);
@@ -272,6 +273,7 @@ namespace Golf_6.Controllers
             int maxAntal = Convert.ToInt32(collection["deltagareinput"]);
             string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
 
+            TempData["tävling"] = "Du har skapat en ny tävling";
             return View("Index");
         }
     }
