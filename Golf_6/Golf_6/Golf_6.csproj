@@ -617,6 +617,7 @@
     <Content Include="Views\Medlem\AvbokningMedlem.cshtml" />
     <Content Include="Views\Admin\TavlingAdmin.cshtml" />
     <Content Include="Views\Admin\Incheckning.cshtml" />
+    <Content Include="Views\ScorekortModel\ScorekortIfyllt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
