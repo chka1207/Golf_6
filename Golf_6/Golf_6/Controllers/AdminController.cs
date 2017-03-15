@@ -322,7 +322,9 @@ namespace Golf_6.Controllers
         public ActionResult Incheckning(FormCollection collection)
         {
             Admin.Incheckning a = new Admin.Incheckning();
-            int bokningsID = Convert.ToInt32(collection["bokningsID"]);
+            int bokningsID = Convert.ToInt32(collection["bokningID"]);
+            int medlemsID = 0;
+            string meddelande = "";
             string s = Convert.ToString(collection["spelarlista"]);
             char[] tecken = new char[] { ',' };
             string[] array = s.Split(tecken, StringSplitOptions.None);
@@ -332,22 +334,29 @@ namespace Golf_6.Controllers
                 if(i == 0)
                 {
                     golfid1 = array[i];
-                    
+                    medlemsID = a.getMedlemsID(golfid1);
+                    meddelande = a.checkainSpelare(medlemsID, bokningsID);                    
                 }
                 if(i==1)
                 {
                     golfid2 = array[i];
+                    medlemsID = a.getMedlemsID(golfid2);
+                    meddelande = a.checkainSpelare(medlemsID, bokningsID);
                 }
                 if(i ==2)
                 {
                     golfid3 = array[i];
+                    medlemsID = a.getMedlemsID(golfid3);
+                    meddelande = a.checkainSpelare(medlemsID, bokningsID);
                 }
                 if(i == 3)
                 {
                     golfid4 = array[i];
+                    medlemsID = a.getMedlemsID(golfid4);
+                    meddelande = a.checkainSpelare(medlemsID, bokningsID);
                 }
             }
-            
+            TempData["incheckning"] = "Du har checkat in " + array.Length + " personer";
             return View("Index");
         }
     }

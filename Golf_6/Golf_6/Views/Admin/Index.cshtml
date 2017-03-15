@@ -15,6 +15,13 @@
         <strong>Tävling</strong> @TempData["tävling"]
     </div>
 }
+@if (TempData["incheckning"] != null)
+{
+    <div class="alert alert-success alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Incheckning</strong> @TempData["incheckning"]
+    </div>
+}
 
 @*@using (Html.BeginForm())
 {
