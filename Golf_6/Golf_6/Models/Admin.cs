@@ -170,44 +170,11 @@ namespace Golf_6.Models
 
             return meddelande;
         }
-        
 
-        public class Tävling
-        {
-            public int TävlingID { get; set; }
 
-            [Required]
-            public DateTime Datum { get; set; }
-            
-            [Required]
-            public DateTime Starttid { get; set; }
-            
-            [Required]
-            public DateTime Sluttid { get; set; }
 
-            [Required]
-            public int MaxAntal { get; set; }
 
-            public string bokaTävling(DateTime datum, DateTime starttid, DateTime sluttid, int maxAntal)
-            {
-                Admin a = new Admin();
-                Postgres x = new Postgres();
-                string meddelande = "";
-                string stängning;
 
-                meddelande = x.SqlParameters("insert into tavling (datum, starttid, sluttid, max_antal) values (@par1, @par2, @par3, @par4);", Postgres.lista = new List<NpgsqlParameter>()
-                {
-                    new NpgsqlParameter("@par1", datum),
-                    new NpgsqlParameter("@par2", starttid),
-                    new NpgsqlParameter("@par3", sluttid),
-                    new NpgsqlParameter("@par4", maxAntal)
-                });
-                stängning = a.stängBanan(datum, datum, starttid, sluttid, "Tävling");
-                
-                return meddelande;
-            }
-            
-        }
     }
     
     //public class AdminMedlemshantering

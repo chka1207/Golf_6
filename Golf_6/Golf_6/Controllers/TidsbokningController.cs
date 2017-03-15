@@ -577,8 +577,8 @@ namespace Golf_6.Controllers
             }
             DataTable dt = new DataTable();
             for (int i = 0; i < parameterLista.Count; i++)
-			{
-			    Postgres p1 = new Postgres();
+            {
+                Postgres p1 = new Postgres();
                 dt = p1.SqlFrågaParameters("select id from medlemmar where golfid = @golfid", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new Npgsql.NpgsqlParameter("@golfid", parameterLista[i]),               
@@ -591,8 +591,20 @@ namespace Golf_6.Controllers
                         medlemsid = dr["id"].ToString();
                         medlemsIdLista.Add(medlemsid);
                     }
+                    if (medlemsid == "")
+                    {
+                        meddelande = meddelande + " " + parameterLista[i];
+                    }
                 }
-			}
+            }
+            
+            string del1 = "Du har försökt boka ett eller fler golfidn som inte existerar, dessa är: ";
+            string del3 = ". Endast existerande golfidn som angetts har blivit inbokade på starttiden.";
+              if (meddelande != "")
+              {
+                TempData["notice"] = del1 + meddelande + del3;
+			  }
+
             int antalMedlemmar = medlemsIdLista.Count;
             string m = "";
             DataTable dt3 = new DataTable();
@@ -637,22 +649,23 @@ namespace Golf_6.Controllers
                 });
                         if (meddelande.Contains("23505"))
                         {
-                            TempData["notice"] = "Spelare du försökte boka fanns redan med i den angivna starttiden. Spelare som inte redan fanns med i starttiden har blivit bokade.";
+                            TempData["notice"] = "Spelare du försökte boka fanns redan med i den valda starttiden. Spelare som inte redan fanns med i starttiden har blivit bokade."
+                                + " Meddelandet gäller starttid " + tid.ToString() + " " +  datum.ToString()+ ".";
                         }
                     }
                 }
                 else
-                {
-                    
+                {                   
                     m = "Någon annan har precis bokat den här tiden. Antalet spelare kommer därför överstiga 4 i denna starttid. Välj en annan starttid.";
                     TempData["notice"] = m;
                 }
+                
                 //ViewBag.message = meddelande;
                 
             }
             DataTable dt2 = new DataTable();
             //Skapar en reservation om det inte redan finns.
-            if (bokningsId == "")
+            if (bokningsId == "" && medlemsIdLista.Count != 0)
             {
                 Postgres p2 = new Postgres();
                 p2.SqlParameters("insert into reservation (datum, tid) VALUES (DATE(@datum), CAST(@tid as TIME))", Postgres.lista = new List<NpgsqlParameter>()
@@ -689,11 +702,18 @@ namespace Golf_6.Controllers
             }
 
             }
+            else if (medlemsIdLista.Count == 0 && TempData["notice"] == null)
+            {
+                TempData["notice"] = "Du måste fylla i golfidn i textrutorna för att boka en starttid. Var god försök igen. Meddelandet gäller starttid " + tid.ToString() + " " + datum.ToString() + ".";
+            }
       
             try
             {
                 // TODO: Add insert logic here
-
+                if (TempData["notice"] == null)
+                {
+                    TempData["success"] = "Bokningen har genomförts.";
+                }
                 return RedirectToAction("AdminBokningsschema");
             }
             catch
@@ -1182,7 +1202,7 @@ namespace Golf_6.Controllers
             }
 
             string bokningsId = collection["bokningsID"];
- 
+            string meddelande = "";
             DataTable dt = new DataTable();
             List<string> medlemsIdLista = new List<string>();
             string medlemsid = "";
@@ -1201,15 +1221,27 @@ namespace Golf_6.Controllers
                         medlemsid = dr["id"].ToString();
                         medlemsIdLista.Add(medlemsid);
                     }
+                    if (medlemsid == "")
+                    {
+                        meddelande = meddelande + " " + golfare[i];
+                    }
                 }
             }
-            string meddelande = "";
-            //Ta bort medlemmar från en bokning
+            string del1 = "Du har försökt avboka ett eller fler golfidn som inte existerar, dessa är: ";
+            string del3 = ". Avbokningen har därför inte genomförts, var god försök igen. Meddelandet gäller starttid " + tid.ToString() + " " + datum.ToString();
+            if (meddelande != "")
+            {
+                TempData["notice"] = del1 + meddelande + del3;
+            }
+
+            if (meddelande == "")
+            {
+                //Ta bort medlemmar från en bokning
                 for (int i = 0; i < medlemsIdLista.Count; i++)
                 {
                     Postgres p = new Postgres();
 
-                    meddelande = p.SqlParameters("delete from deltar where medlem_id = @medlemID and reservation_id = @bokningID;", Postgres.lista = new List<NpgsqlParameter>()
+                    p.SqlParameters("delete from deltar where medlem_id = @medlemID and reservation_id = @bokningID;", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new Npgsql.NpgsqlParameter("@medlemID", Convert.ToInt32(medlemsIdLista[i])),
                     new Npgsql.NpgsqlParameter("@bokningID",Convert.ToInt32(bokningsId))
@@ -1217,24 +1249,56 @@ namespace Golf_6.Controllers
 
                     Postgres p2 = new Postgres();
                     //Tar bort medlemmar från bokare om de är bokare.
-                    meddelande = p2.SqlParameters("delete from bokare where bokare.bokaren = @medlemID and bokare.tid = @bokningID;", Postgres.lista = new List<NpgsqlParameter>()
+                    p2.SqlParameters("delete from bokare where bokare.bokaren = @medlemID and bokare.tid = @bokningID;", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new Npgsql.NpgsqlParameter("@medlemID", Convert.ToInt32(medlemsIdLista[i])),
                     new Npgsql.NpgsqlParameter("@bokningID", Convert.ToInt32(bokningsId))
                 });
                 }
-                 
+                DataTable table1 = new DataTable();
+                Postgres p3 = new Postgres();
 
-            try
-            {
-                // TODO: Add insert logic here
+                table1 = p3.SqlFrågaParameters("select count(medlem_id) from deltar where reservation_id = @bokningID", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@bokningID",Convert.ToInt32(bokningsId))
+                });
+
+                string antaliBokningen = "";
+                if (table1 != null)
+                {
+                    foreach (DataRow dr in table1.Rows)
+                    {
+                        antaliBokningen = dr["count"].ToString();
+
+                    }
+                }
+                if (antaliBokningen == "0")
+                {
+                    Postgres p2 = new Postgres();
+                    //Tar bort starttid från reservation om den starttiden har noll spelare inbokade.
+                    meddelande = p2.SqlParameters("delete from reservation where bokning_id = @bokningID;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                   
+                    new Npgsql.NpgsqlParameter("@bokningID", Convert.ToInt32(bokningsId))
+                });
+                }
 
                 return RedirectToAction("AdminBokningsschema");
-            }
-            catch
+            } 
+            else
             {
-                return View();
+                return RedirectToAction("AdminBokningsschema");
             }
+            //try
+            //{
+            //    // TODO: Add insert logic here
+
+                
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
         }
 
 

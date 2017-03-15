@@ -236,6 +236,7 @@
     <Compile Include="Models\Postgres.cs" />
     <Compile Include="Models\ScorekortModel.cs" />
     <Compile Include="Models\Tidsbokning.cs" />
+    <Compile Include="Models\TävlingModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\HanteraSasongViewModel.cs" />

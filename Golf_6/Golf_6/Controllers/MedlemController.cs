@@ -264,6 +264,7 @@ namespace Golf_6.Controllers
             }
 
             string bokningsId = collection["bokningsID"];
+            string meddelande = "";
 
             DataTable dt = new DataTable();
             List<string> medlemsIdLista = new List<string>();
@@ -281,44 +282,91 @@ namespace Golf_6.Controllers
                     foreach (DataRow dr in dt.Rows)
                     {
                         medlemsid = dr["id"].ToString();
-                        medlemsIdLista.Add(medlemsid);
+                        medlemsIdLista.Add(medlemsid); 
+                    } 
+                    if (medlemsid == "")
+                    {
+                        meddelande = meddelande + " " + golfare[i];
                     }
                 }
             }
-            string meddelande = "";
-            //Ta bort medlemmar från en bokning
-            for (int i = 0; i < medlemsIdLista.Count; i++)
+            string del1 = "Du har försökt avboka ett eller fler golfidn som inte existerar, dessa är: ";
+            string del3 = ". Avbokningen har därför inte genomförts, var god försök igen.";
+              if (meddelande != "")
+              {
+                TempData["notice"] = del1 + meddelande + del3;
+              }
+           
+            
+            if (meddelande == "")
             {
-                Postgres p = new Postgres();
+                //Ta bort medlemmar från en bokning
+                for (int i = 0; i < medlemsIdLista.Count; i++)
+                {
+                    Postgres p = new Postgres();
 
-                meddelande = p.SqlParameters("delete from deltar where medlem_id = @medlemID and reservation_id = @bokningID;", Postgres.lista = new List<NpgsqlParameter>()
+                    meddelande = p.SqlParameters("delete from deltar where medlem_id = @medlemID and reservation_id = @bokningID;", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new Npgsql.NpgsqlParameter("@medlemID", Convert.ToInt32(medlemsIdLista[i])),
                     new Npgsql.NpgsqlParameter("@bokningID",Convert.ToInt32(bokningsId))
                 });
 
-            {
-                Postgres p2 = new Postgres();
-                //Tar bort medlemmar från bokare om de är bokare.
-                meddelande = p2.SqlParameters("delete from bokare where bokare.bokaren = @medlemID and bokare.tid = @bokningID;", Postgres.lista = new List<NpgsqlParameter>()
+                    {
+                        Postgres p2 = new Postgres();
+                        //Tar bort medlemmar från bokare om de är bokare.
+                        meddelande = p2.SqlParameters("delete from bokare where bokare.bokaren = @medlemID and bokare.tid = @bokningID;", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new Npgsql.NpgsqlParameter("@medlemID", Convert.ToInt32(medlemsIdLista[i])),
                     new Npgsql.NpgsqlParameter("@bokningID", Convert.ToInt32(bokningsId))
                 });
-            }
-            }
+                    }
+                }
+                DataTable table1 = new DataTable();
+                Postgres p3 = new Postgres();
 
+                table1 = p3.SqlFrågaParameters("select count(medlem_id) from deltar where reservation_id = @bokningID", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@bokningID",Convert.ToInt32(bokningsId))
+                });
 
-            try
-            {
-                // TODO: Add insert logic here
+                string antaliBokningen = "";
+                if (table1 != null)
+                {
+                    foreach (DataRow dr in table1.Rows)
+                    {
+                        antaliBokningen = dr["count"].ToString();
+
+                    }
+                }
+                if (antaliBokningen == "0")
+                {
+                    Postgres p2 = new Postgres();
+                    //Tar bort starttid från reservation om den starttiden har noll spelare inbokade.
+                    meddelande = p2.SqlParameters("delete from reservation where bokning_id = @bokningID;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                   
+                    new Npgsql.NpgsqlParameter("@bokningID", Convert.ToInt32(bokningsId))
+                });
+                }
 
                 return RedirectToAction("MinaBokningar");
             }
-            catch
+            else
             {
-                return View();
+                //returnera avbokningssidan
+                return RedirectToAction("MinaBokningar");
             }
+
+            //try
+            //{
+            //    // TODO: Add insert logic here
+
+            //    return RedirectToAction("MinaBokningar");
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
         }
         //Visa vy för scorekort
         //[AllowAnonymousAttribute]
