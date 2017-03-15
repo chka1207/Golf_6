@@ -194,6 +194,37 @@ namespace Golf_6.Models
 
                 return meddelande;
             }
+
+            public List<string> GetSpelare(DateTime datum, DateTime tid, ref int bokningsID)
+            {
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+                Tidsbokning t = new Tidsbokning();
+                List<Tidsbokning> deltagare = new List<Tidsbokning>();
+                Admin.Incheckning a = new Admin.Incheckning();
+
+                dt = x.SqlFrågaParameters("select bokning_id from reservation where datum = DATE(@datum) and tid = CAST(@tid as TIME);", Postgres.lista = new List<NpgsqlParameter>
+                {
+                    new NpgsqlParameter("@datum", datum),
+                    new NpgsqlParameter("@tid", tid)
+                });
+
+                foreach(DataRow dr in dt.Rows)
+                {
+                    a.BokningID = Convert.ToInt32(dr["bokning_id"]);
+                }
+
+                List<string> listan = new List<string>();
+                deltagare = t.GetBokning(a.BokningID);
+
+                foreach(Tidsbokning tb in deltagare)
+                {
+                    listan.Add(tb.GolfID.ToString());
+                }
+
+                bokningsID = a.BokningID;
+                return listan;
+            }
         }
 
 
