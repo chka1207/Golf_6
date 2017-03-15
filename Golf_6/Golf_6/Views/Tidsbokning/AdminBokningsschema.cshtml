@@ -19,15 +19,15 @@
     <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
     <strong>Varning! </strong> @TempData["notice"]
   </div>
-    
+  }
     if (TempData["success"] != null)
     {
          <div class="alert alert-success alert-dismissable">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-    <strong>Success! </strong> 
+    <strong>Success! </strong> @TempData["success"]
   </div>
     }
-}  
+  
 <div class="center-block">
 
 

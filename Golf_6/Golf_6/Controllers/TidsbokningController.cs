@@ -659,6 +659,7 @@ namespace Golf_6.Controllers
                     m = "Någon annan har precis bokat den här tiden. Antalet spelare kommer därför överstiga 4 i denna starttid. Välj en annan starttid.";
                     TempData["notice"] = m;
                 }
+                
                 //ViewBag.message = meddelande;
                 
             }
@@ -701,7 +702,7 @@ namespace Golf_6.Controllers
             }
 
             }
-            else
+            else if (medlemsIdLista.Count == 0 && TempData["notice"] == null)
             {
                 TempData["notice"] = "Du måste fylla i golfidn i textrutorna för att boka en starttid. Var god försök igen. Meddelandet gäller starttid " + tid.ToString() + " " + datum.ToString() + ".";
             }
@@ -709,7 +710,10 @@ namespace Golf_6.Controllers
             try
             {
                 // TODO: Add insert logic here
-
+                if (TempData["notice"] == null)
+                {
+                    TempData["success"] = "Bokningen har genomförts.";
+                }
                 return RedirectToAction("AdminBokningsschema");
             }
             catch
@@ -1224,7 +1228,7 @@ namespace Golf_6.Controllers
                 }
             }
             string del1 = "Du har försökt avboka ett eller fler golfidn som inte existerar, dessa är: ";
-            string del3 = ". Avbokningen har därför inte genomförts, var god försök igen.";
+            string del3 = ". Avbokningen har därför inte genomförts, var god försök igen. Meddelandet gäller starttid " + tid.ToString() + " " + datum.ToString();
             if (meddelande != "")
             {
                 TempData["notice"] = del1 + meddelande + del3;
