@@ -170,18 +170,18 @@ namespace Golf_6.Models
 
             return meddelande;
         }
-        
 
         public class Tävling
         {
+            [Key]
             public int TävlingID { get; set; }
 
             [Required]
             public DateTime Datum { get; set; }
-            
+
             [Required]
             public DateTime Starttid { get; set; }
-            
+
             [Required]
             public DateTime Sluttid { get; set; }
 
@@ -203,11 +203,14 @@ namespace Golf_6.Models
                     new NpgsqlParameter("@par4", maxAntal)
                 });
                 stängning = a.stängBanan(datum, datum, starttid, sluttid, "Tävling");
-                
+
                 return meddelande;
             }
-            
+
         }
+
+
+
     }
     
     //public class AdminMedlemshantering
