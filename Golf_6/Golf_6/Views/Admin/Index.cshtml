@@ -8,7 +8,13 @@
 }
 
 <h2>Välkommen admin!</h2>
-
+@if (TempData["tävling"] != null)
+{
+    <div class="alert alert-success alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Tävling</strong> @TempData["tävling"]
+    </div>
+}
 
 @*@using (Html.BeginForm())
 {

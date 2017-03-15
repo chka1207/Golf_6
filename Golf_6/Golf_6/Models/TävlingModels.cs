@@ -54,6 +54,22 @@ namespace Golf_6.Models
         public class Anmälan
         {
             public string golfID { get; set; }
+
+            public int TavlingsId { get; set; }
+
+            public string anmälan(int tävlingsID, string golfid)
+            {
+                Postgres p = new Postgres();
+                string meddelande = "";
+                meddelande = p.SqlParameters("insert into anmalan (golfid, fk_tavling) values (@golfid, @tavlingsid);", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@golfid", tävlingsID),
+                    new NpgsqlParameter("@tavlingsid",golfid)
+
+                });
+
+                return meddelande;
+            }
         }
 
 

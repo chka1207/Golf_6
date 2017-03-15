@@ -29,6 +29,8 @@ namespace Golf_6.Controllers
             return View();
         }
 
+
+
         #region Hämta alla medlemmar
         //GET: Admin/AllaMedlemmar
         [Authorize(Roles ="2")]
@@ -248,7 +250,27 @@ namespace Golf_6.Controllers
             return View();
         }
         #endregion
-        
+
+        //GET: Anmälan
+        [Authorize(Roles = "2")]
+        [HttpGet]
+        public ActionResult AnmalanAdmin()
+        {
+            return View("AnmalanAdmin");
+        }
+
+        [Authorize(Roles = "2")]
+        [HttpPost]
+        public ActionResult AnmalanAdmin(FormCollection collection)
+        {
+            TävlingModels.Anmälan a = new TävlingModels.Anmälan();
+            a.TavlingsId = 1; //hårdkodat nu
+            a.golfID = collection["golfid"]; 
+            int maxAntal = Convert.ToInt32(collection["maxAntal"]);
+            
+
+            return View("Index");
+        }
 
         //GET: Tävling
         [Authorize(Roles ="2")]
@@ -264,6 +286,7 @@ namespace Golf_6.Controllers
         [HttpPost]
         public ActionResult Tävling(FormCollection collection)
         {
+            
             TävlingModels t = new TävlingModels();
             DateTime datum = Convert.ToDateTime(collection["datepickerTavling"]);
             DateTime starttid = Convert.ToDateTime(collection["Starttidinput"]);
@@ -272,6 +295,59 @@ namespace Golf_6.Controllers
             int maxAntal = Convert.ToInt32(collection["deltagareinput"]);
             string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
 
+            TempData["tävling"] = "Du har skapat en ny tävling";
+            return View("Index");
+        }
+
+        //GET: Incheckning
+        [Authorize(Roles ="2")]
+        [HttpGet]
+        public ActionResult Incheckning()
+        {
+            DateTime dt = Convert.ToDateTime(Request.QueryString["datum"]);
+            DateTime tid = Convert.ToDateTime(dt.ToShortTimeString());
+            DateTime datum = Convert.ToDateTime(dt.ToShortDateString());
+            int bokningID = 0;
+            Admin.Incheckning a = new Admin.Incheckning();
+            ViewBag.Spelare = a.GetSpelare(datum, tid, ref bokningID);
+            ViewBag.BokningID = bokningID;
+            ViewBag.Datum = datum;
+            ViewBag.Tid = tid;
+            return View();
+        }
+
+        //POST: Incheckning
+        [Authorize(Roles ="2")]
+        [HttpPost]
+        public ActionResult Incheckning(FormCollection collection)
+        {
+            Admin.Incheckning a = new Admin.Incheckning();
+            int bokningsID = Convert.ToInt32(collection["bokningsID"]);
+            string s = Convert.ToString(collection["spelarlista"]);
+            char[] tecken = new char[] { ',' };
+            string[] array = s.Split(tecken, StringSplitOptions.None);
+            string golfid1, golfid2, golfid3, golfid4 = "";
+            for(int i =0; i < array.Length; i++)
+            {
+                if(i == 0)
+                {
+                    golfid1 = array[i];
+                    
+                }
+                if(i==1)
+                {
+                    golfid2 = array[i];
+                }
+                if(i ==2)
+                {
+                    golfid3 = array[i];
+                }
+                if(i == 3)
+                {
+                    golfid4 = array[i];
+                }
+            }
+            
             return View("Index");
         }
     }
