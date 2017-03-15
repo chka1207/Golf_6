@@ -321,6 +321,31 @@ namespace Golf_6.Controllers
         [HttpPost]
         public ActionResult Incheckning(FormCollection collection)
         {
+
+            string s = Convert.ToString(collection["spelarlista"]);
+            char[] tecken = new char[] { ',' };
+            string[] array = s.Split(tecken, StringSplitOptions.None);
+            string golfid1, golfid2, golfid3, golfid4 = "";
+            for(int i =0; i < array.Length; i++)
+            {
+                if(i == 0)
+                {
+                    golfid1 = array[i];
+                }
+                if(i==1)
+                {
+                    golfid2 = array[i];
+                }
+                if(i ==2)
+                {
+                    golfid3 = array[i];
+                }
+                if(i == 3)
+                {
+                    golfid4 = array[i];
+                }
+            }
+            
             return View("Index");
         }
     }

@@ -14,14 +14,7 @@
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $('#spelarlista').multiselect();
-    });
-    </script>
-
-
-
+   
     <h2>Incheckning</h2>
 
     <div class="form-horizontal">
@@ -45,24 +38,29 @@
                     {
                         a = l[0];
                         t.Spelare1ID = a;
+
                     }
                     if (l.Count == 2 || l.Count > 2)
                     {
                         b = l[1];
                         t.Spelare2ID = b;
+
                     }
                     if (l.Count == 3 || l.Count > 3)
                     {
                         c = l[2];
                         t.Spelare3ID = c;
+
                     }
                     if (l.Count == 4 || l.Count > 4)
                     {
                         d = l[3];
                         t.Spelare4ID = d;
+
                     }
                 }
             }
+            
 
             @Html.Hidden("bokningID", bokningsID);
             @Html.Hidden("nySpelare1", t.Spelare1ID);
@@ -71,31 +69,40 @@
             @Html.Hidden("nySpelare4", t.Spelare4ID);
         }
 
-        <div class="form-group">
-            <style>
-                #tbdatum{
 
-                }
-            </style>
-            <div class="col-md-10">
-                <label>Välj spelare att checka in</label>
-                <select id="spelarlista" multiple="multiple">
-                    <option value="@t.Spelare1ID">@t.Spelare1ID</option>
-                    @if (t.Spelare2ID != null)
-                    {
-                        <option value="@t.Spelare2ID">@t.Spelare2ID</option>
+
+        <div class="form-group">
+                <style>
+                    #tbdatum{
+
                     }
-                    @if (t.Spelare3ID != null)
-                    {
-                        <option value="@t.Spelare3ID">@t.Spelare3ID</option>
-                    }
-                    @if (t.Spelare4ID != null)
-                    {
-                        <option value="@t.Spelare4ID">@t.Spelare4ID</option>
-                    }
-                </select>
+                </style>
+                <div class="col-md-10">
+                    <label>Välj spelare att checka in</label>
+                    <select id="spelarlista" name="spelarlista" multiple="multiple">
+                        <option value="@t.Spelare1ID">@t.Spelare1ID</option>
+                        @if (t.Spelare2ID != null)
+                        {
+                            <option value="@t.Spelare2ID">@t.Spelare2ID</option>
+                        }
+                        @if (t.Spelare3ID != null)
+                        {
+                            <option value="@t.Spelare3ID">@t.Spelare3ID</option>
+                        }
+                        @if (t.Spelare4ID != null)
+                        {
+                            <option value="@t.Spelare4ID">@t.Spelare4ID</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="" value="Incheckning" class="btn btn-default" data-content="spelarlista"/>
             </div>
         </div>
 
     </div>
-           }
+
+            }
