@@ -287,7 +287,10 @@ namespace Golf_6.Controllers
             DateTime datum = Convert.ToDateTime(dt.ToShortDateString());
             int bokningID = 0;
             Admin.Incheckning a = new Admin.Incheckning();
-            ViewBag.Spelare = a.GetSpelare(datum, tid, ref bokningID);
+            List<string> l = new List<string>();
+            List<SelectListItem> select = new List<SelectListItem>();
+            select = a.GetSpelare(datum, tid, ref bokningID, ref l);
+            ViewBag.Spelare = l;
             ViewBag.BokningID = bokningID;
             ViewBag.Datum = datum;
             ViewBag.Tid = tid;
