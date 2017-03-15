@@ -29,6 +29,8 @@ namespace Golf_6.Controllers
             return View();
         }
 
+
+
         #region Hämta alla medlemmar
         //GET: Admin/AllaMedlemmar
         [Authorize(Roles ="2")]
@@ -248,7 +250,27 @@ namespace Golf_6.Controllers
             return View();
         }
         #endregion
-        
+
+        //GET: Anmälan
+        [Authorize(Roles = "2")]
+        [HttpGet]
+        public ActionResult AnmalanAdmin()
+        {
+            return View("AnmalanAdmin");
+        }
+
+        [Authorize(Roles = "2")]
+        [HttpPost]
+        public ActionResult AnmalanAdmin(FormCollection collection)
+        {
+            TävlingModels.Anmälan a = new TävlingModels.Anmälan();
+            a.TavlingsId = 1; //hårdkodat nu
+            a.golfID = collection["golfid"]; 
+            int maxAntal = Convert.ToInt32(collection["maxAntal"]);
+            
+
+            return View("Index");
+        }
 
         //GET: Tävling
         [Authorize(Roles ="2")]
