@@ -130,6 +130,10 @@ namespace Golf_6.Models
         public string stängBanan(DateTime startdatum, DateTime slutdatum, DateTime starttid, DateTime sluttid, string anledning) //Hanterar just nu bara ett datum , efter produktägarens önskemål. Start- och slutdatum måste alltså vara samma för att metoden skall fungera.
         {
             Postgres x = new Postgres();
+            Postgres x1 = new Postgres();
+            Postgres x2 = new Postgres();
+            Postgres x3 = new Postgres();
+            Postgres x4 = new Postgres();
             string meddelande = "";
             string delete = "";
             DataTable dt = new DataTable();
@@ -143,7 +147,7 @@ namespace Golf_6.Models
                     new NpgsqlParameter("@par4", sluttid),
                     new NpgsqlParameter("@par5", anledning)
                 });
-            dt = x.SqlFrågaParameters("select bokning_id from reservation where datum = @par1 and tid between CAST(@par2 as TIME) and CAST(@par3 as TIME);", Postgres.lista = new List<NpgsqlParameter>()
+            dt = x1.SqlFrågaParameters("select bokning_id from reservation where datum = @par1 and tid between CAST(@par2 as TIME) and CAST(@par3 as TIME);", Postgres.lista = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@par1", startdatum),
                 new NpgsqlParameter("@par2", starttid),
@@ -152,15 +156,15 @@ namespace Golf_6.Models
             foreach(DataRow dr in dt.Rows)
             {
                 bokningID = Convert.ToInt32(dr["bokning_id"].ToString());
-                delete = x.SqlParameters("delete from reservation where bokning_id = @par1", Postgres.lista = new List<NpgsqlParameter>()
+                delete = x2.SqlParameters("delete from reservation where bokning_id = @par1", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@par1", bokningID)
                 });
-                delete = x.SqlParameters("delete from bokaren where bokaren.tid = @par1", Postgres.lista = new List<NpgsqlParameter>()
+                delete = x3.SqlParameters("delete from bokaren where bokaren.tid = @par1", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@par1", bokningID)
                 });
-                delete = x.SqlParameters("delete from deltar where reservation_id = @par1", Postgres.lista = new List<NpgsqlParameter>()
+                delete = x4.SqlParameters("delete from deltar where reservation_id = @par1", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@par1", bokningID)
                 });
@@ -171,44 +175,58 @@ namespace Golf_6.Models
             return meddelande;
         }
 
-        public class Tävling
+        public class Incheckning
         {
-            [Key]
-            public int TävlingID { get; set; }
+            public bool Incheckad { get; set; }
+            public int MedelmID { get; set; }
+            public int BokningID { get; set; }
 
-            [Required]
-            public DateTime Datum { get; set; }
-
-            [Required]
-            public DateTime Starttid { get; set; }
-
-            [Required]
-            public DateTime Sluttid { get; set; }
-
-            [Required]
-            public int MaxAntal { get; set; }
-
-            public string bokaTävling(DateTime datum, DateTime starttid, DateTime sluttid, int maxAntal, DateTime sistaAnmälan)
+            public string checkainSpelare (int medlem, int bokning)
             {
-                Admin a = new Admin();
                 Postgres x = new Postgres();
                 string meddelande = "";
-                string stängning;
 
-                meddelande = x.SqlParameters("insert into tavling (datum, starttid, sluttid, max_antal, sista_anmalan) values (@par1, @par2, @par3, @par4, @par5);", Postgres.lista = new List<NpgsqlParameter>()
+                meddelande = x.SqlParameters("update deltar set incheckad = true where medlem_id = @par1 and reservation_id = @par2;", Postgres.lista = new List<NpgsqlParameter>()
                 {
-                    new NpgsqlParameter("@par1", datum),
-                    new NpgsqlParameter("@par2", starttid),
-                    new NpgsqlParameter("@par3", sluttid),
-                    new NpgsqlParameter("@par4", maxAntal),
-                    new NpgsqlParameter("@par5", sistaAnmälan)
+                    new NpgsqlParameter("@par1", medlem),
+                    new NpgsqlParameter("@par2", bokning)
                 });
-                stängning = a.stängBanan(datum, datum, starttid, sluttid, "Tävling");
 
                 return meddelande;
             }
 
+            public List<string> GetSpelare(DateTime datum, DateTime tid, ref int bokningsID)
+            {
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+                Tidsbokning t = new Tidsbokning();
+                List<Tidsbokning> deltagare = new List<Tidsbokning>();
+                Admin.Incheckning a = new Admin.Incheckning();
+
+                dt = x.SqlFrågaParameters("select bokning_id from reservation where datum = DATE(@datum) and tid = CAST(@tid as TIME);", Postgres.lista = new List<NpgsqlParameter>
+                {
+                    new NpgsqlParameter("@datum", datum),
+                    new NpgsqlParameter("@tid", tid)
+                });
+
+                foreach(DataRow dr in dt.Rows)
+                {
+                    a.BokningID = Convert.ToInt32(dr["bokning_id"]);
+                }
+
+                List<string> listan = new List<string>();
+                deltagare = t.GetBokning(a.BokningID);
+
+                foreach(Tidsbokning tb in deltagare)
+                {
+                    listan.Add(tb.GolfID.ToString());
+                }
+
+                bokningsID = a.BokningID;
+                return listan;
+            }
         }
+
 
 
 
