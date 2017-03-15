@@ -1,6 +1,14 @@
-﻿@{
+﻿@model Golf_6.Models.TävlingModels
+@using Golf_6.Controllers;
+@using Golf_6.Models;
+@using System.Collections.Generic;
+
+@{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+
+@using (Html.BeginForm())
+{
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -29,9 +37,7 @@
                 isRTL: false,
                 showMonthAfterYear: false,
                 yearSuffix: '',
-                onSelect: function (dateText, inst) {
-                    $('form').submit();
-                }
+                onSelect: ''
             };
             $.datepicker.setDefaults($.datepicker.regional['sv']);
 </script>
@@ -89,3 +95,4 @@
     </div>
 
 </div>
+}

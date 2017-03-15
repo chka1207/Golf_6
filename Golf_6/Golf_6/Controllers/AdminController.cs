@@ -255,6 +255,7 @@ namespace Golf_6.Controllers
         [HttpGet]
         public ActionResult Tävling()
         {
+            
             return View("TavlingAdmin");
         }
 
@@ -264,11 +265,11 @@ namespace Golf_6.Controllers
         public ActionResult Tävling(FormCollection collection)
         {
             TävlingModels t = new TävlingModels();
-            DateTime datum = Convert.ToDateTime(collection["datepicker"]);
-            DateTime starttid = Convert.ToDateTime(collection["starttid"]);
-            DateTime sluttid = Convert.ToDateTime(collection["sluttid"]);
-            DateTime sistaAnmälan = Convert.ToDateTime(collection["sistaAnmälan"]);
-            int maxAntal = Convert.ToInt32(collection["maxAntal"]);
+            DateTime datum = Convert.ToDateTime(collection["datepickerTavling"]);
+            DateTime starttid = Convert.ToDateTime(collection["Starttidinput"]);
+            DateTime sluttid = Convert.ToDateTime(collection["sluttidinput"]);
+            DateTime sistaAnmälan = Convert.ToDateTime(collection["senastinput"]);
+            int maxAntal = Convert.ToInt32(collection["deltagareinput"]);
             string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
 
             return View("Index");

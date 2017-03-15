@@ -130,6 +130,10 @@ namespace Golf_6.Models
         public string stängBanan(DateTime startdatum, DateTime slutdatum, DateTime starttid, DateTime sluttid, string anledning) //Hanterar just nu bara ett datum , efter produktägarens önskemål. Start- och slutdatum måste alltså vara samma för att metoden skall fungera.
         {
             Postgres x = new Postgres();
+            Postgres x1 = new Postgres();
+            Postgres x2 = new Postgres();
+            Postgres x3 = new Postgres();
+            Postgres x4 = new Postgres();
             string meddelande = "";
             string delete = "";
             DataTable dt = new DataTable();
@@ -143,7 +147,7 @@ namespace Golf_6.Models
                     new NpgsqlParameter("@par4", sluttid),
                     new NpgsqlParameter("@par5", anledning)
                 });
-            dt = x.SqlFrågaParameters("select bokning_id from reservation where datum = @par1 and tid between CAST(@par2 as TIME) and CAST(@par3 as TIME);", Postgres.lista = new List<NpgsqlParameter>()
+            dt = x1.SqlFrågaParameters("select bokning_id from reservation where datum = @par1 and tid between CAST(@par2 as TIME) and CAST(@par3 as TIME);", Postgres.lista = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@par1", startdatum),
                 new NpgsqlParameter("@par2", starttid),
@@ -152,15 +156,15 @@ namespace Golf_6.Models
             foreach(DataRow dr in dt.Rows)
             {
                 bokningID = Convert.ToInt32(dr["bokning_id"].ToString());
-                delete = x.SqlParameters("delete from reservation where bokning_id = @par1", Postgres.lista = new List<NpgsqlParameter>()
+                delete = x2.SqlParameters("delete from reservation where bokning_id = @par1", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@par1", bokningID)
                 });
-                delete = x.SqlParameters("delete from bokaren where bokaren.tid = @par1", Postgres.lista = new List<NpgsqlParameter>()
+                delete = x3.SqlParameters("delete from bokaren where bokaren.tid = @par1", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@par1", bokningID)
                 });
-                delete = x.SqlParameters("delete from deltar where reservation_id = @par1", Postgres.lista = new List<NpgsqlParameter>()
+                delete = x4.SqlParameters("delete from deltar where reservation_id = @par1", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@par1", bokningID)
                 });
