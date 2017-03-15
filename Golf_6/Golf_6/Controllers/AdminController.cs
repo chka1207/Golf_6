@@ -277,6 +277,7 @@ namespace Golf_6.Controllers
         [HttpGet]
         public ActionResult Tävling()
         {
+            
             return View("TavlingAdmin");
         }
 
@@ -285,14 +286,41 @@ namespace Golf_6.Controllers
         [HttpPost]
         public ActionResult Tävling(FormCollection collection)
         {
+            
             TävlingModels t = new TävlingModels();
-            DateTime datum = Convert.ToDateTime(collection["datepicker"]);
-            DateTime starttid = Convert.ToDateTime(collection["starttid"]);
-            DateTime sluttid = Convert.ToDateTime(collection["sluttid"]);
-            DateTime sistaAnmälan = Convert.ToDateTime(collection["sistaAnmälan"]);
-            int maxAntal = Convert.ToInt32(collection["maxAntal"]);
+            DateTime datum = Convert.ToDateTime(collection["datepickerTavling"]);
+            DateTime starttid = Convert.ToDateTime(collection["Starttidinput"]);
+            DateTime sluttid = Convert.ToDateTime(collection["sluttidinput"]);
+            DateTime sistaAnmälan = Convert.ToDateTime(collection["senastinput"]);
+            int maxAntal = Convert.ToInt32(collection["deltagareinput"]);
             string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
 
+            TempData["tävling"] = "Du har skapat en ny tävling";
+            return View("Index");
+        }
+
+        //GET: Incheckning
+        [Authorize(Roles ="2")]
+        [HttpGet]
+        public ActionResult Incheckning()
+        {
+            DateTime dt = Convert.ToDateTime(Request.QueryString["datum"]);
+            DateTime tid = Convert.ToDateTime(dt.ToShortTimeString());
+            DateTime datum = Convert.ToDateTime(dt.ToShortDateString());
+            int bokningID = 0;
+            Admin.Incheckning a = new Admin.Incheckning();
+            ViewBag.Spelare = a.GetSpelare(datum, tid, ref bokningID);
+            ViewBag.BokningID = bokningID;
+            ViewBag.Datum = datum;
+            ViewBag.Tid = tid;
+            return View();
+        }
+
+        //POST: Incheckning
+        [Authorize(Roles ="2")]
+        [HttpPost]
+        public ActionResult Incheckning(FormCollection collection)
+        {
             return View("Index");
         }
     }
