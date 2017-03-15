@@ -56,13 +56,23 @@
                     }
                 </tr>
                 @{ int id = 1;}
+                @{ Dictionary<string, int> summa = new Dictionary<string, int>();}
                 @{ DataRow previousRow = null;}
                 @foreach (DataRow row in Model.scoreKort.Rows)
                 {
+
+                    if (!summa.ContainsKey(row["namn"].ToString()))
+                    {
+                        summa[row["namn"].ToString()] = Convert.ToInt32(row["meter"]);
+                    }
+                    else
+                    {
+                        summa[row["namn"].ToString()] += Convert.ToInt32(row["meter"]);
+                    }
                     if (Convert.ToInt16(row["halid"]) == id)
                     {
-                        if(previousRow !=null)
-                        { 
+                        if (previousRow != null)
+                        {
                             <td>@previousRow["par"]</td>
                             <td>@previousRow["hcp"]</td>
 
@@ -77,7 +87,9 @@
                         if (id == 10)
                         {
                             <tr>
-                                @for (int i = 0; i < 5 + 8; i++)
+                                <td colspan="3" id="förstaHalva" align="right">Ut</td>
+                                <td id="antalPar">@Model.parFörstaHalvan.ToString()</td>
+                                @for (int i = 0; i < 4; i++)
                                 {
                                     <td>&nbsp;</td>
                                 }
@@ -107,7 +119,9 @@
             @if (id == 19)
             {
             <tr>
-                @for (int i = 0; i < 5 + 8; i++)
+                <td colspan="3" id="förstaHalva" align="right">In</td>
+                <td id="antalPar">@Model.parAndraHalvan.ToString()</td>
+                @for (int i = 0; i < 4; i++)
                 {
                     <td>&nbsp;</td>
                 }
@@ -118,7 +132,9 @@
             @if (id == 20)
             {
                 <tr>
-                    @for (int i = 0; i < 5 + 8; i++)
+                    <td colspan="3" id="förstaHalva" align="right">Total</td>
+                    <td id="antalPar">@Model.parTotal.ToString()</td>
+                    @for (int i = 0; i < 4; i++)
                 {
                         <td>&nbsp;</td>
                     }
