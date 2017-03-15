@@ -247,12 +247,22 @@ namespace Golf_6.Controllers
             return View();
         }
         #endregion
+        
 
-        [Authorize(Roles = "2")]
-        public ActionResult TavlingAdmin()
-        { 
-
+        //GET: Tävling
+        [Authorize(Roles ="2")]
+        [HttpGet]
+        public ActionResult Tävling()
+        {
             return View();
+        }
+
+        //POST: Tävling
+        [Authorize(Roles ="2")]
+        [HttpPost]
+        public ActionResult Tävling(FormCollection collection)
+        {
+            return View("Index");
         }
     }
 }
