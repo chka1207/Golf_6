@@ -144,11 +144,19 @@ namespace Golf_6.Models
             [Required]
             public int MaxAntal { get; set; }
 
-            //public string bokaTävling(DateTime datum, DateTime starttid, DateTime sluttid, int maxAntal)
-            //{
-            //    Postgres x = new Postgres();
-            //    x.SqlParameters("")
-            //}
+            public string bokaTävling(DateTime datum, DateTime starttid, DateTime sluttid, int maxAntal)
+            {
+                Postgres x = new Postgres();
+                string meddelande = "";
+                meddelande = x.SqlParameters("insert into tavling (datum, starttid, sluttid, max_antal) values ('@par1', '@par2', '@par3', @par4);", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", datum),
+                    new NpgsqlParameter("@par2", starttid),
+                    new NpgsqlParameter("@par3", sluttid),
+                    new NpgsqlParameter("@par4", maxAntal)
+                });
+                return meddelande;
+            }
         }
     }
     
