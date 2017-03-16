@@ -31,7 +31,9 @@
             </tr>
         </thead>
         <tr>
-    @foreach (DataRow dr in Model.AllaTävlingar.Rows)
+            @if (Model.AllaTävlingar != null)
+            {
+    foreach (DataRow dr in Model.AllaTävlingar.Rows)
     {
     <tr>
         <td>@Convert.ToDateTime(@dr["datum"]).ToShortDateString()</td>
@@ -41,16 +43,16 @@
 
         @{if (anmäldaTävlingar.Contains(Convert.ToInt32(dr["id"])) == true)
             {
-                <td align="right"><button class="btn btn-link" name="Avboka"  type="submit" href="Medlem/AvbokaTävling" value="@Convert.ToInt32(@dr["id"])"></button> </td>
+                <td align="right"><button class="btn btn-link" name="Avboka"  type="submit" href="Medlem/Tävling" title="Avoka" value="@Convert.ToInt32(@dr["id"])"></button> </td>
             }
             else
             {
-                <td align="right"><button class="btn btn-link" name="Boka" type="submit" href="Medlem/Tävling" value = "@Convert.ToInt32(@dr["id"])"></button> </td>
+                <td align="right"><button class="btn btn-link" name="Boka" type="submit" href="Medlem/Tävling" title="Boka" value = "@Convert.ToInt32(@dr["id"])"></button> </td>
             }
         }
     </tr>
 
-            }
+            }}
         </tr>
     </table>
 </div>
