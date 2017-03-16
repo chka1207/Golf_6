@@ -72,13 +72,13 @@
 
 
         <div class="form-group">
-                <style>
+                @*<style>
                     #tbdatum{
 
-                    }
-                </style>
-                <div class="col-md-10">
-                    <label>Välj spelare att checka in</label>
+                    }*@
+                @*</style>*@
+
+                    <h3>Välj spelare att checka in</h3>
                     <select id="spelarlista" name="spelarlista" multiple="multiple">
                         <option value="@t.Spelare1ID">@t.Spelare1ID</option>
                         @if (t.Spelare2ID != null)
@@ -94,15 +94,11 @@
                             <option value="@t.Spelare4ID">@t.Spelare4ID</option>
                         }
                     </select>
-                </div>
+
             </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" id="" value="Incheckning" class="btn btn-default" data-content="spelarlista"/>
+                <input type="submit" id="" value="Checka in" class="btn btn-primary btn-lg" data-content="spelarlista"/>
             </div>
-        </div>
 
-    </div>
 
             }
