@@ -942,6 +942,12 @@ namespace Golf_6.Controllers
                     }
                 }
             }
+
+            if(parameterlista.Count != medlemsIdLista.Count)
+            {
+                TempData["notice"] = "Du har försökt boka golfid som inte finns. Bokningen har inte genomförts för starttid " + tid.ToString() + " " + datum.ToString() + ".";
+                return RedirectToAction("Bokningsschema");
+            }
             antalGäster = t.antalGäster(spelarlista);
             redanbokad = t.BokningarIdag(spelarlista, dag);
             int antalMedlemmar = medlemsIdLista.Count;

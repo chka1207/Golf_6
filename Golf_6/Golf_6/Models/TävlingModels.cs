@@ -64,7 +64,7 @@ namespace Golf_6.Models
                 meddelande = p.SqlParameters("insert into anmalan (golfid, fk_tavling) values (@golfid, @tavlingsid);", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@golfid", tävlingsID),
-                    new NpgsqlParameter("@tavlingsid",golfid)
+                    new NpgsqlParameter("@tavlingsid", golfid)
 
                 });
 
