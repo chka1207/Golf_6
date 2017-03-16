@@ -43,11 +43,11 @@
 
         @{if (anmäldaTävlingar.Contains(Convert.ToInt32(dr["id"])) == true)
             {
-                <td align="right"><button class="btn btn-link" name="Avboka"  type="submit" href="Medlem/AvbokaTävling" value="@Convert.ToInt32(@dr["id"])"></button> </td>
+                <td align="right"><button class="btn btn-link" name="Avboka"  type="submit" href="Medlem/Tävling" title="Avoka" value="@Convert.ToInt32(@dr["id"])"></button> </td>
             }
             else
             {
-                <td align="right"><button class="btn btn-link" name="Boka" type="submit" href="Medlem/Tävling" value = "@Convert.ToInt32(@dr["id"])"></button> </td>
+                <td align="right"><button class="btn btn-link" name="Boka" type="submit" href="Medlem/Tävling" title="Boka" value = "@Convert.ToInt32(@dr["id"])"></button> </td>
             }
         }
     </tr>
