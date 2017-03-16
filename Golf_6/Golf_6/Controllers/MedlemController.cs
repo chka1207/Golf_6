@@ -467,7 +467,7 @@ namespace Golf_6.Controllers
             ViewBag.AnmäldLista = t.tävlingar(t.GolfID);
             ViewBag.GolfID = t.GolfID;
             ViewBag.ID = id;
-            return View();
+            return View(t);
         }
 
         ////POST: Anmäla till tävling

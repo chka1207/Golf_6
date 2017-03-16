@@ -2,6 +2,7 @@
 @using Golf_6.Controllers;
 @using Golf_6.Models;
 @using System.Collections.Generic;
+@using System.Data;
 
 @{
     ViewBag.Title = "Tävling";
@@ -9,6 +10,10 @@
 }
 @Html.BeginForm()
 {
+@{ 
+    List<int> anmäldaTävlingar = ViewBag.AnmäldLista;
+    int räknare = 0;
+}
 
 <h2>Tävlingar</h2>
 
@@ -16,9 +21,42 @@
     <table class="table table-striped table-responsive table-bordered">
         <thead>
             <tr>
-
+                <th>Datum</th>
+                <th>Starttid</th>
+                <th>Sista dag för anmälan</th>
+                <th>Max antal deltagare</th>
             </tr>
         </thead>
+        <tr>
+    @foreach (DataRow dr in Model.AllaTävlingar.Rows)
+            {
+    <tr>
+        <td>@Convert.ToDateTime(@dr["datum"]).ToShortDateString()</td>
+        <td>@dr["starttid"]</td>
+        <td>@Convert.ToDateTime(@dr["sista_anmalan"]).ToShortDateString()</td>
+        <td>@dr["max_antal"]</td>
+        @for (int i = 0; i < anmäldaTävlingar.Count; i++)
+        {
+            if (anmäldaTävlingar[i] == Convert.ToInt32(dr["id"]))
+            {
+                <td align="right">@Html.ActionLink("Avboka", "AvbokaTävling", "Medlem", new { avbokning = Convert.ToInt32(@dr["id"]) })</td>
+                räknare = -1;
+                break;
+            }
+            else
+            {
+                räknare++;
+            }
+            if (i == anmäldaTävlingar.Count)
+            {
+                <td align="right">@Html.ActionLink("Boka", "Tävling", "Medlem", new { avbokning = Convert.ToInt32(@dr["id"]) })</td>
+            }
+        }
+
+    </tr>
+
+    }
+        </tr>
     </table>
 </div>
 }
