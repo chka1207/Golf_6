@@ -254,6 +254,7 @@ namespace Golf_6.Controllers
         //Get alla tävlingar
         [Authorize(Roles = "2")]
         public ActionResult AllaTavlingar()
+        
         {
             TävlingModels t = new TävlingModels();
             DataTable dt = new DataTable();
@@ -291,7 +292,7 @@ namespace Golf_6.Controllers
             {
                 TempData["notice"] = meddelande;
             }
-            return View("Index");
+            return RedirectToAction("AllaTavlingar");
         }
 
         //GET: Tävling

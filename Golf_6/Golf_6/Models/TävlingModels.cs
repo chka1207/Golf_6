@@ -28,10 +28,33 @@ namespace Golf_6.Models
             [Required]
             public int MaxAntal { get; set; }
 
+            public int AntalAnmälda { get; set; }
             [Required]
             public DateTime SistaAnmälan { get; set; }
 
             public DataTable AllaTavlingar { get; set; }
+
+            public int antalAnmälda(int tavlingsid)
+            {
+                int antal = 0;
+                Postgres p = new Postgres ();
+                DataTable dt = new DataTable();
+
+                dt = p.SqlFrågaParameters("select count(golfid) from anmalan where fk_tavling = @tavlingsid;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@tavlingsid", tavlingsid)
+                });
+
+            if (dt != null)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    antal = Convert.ToInt32(dr["count"]);
+                }
+            }
+
+                return antal;
+            }
 
             public string bokaTävling(DateTime datum, DateTime starttid, DateTime sluttid, int maxAntal, DateTime sistaAnmälan)
             {
@@ -63,13 +86,7 @@ namespace Golf_6.Models
 
             public DataTable AllaTävlingar { get; set; }
 
-            public int antalAnmälda()
-            {
-                int antal = 0;
-
-
-                return antal;
-            }
+           
             public string anmälan(int tävlingsID, string golfid)
             {
                 Postgres p = new Postgres();
