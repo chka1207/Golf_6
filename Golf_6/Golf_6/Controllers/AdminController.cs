@@ -254,6 +254,7 @@ namespace Golf_6.Controllers
         //Get alla tävlingar
         [Authorize(Roles = "2")]
         public ActionResult AllaTavlingar()
+        
         {
             TävlingModels t = new TävlingModels();
             DataTable dt = new DataTable();
@@ -285,13 +286,22 @@ namespace Golf_6.Controllers
             a.TavlingsId = Convert.ToInt32(collection["tavlingsID"]);
             a.GolfID = collection["golfid"];
             string meddelande = "";
-            meddelande = a.anmälan(a.TavlingsId, a.GolfID);
-
-            if (meddelande != "")
+            string kontroll = "";
+            kontroll = a.kontrolleraGolfID(a.GolfID);
+            if (kontroll == "giltigt")
+            {
+                meddelande = a.anmälan(a.TavlingsId, a.GolfID);
+                if (meddelande != "")
             {
                 TempData["notice"] = meddelande;
             }
-            return View("Index");
+            }
+            else
+            {
+                TempData["notice"] = kontroll;
+            }
+
+            return RedirectToAction("AllaTavlingar");
         }
 
         //GET: Tävling
@@ -382,18 +392,28 @@ namespace Golf_6.Controllers
         }
 
 
-        [Authorize(Roles = "2")]
+        //[Authorize(Roles = "2")]
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult SlumpaTävling()
         {
-            DataTable allaAnmälda = new DataTable();
-            TävlingModels tävling = new TävlingModels();
+            DataTable dt = new DataTable();
+            TävlingModels.Startlista tävling = new TävlingModels.Startlista();
+            
+            dt = tävling.StartLista();
+            dt.Columns.Add(new DataColumn("RandomNum", Type.GetType("System.Int32")));
+            
+            Random random = new Random();
+            for (int i = 0; i < dt.Rows.Count; i++)
+                dt.Rows[i]["RandomNum"] = random.Next(1000);
+            
+            DataView dv = new DataView(dt);
+            dv.Sort = "RandomNum";
 
-            //allaAnmälda = tävling.StartLista();
+            dt = dv.ToTable();
 
-            //ViewBag.allaAnmälda = allaAnmälda;
-
-            return View(allaAnmälda);
+            dt.Columns.Remove("RandomNum");
+            return View(dt);
         }
 
     }

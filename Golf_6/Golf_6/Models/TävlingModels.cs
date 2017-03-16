@@ -28,10 +28,33 @@ namespace Golf_6.Models
             [Required]
             public int MaxAntal { get; set; }
 
+            public int AntalAnmälda { get; set; }
             [Required]
             public DateTime SistaAnmälan { get; set; }
 
             public DataTable AllaTavlingar { get; set; }
+
+            public int antalAnmälda(int tavlingsid)
+            {
+                int antal = 0;
+                Postgres p = new Postgres ();
+                DataTable dt = new DataTable();
+
+                dt = p.SqlFrågaParameters("select count(golfid) from anmalan where fk_tavling = @tavlingsid;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@tavlingsid", tavlingsid)
+                });
+
+            if (dt != null)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    antal = Convert.ToInt32(dr["count"]);
+                }
+            }
+
+                return antal;
+            }
 
             public string bokaTävling(DateTime datum, DateTime starttid, DateTime sluttid, int maxAntal, DateTime sistaAnmälan)
             {
@@ -63,13 +86,33 @@ namespace Golf_6.Models
 
             public DataTable AllaTävlingar { get; set; }
 
-            public int antalAnmälda()
+            public string kontrolleraGolfID(string golfid)
             {
-                int antal = 0;
+                Postgres p = new Postgres();
+                DataTable dt = new DataTable();
+                string golfidt = "";
+                string meddelande = "";
 
+                dt = p.SqlFrågaParameters("select golfid from medlemmar where golfid = @golfid", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@golfid", golfid)
+                });
 
-                return antal;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    golfidt = dr["golfid"].ToString();
+                }
+                if (golfidt == "" || golfid == "1" || golfid == "2" || golfid == "3" || golfid == "4")
+                {
+                    meddelande = "Du har angett ett golfID som inte existerar. Anmälan har inte genomförts.";
+                }
+                else
+                {
+                    meddelande = "giltigt";
+                }
+                    return meddelande;
             }
+
             public string anmälan(int tävlingsID, string golfid)
             {
                 Postgres p = new Postgres();
@@ -167,7 +210,7 @@ namespace Golf_6.Models
                 startlistan = db.SqlFrågaParameters("SELECT * FROM anmalan WHERE fk_tavling = @tavlingsid;",
                     Postgres.lista = new List<NpgsqlParameter>()
                     {
-                        new NpgsqlParameter("@tavlingsid", tavlingsId)
+                        new NpgsqlParameter("@tavlingsid", tavlingsId) //Hårdkodat tävlingId
                     });
 
                 return startlistan;
