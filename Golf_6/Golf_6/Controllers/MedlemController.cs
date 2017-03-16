@@ -460,6 +460,12 @@ namespace Golf_6.Controllers
         [HttpGet]
         public ActionResult Tävling()
         {
+            TävlingModels.Anmälan t = new TävlingModels.Anmälan();
+            int id = Convert.ToInt32(User.Identity.Name);
+            string golfid = t.getGolfID(id);
+            ViewBag.AnmäldLista = t.tävlingar(golfid);
+            ViewBag.GolfID = golfid;
+            ViewBag.ID = id;
             return View();
         }
 
