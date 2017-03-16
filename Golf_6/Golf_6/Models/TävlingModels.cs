@@ -53,9 +53,11 @@ namespace Golf_6.Models
 
         public class Anmälan
         {
-            public string golfID { get; set; }
+            public string GolfID { get; set; }
 
             public int TavlingsId { get; set; }
+
+            public bool Anmäld { get; set; }
 
             public string anmälan(int tävlingsID, string golfid)
             {
@@ -67,7 +69,10 @@ namespace Golf_6.Models
                     new NpgsqlParameter("@tavlingsid", golfid)
 
                 });
-
+                if (meddelande.Contains("23505"))
+                {
+                    meddelande = "Du har angett ett golfID som redan är anmält.";
+                }
                 return meddelande;
             }
             public string getGolfID(int medlemsID)
@@ -87,6 +92,45 @@ namespace Golf_6.Models
                 }
                 golfID = m.GolfID;
                 return golfID;
+            }
+            public List<int> tävlingar (string golfid)
+            {
+                List<int> l = new List<int>();
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+
+                dt = x.SqlFrågaParameters("select fk_tavling from anmalan where golfid = @par1;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1",golfid)
+                });
+                foreach(DataRow dr in dt.Rows)
+                {
+                    int i = Convert.ToInt32(dr["fk_tavling"]);
+                    l.Add(i);
+                }
+                return l;
+            }
+
+            public bool redanAnmäld(string golfID, int tävlingsID)
+            {
+                bool b = false;
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+
+                dt = x.SqlFrågaParameters("select * from anmalan where golfid = @par1 and fk_tavling = @par2;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", golfID),
+                    new NpgsqlParameter("@par2", tävlingsID)
+                });
+                if(dt.Rows.Count > 0)
+                {
+                    b = true;
+                    return b;
+                }
+                else
+                {
+                    return b;
+                }
             }
         }
 

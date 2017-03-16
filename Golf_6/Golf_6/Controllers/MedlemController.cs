@@ -460,17 +460,28 @@ namespace Golf_6.Controllers
         [HttpGet]
         public ActionResult Tävling()
         {
+            TävlingModels.Anmälan t = new TävlingModels.Anmälan();
+            int id = Convert.ToInt32(User.Identity.Name);
+            string golfid = t.getGolfID(id);
+            ViewBag.AnmäldLista = t.tävlingar(golfid);
+            ViewBag.GolfID = golfid;
+            ViewBag.ID = id;
             return View();
         }
 
         ////POST: Anmäla till tävling
-        //[Authorize(Roles ="1")]
-        //[HttpPost]
-        //public ActionResult Tävling(FormCollection collection)
-        //{
-        //    TävlingModels.Anmälan a = new TävlingModels.Anmälan();
-        //    a.TavlingsId = Convert.ToInt32(User.Identity.Name);
-        //    a.g
-        //}
+        [Authorize(Roles = "1")]
+        [HttpPost]
+        public ActionResult Tävling(FormCollection collection)
+        {
+            TävlingModels.Anmälan a = new TävlingModels.Anmälan();
+            int id = Convert.ToInt32(User.Identity.Name);
+            a.TavlingsId = Convert.ToInt32(collection["tävlingsid"]);
+            a.GolfID = collection["golfid"];
+            string meddelande = "";
+            meddelande = a.anmälan(a.TavlingsId, a.GolfID);
+
+            return View();
+        }
     }
 }
