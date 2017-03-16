@@ -402,40 +402,6 @@ namespace Golf_6.Controllers
                 return RedirectToAction("MinaBokningar");
             }
         }
-        //Visa vy för scorekort
-        [AllowAnonymous]
-        public ActionResult Scorekort()
-        {
-            Medlem scorekort = new Medlem();
-            DataTable dt = new DataTable("ScoreCard");
-            dt = scorekort.hämtaScorekort();
-            string html = "";
-
-            for (int i = 0; i < dt.Rows.Count+2; i++)
-            {
-
-                html += "<tr>";
-                if(i == 9)
-                {
-                    DataRow r = dt.NewRow();
-                    dt.Rows.InsertAt(r, 9);                 
-                }
-                else if(i== 19)
-                {
-                    DataRow r = dt.NewRow();
-                    dt.Rows.InsertAt(r, 19);
-                }
-                else if(i == 20)
-                {
-                    DataRow r = dt.NewRow();
-                    dt.Rows.InsertAt(r, 20);
-                }
-            }
-            
-            return View(dt);
-
-        }
-
         //Visar mina bokningar 
         [Authorize(Roles = "1")]
         public ActionResult MinaBokningar()
