@@ -197,6 +197,19 @@ namespace Golf_6.Models
                 });
                 return dt;
             }
+
+            public string avboka(string golfID, int tävlingID)
+            {
+                Postgres x = new Postgres();
+                string meddelande = "";
+                meddelande = x.SqlParameters("delete from anmalan where golfid=@par1 and fk_tavling = @par2;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", golfID),
+                    new NpgsqlParameter("@par2", tävlingID)
+                });
+
+                return meddelande;
+            }
         }
 
         public class Startlista

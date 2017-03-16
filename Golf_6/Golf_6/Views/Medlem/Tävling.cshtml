@@ -31,7 +31,9 @@
             </tr>
         </thead>
         <tr>
-    @foreach (DataRow dr in Model.AllaTävlingar.Rows)
+            @if (Model.AllaTävlingar != null)
+            {
+    foreach (DataRow dr in Model.AllaTävlingar.Rows)
     {
     <tr>
         <td>@Convert.ToDateTime(@dr["datum"]).ToShortDateString()</td>
@@ -50,7 +52,7 @@
         }
     </tr>
 
-            }
+            }}
         </tr>
     </table>
 </div>
