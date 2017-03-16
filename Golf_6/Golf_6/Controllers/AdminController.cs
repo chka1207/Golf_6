@@ -389,20 +389,81 @@ namespace Golf_6.Controllers
         {
             DataTable dt = new DataTable();
             TävlingModels.Startlista tävling = new TävlingModels.Startlista();
+            Postgres tillDb = new Postgres();
             
             dt = tävling.StartLista();
-            dt.Columns.Add(new DataColumn("RandomNum", Type.GetType("System.Int32")));
             
             Random random = new Random();
+
+            dt.Columns.Add(new DataColumn("RandomNum", Type.GetType("System.Int32")));
+            //DataColumn r = dt.Columns.Add("RandomNum", typeof(Int32));
+
             for (int i = 0; i < dt.Rows.Count; i++)
                 dt.Rows[i]["RandomNum"] = random.Next(1000);
             
+
             DataView dv = new DataView(dt);
             dv.Sort = "RandomNum";
-
             dt = dv.ToTable();
-
             dt.Columns.Remove("RandomNum");
+
+            int antalRader = dt.Rows.Count;
+            string sqlInsertFråga = "";
+
+            for (int i = 0; i < antalRader; i++)
+            {
+                sqlInsertFråga = "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (@tavlingsid" + i + ", @golfid" + i + ");";
+
+                int tavlingsId = (int)dt.Rows[i]["fk_tavling"];
+                string golfid = dt.Rows[i]["golfid"].ToString();
+
+                //tillDb.SqlFrågaParameters(
+                //"INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (" + sqlInsertFråga + ");",
+
+
+                tillDb.SqlFrågaParameters(sqlInsertFråga,
+                Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@tavlingsid" + i, tavlingsId),
+                    new NpgsqlParameter("@golfid" + i, golfid)
+                });
+
+            }
+
+            //tillDb.SqlFrågaParameters(
+            //    "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (" + sqlInsertFråga + ");",
+            //    Postgres.lista = new List<NpgsqlParameter>()
+            //    {
+            //        new NpgsqlParameter("@tavlingsid", tavlingsId),
+            //        new NpgsqlParameter("@golfid", golfid)
+            //    });
+
+
+
+
+            //Skickar in den nya ordningen på tabellen till databasen
+            //foreach (DataRow row in dt.Rows)
+            //{
+            //    foreach (DataColumn dc in dt.Columns)
+            //    {   
+            //        string f = row[dc].ToString();
+            //        string e = row[dc].ToString();
+            //        string golfid = row[dc].ToString();
+            //        string t = row[dc].ToString();
+
+            //        int tavlingsId = Convert.ToInt32(t);
+
+            //        tillDb.SqlFrågaParameters(
+            //            "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (@tavlingsid, @golfid);",
+            //            Postgres.lista = new List<NpgsqlParameter>()
+            //            {
+            //                new NpgsqlParameter("@tavlingsid", tavlingsId),
+            //                new NpgsqlParameter("@golfid", golfid)
+            //            });
+            //    }
+            //}
+
+
             return View(dt);
         }
 
