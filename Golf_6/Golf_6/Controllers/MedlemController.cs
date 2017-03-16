@@ -454,5 +454,23 @@ namespace Golf_6.Controllers
             
             return View(m); 
         }
+
+        //GET: Anmäla till tävling
+        [Authorize(Roles ="1")]
+        [HttpGet]
+        public ActionResult Tävling()
+        {
+            return View();
+        }
+
+        ////POST: Anmäla till tävling
+        //[Authorize(Roles ="1")]
+        //[HttpPost]
+        //public ActionResult Tävling(FormCollection collection)
+        //{
+        //    TävlingModels.Anmälan a = new TävlingModels.Anmälan();
+        //    a.TavlingsId = Convert.ToInt32(User.Identity.Name);
+        //    a.g
+        //}
     }
 }

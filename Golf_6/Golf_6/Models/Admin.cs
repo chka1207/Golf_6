@@ -197,7 +197,8 @@ namespace Golf_6.Models
                 return meddelande;
             }
 
-            public List<string> GetSpelare(DateTime datum, DateTime tid, ref int bokningsID)
+            //Returnerar alla spelare som är knutna till ett bokningsID samt tidens bokningsID via ref-parameter
+            public List<string> GetSpelare(DateTime datum, DateTime tid, ref int bokningsID) 
             {
                 Postgres x = new Postgres();
                 DataTable dt = new DataTable();

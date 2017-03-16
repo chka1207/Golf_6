@@ -64,11 +64,29 @@ namespace Golf_6.Models
                 meddelande = p.SqlParameters("insert into anmalan (golfid, fk_tavling) values (@golfid, @tavlingsid);", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@golfid", tävlingsID),
-                    new NpgsqlParameter("@tavlingsid",golfid)
+                    new NpgsqlParameter("@tavlingsid", golfid)
 
                 });
 
                 return meddelande;
+            }
+            public string getGolfID(int medlemsID)
+            {
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+                Medlem m = new Medlem();
+                string golfID = "";
+
+                dt = x.SqlFrågaParameters("select golfid from medlemmar where id=@par1;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", medlemsID)
+                });
+                foreach(DataRow dr in dt.Rows)
+                {
+                    m.GolfID = dr["golfid"].ToString();
+                }
+                golfID = m.GolfID;
+                return golfID;
             }
         }
 
