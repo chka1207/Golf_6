@@ -56,10 +56,8 @@ namespace Golf_6.Controllers
         [AllowAnonymous]
         public ActionResult ScorekortIfyllt()
         {
-            int MedlemID = 1;
-            //Int16.Parse(Request.QueryString[""]); - variabel för medlemsid
-            int tee = 3;
-            //Int16.Parse(Request.QueryString[""]); - variable för teeid
+            int MedlemID = Int16.Parse(Request.QueryString["m"]); // - variabel för medlemsid
+            int tee = Int16.Parse(Request.QueryString["teeid"]); // - variable för teeid
             DateTime starttid = Convert.ToDateTime(Request.QueryString["datum"]); // - variabel för datum
             ScorekortModel scorekort = new ScorekortModel();
 
