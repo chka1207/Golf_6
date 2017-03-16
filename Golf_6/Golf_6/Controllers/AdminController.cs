@@ -247,7 +247,44 @@ namespace Golf_6.Controllers
             return View();
         }
         #endregion
-        
+
+        //#region Hantera stängning av banan
+        ////GET: Admin/RegistreraNyMedlem
+        //[Authorize(Roles = "2")]
+        //public ActionResult StängaBanan()
+        //{   
+        //    return View();
+        //}
+
+        //// POST: Admin/RegistreraNyMedlem
+        //[Authorize(Roles = "2")]
+        //[HttpPost]
+        //public ActionResult StängaBanan(FormCollection collection)
+        //{
+        //    string datumStart = collection["startDatum"];
+        //    string datumSlut = collection["slutDatum"];
+        //    string anledning = collection["anledning"];
+        //    string tidStart = collection["startTid"];
+        //    string tidSlut= collection["slutTid"];
+        //    DateTime startDatum = Convert.ToDateTime(datumStart);
+        //    DateTime slutDatum = Convert.ToDateTime(datumSlut);
+
+        //    //Postgres db = new Postgres();
+
+        //    //db.SqlParameters("INSERT INTO stangning (starttid, sluttid, startdatum, slutdatum, anledning) VALUES (starttid, sluttid, startdatum, slutdatum, anledning)",
+        //    //    Postgres.lista = new List<NpgsqlParameter>()
+        //    //    {
+        //    //        new NpgsqlParameter("@starttid", tidStart),
+        //    //        new NpgsqlParameter("@sluttid", tidSlut),
+        //    //        new NpgsqlParameter("@startdatum", startDatum),
+        //    //        new NpgsqlParameter("@slutdatum", slutDatum),
+        //    //        new NpgsqlParameter("@anledning", anledning)
+        //    //    });
+
+        //    return View();
+        //}
+#endregion
+
 
     }
 }

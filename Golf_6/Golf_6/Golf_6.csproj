@@ -541,6 +541,7 @@
     <Content Include="Scripts\jquery-1.12.4.min.js" />
     <Content Include="Scripts\jquery-1.12.4.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-TimePicker-1.0.0.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -614,6 +615,7 @@
     <Content Include="Views\Tidsbokning\AdminBokningsschema.cshtml" />
     <Content Include="Views\ScorekortModel\Scorekort.cshtml" />
     <Content Include="Views\Medlem\AvbokningMedlem.cshtml" />
+    <Content Include="Views\Admin\StängaBanan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

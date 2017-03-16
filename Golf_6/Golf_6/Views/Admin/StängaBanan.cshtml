@@ -1,0 +1,168 @@
+﻿
+@*@using System.Globalization
+@using Golf_6.Models
+
+@{
+    ViewBag.Title = "StangaBanan";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+@Styles.Render("~/Content/calendar.css")
+@Scripts.Render("~/scripts/jquery-ui-1.12.1.js")
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+
+<br /><br /><br /><br /><br />
+
+<h3 class="col-lg-offset-2">Lägg in datum för att stänga banan</h3>
+<hr />
+<br /><br /><br />
+<div class="col-lg-12 center-block">
+    <div class="col-lg-6">
+        <input type="text" name="datepickerStart" class="btn btn-info col-lg-offset-3" id="datepickerStart" value="Startdatum" style="margin-bottom: 25px">
+    </div>
+    <div class="col-lg-6">
+        <input type="text" name="datepickerSlut" class="btn btn-info col-lg-offset-3" id="datepickerSlut" value="Slutdatum" style="margin-bottom: 25px">
+    </div>
+    <div class="col-lg-6">
+        <input type="text" name="datepickerStartTid" class="btn btn-info col-lg-offset-3 timepicker" id="datepickerStartTid" value="Starttid" style="margin-bottom: 25px">
+    </div>
+    <div class="col-lg-6">
+        <input type="text" name="datepickerSlutTid" class="btn btn-info col-lg-offset-3 timepicker" id="datepickerSlutTid" value="Sluttid" style="margin-bottom: 25px">
+    </div>
+    <div class="col-lg-12">
+        <input type="text" name="tb-anledning" class="col-lg-offset-5" id="tb-anledning" placeholder="Anledning" style="margin-bottom: 25px">
+    </div>
+</div>
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        $('#datepickerStartTid').timepicker({
+            timeFormat: 'HH:mm:ss',
+            interval: 10,
+            minTime: '7',
+            maxTime: '17:50',
+            defaultTime: '7',
+            startTime: '07:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+    });
+    
+    $(document).ready(function () {
+        $('#datepickerSlutTid').timepicker({
+            timeFormat: 'HH:mm:ss',
+            interval: 10,
+            minTime: '7',
+            maxTime: '17:50',
+            defaultTime: '07:00',
+            startTime: '07:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+    });
+
+    $(function () {
+        $('#datepickerStart').datepicker({
+            onSelect: function (date) {
+                $("#startDatum").val(date);
+                //alert(startDatum);
+            }
+            //startDate: hämta från databas
+        });
+    });
+
+    $(function () {
+        $('#datepickerSlut').datepicker({
+            onSelect: function (date) {
+                $("#slutDatum").val(date);
+                //alert(slutDatum);
+            }
+            //startDate: hämta från databas
+        });
+    });
+
+    var currentDate = $(".selector").datepicker("getDate");
+    $.datepicker.regional['sv'] = {
+        closeText: 'Stäng',
+        prevText: '< Föregående',
+        nextText: 'Nästa >',
+        currentText: 'Idag',
+        monthNames: [
+            'Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'Oktober',
+            'November', 'December'
+        ],
+        monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+        dayNamesShort: ['Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör'],
+        dayNames: ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'],
+        dayNamesMin: ['Sö', 'Må', 'Ti', 'On', 'To', 'Fr', 'Lö'],
+        weekHeader: 'Не',
+        dateFormat: 'yy-mm-dd',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        onSelect: function (dateText, inst) {
+            //    //$('form').submit();
+            //    $('form:first').submit();
+        }
+    };
+    $.datepicker.setDefaults($.datepicker.regional['sv']);
+</script>
+<br /><br /><br /><br /><br /><br />
+<button type="button" id="knappen" class="btn btn-primary btn-lg center-block">Stäng banan</button>
+
+<form id="stängabanan" action="" method="post">
+    <div class="form-horizontal">
+
+        @Html.Hidden("startDatum")
+        @Html.Hidden("slutDatum")
+        @Html.TextBox("startTid")
+        @Html.Hidden("slutTid")
+        @Html.Hidden("anledning")
+
+        <script>
+                $('#knappen').click(function () {
+                    var inputStartDatum = $("#startDatum").val();
+                    var inputSlutDatum = $("#slutDatum").val();
+                    var inputStartTid = $("#datepickerStartTid").val();
+                    var inputSlutTid = $("#datepickerSlutTid").val();
+                    var inputAnledning = $("#tb-anledning").val();
+
+                    if (jQuery.trim(inputStartDatum).length > 0 && jQuery.trim(inputSlutDatum).length > 0 && 
+                        jQuery.trim(inputSlutTid).length > 0 && jQuery.trim(inputStartTid).length > 0) // && jQuery.trim(inputAnledning).length > 0)
+                    {
+                        $('#säsong').attr('action', '/Admin/StängaBanan');
+
+                        var form = $("#stängabanan");
+                        var url = form.attr("action");
+                        var formData = form.serialize();
+                        $.post(url,
+                            formData,
+                            function () {
+                                window.location = '/Admin/StängaBanan/';
+                                //$("#feedback-säsong").html("är nu uppdaterad");
+                        });
+                    } else {
+                        alert("Du måste fylla i både startdatum och slutdatum för säsongen");
+                    }
+                });
+
+        </script>
+
+
+    </div>
+</form>
+
+<div id="feedback-säsong"></div>
+<br /><br /><br />
+<div>
+    @Html.ActionLink("Tillbaka", "Index")
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@
