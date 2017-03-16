@@ -14,7 +14,7 @@
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
-   
+
     <h2>Incheckning</h2>
 
     <div class="form-horizontal">
@@ -60,7 +60,7 @@
                     }
                 }
             }
-            
+
 
             @Html.Hidden("bokningID", bokningsID);
             @Html.Hidden("nySpelare1", t.Spelare1ID);
@@ -72,33 +72,35 @@
 
 
         <div class="form-group">
-                @*<style>
-                    #tbdatum{
+            @*<style>
+                #tbdatum{
 
-                    }*@
-                @*</style>*@
+                }*@
+            @*</style>*@
 
-                    <h3>Välj spelare att checka in</h3>
-                    <select id="spelarlista" name="spelarlista" multiple="multiple">
-                        <option value="@t.Spelare1ID">@t.Spelare1ID</option>
-                        @if (t.Spelare2ID != null)
-                        {
-                            <option value="@t.Spelare2ID">@t.Spelare2ID</option>
-                        }
-                        @if (t.Spelare3ID != null)
-                        {
-                            <option value="@t.Spelare3ID">@t.Spelare3ID</option>
-                        }
-                        @if (t.Spelare4ID != null)
-                        {
-                            <option value="@t.Spelare4ID">@t.Spelare4ID</option>
-                        }
-                    </select>
+            <h3>Välj spelare att checka in</h3>
+            <select class="list-group" id="spelarlista" name="spelarlista" multiple="multiple" style="width:800px">
+              
+                    <option value="@t.Spelare1ID">@t.Spelare1ID</option>
+                    @if (t.Spelare2ID != null)
+                {
+                        <option value="@t.Spelare2ID">@t.Spelare2ID</option>
+                    }
+                    @if (t.Spelare3ID != null)
+                {
+                        <option value="@t.Spelare3ID">@t.Spelare3ID</option>
+                    }
+                    @if (t.Spelare4ID != null)
+                {
+                        <option value="@t.Spelare4ID">@t.Spelare4ID</option>
+                    }
+                </select>
+            <br />
+            <input type="submit" id="" value="Checka in" class="btn btn-primary btn-lg" data-content="spelarlista" />
+        </div>
 
-            </div>
 
-                <input type="submit" id="" value="Checka in" class="btn btn-primary btn-lg" data-content="spelarlista"/>
-            </div>
+    </div>
 
 
             }
