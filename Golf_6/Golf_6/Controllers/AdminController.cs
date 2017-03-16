@@ -300,7 +300,6 @@ namespace Golf_6.Controllers
         [HttpGet]
         public ActionResult Tävling()
         {
-            
             return View("TavlingAdmin");
         }
 
@@ -317,7 +316,7 @@ namespace Golf_6.Controllers
             DateTime sistaAnmälan = Convert.ToDateTime(collection["datepickerSistaAnm"]);
             int maxAntal = Convert.ToInt32(collection["deltagareinput"]);
             string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
-
+            
             TempData["tävling"] = "Du har skapat en ny tävling";
             return View("Index");
         }
@@ -382,5 +381,31 @@ namespace Golf_6.Controllers
             TempData["incheckning"] = "Du har checkat in " + array.Length + " personer";
             return View("Index");
         }
+
+
+        //[Authorize(Roles = "2")]
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult SlumpaTävling()
+        {
+            DataTable dt = new DataTable();
+            TävlingModels.Startlista tävling = new TävlingModels.Startlista();
+            
+            dt = tävling.StartLista();
+            dt.Columns.Add(new DataColumn("RandomNum", Type.GetType("System.Int32")));
+            
+            Random random = new Random();
+            for (int i = 0; i < dt.Rows.Count; i++)
+                dt.Rows[i]["RandomNum"] = random.Next(1000);
+            
+            DataView dv = new DataView(dt);
+            dv.Sort = "RandomNum";
+
+            dt = dv.ToTable();
+
+            dt.Columns.Remove("RandomNum");
+            return View(dt);
+        }
+
     }
 }
