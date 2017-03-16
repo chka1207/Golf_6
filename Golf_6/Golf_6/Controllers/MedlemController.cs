@@ -462,9 +462,10 @@ namespace Golf_6.Controllers
         {
             TävlingModels.Anmälan t = new TävlingModels.Anmälan();
             int id = Convert.ToInt32(User.Identity.Name);
-            string golfid = t.getGolfID(id);
-            ViewBag.AnmäldLista = t.tävlingar(golfid);
-            ViewBag.GolfID = golfid;
+            t.GolfID = t.getGolfID(id);
+            t.AllaTävlingar = t.GetAllaTävlingar(DateTime.Today);
+            ViewBag.AnmäldLista = t.tävlingar(t.GolfID);
+            ViewBag.GolfID = t.GolfID;
             ViewBag.ID = id;
             return View();
         }

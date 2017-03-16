@@ -59,6 +59,8 @@ namespace Golf_6.Models
 
             public bool Anmäld { get; set; }
 
+            public DataTable AllaTävlingar { get; set; }
+
             public string anmälan(int tävlingsID, string golfid)
             {
                 Postgres p = new Postgres();
@@ -131,6 +133,17 @@ namespace Golf_6.Models
                 {
                     return b;
                 }
+            }
+
+            public DataTable GetAllaTävlingar(DateTime idag)
+            {
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+                dt = x.SqlFrågaParameters("select * from tavling where sista_anmalan > @par1;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", idag)
+                });
+                return dt;
             }
         }
 
