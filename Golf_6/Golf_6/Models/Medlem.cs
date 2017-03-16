@@ -111,19 +111,6 @@ namespace Golf_6.Models
             return y;
         }
        
-        //Hämta värden för scorekort från databas
-        public DataTable hämtaScorekort()
-        {
-            Postgres pg = new Postgres();
-            DataTable dt = new DataTable();
-
-
-            string sql = "SELECT scorekort.hal, scorekort.gul, scorekort.rod, scorekort.par, scorekort.hcp FROM scorekort ORDER BY scorekort.hal";
-
-            dt = pg.sqlFragaTable(sql);
-
-            return dt;
-        }
 
     }
 }
