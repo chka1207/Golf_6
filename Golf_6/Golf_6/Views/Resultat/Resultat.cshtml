@@ -1,0 +1,51 @@
+﻿@model Golf_6.Models.TävlingModels.Resultat
+@using Golf_6.Models;
+@using System.Data;
+@using System.Collections.Generic;
+@using Golf_6.Controllers;
+
+@{
+    ViewBag.Title = "Resultat";
+}
+
+
+@{
+    if (TempData["notice"] != null)
+    {
+        <div class="alert alert-warning alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+            <strong>Varning! </strong> @TempData["notice"]
+        </div>
+    }
+
+}
+<div class="center-block">
+
+    <h2>Resultat</h2>
+
+    <table class="table table-striped table-responsive table-bordered">
+        <thead>
+            <tr>
+                <th>Förnamn</th>
+                <th>Efternamn</th>
+                <th>GolfID</th>
+                <th>Poäng</th>
+            </tr>
+        </thead>
+        <tr>
+            @foreach (DataRow row in Model.ResultatTabell.Rows)
+            {
+               
+            <tr>
+                <td>@row["fornamn"]</td>
+                <td>@row["efternamn"]</td>
+                <td>@row["golfid"]</td>
+                <td>@row["poang"]</td>
+
+            </tr>
+            }
+            </tr>
+        </table>
+
+
+    </div>
