@@ -10,6 +10,7 @@ using Golf_6.Models;
 using Golf_6.ViewModels;
 using Npgsql;
 
+
 namespace Golf_6.Controllers
 {
     public class AdminController : Controller
@@ -27,6 +28,8 @@ namespace Golf_6.Controllers
         {
             return View();
         }
+
+
 
         #region Hämta alla medlemmar
         //GET: Admin/AllaMedlemmar
@@ -248,43 +251,113 @@ namespace Golf_6.Controllers
         }
         #endregion
 
-        //#region Hantera stängning av banan
-        ////GET: Admin/RegistreraNyMedlem
-        //[Authorize(Roles = "2")]
-        //public ActionResult StängaBanan()
-        //{   
-        //    return View();
-        //}
+        //GET: Anmälan
+        [Authorize(Roles = "2")]
+        [HttpGet]
+        public ActionResult AnmalanAdmin()
+        {
+            return View("AnmalanAdmin");
+        }
 
-        //// POST: Admin/RegistreraNyMedlem
-        //[Authorize(Roles = "2")]
-        //[HttpPost]
-        //public ActionResult StängaBanan(FormCollection collection)
-        //{
-        //    string datumStart = collection["startDatum"];
-        //    string datumSlut = collection["slutDatum"];
-        //    string anledning = collection["anledning"];
-        //    string tidStart = collection["startTid"];
-        //    string tidSlut= collection["slutTid"];
-        //    DateTime startDatum = Convert.ToDateTime(datumStart);
-        //    DateTime slutDatum = Convert.ToDateTime(datumSlut);
+        [Authorize(Roles = "2")]
+        [HttpPost]
+        public ActionResult AnmalanAdmin(FormCollection collection)
+        {
+            TävlingModels.Anmälan a = new TävlingModels.Anmälan();
+            a.TavlingsId = 1; //hårdkodat nu
+            a.golfID = collection["golfid"]; 
+            int maxAntal = Convert.ToInt32(collection["maxAntal"]);
+            
 
-        //    //Postgres db = new Postgres();
+            return View("Index");
+        }
 
-        //    //db.SqlParameters("INSERT INTO stangning (starttid, sluttid, startdatum, slutdatum, anledning) VALUES (starttid, sluttid, startdatum, slutdatum, anledning)",
-        //    //    Postgres.lista = new List<NpgsqlParameter>()
-        //    //    {
-        //    //        new NpgsqlParameter("@starttid", tidStart),
-        //    //        new NpgsqlParameter("@sluttid", tidSlut),
-        //    //        new NpgsqlParameter("@startdatum", startDatum),
-        //    //        new NpgsqlParameter("@slutdatum", slutDatum),
-        //    //        new NpgsqlParameter("@anledning", anledning)
-        //    //    });
+        //GET: Tävling
+        [Authorize(Roles ="2")]
+        [HttpGet]
+        public ActionResult Tävling()
+        {
+            
+            return View("TavlingAdmin");
+        }
 
-        //    return View();
-        //}
-#endregion
+        //POST: Tävling
+        [Authorize(Roles ="2")]
+        [HttpPost]
+        public ActionResult Tävling(FormCollection collection)
+        {
+            
+            TävlingModels t = new TävlingModels();
+            DateTime datum = Convert.ToDateTime(collection["datepickerTavling"]);
+            DateTime starttid = Convert.ToDateTime(collection["Starttidinput"]);
+            DateTime sluttid = Convert.ToDateTime(collection["sluttidinput"]);
+            DateTime sistaAnmälan = Convert.ToDateTime(collection["senastinput"]);
+            int maxAntal = Convert.ToInt32(collection["deltagareinput"]);
+            string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
 
+            TempData["tävling"] = "Du har skapat en ny tävling";
+            return View("Index");
+        }
 
+        //GET: Incheckning
+        [Authorize(Roles ="2")]
+        [HttpGet]
+        public ActionResult Incheckning()
+        {
+            DateTime dt = Convert.ToDateTime(Request.QueryString["datum"]);
+            DateTime tid = Convert.ToDateTime(dt.ToShortTimeString());
+            DateTime datum = Convert.ToDateTime(dt.ToShortDateString());
+            int bokningID = 0;
+            Admin.Incheckning a = new Admin.Incheckning();
+            ViewBag.Spelare = a.GetSpelare(datum, tid, ref bokningID);
+            ViewBag.BokningID = bokningID;
+            ViewBag.Datum = datum;
+            ViewBag.Tid = tid;
+            return View();
+        }
+
+        //POST: Incheckning
+        [Authorize(Roles ="2")]
+        [HttpPost]
+        public ActionResult Incheckning(FormCollection collection)
+        {
+            Admin.Incheckning a = new Admin.Incheckning();
+            int bokningsID = Convert.ToInt32(collection["bokningID"]);
+            int medlemsID = 0;
+            string meddelande = "";
+            string s = Convert.ToString(collection["spelarlista"]);
+            char[] tecken = new char[] { ',' };
+            string[] array = s.Split(tecken, StringSplitOptions.None);
+            string golfid1, golfid2, golfid3, golfid4 = "";
+            for(int i =0; i < array.Length; i++)
+            {
+                if(i == 0)
+                {
+                    golfid1 = array[i];
+                    medlemsID = a.getMedlemsID(golfid1);
+                    meddelande = a.checkainSpelare(medlemsID, bokningsID);                    
+                }
+                if(i==1)
+                {
+                    golfid2 = array[i];
+                    medlemsID = a.getMedlemsID(golfid2);
+                    meddelande = a.checkainSpelare(medlemsID, bokningsID);
+                }
+                if(i ==2)
+                {
+                    golfid3 = array[i];
+                    medlemsID = a.getMedlemsID(golfid3);
+                    meddelande = a.checkainSpelare(medlemsID, bokningsID);
+                }
+                if(i == 3)
+                {
+                    golfid4 = array[i];
+                    medlemsID = a.getMedlemsID(golfid4);
+                    meddelande = a.checkainSpelare(medlemsID, bokningsID);
+                }
+            }
+            TempData["incheckning"] = "Du har checkat in " + array.Length + " personer";
+            return View("Index");
+        }
     }
 }

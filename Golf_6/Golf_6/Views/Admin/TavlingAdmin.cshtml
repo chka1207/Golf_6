@@ -1,0 +1,95 @@
+﻿@model Golf_6.Models.TävlingModels
+@using Golf_6.Controllers;
+@using Golf_6.Models;
+@using System.Collections.Generic;
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+@using (Html.BeginForm())
+{
+    <div class="container">
+
+        <h2>Här kan du skapa en ny tävling</h2><br />
+
+
+
+        <form>
+
+            <h3>Individuell poängbogey</h3><br />
+            <div class="form-group">
+
+                <input type="text" name="datepickerTavling" class="btn btn-info" id="datepickerTavling" value="Tävlingsdatum">
+            </div>
+
+            <div class="form-group">
+
+
+                <label>Starttid</label><br />
+                <input name="Starttidinput" placeholder="Starttid (hh:mm)" class="form-control input-md" type="time">
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Sluttid</label><br />
+                <input name="sluttidinput" placeholder="Sluttid (hh:mm)" class="form-control input-md" type="time">
+
+            </div>
+
+            <div class="form-group">
+
+                <input name="deltagareinput" placeholder="Max antal deltagare" class="form-control input-md" type="text">
+            </div>
+
+            <div class="form-group">
+
+
+                <input type="text" name="datepickerSistaAnm" class="btn btn-info" id="datepickerSistaAnm" value="Sista anmälningsdag">
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary btn-lg">Skapa tävling</button>
+
+        </form>
+
+    </div>
+
+
+}
+
+<script type="text/javascript">
+
+            $(function () {
+                $('#datepickerTavling').datepicker();
+            });
+            $(function () {
+                $('#datepickerSistaAnm').datepicker();
+            });
+            
+            var currentDate = $(".selector").datepicker("getDate");
+            $.datepicker.regional['sv'] = {
+                closeText: 'Stäng',
+                prevText: '< Föregående',
+                nextText: 'Nästa >',
+                currentText: 'Idag',
+                monthNames: ['Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'Oktober', 'November', 'December'],
+                monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+                dayNamesShort: ['Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör'],
+                dayNames: ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'],
+                dayNamesMin: ['Sö', 'Må', 'Ti', 'On', 'To', 'Fr', 'Lö'],
+                weekHeader: 'Не',
+                dateFormat: 'yy-mm-dd',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                onSelect: ''
+            };
+            $.datepicker.setDefaults($.datepicker.regional['sv']);
+</script>

@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Reflection;
 using System.Web.Mvc;
 using Npgsql;
+using Golf_6.Models;
 
 namespace Golf_6.Models
 {
@@ -126,7 +127,129 @@ namespace Golf_6.Models
 
             return dt;
         }
-        
+
+        public string stängBanan(DateTime startdatum, DateTime slutdatum, DateTime starttid, DateTime sluttid, string anledning) //Hanterar just nu bara ett datum , efter produktägarens önskemål. Start- och slutdatum måste alltså vara samma för att metoden skall fungera.
+        {
+            Postgres x = new Postgres();
+            Postgres x1 = new Postgres();
+            Postgres x2 = new Postgres();
+            Postgres x3 = new Postgres();
+            Postgres x4 = new Postgres();
+            string meddelande = "";
+            string delete = "";
+            DataTable dt = new DataTable();
+            int bokningID;
+
+            meddelande = x.SqlParameters("insert into stangning (startdatum, slutdatum, starttid, sluttid, anledning) values (@par1, @par2, @par3, @par4, @par5);", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", startdatum),
+                    new NpgsqlParameter("@par2", slutdatum),
+                    new NpgsqlParameter("@par3", starttid),
+                    new NpgsqlParameter("@par4", sluttid),
+                    new NpgsqlParameter("@par5", anledning)
+                });
+            dt = x1.SqlFrågaParameters("select bokning_id from reservation where datum = @par1 and tid between CAST(@par2 as TIME) and CAST(@par3 as TIME);", Postgres.lista = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@par1", startdatum),
+                new NpgsqlParameter("@par2", starttid),
+                new NpgsqlParameter("@par3", sluttid)
+            });
+            foreach(DataRow dr in dt.Rows)
+            {
+                bokningID = Convert.ToInt32(dr["bokning_id"].ToString());
+                delete = x2.SqlParameters("delete from reservation where bokning_id = @par1", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", bokningID)
+                });
+                delete = x3.SqlParameters("delete from bokaren where bokaren.tid = @par1", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", bokningID)
+                });
+                delete = x4.SqlParameters("delete from deltar where reservation_id = @par1", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", bokningID)
+                });
+
+
+            }
+
+            return meddelande;
+        }
+
+        public class Incheckning
+        {
+            public bool Incheckad { get; set; }
+            public int MedelmID { get; set; }
+            public int BokningID { get; set; }
+         
+            public string checkainSpelare (int medlem, int bokning)
+            {
+                
+                Postgres x = new Postgres();
+                string meddelande = "";
+
+                meddelande = x.SqlParameters("update deltar set incheckad = true where medlem_id = @par1 and reservation_id = @par2;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", medlem),
+                    new NpgsqlParameter("@par2", bokning)
+                });
+
+                return meddelande;
+            }
+
+            public List<string> GetSpelare(DateTime datum, DateTime tid, ref int bokningsID)
+            {
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+                Tidsbokning t = new Tidsbokning();
+                List<Tidsbokning> deltagare = new List<Tidsbokning>();
+                Admin.Incheckning a = new Admin.Incheckning();
+               
+                dt = x.SqlFrågaParameters("select bokning_id from reservation where datum = DATE(@datum) and tid = CAST(@tid as TIME);", Postgres.lista = new List<NpgsqlParameter>
+                {
+                    new NpgsqlParameter("@datum", datum),
+                    new NpgsqlParameter("@tid", tid)
+                });
+
+                foreach(DataRow dr in dt.Rows)
+                {
+                    a.BokningID = Convert.ToInt32(dr["bokning_id"]);
+                }
+
+                List<string> listan = new List<string>();
+                deltagare = t.GetBokning(a.BokningID);
+
+                foreach(Tidsbokning tb in deltagare)
+                {
+                    listan.Add(tb.GolfID.ToString());
+                    
+                }
+                
+                bokningsID = a.BokningID;
+                
+                return listan;
+            }
+            public int getMedlemsID(string golfID)
+            {
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+                Medlem m = new Medlem();
+                int id;
+                dt = x.SqlFrågaParameters("select id from medlemmar where golfid = @par1;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", golfID)
+                });
+                foreach(DataRow dr in dt.Rows)
+                {
+                    m.MedlemID = Convert.ToInt32(dr["id"]);
+                }
+                id = m.MedlemID;
+                return id;
+            }
+        }
+
+
+
 
     }
     
