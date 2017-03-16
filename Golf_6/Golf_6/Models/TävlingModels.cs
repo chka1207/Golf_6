@@ -167,7 +167,7 @@ namespace Golf_6.Models
                 startlistan = db.SqlFrågaParameters("SELECT * FROM anmalan WHERE fk_tavling = @tavlingsid;",
                     Postgres.lista = new List<NpgsqlParameter>()
                     {
-                        new NpgsqlParameter("@tavlingsid", tavlingsId)
+                        new NpgsqlParameter("@tavlingsid", tavlingsId) //Hårdkodat tävlingId
                     });
 
                 return startlistan;
