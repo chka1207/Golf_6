@@ -86,7 +86,33 @@ namespace Golf_6.Models
 
             public DataTable AllaTävlingar { get; set; }
 
-           
+            public string kontrolleraGolfID(string golfid)
+            {
+                Postgres p = new Postgres();
+                DataTable dt = new DataTable();
+                string golfidt = "";
+                string meddelande = "";
+
+                dt = p.SqlFrågaParameters("select golfid from medlemmar where golfid = @golfid", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@golfid", golfid)
+                });
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    golfidt = dr["golfid"].ToString();
+                }
+                if (golfidt == "" || golfid == "1" || golfid == "2" || golfid == "3" || golfid == "4")
+                {
+                    meddelande = "Du har angett ett golfID som inte existerar. Anmälan har inte genomförts.";
+                }
+                else
+                {
+                    meddelande = "giltigt";
+                }
+                    return meddelande;
+            }
+
             public string anmälan(int tävlingsID, string golfid)
             {
                 Postgres p = new Postgres();
