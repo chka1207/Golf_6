@@ -281,7 +281,8 @@ namespace Golf_6.Controllers
         public ActionResult AnmalanAdmin(FormCollection collection)
         {
             TävlingModels.Anmälan a = new TävlingModels.Anmälan();
-            a.TavlingsId = 1; //hårdkodat nu
+
+            a.TavlingsId = Convert.ToInt32(collection["tavlingsID"]);
             a.GolfID = collection["golfid"];
             string meddelande = "";
             meddelande = a.anmälan(a.TavlingsId, a.GolfID);
