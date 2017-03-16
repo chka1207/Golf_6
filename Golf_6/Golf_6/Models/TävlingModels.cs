@@ -156,7 +156,23 @@ namespace Golf_6.Models
             }
         }
 
+        public class Startlista
+        {
+            public DataTable StartLista()
+            {
+                Postgres db = new Postgres();
+                DataTable startlistan = new DataTable();
+                int tavlingsId = 3;
 
-        
+                startlistan = db.SqlFrågaParameters("SELECT * FROM anmalan WHERE fk_tavling = @tavlingsid;",
+                    Postgres.lista = new List<NpgsqlParameter>()
+                    {
+                        new NpgsqlParameter("@tavlingsid", tavlingsId)
+                    });
+
+                return startlistan;
+            }
+        }
+
     }
 }

@@ -389,7 +389,7 @@ namespace Golf_6.Controllers
             DataTable allaAnmälda = new DataTable();
             TävlingModels tävling = new TävlingModels();
 
-            allaAnmälda = tävling.StartLista();
+            //allaAnmälda = tävling.StartLista();
 
             //ViewBag.allaAnmälda = allaAnmälda;
 
