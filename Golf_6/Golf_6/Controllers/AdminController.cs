@@ -298,7 +298,7 @@ namespace Golf_6.Controllers
             DateTime datum = Convert.ToDateTime(collection["datepickerTavling"]);
             DateTime starttid = Convert.ToDateTime(collection["Starttidinput"]);
             DateTime sluttid = Convert.ToDateTime(collection["sluttidinput"]);
-            DateTime sistaAnmälan = Convert.ToDateTime(collection["senastinput"]);
+            DateTime sistaAnmälan = Convert.ToDateTime(collection["datepickerSistaAnm"]);
             int maxAntal = Convert.ToInt32(collection["deltagareinput"]);
             string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
 

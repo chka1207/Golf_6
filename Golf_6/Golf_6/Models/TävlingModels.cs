@@ -73,6 +73,24 @@ namespace Golf_6.Models
                 }
                 return meddelande;
             }
+            public string getGolfID(int medlemsID)
+            {
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+                Medlem m = new Medlem();
+                string golfID = "";
+
+                dt = x.SqlFrågaParameters("select golfid from medlemmar where id=@par1;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", medlemsID)
+                });
+                foreach(DataRow dr in dt.Rows)
+                {
+                    m.GolfID = dr["golfid"].ToString();
+                }
+                golfID = m.GolfID;
+                return golfID;
+            }
         }
 
 
