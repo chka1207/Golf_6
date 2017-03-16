@@ -53,7 +53,7 @@ namespace Golf_6.Models
 
         public class Anmälan
         {
-            public string golfID { get; set; }
+            public string GolfID { get; set; }
 
             public int TavlingsId { get; set; }
 
@@ -69,7 +69,10 @@ namespace Golf_6.Models
                     new NpgsqlParameter("@tavlingsid", golfid)
 
                 });
-
+                if (meddelande.Contains("23505"))
+                {
+                    meddelande = "Du har angett ett golfID som redan är anmält.";
+                }
                 return meddelande;
             }
             public string getGolfID(int medlemsID)
