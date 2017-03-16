@@ -254,6 +254,7 @@ namespace Golf_6.Controllers
         //Get alla tävlingar
         [Authorize(Roles = "2")]
         public ActionResult AllaTavlingar()
+        
         {
             TävlingModels t = new TävlingModels();
             DataTable dt = new DataTable();
@@ -285,13 +286,22 @@ namespace Golf_6.Controllers
             a.TavlingsId = Convert.ToInt32(collection["tavlingsID"]);
             a.GolfID = collection["golfid"];
             string meddelande = "";
-            meddelande = a.anmälan(a.TavlingsId, a.GolfID);
-
-            if (meddelande != "")
+            string kontroll = "";
+            kontroll = a.kontrolleraGolfID(a.GolfID);
+            if (kontroll == "giltigt")
+            {
+                meddelande = a.anmälan(a.TavlingsId, a.GolfID);
+                if (meddelande != "")
             {
                 TempData["notice"] = meddelande;
             }
-            return View("Index");
+            }
+            else
+            {
+                TempData["notice"] = kontroll;
+            }
+
+            return RedirectToAction("AllaTavlingar");
         }
 
         //GET: Tävling

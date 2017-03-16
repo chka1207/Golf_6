@@ -1,0 +1,47 @@
+﻿@model Golf_6.Models.TävlingModels
+@using Golf_6.Models;
+@using System.Data;
+@{
+    ViewBag.Title = "TavlingarMedResultat";
+}
+
+
+@{
+    if (TempData["notice"] != null)
+    {
+        <div class="alert alert-warning alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+            <strong>Varning! </strong> @TempData["notice"]
+        </div>
+    }
+
+}
+<div class="center-block">
+
+    <h2>Tävlingar Med Resultat</h2>
+
+    <table class="table table-striped table-responsive table-bordered">
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Starttid</th>
+                <th>Sluttid</th>
+                <th>Resultat</th>
+            </tr>
+        </thead>
+        <tr>
+            @foreach (DataRow row in Model.AllaTavlingar.Rows)
+            {
+
+            <tr>
+                <td>@Convert.ToDateTime(@row["datum"]).ToShortDateString()</td>
+                <td>@row["starttid"]</td>
+                <td>@row["sluttid"]</td>
+                <td align="right">@Html.ActionLink("Resultat", "Resultat", "Resultat", new { validate = Convert.ToInt32(@row["fk_tavling"]) }, null)</td>
+            </tr>
+            }
+            </tr>
+        </table>
+
+
+    </div>

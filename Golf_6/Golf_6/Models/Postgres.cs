@@ -150,6 +150,29 @@ namespace Golf_6.Models
              return  meddelande;
         }
 
+        public DataTable sqltable(string sqlfraga)
+        {
+            try
+            {
+                _cmd = new NpgsqlCommand(sqlfraga, _conn);
+                _dr = _cmd.ExecuteReader();
+                _tabell.Load(_dr);
+                return _tabell;
+
+            }
+            catch (Exception ex)
+            {
+                _error = ex.Message;
+                return null;
+            }
+
+            finally
+            {
+                _conn.Close();
+            }
+
+        }
+
         public DataTable SqlFrågaParameters(string sqlfraga, List<NpgsqlParameter> parametrar)
         {
             try

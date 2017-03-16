@@ -28,10 +28,42 @@ namespace Golf_6.Models
             [Required]
             public int MaxAntal { get; set; }
 
+            public int AntalAnmälda { get; set; }
             [Required]
             public DateTime SistaAnmälan { get; set; }
 
             public DataTable AllaTavlingar { get; set; }
+
+            public DataTable TavlingMResultat()
+            {
+                Postgres p = new Postgres();
+                DataTable dt = new DataTable();
+
+                dt = p.sqltable("SELECT DISTINCT tavling.datum, tavling.starttid, tavling.sluttid, resultat.fk_tavling FROM tavling, resultat WHERE tavling.id = resultat.fk_tavling;");
+
+                return dt;
+            }
+            public int antalAnmälda(int tavlingsid)
+            {
+                int antal = 0;
+                Postgres p = new Postgres ();
+                DataTable dt = new DataTable();
+
+                dt = p.SqlFrågaParameters("select count(golfid) from anmalan where fk_tavling = @tavlingsid;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new Npgsql.NpgsqlParameter("@tavlingsid", tavlingsid)
+                });
+
+            if (dt != null)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    antal = Convert.ToInt32(dr["count"]);
+                }
+            }
+
+                return antal;
+            }
 
             public string bokaTävling(DateTime datum, DateTime starttid, DateTime sluttid, int maxAntal, DateTime sistaAnmälan)
             {
@@ -63,13 +95,33 @@ namespace Golf_6.Models
 
             public DataTable AllaTävlingar { get; set; }
 
-            public int antalAnmälda()
+            public string kontrolleraGolfID(string golfid)
             {
-                int antal = 0;
+                Postgres p = new Postgres();
+                DataTable dt = new DataTable();
+                string golfidt = "";
+                string meddelande = "";
 
+                dt = p.SqlFrågaParameters("select golfid from medlemmar where golfid = @golfid", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@golfid", golfid)
+                });
 
-                return antal;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    golfidt = dr["golfid"].ToString();
+                }
+                if (golfidt == "" || golfid == "1" || golfid == "2" || golfid == "3" || golfid == "4")
+                {
+                    meddelande = "Du har angett ett golfID som inte existerar. Anmälan har inte genomförts.";
+                }
+                else
+                {
+                    meddelande = "giltigt";
+                }
+                    return meddelande;
             }
+
             public string anmälan(int tävlingsID, string golfid)
             {
                 Postgres p = new Postgres();
@@ -154,6 +206,19 @@ namespace Golf_6.Models
                 });
                 return dt;
             }
+
+            public string avboka(string golfID, int tävlingID)
+            {
+                Postgres x = new Postgres();
+                string meddelande = "";
+                meddelande = x.SqlParameters("delete from anmalan where golfid=@par1 and fk_tavling = @par2;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", golfID),
+                    new NpgsqlParameter("@par2", tävlingID)
+                });
+
+                return meddelande;
+            }
         }
 
         public class Startlista
@@ -175,5 +240,42 @@ namespace Golf_6.Models
             }
         }
 
+        public class Resultat
+        {
+            public int TavlingsID { get; set; }
+            
+            public string Fornamn { get; set; }
+            
+            public string Efternamn { get; set; }
+            
+            public string GolfID { get; set; }
+            
+            public double Poäng { get; set; }
+
+            public DataTable ResultatTabell { get; set; }
+
+            public DataTable tavlingsResultat(int id)
+            {
+           
+                Postgres p = new Postgres();
+                DataTable dt = new DataTable();
+                dt = p.SqlFrågaParameters("SELECT medlemmar.fornamn, medlemmar.efternamn, medlemmar.golfid, resultat.poang FROM medlemmar, resultat WHERE medlemmar.golfid = resultat.fk_golfid and fk_tavling = @tavlingID;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@tavlingID", id)
+                });
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Fornamn = dr["fornamn"].ToString();
+                    Efternamn = dr["efternamn"].ToString();
+                    GolfID = dr["golfid"].ToString();
+                    Poäng = Convert.ToDouble(dr["poang"]);
+                }
+
+                return dt;
+
+            }
+
+        }
     }
 }

@@ -8,14 +8,17 @@
     ViewBag.Title = "Tävling";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-@Html.BeginForm()
-{
-@{ 
-    List<int> anmäldaTävlingar = ViewBag.AnmäldLista;
-    int räknare = 0;
-}
 
 <h2>Tävlingar</h2>
+@Html.BeginForm()
+{
+ @{ 
+     List<int> anmäldaTävlingar = ViewBag.AnmäldLista;
+     string golfid = ViewBag.GolfID;
+ }
+
+
+
 
 <div class="center-block">
     <table class="table table-striped table-responsive table-bordered">
@@ -28,35 +31,30 @@
             </tr>
         </thead>
         <tr>
-    @foreach (DataRow dr in Model.AllaTävlingar.Rows)
+            @if (Model.AllaTävlingar != null)
             {
+    foreach (DataRow dr in Model.AllaTävlingar.Rows)
+    {
     <tr>
         <td>@Convert.ToDateTime(@dr["datum"]).ToShortDateString()</td>
         <td>@dr["starttid"]</td>
         <td>@Convert.ToDateTime(@dr["sista_anmalan"]).ToShortDateString()</td>
         <td>@dr["max_antal"]</td>
-        @for (int i = 0; i < anmäldaTävlingar.Count; i++)
-        {
-            if (anmäldaTävlingar[i] == Convert.ToInt32(dr["id"]))
+
+        @{if (anmäldaTävlingar.Contains(Convert.ToInt32(dr["id"])) == true)
             {
-                <td align="right">@Html.ActionLink("Avboka", "AvbokaTävling", "Medlem", new { avbokning = Convert.ToInt32(@dr["id"]) })</td>
-                räknare = -1;
-                break;
+                <td align="right"><button class="btn btn-link" name="Avboka"  type="submit" href="Medlem/Tävling" title="Avoka" value="@Convert.ToInt32(@dr["id"])"></button> </td>
             }
             else
             {
-                räknare++;
-            }
-            if (i == anmäldaTävlingar.Count)
-            {
-                <td align="right">@Html.ActionLink("Boka", "Tävling", "Medlem", new { avbokning = Convert.ToInt32(@dr["id"]) })</td>
+                <td align="right"><button class="btn btn-link" name="Boka" type="submit" href="Medlem/Tävling" title="Boka" value = "@Convert.ToInt32(@dr["id"])"></button> </td>
             }
         }
-
     </tr>
 
-    }
+            }}
         </tr>
     </table>
 </div>
+
 }

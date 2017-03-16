@@ -28,20 +28,52 @@
                 <th>Starttid</th>
                 <th>Sluttid</th>
                 <th>Max antal deltagare</th>
+                <th>Totalt anmälda</th>
                 <th>Sista anmälningsdag</th>
                 <th>Anmäl</th>
+                <th>Avanmäl</th>
             </tr>
         </thead>
         <tr>
             @foreach (DataRow row in Model.AllaTavlingar.Rows)
             {
+                TävlingModels t = new TävlingModels();
+                int id = Convert.ToInt32(@row["id"]);
+                int antalAnmälda = 0;
+                antalAnmälda = t.antalAnmälda(id);
+                
+                t.AntalAnmälda = antalAnmälda;
+                int maxAntal = Convert.ToInt32(@row["max_antal"]);
+                
+               
+               
+                
+                string antal = t.AntalAnmälda.ToString();
             <tr>
                 <td>@Convert.ToDateTime(@row["datum"]).ToShortDateString()</td>
                 <td>@row["starttid"]</td>
                 <td>@row["sluttid"]</td>
                 <td>@row["max_antal"]</td>
+                <td>@antal</td>
+                @*<td>@Html.Display(t.AntalAnmälda.ToString())</td>*@
                 <th>@Convert.ToDateTime(@row["sista_anmalan"]).ToShortDateString()</th>
-                <td align="right">@Html.ActionLink("Anmäl", "AnmalanAdmin", "Admin", new { validate = Convert.ToInt32(@row["id"]) }, null)</td>
+                @if (maxAntal > t.AntalAnmälda && DateTime.Today <= Convert.ToDateTime(@row["sista_anmalan"]))
+                {
+                    <td align="right">@Html.ActionLink("Anmäl", "AnmalanAdmin", "Admin", new { validate = Convert.ToInt32(@row["id"]) }, null)</td>
+                }
+                
+                else
+                {
+                    <td></td>
+                }
+                @if (t.AntalAnmälda > 0)
+                {
+                    <td align="right">@Html.ActionLink("Avanmäl", "", "", new { validate = Convert.ToInt32(@row["id"]) }, null)</td>
+                }
+                else
+                {
+                    <td></td>
+                }
             </tr>
             }
             </tr>
