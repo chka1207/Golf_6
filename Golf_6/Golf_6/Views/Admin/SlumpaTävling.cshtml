@@ -1,0 +1,44 @@
+﻿
+@using System.Data;
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+    <div class="container">
+
+        <h2>Här kan du slumpa en tävling</h2><br />
+
+        <div>
+            <table id="alla_medlemmar" class="display responsive" cellspacing="0">
+
+                <thead>
+                    <tr>
+                        @foreach (DataColumn x in Model.Columns)
+                        {
+                            <th width="300px">@x.ColumnName</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DataRow row in Model.Rows)
+                    {
+                        <tr>
+                            @foreach (DataColumn x in Model.Columns)
+                            {
+                                <td width="300px">@row[x.ColumnName]</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        
+
+    </div>
+
+
+
