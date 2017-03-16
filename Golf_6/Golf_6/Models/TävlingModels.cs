@@ -230,5 +230,42 @@ namespace Golf_6.Models
             }
         }
 
+        public class Resultat
+        {
+            public int TavlingsID { get; set; }
+            
+            public string Fornamn { get; set; }
+            
+            public string Efternamn { get; set; }
+            
+            public string GolfID { get; set; }
+            
+            public double Poäng { get; set; }
+
+            public DataTable ResultatTabell { get; set; }
+
+            public DataTable tavlingsResultat(int id)
+            {
+           
+                Postgres p = new Postgres();
+                DataTable dt = new DataTable();
+                dt = p.SqlFrågaParameters("SELECT medlemmar.fornamn, medlemmar.efternamn, medlemmar.golfid, resultat.poang FROM medlemmar, resultat WHERE medlemmar.golfid = resultat.fk_golfid and fk_tavling = @tavlingID;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@tavlingID", id)
+                });
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Fornamn = dr["fornamn"].ToString();
+                    Efternamn = dr["efternamn"].ToString();
+                    GolfID = dr["golfid"].ToString();
+                    Poäng = Convert.ToDouble(dr["poang"]);
+                }
+
+                return dt;
+
+            }
+
+        }
     }
 }

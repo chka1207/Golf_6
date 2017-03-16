@@ -213,6 +213,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MedlemController.cs" />
+    <Compile Include="Controllers\ResultatController.cs" />
     <Compile Include="Controllers\ScorekortModelController.cs" />
     <Compile Include="Controllers\TidsbokningController.cs" />
     <Compile Include="Global.asax.cs">
@@ -618,6 +619,7 @@
     <Content Include="Views\Admin\AnmalanAdmin.cshtml" />
     <Content Include="Views\Medlem\Tävling.cshtml" />
     <Content Include="Views\Admin\AllaTavlingar.cshtml" />
+    <Content Include="Views\Resultat\Resultat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
