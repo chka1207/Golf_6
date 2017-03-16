@@ -21,15 +21,25 @@ namespace Golf_6.Controllers
             return View();
         }
 
+        public ActionResult TavlingarMedResultat()
+        {
+            
+            TävlingModels t = new TävlingModels();
+            DataTable dt = new DataTable();
+            dt = t.TavlingMResultat();
+            t.AllaTavlingar = dt;
+            return View(t);
+        }
         //
         // GET: /Resultat/Details/5
         public ActionResult Resultat()
         {
-            //HÅRDKODAT TÄVLINGSID ÄN SÅ LÄNGE, MÅSTE ÄNDRA SEN!!!
-            int id = 10;
+           
+            
             TävlingModels.Resultat r = new TävlingModels.Resultat();
+            r.TavlingsID = Convert.ToInt32(Request.QueryString["validate"]); 
             DataTable dt = new DataTable();
-            dt = r.tavlingsResultat(id);
+            dt = r.tavlingsResultat(r.TavlingsID);
             r.ResultatTabell = dt;
             return View(r);
         }
