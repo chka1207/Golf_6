@@ -31,6 +31,8 @@ namespace Golf_6.Models
             [Required]
             public DateTime SistaAnmälan { get; set; }
 
+            public DataTable AllaTavlingar { get; set; }
+
             public string bokaTävling(DateTime datum, DateTime starttid, DateTime sluttid, int maxAntal, DateTime sistaAnmälan)
             {
                 Admin a = new Admin();

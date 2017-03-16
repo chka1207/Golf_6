@@ -251,7 +251,20 @@ namespace Golf_6.Controllers
         }
         #endregion
 
-        //GET: Anmälan
+        //Get alla tävlingar
+        [Authorize(Roles = "2")]
+        public ActionResult AllaTavlingar()
+        {
+            TävlingModels t = new TävlingModels();
+            DataTable dt = new DataTable();
+            Postgres p = new Postgres();
+
+            dt = p.sqlFragaTable("SELECT * from tavling");
+            t.AllaTavlingar = dt;
+            return View(t);
+        }
+
+        //GET: Anmälningsvyn för admin
         [Authorize(Roles = "2")]
         [HttpGet]
         public ActionResult AnmalanAdmin()
@@ -262,6 +275,7 @@ namespace Golf_6.Controllers
             return View("AnmalanAdmin");
         }
 
+        //Skapar anmälan
         [Authorize(Roles = "2")]
         [HttpPost]
         public ActionResult AnmalanAdmin(FormCollection collection)
