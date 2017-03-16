@@ -39,7 +39,7 @@ namespace Golf_6.Models
                 Postgres p = new Postgres();
                 DataTable dt = new DataTable();
 
-                dt = p.sqltable("SELECT DISTINCT tavling.datum, tavling.starttid, tavling.sluttid, resultat.fk_tavling FROM tavling, resultat WHERE tavling.id = resultat.fk_tavling;");
+                dt = p.sqltable("SELECT DISTINCT tavling.datum, tavling.starttid, tavling.sluttid, resultat.fk_tavling FROM tavling, resultat WHERE tavling.id = resultat.fk_tavling order by tavling.datum asc;");
 
                 return dt;
             }
@@ -259,7 +259,7 @@ namespace Golf_6.Models
            
                 Postgres p = new Postgres();
                 DataTable dt = new DataTable();
-                dt = p.SqlFrågaParameters("SELECT medlemmar.fornamn, medlemmar.efternamn, medlemmar.golfid, resultat.poang FROM medlemmar, resultat WHERE medlemmar.golfid = resultat.fk_golfid and fk_tavling = @tavlingID;", Postgres.lista = new List<NpgsqlParameter>()
+                dt = p.SqlFrågaParameters("SELECT medlemmar.fornamn, medlemmar.efternamn, medlemmar.golfid, resultat.poang FROM medlemmar, resultat WHERE medlemmar.golfid = resultat.fk_golfid and fk_tavling = @tavlingID order by resultat.poang desc;", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@tavlingID", id)
                 });
