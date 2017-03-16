@@ -1,0 +1,40 @@
+﻿@model Golf_6.Models.TävlingModels.Anmälan
+@using Golf_6.Controllers;
+@using Golf_6.Models;
+@using System.Collections.Generic;
+@{
+    ViewBag.Title = "AnmalanAdmin";
+}
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@using (Html.BeginForm())
+{ 
+    <br />
+    <h2>Anmäl till tävling</h2>
+
+    <br />
+    TävlingModels.Anmälan a = new TävlingModels.Anmälan();
+    a.TavlingsId = Convert.ToInt32(ViewBag.TavlingsID);
+
+       <div class="form-group">
+
+            <div class="col-md-10">
+                <label>GolfID: </label>
+                @Html.TextBox("myTextBox1", a.GolfID, new { @class = "form-control" })
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+    
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Anmäl" class="btn btn-default" />
+            </div>
+        </div>
+    @Html.Hidden("tavlingsID", a.TavlingsId);
+
+}

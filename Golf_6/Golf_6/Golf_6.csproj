@@ -598,7 +598,6 @@
     <Content Include="Views\Medlem\Personuppgifter.cshtml" />
     <Content Include="Views\Medlem\Index.cshtml" />
     <Content Include="Views\Medlem\MinaBokningar.cshtml" />
-    <Content Include="Views\Tidsbokning\BokningsschemaAdmin.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Admin\HanteraSasong.cshtml" />
     <Content Include="Views\Tidsbokning\PartialSearch.cshtml" />
@@ -606,7 +605,6 @@
     <Content Include="Views\Admin\RaderaMedlem.cshtml" />
     <Content Include="Views\Admin\RedigeraMedlem.cshtml" />
     <Content Include="Views\Medlem\Scorekort.cshtml" />
-    <Content Include="Views\Tidsbokning\BokningsschematAdmin.cshtml" />
     <Content Include="Views\Tidsbokning\BokningAdmin.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\NewUser.cshtml" />
@@ -618,6 +616,7 @@
     <Content Include="Views\Admin\TavlingAdmin.cshtml" />
     <Content Include="Views\Admin\Incheckning.cshtml" />
     <Content Include="Views\ScorekortModel\ScorekortIfyllt.cshtml" />
+    <Content Include="Views\Admin\AnmalanAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -256,6 +256,9 @@ namespace Golf_6.Controllers
         [HttpGet]
         public ActionResult AnmalanAdmin()
         {
+            TävlingModels.Anmälan a = new TävlingModels.Anmälan();
+            a.TavlingsId = Convert.ToInt32(Request.QueryString["validate"]);
+            ViewBag.TavlingsID = a.TavlingsId;
             return View("AnmalanAdmin");
         }
 
@@ -265,10 +268,14 @@ namespace Golf_6.Controllers
         {
             TävlingModels.Anmälan a = new TävlingModels.Anmälan();
             a.TavlingsId = 1; //hårdkodat nu
-            a.golfID = collection["golfid"]; 
-            int maxAntal = Convert.ToInt32(collection["maxAntal"]);
-            
+            a.GolfID = collection["golfid"];
+            string meddelande = "";
+            meddelande = a.anmälan(a.TavlingsId, a.GolfID);
 
+            if (meddelande != "")
+            {
+                TempData["notice"] = meddelande;
+            }
             return View("Index");
         }
 
