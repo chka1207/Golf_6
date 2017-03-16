@@ -590,7 +590,6 @@
     <Content Include="Views\Home\Tävlingar.cshtml" />
     <Content Include="Views\Home\Bokning &amp; Priser.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\RegistreraNyMedlem.cshtml" />
     <Content Include="Views\Admin\AllaMedlemmar.cshtml" />
     <Content Include="Views\Home\BokningPriser.cshtml" />
     <Content Include="Views\Tidsbokning\Bokningsschema.cshtml" />
@@ -603,8 +602,6 @@
     <Content Include="Views\Admin\HanteraSasong.cshtml" />
     <Content Include="Views\Tidsbokning\PartialSearch.cshtml" />
     <Content Include="Views\Tidsbokning\GetGolfID.cshtml" />
-    <Content Include="Views\Admin\RaderaMedlem.cshtml" />
-    <Content Include="Views\Admin\RedigeraMedlem.cshtml" />
     <Content Include="Views\Medlem\Scorekort.cshtml" />
     <Content Include="Views\Tidsbokning\BokningsschematAdmin.cshtml" />
     <Content Include="Views\Tidsbokning\BokningAdmin.cshtml" />
