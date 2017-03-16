@@ -277,7 +277,6 @@ namespace Golf_6.Controllers
         [HttpGet]
         public ActionResult Tävling()
         {
-            
             return View("TavlingAdmin");
         }
 
@@ -294,7 +293,7 @@ namespace Golf_6.Controllers
             DateTime sistaAnmälan = Convert.ToDateTime(collection["senastinput"]);
             int maxAntal = Convert.ToInt32(collection["deltagareinput"]);
             string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
-
+            
             TempData["tävling"] = "Du har skapat en ny tävling";
             return View("Index");
         }
@@ -359,5 +358,21 @@ namespace Golf_6.Controllers
             TempData["incheckning"] = "Du har checkat in " + array.Length + " personer";
             return View("Index");
         }
+
+
+        [Authorize(Roles = "2")]
+        [HttpGet]
+        public ActionResult SlumpaTävling()
+        {
+            DataTable allaAnmälda = new DataTable();
+            TävlingModels tävling = new TävlingModels();
+
+            allaAnmälda = tävling.StartLista();
+
+            //ViewBag.allaAnmälda = allaAnmälda;
+
+            return View(allaAnmälda);
+        }
+
     }
 }

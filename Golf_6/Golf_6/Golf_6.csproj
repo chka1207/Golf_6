@@ -615,6 +615,7 @@
     <Content Include="Views\Admin\TavlingAdmin.cshtml" />
     <Content Include="Views\Admin\Incheckning.cshtml" />
     <Content Include="Views\ScorekortModel\ScorekortIfyllt.cshtml" />
+    <Content Include="Views\Admin\SlumpaTävling.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
