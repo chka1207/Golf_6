@@ -417,28 +417,127 @@ namespace Golf_6.Controllers
             dt = dv.ToTable();
             dt.Columns.Remove("RandomNum");
 
-            int antalRader = dt.Rows.Count;
-            string sqlInsertFråga = "";
+            DataTable dtCopy = new DataTable();
+            dtCopy = dt.Copy();
 
-            for (int i = 0; i < antalRader; i++)
+            dtCopy.Columns.Remove("fornamn");
+            dtCopy.Columns.Remove("efternamn");
+            dtCopy.Columns["fk_tavling"].SetOrdinal(0);
+
+            int countRow = dtCopy.Rows.Count;
+            int countCol = dtCopy.Columns.Count;
+
+            string sqlStart = "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES ";
+            string sqlAntalVärden = "";
+            string sqlQuery;
+
+            for (int i = 0; i < countRow; i++)
             {
-                sqlInsertFråga = "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (@tavlingsid" + i + ", @golfid" + i + ");";
-
-                int tavlingsId = (int)dt.Rows[i]["fk_tavling"];
-                string golfid = dt.Rows[i]["golfid"].ToString();
-
-                //tillDb.SqlFrågaParameters(
-                //"INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (" + sqlInsertFråga + ");",
-
-
-                tillDb.SqlFrågaParameters(sqlInsertFråga,
-                Postgres.lista = new List<NpgsqlParameter>()
-                {
-                    new NpgsqlParameter("@tavlingsid" + i, tavlingsId),
-                    new NpgsqlParameter("@golfid" + i, golfid)
-                });
-
+                sqlAntalVärden += "(@tavlingsid" + i + ", @golfid" + i + "), ";
             }
+
+            sqlAntalVärden = sqlAntalVärden.Remove(sqlAntalVärden.Length - 2);
+
+            sqlQuery = sqlStart + sqlAntalVärden + ";";
+            
+            tillDb.SqlFrågaParameters(sqlQuery, Postgres.lista = new List<NpgsqlParameter>()
+                    {
+                        new NpgsqlParameter("@golfid0", dtCopy.Rows[0]["golfid"]),
+                        new NpgsqlParameter("@tavlingsid0",  dtCopy.Rows[0]["fk_tavling"]),
+                        new NpgsqlParameter("@golfid1", dtCopy.Rows[1]["golfid"]),
+                        new NpgsqlParameter("@tavlingsid1",  dtCopy.Rows[1]["fk_tavling"]),
+                        new NpgsqlParameter("@golfid2", dtCopy.Rows[2]["golfid"]),
+                        new NpgsqlParameter("@tavlingsid2",  dtCopy.Rows[2]["fk_tavling"]),
+                        new NpgsqlParameter("@golfid3", dtCopy.Rows[3]["golfid"]),
+                        new NpgsqlParameter("@tavlingsid3",  dtCopy.Rows[3]["fk_tavling"]),
+                        new NpgsqlParameter("@golfid4", dtCopy.Rows[4]["golfid"]),
+                        new NpgsqlParameter("@tavlingsid4",  dtCopy.Rows[4]["fk_tavling"]),
+                        new NpgsqlParameter("@golfid5", dtCopy.Rows[5]["golfid"]),
+                        new NpgsqlParameter("@tavlingsid5",  dtCopy.Rows[5]["fk_tavling"]),
+                        new NpgsqlParameter("@golfid6", dtCopy.Rows[6]["golfid"]),
+                        new NpgsqlParameter("@tavlingsid6",  dtCopy.Rows[6]["fk_tavling"]),
+                        new NpgsqlParameter("@golfid7", dtCopy.Rows[7]["golfid"]),
+                        new NpgsqlParameter("@tavlingsid7",  dtCopy.Rows[7]["fk_tavling"]),
+                        new NpgsqlParameter("@golfid8", dtCopy.Rows[8]["golfid"]),
+                        new NpgsqlParameter("@tavlingsid8",  dtCopy.Rows[8]["fk_tavling"]),
+                        new NpgsqlParameter("@golfid9", dtCopy.Rows[9]["golfid"]),
+                        new NpgsqlParameter("@tavlingsid9",  dtCopy.Rows[9]["fk_tavling"]),
+                    });
+
+            //tillDb.SqlFrågaParameters(
+            //        "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (@tavlingsid, @golfid), (@tavlingsid1, @golfid1);",
+            //        Postgres.lista = new List<NpgsqlParameter>()
+            //        {
+            //            new NpgsqlParameter("@golfid", dtCopy.Rows[0]["golfid"]),
+            //            new NpgsqlParameter("@tavlingsid",  dtCopy.Rows[0]["fk_tavling"]),
+            //            new NpgsqlParameter("@golfid1", dtCopy.Rows[1]["golfid"]),
+            //            new NpgsqlParameter("@tavlingsid1",  dtCopy.Rows[1]["fk_tavling"])
+            //        });
+
+
+            //int countRow = dtCopy.Rows.Count;
+            //int countCol = dtCopy.Columns.Count;
+
+            //for (int iCol = 0; iCol < countCol; iCol++)
+            //{
+            //    DataColumn col = dtCopy.Columns[iCol];
+
+            //    for (int iRow = 0; iRow < countRow; iRow++)
+            //    {
+            //        object cell = dtCopy.Rows[iRow].ItemArray[iCol];
+
+            //        tillDb.SqlFrågaParameters(
+            //            "INSERT INTO tavlingsgrupper (fk_tavling) VALUES (@fk_tavling);",
+            //            Postgres.lista = new List<NpgsqlParameter>()
+            //            {
+            //                new NpgsqlParameter("@fk_tavling", cell)
+            //            });
+            //    }
+            //}
+
+
+            //foreach (DataRow row in dtCopy.Rows)
+            //{
+            //    foreach (DataColumn dc in dtCopy.Columns)
+            //    {
+            //        tillDb.SqlFrågaParameters(
+            //            "INSERT INTO tavlingsgrupper (fk_tavling) VALUES (@fk_tavling);",
+            //            Postgres.lista = new List<NpgsqlParameter>()
+            //            {
+            //                new NpgsqlParameter("@fk_tavling", row[dc])
+            //            });
+            //    }
+
+
+            //foreach (DataColumn dc in dtCopy.Columns)
+            //{
+            //    tillDb.SqlFrågaParameters(
+            //        "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (@tavlingsid, @golfid);",
+            //        Postgres.lista = new List<NpgsqlParameter>()
+            //        {
+            //            new NpgsqlParameter("@golfid", row[dc]),
+            //            new NpgsqlParameter("@tavlingsid", row[dc])
+            //        });
+            //}
+            //}
+
+            //int antalRader = dt.Rows.Count;
+            //string sqlInsertFråga = "";
+
+            //for (int i = 0; i < antalRader; i++)
+            //{
+            //    sqlInsertFråga = "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (@tavlingsid" + i + ", @golfid" + i + ");";
+
+            //    int tavlingsId = (int)dt.Rows[i]["fk_tavling"];
+            //    string golfid = dt.Rows[i]["golfid"].ToString();
+
+            //    tillDb.SqlFrågaParameters(sqlInsertFråga, Postgres.lista = new List<NpgsqlParameter>()
+            //    {
+            //        new NpgsqlParameter("@tavlingsid" + i, tavlingsId),
+            //        new NpgsqlParameter("@golfid" + i, golfid)
+            //    });
+
+            //}
 
             //tillDb.SqlFrågaParameters(
             //    "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (" + sqlInsertFråga + ");",
