@@ -251,24 +251,46 @@ namespace Golf_6.Controllers
         }
         #endregion
 
-        //GET: Anmälan
+        //Get alla tävlingar
+        [Authorize(Roles = "2")]
+        public ActionResult AllaTavlingar()
+        {
+            TävlingModels t = new TävlingModels();
+            DataTable dt = new DataTable();
+            Postgres p = new Postgres();
+
+            dt = p.sqlFragaTable("SELECT * from tavling");
+            t.AllaTavlingar = dt;
+            return View(t);
+        }
+
+        //GET: Anmälningsvyn för admin
         [Authorize(Roles = "2")]
         [HttpGet]
         public ActionResult AnmalanAdmin()
         {
+            TävlingModels.Anmälan a = new TävlingModels.Anmälan();
+            a.TavlingsId = Convert.ToInt32(Request.QueryString["validate"]);
+            ViewBag.TavlingsID = a.TavlingsId;
             return View("AnmalanAdmin");
         }
 
+        //Skapar anmälan
         [Authorize(Roles = "2")]
         [HttpPost]
         public ActionResult AnmalanAdmin(FormCollection collection)
         {
             TävlingModels.Anmälan a = new TävlingModels.Anmälan();
-            a.TavlingsId = 1; //hårdkodat nu
-            a.golfID = collection["golfid"]; 
-            int maxAntal = Convert.ToInt32(collection["maxAntal"]);
-            
 
+            a.TavlingsId = Convert.ToInt32(collection["tavlingsID"]);
+            a.GolfID = collection["golfid"];
+            string meddelande = "";
+            meddelande = a.anmälan(a.TavlingsId, a.GolfID);
+
+            if (meddelande != "")
+            {
+                TempData["notice"] = meddelande;
+            }
             return View("Index");
         }
 
@@ -290,7 +312,7 @@ namespace Golf_6.Controllers
             DateTime datum = Convert.ToDateTime(collection["datepickerTavling"]);
             DateTime starttid = Convert.ToDateTime(collection["Starttidinput"]);
             DateTime sluttid = Convert.ToDateTime(collection["sluttidinput"]);
-            DateTime sistaAnmälan = Convert.ToDateTime(collection["senastinput"]);
+            DateTime sistaAnmälan = Convert.ToDateTime(collection["datepickerSistaAnm"]);
             int maxAntal = Convert.ToInt32(collection["deltagareinput"]);
             string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
             
