@@ -446,11 +446,23 @@ namespace Golf_6.Controllers
             int id = Convert.ToInt32(User.Identity.Name);
             a.GolfID = a.getGolfID(id);
             string meddelande = "";
+            string kontrollAntal = "";
+
+            
             a.AllaTävlingar = a.GetAllaTävlingar(DateTime.Today);
             if (collection["boka"] != null)
             {
                 a.TavlingsId = Convert.ToInt32(collection["boka"]);
-                meddelande = a.anmälan(a.TavlingsId, a.GolfID);
+                kontrollAntal = a.kontrolleraAntalAnmälda(a.TavlingsId);
+                if (kontrollAntal == "")
+                {
+                    meddelande = a.anmälan(a.TavlingsId, a.GolfID);
+                }
+                else
+                {
+                    TempData["notice"] = "Max antal anmälda hann tyvärr uppnå maxantalet. Anmälan har inte genomförts.";
+                }
+                
             }
             if(collection["avboka"] != null)
             {

@@ -7,15 +7,20 @@
 @{
     Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
 }
-
+<br />
+ 
  @using (Html.BeginForm())
  {
     
         List<int> anmäldaTävlingar = ViewBag.AnmäldLista;
         string golfid = ViewBag.GolfID;
     
-
-
+     if (TempData["notice"] != null) {
+<div class="alert alert-warning alert-dismissable">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+    <strong>Varning! </strong> TempData["notice"]
+</div>
+     }
 
 
         <div class="center-block">
