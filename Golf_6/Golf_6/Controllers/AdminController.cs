@@ -511,6 +511,23 @@ namespace Golf_6.Controllers
         [HttpPost]
         public ActionResult RegistreraTävling(FormCollection collection)
         {
+            int tävlingsID = 1; //Hårdkodat, ska tas in från viewn
+
+            TävlingModels.Resultat t = new TävlingModels.Resultat();
+            string golfid = collection["golfid"];
+            List<int> resultat = new List<int>();
+            List<int> erhållnaSlag = t.getErhållnaSlag(golfid);
+            string meddelande = "";
+            int slag = 0;
+            for(int i = 0; i<18; i++)
+            {
+                int y = i + 1;
+                string x = "hål" + y.ToString();
+                slag = Convert.ToInt32(collection[x]);
+                resultat.Add(slag);
+            }
+            t.Poäng = t.getPoäng(resultat, erhållnaSlag);
+            meddelande = t.registreraResultat(tävlingsID, golfid, t.Poäng);
             return View();
         }
 
