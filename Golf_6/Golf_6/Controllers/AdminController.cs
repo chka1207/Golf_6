@@ -506,6 +506,58 @@ namespace Golf_6.Controllers
         {
             return View();
         }
+   
+        //GET: Avanmälningsvyn för admin
+        [Authorize(Roles = "2")]
+        [HttpGet]
+        public ActionResult AvanmalanAdmin()
+        {
+            TävlingModels.Anmälan a = new TävlingModels.Anmälan();
+            DataTable dt = new DataTable();
+            TävlingModels.Startlista s = new TävlingModels.Startlista();
+            a.TavlingsId = Convert.ToInt32(Request.QueryString["validate"]);
+            ViewBag.TavlingsID = a.TavlingsId;
+           
+          dt =  s.StartLista(a.TavlingsId);
 
+            foreach (DataRow dr in dt.Rows)
+            {
+                Admin ad = new Admin
+                {
+                    GolfID = dr["golfid"].ToString(),
+                    Fornamn = dr["fornamn"].ToString(),
+                    Efternamn = dr["efternamn"].ToString()
+                };
+            }
+            return View("AvanmalanAdmin", dt);
+        }
+
+        //Avanmälan
+        [Authorize(Roles = "2")]
+        [HttpPost]
+        public ActionResult AvanmalanAdmin(FormCollection collection)
+        {
+            TävlingModels.Anmälan a = new TävlingModels.Anmälan();
+
+            a.TavlingsId = Convert.ToInt32(collection["tavlingsID"]);
+            a.GolfID = collection["golfid"];
+            string meddelande = "";
+            string kontroll = "";
+            kontroll = a.kontrolleraGolfID(a.GolfID);
+            if (kontroll == "giltigt")
+            {
+                meddelande = a.anmälan(a.TavlingsId, a.GolfID);
+                if (meddelande != "")
+                {
+                    TempData["notice"] = meddelande;
+                }
+            }
+            else
+            {
+                TempData["notice"] = kontroll;
+            }
+
+            return RedirectToAction("AllaTavlingar");
+        }
     }
 }
