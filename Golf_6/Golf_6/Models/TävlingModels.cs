@@ -276,6 +276,22 @@ namespace Golf_6.Models
 
             }
 
+            public string registreraResultat(int tävlingID, string golfID, double poäng)
+            {
+                Postgres x = new Postgres();
+                string meddelande = "";
+
+                meddelande = x.SqlParameters("insert into resultat (fk_tavling, fk_golfid, poang) values (@par1, @par2, @par3)", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", tävlingID),
+                    new NpgsqlParameter("@par2", golfID),
+                    new NpgsqlParameter("@par3", poäng)
+                });
+
+                return meddelande;
+            }
+
+
         }
     }
 }
