@@ -260,7 +260,7 @@ namespace Golf_6.Controllers
             DataTable dt = new DataTable();
             Postgres p = new Postgres();
 
-            dt = p.sqlFragaTable("SELECT * from tavling");
+            dt = p.sqlFragaTable("SELECT * from tavling order by datum desc");
             t.AllaTavlingar = dt;
             return View(t);
         }

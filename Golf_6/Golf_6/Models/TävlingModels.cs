@@ -39,7 +39,7 @@ namespace Golf_6.Models
                 Postgres p = new Postgres();
                 DataTable dt = new DataTable();
 
-                dt = p.sqltable("SELECT DISTINCT tavling.datum, tavling.starttid, tavling.sluttid, resultat.fk_tavling FROM tavling, resultat WHERE tavling.id = resultat.fk_tavling order by tavling.datum asc;");
+                dt = p.sqltable("SELECT DISTINCT tavling.datum, tavling.starttid, tavling.sluttid, resultat.fk_tavling FROM tavling, resultat WHERE tavling.id = resultat.fk_tavling order by tavling.datum desc;");
 
                 return dt;
             }
