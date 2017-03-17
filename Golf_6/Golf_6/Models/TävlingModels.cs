@@ -278,6 +278,8 @@ namespace Golf_6.Models
 
             public double Poäng { get; set; }
 
+            public string Kön { get; set; }
+
             public List<string> ErhållnaSlag { get; set; }
 
             public int HålErhållnaSlag { get; set; }
@@ -330,12 +332,16 @@ namespace Golf_6.Models
             //Metod för att hämta erhållna slag för varje hål, ej färdig
             public List<int> getErhållnaSlag(string golfid, string tee, string kön)
             {
+                TävlingModels.Resultat t = new TävlingModels.Resultat();
+                DataTable teeTabell = t.getTeeTabell(tee);
+                double hcp = t.getHcp(golfid);
+                t.Kön = t.getKön(golfid);
                 int kvarvarande = 0;
                 int erhållnaSlag = 0;
                 
 
 
-                TävlingModels.Resultat t = new TävlingModels.Resultat();
+                
                 List<TävlingModels.Resultat> lista = new List<TävlingModels.Resultat>();
                 Postgres x = new Postgres();
                 DataTable tabellBana = new DataTable();
@@ -439,6 +445,22 @@ namespace Golf_6.Models
                 }
                 return hcp;
             }
+            public string getKön(string golfid)
+            {
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+                string kön = "";
+                dt = x.SqlFrågaParameters("select kon from medlemmar where golfid = @par1;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", golfid)
+                });
+                foreach (DataRow dr in dt.Rows)
+                {
+                    kön = dr["kon"].ToString();
+                }
+                return kön;
+            }
+
 
 
         }
