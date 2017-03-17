@@ -68,7 +68,7 @@
                 }
                 @if (t.AntalAnmälda > 0)
                 {
-                    <td align="right">@Html.ActionLink("Avanmäl", "", "", new { validate = Convert.ToInt32(@row["id"]) }, null)</td>
+                    <td align="right">@Html.ActionLink("Avanmäl", "AvanmalanAdmin", "Admin", new { validate = Convert.ToInt32(@row["id"]) }, null)</td>
                 }
                 else
                 {
