@@ -58,7 +58,7 @@ namespace Golf_6.Controllers
         {
             int MedlemID = Int16.Parse(Request.QueryString["m"]); // - variabel för medlemsid
             int tee = Int16.Parse(Request.QueryString["teeid"]); // - variable för teeid
-            DateTime starttid = Convert.ToDateTime(Request.QueryString["datum"]); // - variabel för datum
+            DateTime starttid = Convert.ToDateTime(Request.QueryString["starttid"]); // - variabel för starttiden
             ScorekortModel scorekort = new ScorekortModel();
 
             //Hämtar relevant information för scorekort.
