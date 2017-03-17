@@ -289,6 +289,27 @@ namespace Golf_6.Models
             return meddelande;
         }
 
+        //hämtar spelare som inte är incheckade
+        public List<Tidsbokning> GetEjIncheckade(int bokningsID)
+        {
+            Postgres x = new Postgres();
+            x.SqlFrågaParameters("select golfid, kon, handikapp from medlemmar where id in (select medlem_id from deltar where reservation_id = @id and incheckad = false);", Postgres.lista = new List<Npgsql.NpgsqlParameter>()
+            {
+                new Npgsql.NpgsqlParameter("@id", bokningsID)
+            });
+            List<Tidsbokning> y = new List<Tidsbokning>();
+
+            foreach (DataRow dr in x._tabell.Rows)
+            {
+                Tidsbokning t = new Tidsbokning();
+                t.GolfID = dr["golfid"].ToString();
+                t.MedlemKön = dr["kon"].ToString();
+                t.MedlemHCP = Convert.ToDouble(dr["handikapp"]);
+                y.Add(t);
+            }
+            return y;
+        }
+
         public List<Tidsbokning> GetBokning (int bokningsID)
         {
             Postgres x = new Postgres();
