@@ -426,7 +426,7 @@ namespace Golf_6.Controllers
 
             if (ärTävlingenRedanSlumpad == false)
             {
-                dt = tävling.StartLista();
+                dt = tävling.StartLista(3);
                 ViewBag.Message = "Denna tävling är nu slumpad. Här kommer ordningen.";
                 //Slumpare
                 Random random = new Random();
