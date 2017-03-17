@@ -286,9 +286,12 @@ namespace Golf_6.Controllers
             a.TavlingsId = Convert.ToInt32(collection["tavlingsID"]);
             a.GolfID = collection["golfid"];
             string meddelande = "";
-            string kontroll = "";
-            kontroll = a.kontrolleraGolfID(a.GolfID);
-            if (kontroll == "giltigt")
+            string kontrollGolfId = "";
+            string kontrollAntal = "";
+
+            kontrollAntal = a.kontrolleraAntalAnmälda(a.TavlingsId);
+            kontrollGolfId = a.kontrolleraGolfID(a.GolfID);
+            if (kontrollGolfId == "giltigt" && kontrollAntal == "")
             {
                 meddelande = a.anmälan(a.TavlingsId, a.GolfID);
                 if (meddelande != "")
@@ -296,9 +299,13 @@ namespace Golf_6.Controllers
                 TempData["notice"] = meddelande;
             }
             }
-            else
+            else if (kontrollGolfId != "giltigt")
             {
-                TempData["notice"] = kontroll;
+                TempData["notice"] = kontrollGolfId;
+            }
+            else if (kontrollAntal != "")
+            {
+                TempData["notice"] = kontrollAntal;
             }
 
             return RedirectToAction("AllaTavlingar");
