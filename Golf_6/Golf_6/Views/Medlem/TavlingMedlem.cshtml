@@ -1,0 +1,59 @@
+﻿@model Golf_6.Models.TävlingModels.Anmälan
+@using Golf_6.Controllers;
+@using Golf_6.Models;
+@using System.Collections.Generic;
+@using System.Data;
+
+@{
+    Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
+}
+
+<h2>Individuell poängbogey</h2>
+@Html.BeginForm()
+{
+@{
+    List<int> anmäldaTävlingar = ViewBag.AnmäldLista;
+    string golfid = ViewBag.GolfID;
+}
+
+
+
+
+<div class="center-block">
+    <table class="table table-striped table-responsive table-bordered">
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Starttid</th>
+                <th>Sista dag för anmälan</th>
+                <th>Max antal deltagare</th>
+            </tr>
+        </thead>
+        <tr>
+            @if (Model.AllaTävlingar != null)
+            {
+                foreach (DataRow dr in Model.AllaTävlingar.Rows)
+                {
+                <tr>
+                    <td>@Convert.ToDateTime(@dr["datum"]).ToShortDateString()</td>
+                    <td>@dr["starttid"]</td>
+                    <td>@Convert.ToDateTime(@dr["sista_anmalan"]).ToShortDateString()</td>
+                    <td>@dr["max_antal"]</td>
+
+                    @{if (anmäldaTävlingar.Contains(Convert.ToInt32(dr["id"])) == true)
+                        {
+                            <td align="right"><button class="btn btn-link" name="Avboka" type="submit" href="Medlem/Tävling" title="Avoka" value="@Convert.ToInt32(@dr["id"])"></button> </td>
+                        }
+                        else
+                        {
+                            <td align="right"><button class="btn btn-link" name="Boka" type="submit" href="Medlem/Tävling" title="Boka" value="@Convert.ToInt32(@dr["id"])"></button> </td>
+                        }
+                    }
+                </tr>
+
+                            }
+                        }
+            </tr>
+        </table>
+    </div>
+    }
