@@ -28,19 +28,32 @@
                         <th>Starttid</th>
                         <th>Sista dag för anmälan</th>
                         <th>Max antal deltagare</th>
+                        <th>Totalt antal anmälda</th>
                         <th>Anmälan</th>
                     </tr>
                 </thead>
                 <tr>
                     @if (Model.AllaTävlingar != null)
                     {
+                      
                         foreach (DataRow dr in Model.AllaTävlingar.Rows)
                         {
+                            TävlingModels t = new TävlingModels();
+                            int id = Convert.ToInt32(@dr["id"]);
+                            int antalAnmälda = 0;
+                            antalAnmälda = t.antalAnmälda(id);
+
+                            t.AntalAnmälda = antalAnmälda;
+                            int maxAntal = Convert.ToInt32(@dr["max_antal"]);
+                            string meddelande = "Antal anmälda har uppnåt maxantalet.";
+                            string antal = t.AntalAnmälda.ToString();
+                            
                         <tr>
                             <td>@Convert.ToDateTime(@dr["datum"]).ToShortDateString()</td>
                             <td>@dr["starttid"]</td>
                             <td>@Convert.ToDateTime(@dr["sista_anmalan"]).ToShortDateString()</td>
                             <td>@dr["max_antal"]</td>
+                            <td>@antal</td>
 
                             @{if (anmäldaTävlingar.Contains(Convert.ToInt32(dr["id"])) == true)
                                 {
@@ -51,7 +64,15 @@
                                 else
                                 {
                                     <td align="center">
-                                        <button class="btn btn-info show" name="Boka" type="submit" href="Medlem/Tävling" title="Anmäl" value="@Convert.ToInt32(@dr["id"])">Anmäl</button>
+                                        @if (maxAntal > t.AntalAnmälda)
+                                        {
+                                            <button class="btn btn-info show" name="Boka" type="submit" href="Medlem/Tävling" title="Anmäl" value="@Convert.ToInt32(@dr["id"])">Anmäl</button>
+                                        }
+                                        else
+                                        {
+                                            @meddelande;
+                                        }
+                                        
                                     </td>
                                 }
                             }
