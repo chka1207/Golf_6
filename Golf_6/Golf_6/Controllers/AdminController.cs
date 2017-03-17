@@ -591,5 +591,21 @@ namespace Golf_6.Controllers
             return View(dt);
         }
 
+        //GET: Registrera tävlingsresultat
+        [Authorize(Roles ="2")]
+        [HttpGet]
+        public ActionResult RegistreraTävling()
+        {
+            return View();
+        }
+
+        //POST: Registrera tävlingsresultat
+        [Authorize(Roles ="2")]
+        [HttpPost]
+        public ActionResult RegistreraTävling(FormCollection collection)
+        {
+            return View();
+        }
+
     }
 }
