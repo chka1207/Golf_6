@@ -269,16 +269,24 @@ namespace Golf_6.Models
         public class Resultat
         {
             public int TavlingsID { get; set; }
-            
+
             public string Fornamn { get; set; }
-            
+
             public string Efternamn { get; set; }
-            
+
             public string GolfID { get; set; }
-            
+
             public double Poäng { get; set; }
 
             public List<string> ErhållnaSlag { get; set; }
+
+            public int HålErhållnaSlag { get; set; }
+
+            public int HålID { get; set; }
+
+            public int HålHCP { get; set; }
+
+            public int HålPar {get; set;}
 
             public DataTable ResultatTabell { get; set; }
 
@@ -320,13 +328,44 @@ namespace Golf_6.Models
             }
 
             //Metod för att hämta erhållna slag för varje hål, ej färdig
-            public List<int> getErhållnaSlag(string golfid)
+            public List<int> getErhållnaSlag(string golfid, string tee, string kön)
             {
-                Postgres x = new Postgres();
-                DataTable dt = new DataTable();
-                List<int> l = new List<int>();
-                int i = 0;
+                int kvarvarande = 0;
                 int erhållnaSlag = 0;
+                
+
+
+                TävlingModels.Resultat t = new TävlingModels.Resultat();
+                List<TävlingModels.Resultat> lista = new List<TävlingModels.Resultat>();
+                Postgres x = new Postgres();
+                DataTable tabellBana = new DataTable();
+                tabellBana = x.sqlFragaTable("select * from bananshal order by hcp;");
+                foreach(DataRow dr in tabellBana.Rows)
+                {
+                    t.HålID = Convert.ToInt32(dr["halid"]);
+                    t.HålHCP = Convert.ToInt32(dr["hcp"]);
+                    t.HålPar = Convert.ToInt32(dr["par"]);
+                    
+                    if (kvarvarande != 0)
+                    {
+                        t.HålErhållnaSlag = erhållnaSlag + t.HålPar + 1;
+                        kvarvarande += kvarvarande - 1;
+                    }
+                    else
+                    {
+                        t.HålErhållnaSlag = erhållnaSlag + t.HålPar;
+                    }
+
+                    lista.Add(t);
+                }
+                List<TävlingModels.Resultat> lista2 = lista.OrderBy(tt => tt.HålID).ToList();
+                List<int> l = new List<int>();
+                foreach(TävlingModels.Resultat tr in lista2)
+                {
+                    int temp = tr.HålErhållnaSlag;
+                    l.Add(temp);
+                }
+               
 
                 return l;
             }

@@ -512,11 +512,13 @@ namespace Golf_6.Controllers
         public ActionResult RegistreraTävling(FormCollection collection)
         {
             int tävlingsID = 1; //Hårdkodat, ska tas in från viewn
+            string tee = "";
+            string kön = "";
 
             TävlingModels.Resultat t = new TävlingModels.Resultat();
             string golfid = collection["golfid"];
             List<int> resultat = new List<int>();
-            List<int> erhållnaSlag = t.getErhållnaSlag(golfid);
+            List<int> erhållnaSlag = t.getErhållnaSlag(golfid, tee, kön);
             string meddelande = "";
             int slag = 0;
             for(int i = 0; i<18; i++)
