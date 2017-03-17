@@ -414,6 +414,17 @@ namespace Golf_6.Models
                 return totPoäng;
             }
 
+            public DataTable getTeeTabell(string teeFärg)
+            {
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+                dt = x.SqlFrågaParameters("select * from tee where namn = @par1;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", teeFärg)
+                });
+                return dt;
+            }
+
 
         }
     }
