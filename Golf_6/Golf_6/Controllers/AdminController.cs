@@ -400,180 +400,79 @@ namespace Golf_6.Controllers
             DataTable dt = new DataTable();
             TävlingModels.Startlista tävling = new TävlingModels.Startlista();
             Postgres tillDb = new Postgres();
+            Postgres frånDb = new Postgres();
+            Postgres db = new Postgres();
             
-            dt = tävling.StartLista();
-            
-            Random random = new Random();
+            DataTable kontrolleraOmTävlingenRedanÄrSlumpad;
+            //ärTävlingenRedanSlumpad = Convert.ToBoolean(db.sqlFraga("SELECT EXISTS ( SELECT 1 FROM tavlingsgrupper WHERE fk_tavling = 3 )"));
+            kontrolleraOmTävlingenRedanÄrSlumpad = db.sqlFragaTable("SELECT EXISTS ( SELECT 1 FROM tavlingsgrupper WHERE fk_tavling = 3 )");
 
-            dt.Columns.Add(new DataColumn("RandomNum", Type.GetType("System.Int32")));
-            //DataColumn r = dt.Columns.Add("RandomNum", typeof(Int32));
+            bool ärTävlingenRedanSlumpad = Convert.ToBoolean(kontrolleraOmTävlingenRedanÄrSlumpad.Rows[0][0]);
 
-            for (int i = 0; i < dt.Rows.Count; i++)
-                dt.Rows[i]["RandomNum"] = random.Next(1000);
-            
-
-            DataView dv = new DataView(dt);
-            dv.Sort = "RandomNum";
-            dt = dv.ToTable();
-            dt.Columns.Remove("RandomNum");
-
-            DataTable dtCopy = new DataTable();
-            dtCopy = dt.Copy();
-
-            dtCopy.Columns.Remove("fornamn");
-            dtCopy.Columns.Remove("efternamn");
-            dtCopy.Columns["fk_tavling"].SetOrdinal(0);
-
-            int countRow = dtCopy.Rows.Count;
-            int countCol = dtCopy.Columns.Count;
-
-            string sqlStart = "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES ";
-            string sqlAntalVärden = "";
-            string sqlQuery;
-
-            for (int i = 0; i < countRow; i++)
+            if (ärTävlingenRedanSlumpad == false)
             {
-                sqlAntalVärden += "(@tavlingsid" + i + ", @golfid" + i + "), ";
-            }
+                dt = tävling.StartLista();
+                ViewBag.Message = "Denna tävling är nu slumpad. Här kommer ordningen.";
+                //Slumpare
+                Random random = new Random();
+                dt.Columns.Add(new DataColumn("RandomNum", Type.GetType("System.Int32")));
+                for (int i = 0; i < dt.Rows.Count; i++)
+                    dt.Rows[i]["RandomNum"] = random.Next(1000);
+                DataView dv = new DataView(dt);
+                dv.Sort = "RandomNum";
+                dt = dv.ToTable();
+                dt.Columns.Remove("RandomNum");
 
-            sqlAntalVärden = sqlAntalVärden.Remove(sqlAntalVärden.Length - 2);
+                //Kopierar datatable för att kopiera tillbaka nya ordningen till databasen
+                DataTable dtCopy = new DataTable();
+                dtCopy = dt.Copy();
 
-            sqlQuery = sqlStart + sqlAntalVärden + ";";
-            
-            tillDb.SqlFrågaParameters(sqlQuery, Postgres.lista = new List<NpgsqlParameter>()
+                dtCopy.Columns.Remove("fornamn");
+                dtCopy.Columns.Remove("efternamn");
+                dtCopy.Columns["fk_tavling"].SetOrdinal(0);
+
+                int tavlingsId = Convert.ToInt32(dtCopy.Rows[0]["fk_tavling"]);
+                dtCopy.Columns.Remove("fk_tavling");
+
+                List<string> golfid = new List<string>();
+                foreach (DataRow dr in dtCopy.Rows)
+                    golfid.Add(dr[0].ToString());
+
+                tillDb.SqlFrågaParameters(
+                    "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (@tavlingsid, @golfid);",
+                    Postgres.lista = new List<NpgsqlParameter>()
                     {
-                        new NpgsqlParameter("@golfid0", dtCopy.Rows[0]["golfid"]),
-                        new NpgsqlParameter("@tavlingsid0",  dtCopy.Rows[0]["fk_tavling"]),
-                        new NpgsqlParameter("@golfid1", dtCopy.Rows[1]["golfid"]),
-                        new NpgsqlParameter("@tavlingsid1",  dtCopy.Rows[1]["fk_tavling"]),
-                        new NpgsqlParameter("@golfid2", dtCopy.Rows[2]["golfid"]),
-                        new NpgsqlParameter("@tavlingsid2",  dtCopy.Rows[2]["fk_tavling"]),
-                        new NpgsqlParameter("@golfid3", dtCopy.Rows[3]["golfid"]),
-                        new NpgsqlParameter("@tavlingsid3",  dtCopy.Rows[3]["fk_tavling"]),
-                        new NpgsqlParameter("@golfid4", dtCopy.Rows[4]["golfid"]),
-                        new NpgsqlParameter("@tavlingsid4",  dtCopy.Rows[4]["fk_tavling"]),
-                        new NpgsqlParameter("@golfid5", dtCopy.Rows[5]["golfid"]),
-                        new NpgsqlParameter("@tavlingsid5",  dtCopy.Rows[5]["fk_tavling"]),
-                        new NpgsqlParameter("@golfid6", dtCopy.Rows[6]["golfid"]),
-                        new NpgsqlParameter("@tavlingsid6",  dtCopy.Rows[6]["fk_tavling"]),
-                        new NpgsqlParameter("@golfid7", dtCopy.Rows[7]["golfid"]),
-                        new NpgsqlParameter("@tavlingsid7",  dtCopy.Rows[7]["fk_tavling"]),
-                        new NpgsqlParameter("@golfid8", dtCopy.Rows[8]["golfid"]),
-                        new NpgsqlParameter("@tavlingsid8",  dtCopy.Rows[8]["fk_tavling"]),
-                        new NpgsqlParameter("@golfid9", dtCopy.Rows[9]["golfid"]),
-                        new NpgsqlParameter("@tavlingsid9",  dtCopy.Rows[9]["fk_tavling"]),
+                        new NpgsqlParameter("@tavlingsid", tavlingsId),
+                        new NpgsqlParameter("@golfid", golfid)
                     });
 
-            //tillDb.SqlFrågaParameters(
-            //        "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (@tavlingsid, @golfid), (@tavlingsid1, @golfid1);",
-            //        Postgres.lista = new List<NpgsqlParameter>()
-            //        {
-            //            new NpgsqlParameter("@golfid", dtCopy.Rows[0]["golfid"]),
-            //            new NpgsqlParameter("@tavlingsid",  dtCopy.Rows[0]["fk_tavling"]),
-            //            new NpgsqlParameter("@golfid1", dtCopy.Rows[1]["golfid"]),
-            //            new NpgsqlParameter("@tavlingsid1",  dtCopy.Rows[1]["fk_tavling"])
-            //        });
+                return View(dt);
+            }
+            else
+            {
+                ViewBag.Message = "Denna tävling är redan slumpad sen tidigare. Här är ordningen.";
+                DataTable slumpadeSpelare = frånDb.sqlFragaTable("SELECT fk_tavling, golfid FROM tavlingsgrupper WHERE fk_tavling = 3");
 
+                string golfidn = slumpadeSpelare.Rows[0][1].ToString();
+                golfidn = golfidn.Substring(1, golfidn.Length - 2); //Tar bort hakparenteserna
+                string[] array = golfidn.Split(',');
+                slumpadeSpelare.Clear();
 
-            //int countRow = dtCopy.Rows.Count;
-            //int countCol = dtCopy.Columns.Count;
+                for (int i = 0; i < array.Length; i++)
+                {
+                    string[] arraysplit = golfidn.Split(',');
+                    DataRow row;
+                    row = slumpadeSpelare.NewRow();
+                    row["golfid"] = arraysplit[i];
+                    row["fk_tavling"] = 3;
+                    slumpadeSpelare.Rows.Add(row);
+                }
+                //bool columnsAdded = false;
 
-            //for (int iCol = 0; iCol < countCol; iCol++)
-            //{
-            //    DataColumn col = dtCopy.Columns[iCol];
+                //ViewBag.Golfid = golfidn;
 
-            //    for (int iRow = 0; iRow < countRow; iRow++)
-            //    {
-            //        object cell = dtCopy.Rows[iRow].ItemArray[iCol];
-
-            //        tillDb.SqlFrågaParameters(
-            //            "INSERT INTO tavlingsgrupper (fk_tavling) VALUES (@fk_tavling);",
-            //            Postgres.lista = new List<NpgsqlParameter>()
-            //            {
-            //                new NpgsqlParameter("@fk_tavling", cell)
-            //            });
-            //    }
-            //}
-
-
-            //foreach (DataRow row in dtCopy.Rows)
-            //{
-            //    foreach (DataColumn dc in dtCopy.Columns)
-            //    {
-            //        tillDb.SqlFrågaParameters(
-            //            "INSERT INTO tavlingsgrupper (fk_tavling) VALUES (@fk_tavling);",
-            //            Postgres.lista = new List<NpgsqlParameter>()
-            //            {
-            //                new NpgsqlParameter("@fk_tavling", row[dc])
-            //            });
-            //    }
-
-
-            //foreach (DataColumn dc in dtCopy.Columns)
-            //{
-            //    tillDb.SqlFrågaParameters(
-            //        "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (@tavlingsid, @golfid);",
-            //        Postgres.lista = new List<NpgsqlParameter>()
-            //        {
-            //            new NpgsqlParameter("@golfid", row[dc]),
-            //            new NpgsqlParameter("@tavlingsid", row[dc])
-            //        });
-            //}
-            //}
-
-            //int antalRader = dt.Rows.Count;
-            //string sqlInsertFråga = "";
-
-            //for (int i = 0; i < antalRader; i++)
-            //{
-            //    sqlInsertFråga = "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (@tavlingsid" + i + ", @golfid" + i + ");";
-
-            //    int tavlingsId = (int)dt.Rows[i]["fk_tavling"];
-            //    string golfid = dt.Rows[i]["golfid"].ToString();
-
-            //    tillDb.SqlFrågaParameters(sqlInsertFråga, Postgres.lista = new List<NpgsqlParameter>()
-            //    {
-            //        new NpgsqlParameter("@tavlingsid" + i, tavlingsId),
-            //        new NpgsqlParameter("@golfid" + i, golfid)
-            //    });
-
-            //}
-
-            //tillDb.SqlFrågaParameters(
-            //    "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (" + sqlInsertFråga + ");",
-            //    Postgres.lista = new List<NpgsqlParameter>()
-            //    {
-            //        new NpgsqlParameter("@tavlingsid", tavlingsId),
-            //        new NpgsqlParameter("@golfid", golfid)
-            //    });
-
-
-
-
-            //Skickar in den nya ordningen på tabellen till databasen
-            //foreach (DataRow row in dt.Rows)
-            //{
-            //    foreach (DataColumn dc in dt.Columns)
-            //    {   
-            //        string f = row[dc].ToString();
-            //        string e = row[dc].ToString();
-            //        string golfid = row[dc].ToString();
-            //        string t = row[dc].ToString();
-
-            //        int tavlingsId = Convert.ToInt32(t);
-
-            //        tillDb.SqlFrågaParameters(
-            //            "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (@tavlingsid, @golfid);",
-            //            Postgres.lista = new List<NpgsqlParameter>()
-            //            {
-            //                new NpgsqlParameter("@tavlingsid", tavlingsId),
-            //                new NpgsqlParameter("@golfid", golfid)
-            //            });
-            //    }
-            //}
-
-
-            return View(dt);
+                return View(slumpadeSpelare);
+            }
         }
 
     }
