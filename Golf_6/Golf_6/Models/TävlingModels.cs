@@ -232,7 +232,7 @@ namespace Golf_6.Models
                     "LEFT JOIN medlemmar m ON a.golfid=m.golfid WHERE fk_tavling = @tavlingsid;",
                     Postgres.lista = new List<NpgsqlParameter>()
                     {
-                        new NpgsqlParameter("@tavlingsid", tavlingsId) //Hårdkodat tävlingId
+                        new NpgsqlParameter("@tavlingsid", tavlingsId)
                     });
 
                 return startlistan;
