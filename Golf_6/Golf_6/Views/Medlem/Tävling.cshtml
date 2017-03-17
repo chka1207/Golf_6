@@ -10,12 +10,12 @@
 }
 
 <h2>Tävlingar</h2>
-@Html.BeginForm()
+@using (Html.BeginForm())
 {
- @{ 
-     List<int> anmäldaTävlingar = ViewBag.AnmäldLista;
+ 
+         List<int> anmäldaTävlingar = ViewBag.AnmäldLista;
      string golfid = ViewBag.GolfID;
- }
+ 
 
 
 

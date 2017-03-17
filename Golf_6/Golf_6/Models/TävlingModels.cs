@@ -252,6 +252,8 @@ namespace Golf_6.Models
             
             public double Poäng { get; set; }
 
+            public List<string> ErhållnaSlag { get; set; }
+
             public DataTable ResultatTabell { get; set; }
 
             public DataTable tavlingsResultat(int id)
@@ -289,6 +291,62 @@ namespace Golf_6.Models
                 });
 
                 return meddelande;
+            }
+
+            //Metod för att hämta erhållna slag för varje hål, ej färdig
+            public List<int> getErhållnaSlag(string golfid)
+            {
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+                List<int> l = new List<int>();
+                int i = 0;
+                int erhållnaSlag = 0;
+
+                return l;
+            }
+
+            //Tar in en lista med spelarens erhållna slag/hål och en lista med slag/hål från tävlingen och räknar ut den totala poängen för tävlingen
+            public int getPoäng(List<int> slag, List<int> erhållnaSlagLista)
+            {
+                int totPoäng = 0;
+                for(int i =0; i < slag.Count; i++)
+                {
+                    if(erhållnaSlagLista[i] == slag[i])
+                    {
+                        totPoäng += 2;
+                    }
+                    if(erhållnaSlagLista[i] == slag[i] +1)
+                    {
+                        totPoäng += 3;
+                    }
+                    if(erhållnaSlagLista[i] == slag[i] +2)
+                    {
+                        totPoäng += 4;
+                    }
+                    if(erhållnaSlagLista[i] == slag[i] +3)
+                    {
+                        totPoäng += 5;
+                    }
+                    if(erhållnaSlagLista[i] == slag[i] +4)
+                    {
+                        totPoäng += 6;
+                    }
+                    if(erhållnaSlagLista[i] == slag[i] +5)
+                    {
+                        totPoäng += 7;
+                    }
+                    if(erhållnaSlagLista[i] == slag[i] -1)
+                    {
+                        totPoäng += +1;
+                    }
+                    if(erhållnaSlagLista[i] <= slag[i] -2)
+                    {
+                        totPoäng += 0;
+                    }
+
+                }
+
+                return totPoäng;
             }
 
 
