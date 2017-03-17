@@ -54,13 +54,17 @@ namespace Golf_6.Controllers
         //GET: ScorekortIfyllt
         //Genererar Scorekort med data ifyllt får vald medlem.
         [AllowAnonymous]
-        public ActionResult ScorekortIfyllt()
+        public ActionResult ScorekortIfyllt(FormCollection collection)
         {
             int MedlemID = Int16.Parse(Request.QueryString["m"]); // - variabel för medlemsid
-            int tee = Int16.Parse(Request.QueryString["teeid"]); // - variable för teeid
-            DateTime starttid = Convert.ToDateTime(Request.QueryString["starttid"]); // - variabel för starttiden
+            //int tee = Int16.Parse(Request.QueryString["teeid"]); // - variable för teeid
+            int tee = 1; //hårdkodat för tillfället
+            string tid = Request.QueryString["starttid"];
+            string starttid = tid;//.ToShortTimeString(); // - variabel för starttiden
+            
             ScorekortModel scorekort = new ScorekortModel();
-
+            scorekort.Starttid = starttid;
+          
             //Hämtar relevant information för scorekort.
             Postgres pg = new Postgres();
             DataTable dt = new DataTable();
