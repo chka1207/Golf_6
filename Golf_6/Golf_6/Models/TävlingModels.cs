@@ -95,6 +95,33 @@ namespace Golf_6.Models
 
             public DataTable AllaTävlingar { get; set; }
 
+            public string kontrolleraAntalAnmälda(int id)
+            {
+                string meddelande = "";
+                DataTable dt = new DataTable();
+                Postgres p = new Postgres();
+                int maxAntal = 0;
+                int totaltAnmälda = 0;
+                dt = p.SqlFrågaParameters("select max_antal from tavling where id = @tavlingsid", Postgres.lista = new List<NpgsqlParameter>()
+                    {
+                        new NpgsqlParameter("@tavlingsid", id)
+                    });
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    maxAntal = (int)dr["max_antal"];
+                }
+
+                TävlingModels t = new TävlingModels();
+                totaltAnmälda = t.antalAnmälda(id);
+
+                if (totaltAnmälda >= maxAntal)
+                {
+                    meddelande = "Antal anmälda har nått maxantalet. Anmälan har inte genomförts.";
+                }
+
+                return meddelande;
+            }
             public string kontrolleraGolfID(string golfid)
             {
                 Postgres p = new Postgres();
@@ -232,7 +259,7 @@ namespace Golf_6.Models
                     "LEFT JOIN medlemmar m ON a.golfid=m.golfid WHERE fk_tavling = @tavlingsid;",
                     Postgres.lista = new List<NpgsqlParameter>()
                     {
-                        new NpgsqlParameter("@tavlingsid", tavlingsId) //Hårdkodat tävlingId
+                        new NpgsqlParameter("@tavlingsid", tavlingsId)
                     });
 
                 return startlistan;
