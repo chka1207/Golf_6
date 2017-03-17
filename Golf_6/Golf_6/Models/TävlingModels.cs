@@ -424,6 +424,21 @@ namespace Golf_6.Models
                 });
                 return dt;
             }
+            public double getHcp(string golfid)
+            {
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+                double hcp = 0;
+                dt = x.SqlFrågaParameters("select handikapp from medlemmar where golfid = @par1;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", golfid)
+                });
+                foreach(DataRow dr in dt.Rows)
+                {
+                    hcp = Convert.ToDouble(dr["handikapp"]);
+                }
+                return hcp;
+            }
 
 
         }
