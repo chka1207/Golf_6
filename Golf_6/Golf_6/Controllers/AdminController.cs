@@ -511,14 +511,14 @@ namespace Golf_6.Controllers
         [HttpPost]
         public ActionResult RegistreraTävling(FormCollection collection)
         {
-            int tävlingsID = 1; //Hårdkodat, ska tas in från viewn
-            string tee = "";
-            string kön = "";
+            int tävlingsID = 3; //Hårdkodat, ska tas in från viewn
+            string tee = "Röd"; //Hårdkodat, ska tas in från viewn
+            
 
             TävlingModels.Resultat t = new TävlingModels.Resultat();
             string golfid = collection["golfid"];
             List<int> resultat = new List<int>();
-            List<int> erhållnaSlag = t.getErhållnaSlag(golfid, tee, kön);
+            List<int> erhållnaSlag = t.getErhållnaSlag(golfid, tee);
             string meddelande = "";
             int slag = 0;
             for(int i = 0; i<18; i++)
