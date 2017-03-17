@@ -181,7 +181,19 @@ namespace Golf_6.Models
             public bool Incheckad { get; set; }
             public int MedelmID { get; set; }
             public int BokningID { get; set; }
-         
+            public DataTable Incheckade { get; set; }
+
+
+            public DataTable allaIncheckade(int id)
+            {
+                Postgres p = new Postgres();
+                Incheckade = p.SqlFrågaParameters("select distinct medlem_id, fornamn, efternamn, golfid from deltar, reservation, medlemmar where incheckad = true and reservation_id = @id and medlemmar.id = deltar.medlem_id", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@id", id),                    
+                });
+
+                return Incheckade;
+            }
             public string checkainSpelare (int medlem, int bokning)
             {
                 
@@ -218,7 +230,8 @@ namespace Golf_6.Models
                 }
 
                 List<string> listan = new List<string>();
-                deltagare = t.GetBokning(a.BokningID);
+                //deltagare = t.GetBokning(a.BokningID);
+                deltagare = t.GetEjIncheckade(a.BokningID);
 
                 foreach(Tidsbokning tb in deltagare)
                 {

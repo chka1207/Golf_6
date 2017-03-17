@@ -344,7 +344,11 @@ namespace Golf_6.Controllers
             ViewBag.BokningID = bokningID;
             ViewBag.Datum = datum;
             ViewBag.Tid = tid;
-            return View();
+            DataTable d = new DataTable();
+            d = a.allaIncheckade(bokningID);
+            a.Incheckade = d;
+
+            return View(a);
         }
 
         //POST: Incheckning
@@ -356,6 +360,7 @@ namespace Golf_6.Controllers
             int bokningsID = Convert.ToInt32(collection["bokningID"]);
             int medlemsID = 0;
             string meddelande = "";
+            
             string s = Convert.ToString(collection["spelarlista"]);
             char[] tecken = new char[] { ',' };
             string[] array = s.Split(tecken, StringSplitOptions.None);
@@ -387,8 +392,18 @@ namespace Golf_6.Controllers
                     meddelande = a.checkainSpelare(medlemsID, bokningsID);
                 }
             }
+            DataTable d = new DataTable();
+            d = a.allaIncheckade(bokningsID);
+            a.Incheckade = d;
+           
+            DateTime datum = Convert.ToDateTime(collection["datum"]);
+            DateTime tid = Convert.ToDateTime(collection["tid"]);
+            ViewBag.Datum = Convert.ToDateTime(datum.ToShortDateString());
+            ViewBag.Tid = Convert.ToDateTime(tid.ToShortTimeString());
+            ViewBag.BokningID = bokningsID;
+            ViewBag.Spelare = a.GetSpelare(datum, tid, ref bokningsID);
             TempData["incheckning"] = "Du har checkat in " + array.Length + " personer";
-            return View("Index");
+            return View("Incheckning", a);
         }
 
 
