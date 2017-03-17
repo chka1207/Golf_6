@@ -34,6 +34,7 @@ namespace Golf_6.Models
         public int räknare { get; set; } = 0;
         public int kvarvarande { get; set; } = 0;
 
+        public string Starttid { get; set; }
         //Den informaiton som ska fylla scorekort.
         public Medlem AktuellMedlem { get; set; } = new Medlem();
         public Tidsbokning AktuellTidsbokning { get; set; } = new Tidsbokning();

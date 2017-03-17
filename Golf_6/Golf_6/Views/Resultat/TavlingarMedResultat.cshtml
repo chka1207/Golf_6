@@ -17,9 +17,9 @@
 
 }
 <div class="center-block">
-
-    <h2>Tävlingar Med Resultat</h2>
-
+    <br />
+    <h2>Tävlingar med resultat</h2>
+    <br />
     <table class="table table-striped table-responsive table-bordered">
         <thead>
             <tr>
@@ -37,7 +37,7 @@
                 <td>@Convert.ToDateTime(@row["datum"]).ToShortDateString()</td>
                 <td>@row["starttid"]</td>
                 <td>@row["sluttid"]</td>
-                <td align="right">@Html.ActionLink("Resultat", "Resultat", "Resultat", new { validate = Convert.ToInt32(@row["fk_tavling"]) }, null)</td>
+                <td align="left">@Html.ActionLink("Resultat", "Resultat", "Resultat", new { validate = Convert.ToInt32(@row["fk_tavling"]) }, null)</td>
             </tr>
             }
             </tr>

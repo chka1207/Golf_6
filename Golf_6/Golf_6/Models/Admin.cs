@@ -187,7 +187,7 @@ namespace Golf_6.Models
             public DataTable allaIncheckade(int id)
             {
                 Postgres p = new Postgres();
-                Incheckade = p.SqlFrågaParameters("select distinct medlem_id, fornamn, efternamn, golfid from deltar, reservation, medlemmar where incheckad = true and reservation_id = @id and medlemmar.id = deltar.medlem_id", Postgres.lista = new List<NpgsqlParameter>()
+                Incheckade = p.SqlFrågaParameters("select distinct tid, medlem_id, fornamn, efternamn, golfid from deltar, reservation, medlemmar where incheckad = true and reservation_id = @id and medlemmar.id = deltar.medlem_id and reservation.bokning_id = deltar.reservation_id", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@id", id),                    
                 });

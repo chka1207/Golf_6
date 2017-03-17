@@ -260,7 +260,7 @@ namespace Golf_6.Controllers
             DataTable dt = new DataTable();
             Postgres p = new Postgres();
 
-            dt = p.sqlFragaTable("SELECT * from tavling");
+            dt = p.sqlFragaTable("SELECT * from tavling order by datum desc");
             t.AllaTavlingar = dt;
             return View(t);
         }
@@ -317,17 +317,18 @@ namespace Golf_6.Controllers
         [HttpPost]
         public ActionResult Tävling(FormCollection collection)
         {
+                TävlingModels t = new TävlingModels();
+                DateTime datum = Convert.ToDateTime(collection["datepickerTavling"]);
+                DateTime starttid = Convert.ToDateTime(collection["Starttidinput"]);
+                DateTime sluttid = Convert.ToDateTime(collection["sluttidinput"]);
+                DateTime sistaAnmälan = Convert.ToDateTime(collection["datepickerSistaAnm"]);
+                int maxAntal = Convert.ToInt32(collection["deltagareinput"]);
+                string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
+
+                TempData["tävling"] = "Du har skapat en ny tävling";
+                return View("Index");
             
-            TävlingModels t = new TävlingModels();
-            DateTime datum = Convert.ToDateTime(collection["datepickerTavling"]);
-            DateTime starttid = Convert.ToDateTime(collection["Starttidinput"]);
-            DateTime sluttid = Convert.ToDateTime(collection["sluttidinput"]);
-            DateTime sistaAnmälan = Convert.ToDateTime(collection["datepickerSistaAnm"]);
-            int maxAntal = Convert.ToInt32(collection["deltagareinput"]);
-            string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
-            
-            TempData["tävling"] = "Du har skapat en ny tävling";
-            return View("Index");
+           
         }
 
         //GET: Incheckning
@@ -488,6 +489,22 @@ namespace Golf_6.Controllers
 
                 return View(slumpadeSpelare);
             }
+        }
+
+        //GET: Registrera tävlingsresultat
+        [Authorize(Roles ="2")]
+        [HttpGet]
+        public ActionResult RegistreraTävling()
+        {
+            return View();
+        }
+
+        //POST: Registrera tävlingsresultat
+        [Authorize(Roles ="2")]
+        [HttpPost]
+        public ActionResult RegistreraTävling(FormCollection collection)
+        {
+            return View();
         }
 
     }

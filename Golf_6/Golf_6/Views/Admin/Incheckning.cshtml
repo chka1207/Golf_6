@@ -120,12 +120,12 @@
         <tr>
             @foreach (DataRow row in Model.Incheckade.Rows)
             {
-          
+                @Html.Hidden("starttid", @row["tid"]);
             <tr>
                 <td>@row["fornamn"]</td>
                 <td>@row["efternamn"]</td>
                 <td>@row["golfid"]</td>
-                <td align="right">@Html.ActionLink("Scorekort", "Scorekort", "ScorekortModel", new { validate = Convert.ToInt32(@row["medlem_id"]) }, null)</td>
+                <td align="left">@Html.ActionLink("Scorekort", "ScorekortIfyllt", "ScorekortModel", new { m = Convert.ToInt32(@row["medlem_id"]), starttid = @row["tid"] }, null)</td>
             </tr>
             }
             </tr>
