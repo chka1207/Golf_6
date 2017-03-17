@@ -1,0 +1,66 @@
+﻿@model Golf_6.Models.TävlingModels.Anmälan
+@using Golf_6.Controllers;
+@using Golf_6.Models;
+@using System.Collections.Generic;
+@using System.Data;
+
+@{
+    Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
+}
+
+ @using (Html.BeginForm())
+ {
+    
+        List<int> anmäldaTävlingar = ViewBag.AnmäldLista;
+        string golfid = ViewBag.GolfID;
+    
+
+
+
+
+        <div class="center-block">
+            <h2>Här kan du anmäla dig till tävlingarna hos Hålslagets golfklubb</h2><br />
+            <h3>Individuell poängbogey</h3>
+            <table class="table table-striped table-responsive table-bordered">
+                <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Starttid</th>
+                        <th>Sista dag för anmälan</th>
+                        <th>Max antal deltagare</th>
+                        <th>Anmälan</th>
+                    </tr>
+                </thead>
+                <tr>
+                    @if (Model.AllaTävlingar != null)
+                    {
+                        foreach (DataRow dr in Model.AllaTävlingar.Rows)
+                        {
+                        <tr>
+                            <td>@Convert.ToDateTime(@dr["datum"]).ToShortDateString()</td>
+                            <td>@dr["starttid"]</td>
+                            <td>@Convert.ToDateTime(@dr["sista_anmalan"]).ToShortDateString()</td>
+                            <td>@dr["max_antal"]</td>
+
+                            @{if (anmäldaTävlingar.Contains(Convert.ToInt32(dr["id"])) == true)
+                                {
+                                    <td align="center">
+                                        <button class="btn btn-danger show" name="Avboka" type="submit" href="Medlem/Tävling" title="Avanmäl" value="@Convert.ToInt32(@dr["id"])">Avanmäl</button>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td align="center">
+                                        <button class="btn btn-info show" name="Boka" type="submit" href="Medlem/Tävling" title="Anmäl" value="@Convert.ToInt32(@dr["id"])">Anmäl</button>
+                                    </td>
+                                }
+                            }
+                        </tr>
+
+                                    }
+                                }
+
+                </table>
+            </div>
+
+                                }

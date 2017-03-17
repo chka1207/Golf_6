@@ -2,6 +2,7 @@
 @using Golf_6.Controllers;
 @using Golf_6.Models;
 @using System.Collections.Generic;
+@using System.Data;
 @{
     ViewBag.Title = "Incheckning";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -60,8 +61,8 @@
                     }
                 }
             }
-
-
+            @Html.Hidden("datum", datum);
+            @Html.Hidden("tid", tid);
             @Html.Hidden("bokningID", bokningsID);
             @Html.Hidden("nySpelare1", t.Spelare1ID);
             @Html.Hidden("nySpelare2", t.Spelare2ID);
@@ -102,5 +103,34 @@
 
     </div>
 
+    <br />
+    <div class="center-block">
 
+        <h2>Incheckade spelare</h2>
+
+    <table class="table table-striped table-responsive table-bordered">
+        <thead>
+            <tr>
+                <th>Förnamn</th>
+                <th>Efternamn</th>
+                <th>GolfID</th>
+                <th>Scorekort</th>
+              </tr>
+        </thead>
+        <tr>
+            @foreach (DataRow row in Model.Incheckade.Rows)
+            {
+          
+            <tr>
+                <td>@row["fornamn"]</td>
+                <td>@row["efternamn"]</td>
+                <td>@row["golfid"]</td>
+                <td align="right">@Html.ActionLink("Scorekort", "Scorekort", "ScorekortModel", new { validate = Convert.ToInt32(@row["medlem_id"]) }, null)</td>
+            </tr>
+            }
+            </tr>
+        </table>
+
+
+    </div>
             }

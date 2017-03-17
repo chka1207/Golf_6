@@ -617,10 +617,10 @@
     <Content Include="Views\Admin\Incheckning.cshtml" />
     <Content Include="Views\ScorekortModel\ScorekortIfyllt.cshtml" />
     <Content Include="Views\Admin\AnmalanAdmin.cshtml" />
-    <Content Include="Views\Medlem\Tävling.cshtml" />
     <Content Include="Views\Admin\AllaTavlingar.cshtml" />
     <Content Include="Views\Resultat\Resultat.cshtml" />
     <Content Include="Views\Resultat\TavlingarMedResultat.cshtml" />
+    <Content Include="Views\Medlem\TavlingMedlem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

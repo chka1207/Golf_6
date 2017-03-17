@@ -14,6 +14,7 @@ namespace Golf_6.Controllers
 {
     public class MedlemController : Controller
     {
+
         //Uppdatera personuppgifter
         [Authorize(Roles ="1")]
         [HttpPost]
@@ -424,7 +425,7 @@ namespace Golf_6.Controllers
         //GET: Anmäla till tävling
         [Authorize(Roles ="1")]
         [HttpGet]
-        public ActionResult Tävling()
+        public ActionResult TavlingMedlem()
         {
             TävlingModels.Anmälan t = new TävlingModels.Anmälan();
             int id = Convert.ToInt32(User.Identity.Name);
@@ -439,7 +440,7 @@ namespace Golf_6.Controllers
         //POST: Anmäla/Avanäla till tävling
         [Authorize(Roles = "1")]
         [HttpPost]
-        public ActionResult Tävling(FormCollection collection)
+        public ActionResult TavlingMedlem(FormCollection collection)
         {
             TävlingModels.Anmälan a = new TävlingModels.Anmälan();
             int id = Convert.ToInt32(User.Identity.Name);
