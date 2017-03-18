@@ -474,22 +474,75 @@ namespace Golf_6.Controllers
             else
             {
                 ViewBag.Message = "Denna tävling är redan slumpad sen tidigare. Här är ordningen.";
-                DataTable slumpadeSpelare = frånDb.sqlFragaTable("SELECT fk_tavling, golfid FROM tavlingsgrupper WHERE fk_tavling = 3");
+                DataTable slumpadeSpelare = frånDb.sqlFragaTable("SELECT golfid FROM tavlingsgrupper WHERE fk_tavling = 3");
 
-                string golfidn = slumpadeSpelare.Rows[0][1].ToString();
+                string golfidn = slumpadeSpelare.Rows[0][0].ToString();
                 golfidn = golfidn.Substring(1, golfidn.Length - 2); //Tar bort hakparenteserna
                 string[] array = golfidn.Split(',');
                 slumpadeSpelare.Clear();
+                int j = 1;
 
                 for (int i = 0; i < array.Length; i++)
                 {
-                    string[] arraysplit = golfidn.Split(',');
-                    DataRow row;
-                    row = slumpadeSpelare.NewRow();
-                    row["golfid"] = arraysplit[i];
-                    row["fk_tavling"] = 3;
-                    slumpadeSpelare.Rows.Add(row);
+                    if (i % 3 == 0)
+                    {
+                        DataRow row, row1;
+                        row = slumpadeSpelare.NewRow();
+                        row1 = slumpadeSpelare.NewRow();
+                        slumpadeSpelare.Rows.Add(row1);
+                        row["golfid"] = "Grupp " + j;
+                        slumpadeSpelare.Rows.Add(row);
+                        j++;
+
+                        string[] arraysplit = golfidn.Split(',');
+                        row = slumpadeSpelare.NewRow();
+                        row["golfid"] = arraysplit[i];
+                        //row["fk_tavling"] = 3;
+                        slumpadeSpelare.Rows.Add(row);
+                    }
+                    else if ((array.Length - i) == 4)
+                    {
+                        DataRow row, row1;
+                        row = slumpadeSpelare.NewRow();
+                        row1 = slumpadeSpelare.NewRow();
+                        slumpadeSpelare.Rows.Add(row1);
+                        row["golfid"] = "Grupp " + j;
+                        slumpadeSpelare.Rows.Add(row);
+                        j++;
+
+                        string[] arraysplit = golfidn.Split(',');
+                        row = slumpadeSpelare.NewRow();
+                        row["golfid"] = arraysplit[i];
+                        //row["fk_tavling"] = 3;
+                        slumpadeSpelare.Rows.Add(row);
+                    }
+                    else if ((array.Length - i) == 2)
+                    {
+                        DataRow row, row1;
+                        row = slumpadeSpelare.NewRow();
+                        row1 = slumpadeSpelare.NewRow();
+                        slumpadeSpelare.Rows.Add(row1);
+                        row["golfid"] = "Grupp " + j;
+                        slumpadeSpelare.Rows.Add(row);
+                        j++;
+
+                        string[] arraysplit = golfidn.Split(',');
+                        row = slumpadeSpelare.NewRow();
+                        row["golfid"] = arraysplit[i];
+                        //row["fk_tavling"] = 3;
+                        slumpadeSpelare.Rows.Add(row);
+                    }
+                    else
+                    {
+                        string[] arraysplit = golfidn.Split(',');
+                        DataRow row;
+                        row = slumpadeSpelare.NewRow();
+                        row["golfid"] = arraysplit[i];
+                        //row["fk_tavling"] = 3;
+                        slumpadeSpelare.Rows.Add(row);
+                    }
                 }
+                slumpadeSpelare.Columns["golfid"].ColumnName = "Grupper";
                 //bool columnsAdded = false;
 
                 //ViewBag.Golfid = golfidn;
