@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using Golf_6.Models;
 using Golf_6.ViewModels;
@@ -449,9 +450,6 @@ namespace Golf_6.Controllers
                 //Kopierar datatable för att kopiera tillbaka nya ordningen till databasen
                 DataTable dtCopy = new DataTable();
                 dtCopy = dt.Copy();
-
-                dtCopy.Columns.Remove("fornamn");
-                dtCopy.Columns.Remove("efternamn");
                 dtCopy.Columns["fk_tavling"].SetOrdinal(0);
 
                 int tavlingsId = Convert.ToInt32(dtCopy.Rows[0]["fk_tavling"]);
@@ -459,7 +457,7 @@ namespace Golf_6.Controllers
 
                 List<string> golfid = new List<string>();
                 foreach (DataRow dr in dtCopy.Rows)
-                    golfid.Add(dr[0].ToString());
+                    golfid.Add(dr[2] + " " + dr[0] + " " + dr[1]);
 
                 tillDb.SqlFrågaParameters(
                     "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (@tavlingsid, @golfid);",
@@ -474,25 +472,230 @@ namespace Golf_6.Controllers
             else
             {
                 ViewBag.Message = "Denna tävling är redan slumpad sen tidigare. Här är ordningen.";
-                DataTable slumpadeSpelare = frånDb.sqlFragaTable("SELECT fk_tavling, golfid FROM tavlingsgrupper WHERE fk_tavling = 3");
+                DataTable slumpadeSpelare = frånDb.sqlFragaTable("SELECT tg.golfid, t.starttid FROM tavlingsgrupper tg LEFT JOIN tavling t ON t.id = tg.fk_tavling WHERE tg.fk_tavling = 3");
 
-                string golfidn = slumpadeSpelare.Rows[0][1].ToString();
+                //tiden = tiden.Substring(12, tiden.Length - 1);
+
+                string temp = slumpadeSpelare.Rows[0][1].ToString();
+                //TimeSpan tiden = TimeSpan.Parse(temp);
+                //tiden = tiden.ToShortTimeString();
+                double minuter = 10;
+                slumpadeSpelare.Columns.Remove("starttid");
+                string golfidn = slumpadeSpelare.Rows[0][0].ToString();
                 golfidn = golfidn.Substring(1, golfidn.Length - 2); //Tar bort hakparenteserna
+                var taBortKaninÖron = new string[] {"\""};
+                foreach (var c in taBortKaninÖron)
+                    golfidn = golfidn.Replace(c, string.Empty);
+                
                 string[] array = golfidn.Split(',');
                 slumpadeSpelare.Clear();
+                int j = 1;
 
                 for (int i = 0; i < array.Length; i++)
                 {
-                    string[] arraysplit = golfidn.Split(',');
-                    DataRow row;
-                    row = slumpadeSpelare.NewRow();
-                    row["golfid"] = arraysplit[i];
-                    row["fk_tavling"] = 3;
-                    slumpadeSpelare.Rows.Add(row);
-                }
-                //bool columnsAdded = false;
+                    
+                    TimeSpan tiden = TimeSpan.Parse(temp);
 
-                //ViewBag.Golfid = golfidn;
+                    if (array.Length < 2)
+                    {
+                        DataRow row;
+                        row = slumpadeSpelare.NewRow();
+                        row["golfid"] = "Det finns inte tillräckligt med spelare till denna tävling";
+                        slumpadeSpelare.Rows.Add(row);
+                        ViewBag.Message = "Det finns inte tillräckligt med spelare anmälda för denna tävling";
+                    }
+                    else if (array.Length < 7)
+                    {
+                        if (array.Length % 3 == 0)
+                        {
+                            if (i == 0 || i == 3)
+                            {
+                                tiden += new TimeSpan(0, 0, (j*10-10), 0);
+                                DataRow row, row1;
+                                row = slumpadeSpelare.NewRow();
+                                row1 = slumpadeSpelare.NewRow();
+                                slumpadeSpelare.Rows.Add(row1);
+                                row["golfid"] = tiden + " Grupp " + j;
+                                slumpadeSpelare.Rows.Add(row);
+                                j++;
+
+                                string[] arraysplit = golfidn.Split(',');
+                                row = slumpadeSpelare.NewRow();
+                                row["golfid"] = arraysplit[i];
+                                slumpadeSpelare.Rows.Add(row);
+                            }
+                            else
+                            {
+                                string[] arraysplit = golfidn.Split(',');
+                                DataRow row;
+                                row = slumpadeSpelare.NewRow();
+                                row["golfid"] = arraysplit[i];
+                                slumpadeSpelare.Rows.Add(row);
+                            }
+                        }
+                        else if (array.Length % 2 == 0)
+                        {
+                            if (i == 0 || i == 2)
+                            {
+                                tiden += new TimeSpan(0, 0, (j * 10 - 10), 0);
+                                DataRow row, row1;
+                                row = slumpadeSpelare.NewRow();
+                                row1 = slumpadeSpelare.NewRow();
+                                slumpadeSpelare.Rows.Add(row1);
+                                row["golfid"] = tiden + " Grupp " + j;
+                                slumpadeSpelare.Rows.Add(row);
+                                j++;
+
+                                string[] arraysplit = golfidn.Split(',');
+                                row = slumpadeSpelare.NewRow();
+                                row["golfid"] = arraysplit[i];
+                                slumpadeSpelare.Rows.Add(row);
+                            }
+                            else
+                            {
+                                string[] arraysplit = golfidn.Split(',');
+                                DataRow row;
+                                row = slumpadeSpelare.NewRow();
+                                row["golfid"] = arraysplit[i];
+                                slumpadeSpelare.Rows.Add(row);
+                            }
+                        }
+                        else
+                        {
+                            if (i == 0 || i == 3)
+                            {
+                                tiden += new TimeSpan(0, 0, (j * 10 - 10), 0);
+                                DataRow row, row1;
+                                row = slumpadeSpelare.NewRow();
+                                row1 = slumpadeSpelare.NewRow();
+                                slumpadeSpelare.Rows.Add(row1);
+                                row["golfid"] = tiden + " Grupp " + j;
+                                slumpadeSpelare.Rows.Add(row);
+                                j++;
+
+                                string[] arraysplit = golfidn.Split(',');
+                                row = slumpadeSpelare.NewRow();
+                                row["golfid"] = arraysplit[i];
+                                slumpadeSpelare.Rows.Add(row);
+                            }
+                            else
+                            {
+                                string[] arraysplit = golfidn.Split(',');
+                                DataRow row;
+                                row = slumpadeSpelare.NewRow();
+                                row["golfid"] = arraysplit[i];
+                                slumpadeSpelare.Rows.Add(row);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (array.Length == 8 && i == 4)
+                        {
+                            tiden += new TimeSpan(0, 0, (j * 10 - 10), 0);
+                            DataRow row;
+                            string[] arraysplit = golfidn.Split(',');
+                            row = slumpadeSpelare.NewRow();
+                            row["golfid"] = arraysplit[i];
+                            slumpadeSpelare.Rows.Add(row);
+                        }
+                        else if (array.Length % 3 == 0)
+                        {
+                            if (i % 3 == 0)
+                            {
+                                tiden += new TimeSpan(0, 0, (j * 10 - 10), 0);
+                                DataRow row, row1;
+                                row = slumpadeSpelare.NewRow();
+                                row1 = slumpadeSpelare.NewRow();
+                                slumpadeSpelare.Rows.Add(row1);
+                                row["golfid"] = tiden + " Grupp " + j;
+                                slumpadeSpelare.Rows.Add(row);
+                                j++;
+
+                                string[] arraysplit = golfidn.Split(',');
+                                row = slumpadeSpelare.NewRow();
+                                row["golfid"] = arraysplit[i];
+                                slumpadeSpelare.Rows.Add(row);
+                            }
+                            else
+                            {
+                                DataRow row;
+                                string[] arraysplit = golfidn.Split(',');
+                                row = slumpadeSpelare.NewRow();
+                                row["golfid"] = arraysplit[i];
+                                slumpadeSpelare.Rows.Add(row);
+                            }
+                        }
+                        else if ((array.Length - i) == 1)
+                        {
+                            DataRow row;
+                            string[] arraysplit = golfidn.Split(',');
+                            row = slumpadeSpelare.NewRow();
+                            row["golfid"] = arraysplit[i];
+                            slumpadeSpelare.Rows.Add(row);
+                        }
+                        else if (i % 3 == 0)
+                        {
+                            tiden += new TimeSpan(0, 0, (j * 10 - 10), 0);
+                            DataRow row, row1;
+                            row = slumpadeSpelare.NewRow();
+                            row1 = slumpadeSpelare.NewRow();
+                            slumpadeSpelare.Rows.Add(row1);
+                            row["golfid"] = tiden + " Grupp " + j;
+                            slumpadeSpelare.Rows.Add(row);
+                            j++;
+
+                            string[] arraysplit = golfidn.Split(',');
+                            row = slumpadeSpelare.NewRow();
+                            row["golfid"] = arraysplit[i];
+                            slumpadeSpelare.Rows.Add(row);
+                        }
+                        else if ((array.Length - i) < 5)
+                        {
+                            if ((array.Length - i) == 4)
+                            {
+                                DataRow row;
+                                string[] arraysplit = golfidn.Split(',');
+                                row = slumpadeSpelare.NewRow();
+                                row["golfid"] = arraysplit[i];
+                                slumpadeSpelare.Rows.Add(row);
+                            }
+                            else if ((array.Length - i) == 3)
+                            {
+                                DataRow row;
+                                string[] arraysplit = golfidn.Split(',');
+                                row = slumpadeSpelare.NewRow();
+                                row["golfid"] = arraysplit[i];
+                                slumpadeSpelare.Rows.Add(row);
+                            }
+                            else if ((array.Length - i) == 2)
+                            {
+                                tiden += new TimeSpan(0, 0, (j * 10 - 10), 0);
+                                DataRow row, row1;
+                                row = slumpadeSpelare.NewRow();
+                                row1 = slumpadeSpelare.NewRow();
+                                slumpadeSpelare.Rows.Add(row1);
+                                row["golfid"] = tiden + " Grupp" + j;
+                                slumpadeSpelare.Rows.Add(row);
+                                j++;
+
+                                string[] arraysplit = golfidn.Split(',');
+                                row = slumpadeSpelare.NewRow();
+                                row["golfid"] = arraysplit[i];
+                                slumpadeSpelare.Rows.Add(row);
+                            }
+                        }
+                        else
+                        {
+                            string[] arraysplit = golfidn.Split(',');
+                            DataRow row;
+                            row = slumpadeSpelare.NewRow();
+                            row["golfid"] = arraysplit[i];
+                            slumpadeSpelare.Rows.Add(row);
+                        }
+                    }
+                }
+                slumpadeSpelare.Columns["golfid"].ColumnName = "Grupper";
 
                 return View(slumpadeSpelare);
             }
@@ -511,12 +714,14 @@ namespace Golf_6.Controllers
         [HttpPost]
         public ActionResult RegistreraTävling(FormCollection collection)
         {
-            int tävlingsID = 1; //Hårdkodat, ska tas in från viewn
+            int tävlingsID = 3; //Hårdkodat, ska tas in från viewn
+            string tee = "Röd"; //Hårdkodat, ska tas in från viewn
+            
 
             TävlingModels.Resultat t = new TävlingModels.Resultat();
             string golfid = collection["golfid"];
             List<int> resultat = new List<int>();
-            List<int> erhållnaSlag = t.getErhållnaSlag(golfid);
+            List<int> erhållnaSlag = t.getErhållnaSlag(golfid, tee);
             string meddelande = "";
             int slag = 0;
             for(int i = 0; i<18; i++)

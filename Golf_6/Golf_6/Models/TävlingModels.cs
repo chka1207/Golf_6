@@ -269,16 +269,26 @@ namespace Golf_6.Models
         public class Resultat
         {
             public int TavlingsID { get; set; }
-            
+
             public string Fornamn { get; set; }
-            
+
             public string Efternamn { get; set; }
-            
+
             public string GolfID { get; set; }
-            
+
             public double Poäng { get; set; }
 
+            public string Kön { get; set; }
+
             public List<string> ErhållnaSlag { get; set; }
+
+            public int HålErhållnaSlag { get; set; }
+
+            public int HålID { get; set; }
+
+            public int HålHCP { get; set; }
+
+            public int HålPar {get; set;}
 
             public DataTable ResultatTabell { get; set; }
 
@@ -320,13 +330,79 @@ namespace Golf_6.Models
             }
 
             //Metod för att hämta erhållna slag för varje hål, ej färdig
-            public List<int> getErhållnaSlag(string golfid)
+            public List<int> getErhållnaSlag(string golfid, string tee)
             {
-                Postgres x = new Postgres();
-                DataTable dt = new DataTable();
-                List<int> l = new List<int>();
-                int i = 0;
+                TävlingModels.Resultat t = new TävlingModels.Resultat();
+                ScorekortModel sm = new ScorekortModel();
+                DataTable teeTabell = t.getTeeTabell(tee);
+                foreach(DataRow dr in teeTabell.Rows)
+                {
+                    sm.teeNamn = dr["namn"].ToString();
+                    sm.tee = Convert.ToInt32(dr["teeid"]);
+                    sm.kvinnaCr = Convert.ToDouble(dr["kvinnacr"]);
+                    sm.kvinnaSlope = Convert.ToInt32(dr["kvinnaslope"]);
+                    sm.manCr = Convert.ToDouble(dr["mancr"]);
+                    sm.manSlope = Convert.ToInt32(dr["manslope"]);
+                }
+                double hcp = t.getHcp(golfid);
+                t.Kön = t.getKön(golfid);
+                int kvarvarande = 0;
                 int erhållnaSlag = 0;
+
+                //Björns uträkning från scorekortet
+                if (t.Kön == "Male")
+                {
+                    double totErhållna = hcp * (sm.manSlope / 113) + (sm.manCr - 72);
+                    double avrundning = Math.Round(totErhållna, MidpointRounding.AwayFromZero);
+                    int totSlag = Convert.ToInt32(avrundning);
+                    int hål = 18;
+                    erhållnaSlag = (totSlag / hål);
+                    totSlag %= hål;
+                    kvarvarande = totSlag; 
+                }
+                else
+                {
+                    double totErhållna = hcp * (sm.kvinnaSlope / 113) + (sm.kvinnaCr - 72);
+                    double avrundning = Math.Round(totErhållna, MidpointRounding.AwayFromZero);
+                    int totSlag = Convert.ToInt32(avrundning);
+                    int hål = 18;
+                    erhållnaSlag = (totSlag / hål);
+                    totSlag %= hål;
+                    kvarvarande = totSlag;
+                }
+                                
+                
+                List<TävlingModels.Resultat> lista = new List<TävlingModels.Resultat>();
+                Postgres x = new Postgres();
+                DataTable tabellBana = new DataTable();
+                tabellBana = x.sqlFragaTable("select * from bananshal order by hcp;");
+                foreach(DataRow dr in tabellBana.Rows)
+                {
+                    TävlingModels.Resultat ob = new TävlingModels.Resultat();
+                    ob.HålID = Convert.ToInt32(dr["halid"]);
+                    ob.HålHCP = Convert.ToInt32(dr["hcp"]);
+                    ob.HålPar = Convert.ToInt32(dr["par"]);
+                    
+                    if (kvarvarande != 0)
+                    {
+                        ob.HålErhållnaSlag = erhållnaSlag + ob.HålPar + 1;
+                        kvarvarande = kvarvarande - 1;
+                    }
+                    else
+                    {
+                        ob.HålErhållnaSlag = erhållnaSlag + ob.HålPar;
+                    }
+
+                    lista.Add(ob);
+                }
+                List<TävlingModels.Resultat> lista2 = lista.OrderBy(tt => tt.HålID).ToList();
+                List<int> l = new List<int>();
+                foreach(TävlingModels.Resultat tr in lista2)
+                {
+                    int temp = tr.HålErhållnaSlag;
+                    l.Add(temp);
+                }
+               
 
                 return l;
             }
@@ -374,6 +450,48 @@ namespace Golf_6.Models
 
                 return totPoäng;
             }
+
+            public DataTable getTeeTabell(string teeFärg)
+            {
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+                dt = x.SqlFrågaParameters("select * from tee where namn = @par1;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", teeFärg)
+                });
+                return dt;
+            }
+            public double getHcp(string golfid)
+            {
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+                double hcp = 0;
+                dt = x.SqlFrågaParameters("select handikapp from medlemmar where golfid = @par1;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", golfid)
+                });
+                foreach(DataRow dr in dt.Rows)
+                {
+                    hcp = Convert.ToDouble(dr["handikapp"]);
+                }
+                return hcp;
+            }
+            public string getKön(string golfid)
+            {
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+                string kön = "";
+                dt = x.SqlFrågaParameters("select kon from medlemmar where golfid = @par1;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", golfid)
+                });
+                foreach (DataRow dr in dt.Rows)
+                {
+                    kön = dr["kon"].ToString();
+                }
+                return kön;
+            }
+
 
 
         }
