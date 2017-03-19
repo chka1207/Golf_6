@@ -17,14 +17,14 @@ namespace Golf_6.Controllers
     public class AdminController : Controller
     {
         // Logga ut och kom till index
-        [Authorize(Roles ="2")]
+        [Authorize(Roles = "2")]
         public ActionResult LogOut()
         {
 
             return RedirectToAction("Index", "Home", "Home");
         }
         // GET: Admin
-        [Authorize(Roles ="2")]
+        [Authorize(Roles = "2")]
         public ActionResult Index()
         {
             return View();
@@ -34,7 +34,7 @@ namespace Golf_6.Controllers
 
         #region Hämta alla medlemmar
         //GET: Admin/AllaMedlemmar
-        [Authorize(Roles ="2")]
+        [Authorize(Roles = "2")]
         public ActionResult AllaMedlemmar()
         {
             Admin medlemmarna = new Admin();
@@ -62,7 +62,7 @@ namespace Golf_6.Controllers
                 else if (dtCloned.Rows[i][columnNumber].ToString() == "4")
                 { dtCloned.Rows[i][columnNumber] = "Senior"; }
             }
-            
+
             dtCloned.Columns[0].ColumnName = "Förnamn";
             dtCloned.Columns[1].ColumnName = "Efternamn";
             dtCloned.Columns[2].ColumnName = "Adress";
@@ -82,7 +82,7 @@ namespace Golf_6.Controllers
         #region Registrera ny medlem /GET: /POST:
 
         //GET: Admin/RegistreraNyMedlem
-        [Authorize(Roles ="2")]
+        [Authorize(Roles = "2")]
         public ActionResult RegistreraNyMedlem()
         {
             var viewModel = new AdminMedlemshanteringViewModel();
@@ -91,7 +91,7 @@ namespace Golf_6.Controllers
         }
 
         // POST: Admin/RegistreraNyMedlem
-        [Authorize(Roles ="2")]
+        [Authorize(Roles = "2")]
         [HttpPost]
         public ActionResult RegistreraNyMedlem(Admin viewModel)
         {
@@ -102,11 +102,11 @@ namespace Golf_6.Controllers
             }
 
             Admin admin = new Admin();
-            
+
             admin.RegistreraNyMedlem(viewModel.Fornamn, viewModel.Efternamn,
                 viewModel.Adress, viewModel.Postnummer, viewModel.Ort,
                 viewModel.Email, viewModel.Kon, viewModel.Handikapp,
-                viewModel.GolfID, viewModel.MedlemsKategori, 
+                viewModel.GolfID, viewModel.MedlemsKategori,
                 viewModel.Telefonnummer);
             return View("Index");
         }
@@ -114,7 +114,7 @@ namespace Golf_6.Controllers
 
         #region Redigera medlem /GET: /POST:
         // GET: Admin/RedigeraMedlem
-        [Authorize(Roles ="2")]
+        [Authorize(Roles = "2")]
         public ActionResult RedigeraMedlem()
         {
             var viewModel = new AdminMedlemshanteringViewModel();
@@ -123,7 +123,7 @@ namespace Golf_6.Controllers
         }
 
         // POST: Admin/RegistreraNyMedlem
-        [Authorize(Roles ="2")]
+        [Authorize(Roles = "2")]
         [HttpPost]
         public ActionResult RedigeraMedlem(Admin viewModel)
         {
@@ -138,7 +138,7 @@ namespace Golf_6.Controllers
             admin.RedigeraMedlem(viewModel.Fornamn, viewModel.Efternamn,
                 viewModel.Adress, viewModel.Postnummer, viewModel.Ort,
                 viewModel.Email, viewModel.Kon, viewModel.Handikapp,
-                viewModel.GolfID, viewModel.MedlemsKategori, 
+                viewModel.GolfID, viewModel.MedlemsKategori,
                 viewModel.Telefonnummer);
             return View("Index");
         }
@@ -146,8 +146,8 @@ namespace Golf_6.Controllers
         #endregion
 
         #region Radera medlem /GET: /POST:
-            //GET: Admin/RaderaMedlem
-        [Authorize(Roles ="2")]
+        //GET: Admin/RaderaMedlem
+        [Authorize(Roles = "2")]
         public ActionResult RaderaMedlem()
         {
             var viewModel = new AdminMedlemshanteringViewModel();
@@ -173,7 +173,7 @@ namespace Golf_6.Controllers
         //    return View("Index");
         //}
 
-        [Authorize(Roles ="2")]
+        [Authorize(Roles = "2")]
         [HttpPost]
         public ActionResult RaderaMedlem(Admin viewModel)
         {
@@ -193,7 +193,7 @@ namespace Golf_6.Controllers
 
         #region Hantera säsong /GET: /POST:
         // GET: HanteraSasong
-        [Authorize(Roles ="2")]
+        [Authorize(Roles = "2")]
         public ActionResult HanteraSasong()
         {
             HanteraSasong hs = new HanteraSasong();
@@ -229,12 +229,12 @@ namespace Golf_6.Controllers
             return View();
         }
 
-        
+
         // POST: HanteraSasong
-        [Authorize(Roles ="2")]
+        [Authorize(Roles = "2")]
         [HttpPost]
         public ActionResult HanteraSasong(FormCollection collection)
-        {   
+        {
             string sasongStart = collection["startDatum"];
             string sasongSlut = collection["slutDatum"];
             DateTime startDatum = Convert.ToDateTime(sasongStart);
@@ -255,7 +255,7 @@ namespace Golf_6.Controllers
         //Get alla tävlingar
         [Authorize(Roles = "2")]
         public ActionResult AllaTavlingar()
-        
+
         {
             TävlingModels t = new TävlingModels();
             DataTable dt = new DataTable();
@@ -296,9 +296,9 @@ namespace Golf_6.Controllers
             {
                 meddelande = a.anmälan(a.TavlingsId, a.GolfID);
                 if (meddelande != "")
-            {
-                TempData["notice"] = meddelande;
-            }
+                {
+                    TempData["notice"] = meddelande;
+                }
             }
             else if (kontrollGolfId != "giltigt")
             {
@@ -313,7 +313,7 @@ namespace Golf_6.Controllers
         }
 
         //GET: Tävling
-        [Authorize(Roles ="2")]
+        [Authorize(Roles = "2")]
         [HttpGet]
         public ActionResult Tävling()
         {
@@ -321,26 +321,26 @@ namespace Golf_6.Controllers
         }
 
         //POST: Tävling
-        [Authorize(Roles ="2")]
+        [Authorize(Roles = "2")]
         [HttpPost]
         public ActionResult Tävling(FormCollection collection)
         {
-                TävlingModels t = new TävlingModels();
-                DateTime datum = Convert.ToDateTime(collection["datepickerTavling"]);
-                DateTime starttid = Convert.ToDateTime(collection["Starttidinput"]);
-                DateTime sluttid = Convert.ToDateTime(collection["sluttidinput"]);
-                DateTime sistaAnmälan = Convert.ToDateTime(collection["datepickerSistaAnm"]);
-                int maxAntal = Convert.ToInt32(collection["deltagareinput"]);
-                string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
+            TävlingModels t = new TävlingModels();
+            DateTime datum = Convert.ToDateTime(collection["datepickerTavling"]);
+            DateTime starttid = Convert.ToDateTime(collection["Starttidinput"]);
+            DateTime sluttid = Convert.ToDateTime(collection["sluttidinput"]);
+            DateTime sistaAnmälan = Convert.ToDateTime(collection["datepickerSistaAnm"]);
+            int maxAntal = Convert.ToInt32(collection["deltagareinput"]);
+            string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
 
-                TempData["tävling"] = "Du har skapat en ny tävling";
-                return View("Index");
-            
-           
+            TempData["tävling"] = "Du har skapat en ny tävling";
+            return View("Index");
+
+
         }
 
         //GET: Incheckning
-        [Authorize(Roles ="2")]
+        [Authorize(Roles = "2")]
         [HttpGet]
         public ActionResult Incheckning()
         {
@@ -361,7 +361,7 @@ namespace Golf_6.Controllers
         }
 
         //POST: Incheckning
-        [Authorize(Roles ="2")]
+        [Authorize(Roles = "2")]
         [HttpPost]
         public ActionResult Incheckning(FormCollection collection)
         {
@@ -369,32 +369,32 @@ namespace Golf_6.Controllers
             int bokningsID = Convert.ToInt32(collection["bokningID"]);
             int medlemsID = 0;
             string meddelande = "";
-            
+
             string s = Convert.ToString(collection["spelarlista"]);
             char[] tecken = new char[] { ',' };
             string[] array = s.Split(tecken, StringSplitOptions.None);
             string golfid1, golfid2, golfid3, golfid4 = "";
-            for(int i =0; i < array.Length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                if(i == 0)
+                if (i == 0)
                 {
                     golfid1 = array[i];
                     medlemsID = a.getMedlemsID(golfid1);
-                    meddelande = a.checkainSpelare(medlemsID, bokningsID);                    
+                    meddelande = a.checkainSpelare(medlemsID, bokningsID);
                 }
-                if(i==1)
+                if (i == 1)
                 {
                     golfid2 = array[i];
                     medlemsID = a.getMedlemsID(golfid2);
                     meddelande = a.checkainSpelare(medlemsID, bokningsID);
                 }
-                if(i ==2)
+                if (i == 2)
                 {
                     golfid3 = array[i];
                     medlemsID = a.getMedlemsID(golfid3);
                     meddelande = a.checkainSpelare(medlemsID, bokningsID);
                 }
-                if(i == 3)
+                if (i == 3)
                 {
                     golfid4 = array[i];
                     medlemsID = a.getMedlemsID(golfid4);
@@ -404,7 +404,7 @@ namespace Golf_6.Controllers
             DataTable d = new DataTable();
             d = a.allaIncheckade(bokningsID);
             a.Incheckade = d;
-           
+
             DateTime datum = Convert.ToDateTime(collection["datum"]);
             DateTime tid = Convert.ToDateTime(collection["tid"]);
             ViewBag.Datum = Convert.ToDateTime(datum.ToShortDateString());
@@ -426,7 +426,7 @@ namespace Golf_6.Controllers
             Postgres tillDb = new Postgres();
             Postgres frånDb = new Postgres();
             Postgres db = new Postgres();
-            
+
             DataTable kontrolleraOmTävlingenRedanÄrSlumpad;
             //ärTävlingenRedanSlumpad = Convert.ToBoolean(db.sqlFraga("SELECT EXISTS ( SELECT 1 FROM tavlingsgrupper WHERE fk_tavling = 3 )"));
             kontrolleraOmTävlingenRedanÄrSlumpad = db.sqlFragaTable("SELECT EXISTS ( SELECT 1 FROM tavlingsgrupper WHERE fk_tavling = 3 )");
@@ -483,17 +483,17 @@ namespace Golf_6.Controllers
                 slumpadeSpelare.Columns.Remove("starttid");
                 string golfidn = slumpadeSpelare.Rows[0][0].ToString();
                 golfidn = golfidn.Substring(1, golfidn.Length - 2); //Tar bort hakparenteserna
-                var taBortKaninÖron = new string[] {"\""};
+                var taBortKaninÖron = new string[] { "\"" };
                 foreach (var c in taBortKaninÖron)
                     golfidn = golfidn.Replace(c, string.Empty);
-                
+
                 string[] array = golfidn.Split(',');
                 slumpadeSpelare.Clear();
                 int j = 1;
 
                 for (int i = 0; i < array.Length; i++)
                 {
-                    
+
                     TimeSpan tiden = TimeSpan.Parse(temp);
 
                     if (array.Length < 2)
@@ -510,7 +510,7 @@ namespace Golf_6.Controllers
                         {
                             if (i == 0 || i == 3)
                             {
-                                tiden += new TimeSpan(0, 0, (j*10-10), 0);
+                                tiden += new TimeSpan(0, 0, (j * 10 - 10), 0);
                                 DataRow row, row1;
                                 row = slumpadeSpelare.NewRow();
                                 row1 = slumpadeSpelare.NewRow();
@@ -702,7 +702,7 @@ namespace Golf_6.Controllers
         }
 
         //GET: Registrera tävlingsresultat
-        [Authorize(Roles ="2")]
+        [Authorize(Roles = "2")]
         [HttpGet]
         public ActionResult RegistreraTävling()
         {
@@ -710,13 +710,13 @@ namespace Golf_6.Controllers
         }
 
         //POST: Registrera tävlingsresultat
-        [Authorize(Roles ="2")]
+        [Authorize(Roles = "2")]
         [HttpPost]
         public ActionResult RegistreraTävling(FormCollection collection)
         {
             int tävlingsID = 3; //Hårdkodat, ska tas in från viewn
             string tee = "Röd"; //Hårdkodat, ska tas in från viewn
-            
+
 
             TävlingModels.Resultat t = new TävlingModels.Resultat();
             string golfid = collection["golfid"];
@@ -724,7 +724,7 @@ namespace Golf_6.Controllers
             List<int> erhållnaSlag = t.getErhållnaSlag(golfid, tee);
             string meddelande = "";
             int slag = 0;
-            for(int i = 0; i<18; i++)
+            for (int i = 0; i < 18; i++)
             {
                 int y = i + 1;
                 string x = "hål" + y.ToString();
@@ -735,7 +735,7 @@ namespace Golf_6.Controllers
             meddelande = t.registreraResultat(tävlingsID, golfid, t.Poäng);
             return View();
         }
-   
+
         //GET: Avanmälningsvyn för admin
         [Authorize(Roles = "2")]
         [HttpGet]
@@ -746,8 +746,8 @@ namespace Golf_6.Controllers
             TävlingModels.Startlista s = new TävlingModels.Startlista();
             a.TavlingsId = Convert.ToInt32(Request.QueryString["validate"]);
             ViewBag.TavlingsID = a.TavlingsId;
-           
-          dt =  s.StartLista(a.TavlingsId);
+
+            dt = s.StartLista(a.TavlingsId);
 
             foreach (DataRow dr in dt.Rows)
             {
@@ -762,9 +762,11 @@ namespace Golf_6.Controllers
         }
 
         //Avanmälan
-        [Authorize(Roles = "2")]
-        [HttpPost]
-        public ActionResult AvanmalanAdmin(FormCollection collection)
-        {
-           
+        //[Authorize(Roles = "2")]
+        //[HttpPost]
+        //public ActionResult AvanmalanAdmin(FormCollection collection)
+        //{
+
+        //}
+    }
 }

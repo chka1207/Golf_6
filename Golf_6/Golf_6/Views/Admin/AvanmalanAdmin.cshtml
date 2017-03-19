@@ -4,11 +4,11 @@
 @using System.Collections.Generic;
 @using System.Data;
 @{
-@{
+{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<p>Avanmälan av deltagare</p>
+@*<p>Avanmälan av deltagare</p>
 <div class="center-block">
 
     <h2>Tävlingar</h2>
@@ -26,8 +26,8 @@
                 <th>Avanmäl</th>
             </tr>
         </thead>
-        <tr>
-            @foreach (DataRow row in Model.StartLista.Rows)
+        @*<tr>
+            @foreach (DataRow row in Model.StartLista)
             {
                 TävlingModels t = new TävlingModels();
                 int id = Convert.ToInt32(@row["id"]);
@@ -48,7 +48,7 @@
                 <td>@row["max_antal"]</td>
                 <td>@antal</td>
                 @*<td>@Html.Display(t.AntalAnmälda.ToString())</td>*@
-                <th>@Convert.ToDateTime(@row["sista_anmalan"]).ToShortDateString()</th>
+                @*<th>@Convert.ToDateTime(@row["sista_anmalan"]).ToShortDateString()</th>
                 @if (maxAntal > t.AntalAnmälda && DateTime.Today <= Convert.ToDateTime(@row["sista_anmalan"]))
                 {
                     <td align="right">@Html.ActionLink("Anmäl", "AnmalanAdmin", "Admin", new { validate = Convert.ToInt32(@row["id"]) }, null)</td>
@@ -66,8 +66,8 @@
                 {
                     <td></td>
                 }
-            </tr>
-            }
+            @*</tr>*@
+            }*@*@
             </tr>
         </table>
 
