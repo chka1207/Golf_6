@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using Golf_6.Models;
 using Golf_6.ViewModels;
@@ -450,8 +451,8 @@ namespace Golf_6.Controllers
                 DataTable dtCopy = new DataTable();
                 dtCopy = dt.Copy();
 
-                dtCopy.Columns.Remove("fornamn");
-                dtCopy.Columns.Remove("efternamn");
+                //dtCopy.Columns.Remove("fornamn");
+                //dtCopy.Columns.Remove("efternamn");
                 dtCopy.Columns["fk_tavling"].SetOrdinal(0);
 
                 int tavlingsId = Convert.ToInt32(dtCopy.Rows[0]["fk_tavling"]);
@@ -459,7 +460,7 @@ namespace Golf_6.Controllers
 
                 List<string> golfid = new List<string>();
                 foreach (DataRow dr in dtCopy.Rows)
-                    golfid.Add(dr[0].ToString());
+                    golfid.Add(dr[2] + " " + dr[0] + " " + dr[1]);
 
                 tillDb.SqlFrågaParameters(
                     "INSERT INTO tavlingsgrupper (fk_tavling, golfid) VALUES (@tavlingsid, @golfid);",
@@ -478,6 +479,10 @@ namespace Golf_6.Controllers
 
                 string golfidn = slumpadeSpelare.Rows[0][0].ToString();
                 golfidn = golfidn.Substring(1, golfidn.Length - 2); //Tar bort hakparenteserna
+                var taBortKaninÖron = new string[] {"\""};
+                foreach (var c in taBortKaninÖron)
+                    golfidn = golfidn.Replace(c, string.Empty);
+                
                 string[] array = golfidn.Split(',');
                 slumpadeSpelare.Clear();
                 int j = 1;
@@ -509,7 +514,6 @@ namespace Golf_6.Controllers
                                 string[] arraysplit = golfidn.Split(',');
                                 row = slumpadeSpelare.NewRow();
                                 row["golfid"] = arraysplit[i];
-                                //row["fk_tavling"] = 3;
                                 slumpadeSpelare.Rows.Add(row);
                             }
                             else
@@ -518,7 +522,6 @@ namespace Golf_6.Controllers
                                 DataRow row;
                                 row = slumpadeSpelare.NewRow();
                                 row["golfid"] = arraysplit[i];
-                                //row["fk_tavling"] = 3;
                                 slumpadeSpelare.Rows.Add(row);
                             }
                         }
@@ -537,7 +540,6 @@ namespace Golf_6.Controllers
                                 string[] arraysplit = golfidn.Split(',');
                                 row = slumpadeSpelare.NewRow();
                                 row["golfid"] = arraysplit[i];
-                                //row["fk_tavling"] = 3;
                                 slumpadeSpelare.Rows.Add(row);
                             }
                             else
@@ -546,7 +548,6 @@ namespace Golf_6.Controllers
                                 DataRow row;
                                 row = slumpadeSpelare.NewRow();
                                 row["golfid"] = arraysplit[i];
-                                //row["fk_tavling"] = 3;
                                 slumpadeSpelare.Rows.Add(row);
                             }
                         }
@@ -565,7 +566,6 @@ namespace Golf_6.Controllers
                                 string[] arraysplit = golfidn.Split(',');
                                 row = slumpadeSpelare.NewRow();
                                 row["golfid"] = arraysplit[i];
-                                //row["fk_tavling"] = 3;
                                 slumpadeSpelare.Rows.Add(row);
                             }
                             else
@@ -574,7 +574,6 @@ namespace Golf_6.Controllers
                                 DataRow row;
                                 row = slumpadeSpelare.NewRow();
                                 row["golfid"] = arraysplit[i];
-                                //row["fk_tavling"] = 3;
                                 slumpadeSpelare.Rows.Add(row);
                             }
                         }
@@ -587,7 +586,6 @@ namespace Golf_6.Controllers
                             string[] arraysplit = golfidn.Split(',');
                             row = slumpadeSpelare.NewRow();
                             row["golfid"] = arraysplit[i];
-                            //row["fk_tavling"] = 3;
                             slumpadeSpelare.Rows.Add(row);
                         }
                         else if (array.Length % 3 == 0)
@@ -605,7 +603,6 @@ namespace Golf_6.Controllers
                                 string[] arraysplit = golfidn.Split(',');
                                 row = slumpadeSpelare.NewRow();
                                 row["golfid"] = arraysplit[i];
-                                //row["fk_tavling"] = 3;
                                 slumpadeSpelare.Rows.Add(row);
                             }
                             else
@@ -614,7 +611,6 @@ namespace Golf_6.Controllers
                                 string[] arraysplit = golfidn.Split(',');
                                 row = slumpadeSpelare.NewRow();
                                 row["golfid"] = arraysplit[i];
-                                //row["fk_tavling"] = 3;
                                 slumpadeSpelare.Rows.Add(row);
                             }
                         }
@@ -624,7 +620,6 @@ namespace Golf_6.Controllers
                             string[] arraysplit = golfidn.Split(',');
                             row = slumpadeSpelare.NewRow();
                             row["golfid"] = arraysplit[i];
-                            //row["fk_tavling"] = 3;
                             slumpadeSpelare.Rows.Add(row);
                         }
                         else if (i % 3 == 0)
@@ -640,7 +635,6 @@ namespace Golf_6.Controllers
                             string[] arraysplit = golfidn.Split(',');
                             row = slumpadeSpelare.NewRow();
                             row["golfid"] = arraysplit[i];
-                            //row["fk_tavling"] = 3;
                             slumpadeSpelare.Rows.Add(row);
                         }
                         else if ((array.Length - i) < 5)
@@ -651,7 +645,6 @@ namespace Golf_6.Controllers
                                 string[] arraysplit = golfidn.Split(',');
                                 row = slumpadeSpelare.NewRow();
                                 row["golfid"] = arraysplit[i];
-                                //row["fk_tavling"] = 3;
                                 slumpadeSpelare.Rows.Add(row);
                             }
                             else if ((array.Length - i) == 3)
@@ -660,7 +653,6 @@ namespace Golf_6.Controllers
                                 string[] arraysplit = golfidn.Split(',');
                                 row = slumpadeSpelare.NewRow();
                                 row["golfid"] = arraysplit[i];
-                                //row["fk_tavling"] = 3;
                                 slumpadeSpelare.Rows.Add(row);
                             }
                             else if ((array.Length - i) == 2)
@@ -676,7 +668,6 @@ namespace Golf_6.Controllers
                                 string[] arraysplit = golfidn.Split(',');
                                 row = slumpadeSpelare.NewRow();
                                 row["golfid"] = arraysplit[i];
-                                //row["fk_tavling"] = 3;
                                 slumpadeSpelare.Rows.Add(row);
                             }
                         }
@@ -686,15 +677,11 @@ namespace Golf_6.Controllers
                             DataRow row;
                             row = slumpadeSpelare.NewRow();
                             row["golfid"] = arraysplit[i];
-                            //row["fk_tavling"] = 3;
                             slumpadeSpelare.Rows.Add(row);
                         }
                     }
                 }
                 slumpadeSpelare.Columns["golfid"].ColumnName = "Grupper";
-                //bool columnsAdded = false;
-
-                //ViewBag.Golfid = golfidn;
 
                 return View(slumpadeSpelare);
             }
