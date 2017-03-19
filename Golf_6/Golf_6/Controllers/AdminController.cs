@@ -472,8 +472,15 @@ namespace Golf_6.Controllers
             else
             {
                 ViewBag.Message = "Denna tävling är redan slumpad sen tidigare. Här är ordningen.";
-                DataTable slumpadeSpelare = frånDb.sqlFragaTable("SELECT golfid FROM tavlingsgrupper WHERE fk_tavling = 3");
+                DataTable slumpadeSpelare = frånDb.sqlFragaTable("SELECT tg.golfid, t.starttid FROM tavlingsgrupper tg LEFT JOIN tavling t ON t.id = tg.fk_tavling WHERE tg.fk_tavling = 3");
 
+                //tiden = tiden.Substring(12, tiden.Length - 1);
+
+                string temp = slumpadeSpelare.Rows[0][1].ToString();
+                //TimeSpan tiden = TimeSpan.Parse(temp);
+                //tiden = tiden.ToShortTimeString();
+                double minuter = 10;
+                slumpadeSpelare.Columns.Remove("starttid");
                 string golfidn = slumpadeSpelare.Rows[0][0].ToString();
                 golfidn = golfidn.Substring(1, golfidn.Length - 2); //Tar bort hakparenteserna
                 var taBortKaninÖron = new string[] {"\""};
@@ -486,6 +493,9 @@ namespace Golf_6.Controllers
 
                 for (int i = 0; i < array.Length; i++)
                 {
+                    
+                    TimeSpan tiden = TimeSpan.Parse(temp);
+
                     if (array.Length < 2)
                     {
                         DataRow row;
@@ -500,11 +510,12 @@ namespace Golf_6.Controllers
                         {
                             if (i == 0 || i == 3)
                             {
+                                tiden += new TimeSpan(0, 0, (j*10-10), 0);
                                 DataRow row, row1;
                                 row = slumpadeSpelare.NewRow();
                                 row1 = slumpadeSpelare.NewRow();
                                 slumpadeSpelare.Rows.Add(row1);
-                                row["golfid"] = "Grupp " + j;
+                                row["golfid"] = tiden + " Grupp " + j;
                                 slumpadeSpelare.Rows.Add(row);
                                 j++;
 
@@ -526,11 +537,12 @@ namespace Golf_6.Controllers
                         {
                             if (i == 0 || i == 2)
                             {
+                                tiden += new TimeSpan(0, 0, (j * 10 - 10), 0);
                                 DataRow row, row1;
                                 row = slumpadeSpelare.NewRow();
                                 row1 = slumpadeSpelare.NewRow();
                                 slumpadeSpelare.Rows.Add(row1);
-                                row["golfid"] = "Grupp " + j;
+                                row["golfid"] = tiden + " Grupp " + j;
                                 slumpadeSpelare.Rows.Add(row);
                                 j++;
 
@@ -552,11 +564,12 @@ namespace Golf_6.Controllers
                         {
                             if (i == 0 || i == 3)
                             {
+                                tiden += new TimeSpan(0, 0, (j * 10 - 10), 0);
                                 DataRow row, row1;
                                 row = slumpadeSpelare.NewRow();
                                 row1 = slumpadeSpelare.NewRow();
                                 slumpadeSpelare.Rows.Add(row1);
-                                row["golfid"] = "Grupp " + j;
+                                row["golfid"] = tiden + " Grupp " + j;
                                 slumpadeSpelare.Rows.Add(row);
                                 j++;
 
@@ -579,6 +592,7 @@ namespace Golf_6.Controllers
                     {
                         if (array.Length == 8 && i == 4)
                         {
+                            tiden += new TimeSpan(0, 0, (j * 10 - 10), 0);
                             DataRow row;
                             string[] arraysplit = golfidn.Split(',');
                             row = slumpadeSpelare.NewRow();
@@ -589,11 +603,12 @@ namespace Golf_6.Controllers
                         {
                             if (i % 3 == 0)
                             {
+                                tiden += new TimeSpan(0, 0, (j * 10 - 10), 0);
                                 DataRow row, row1;
                                 row = slumpadeSpelare.NewRow();
                                 row1 = slumpadeSpelare.NewRow();
                                 slumpadeSpelare.Rows.Add(row1);
-                                row["golfid"] = "Grupp " + j;
+                                row["golfid"] = tiden + " Grupp " + j;
                                 slumpadeSpelare.Rows.Add(row);
                                 j++;
 
@@ -621,11 +636,12 @@ namespace Golf_6.Controllers
                         }
                         else if (i % 3 == 0)
                         {
+                            tiden += new TimeSpan(0, 0, (j * 10 - 10), 0);
                             DataRow row, row1;
                             row = slumpadeSpelare.NewRow();
                             row1 = slumpadeSpelare.NewRow();
                             slumpadeSpelare.Rows.Add(row1);
-                            row["golfid"] = "Grupp " + j;
+                            row["golfid"] = tiden + " Grupp " + j;
                             slumpadeSpelare.Rows.Add(row);
                             j++;
 
@@ -654,11 +670,12 @@ namespace Golf_6.Controllers
                             }
                             else if ((array.Length - i) == 2)
                             {
+                                tiden += new TimeSpan(0, 0, (j * 10 - 10), 0);
                                 DataRow row, row1;
                                 row = slumpadeSpelare.NewRow();
                                 row1 = slumpadeSpelare.NewRow();
                                 slumpadeSpelare.Rows.Add(row1);
-                                row["golfid"] = "Grupp" + j;
+                                row["golfid"] = tiden + " Grupp" + j;
                                 slumpadeSpelare.Rows.Add(row);
                                 j++;
 
