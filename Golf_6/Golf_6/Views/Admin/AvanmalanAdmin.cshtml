@@ -10,20 +10,21 @@
 }
 
 
-@using (Html.BeginForm("AvanmalanAdmin")) { 
+@using (Html.BeginForm("AvanmalanAdmin"))
+{
 
+    <h2>Avanmäl tävlingsdeltagare</h2>
+    <div class="container">
+        <select multiple class="form-control" id="sel2">
+            @foreach
+                                        (var admin in
+                                        Model)
+            {
 
-<div>
-        @foreach
-                (var admin in
-                Model)
-        {<ul class="list-group">
-            <li class="list-group-item">@admin.GolfID</li>
-            <li class="list-group-item">Förnamn:- @admin.Fornamn</li>
-            <li class="list-group-item">Efternamn:- @admin.Efternamn</li>
-          
-        </ul>
-        }
+                <option class="list-group-item">@admin.GolfID, @admin.Fornamn @admin.Efternamn</option>
+
+            }
+        </select>
 </div>
 }
 
