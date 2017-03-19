@@ -746,7 +746,7 @@ namespace Golf_6.Controllers
             TävlingModels.Startlista s = new TävlingModels.Startlista();
             a.TavlingsId = Convert.ToInt32(Request.QueryString["validate"]);
             ViewBag.TavlingsID = a.TavlingsId;
-
+            List<Admin> anmäldalistan = new List<Admin>();
             dt = s.StartLista(a.TavlingsId);
 
             foreach (DataRow dr in dt.Rows)
@@ -757,8 +757,9 @@ namespace Golf_6.Controllers
                     Fornamn = dr["fornamn"].ToString(),
                     Efternamn = dr["efternamn"].ToString()
                 };
+                anmäldalistan.Add(ad);
             }
-            return View("AvanmalanAdmin", dt);
+            return View(anmäldalistan);
         }
 
         //Avanmälan
