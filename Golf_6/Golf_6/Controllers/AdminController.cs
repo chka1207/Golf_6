@@ -450,9 +450,6 @@ namespace Golf_6.Controllers
                 //Kopierar datatable för att kopiera tillbaka nya ordningen till databasen
                 DataTable dtCopy = new DataTable();
                 dtCopy = dt.Copy();
-
-                //dtCopy.Columns.Remove("fornamn");
-                //dtCopy.Columns.Remove("efternamn");
                 dtCopy.Columns["fk_tavling"].SetOrdinal(0);
 
                 int tavlingsId = Convert.ToInt32(dtCopy.Rows[0]["fk_tavling"]);
