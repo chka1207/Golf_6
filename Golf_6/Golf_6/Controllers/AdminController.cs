@@ -561,27 +561,5 @@ namespace Golf_6.Controllers
         [HttpPost]
         public ActionResult AvanmalanAdmin(FormCollection collection)
         {
-            TävlingModels.Anmälan a = new TävlingModels.Anmälan();
-
-            a.TavlingsId = Convert.ToInt32(collection["tavlingsID"]);
-            a.GolfID = collection["golfid"];
-            string meddelande = "";
-            string kontroll = "";
-            kontroll = a.kontrolleraGolfID(a.GolfID);
-            if (kontroll == "giltigt")
-            {
-                meddelande = a.anmälan(a.TavlingsId, a.GolfID);
-                if (meddelande != "")
-                {
-                    TempData["notice"] = meddelande;
-                }
-            }
-            else
-            {
-                TempData["notice"] = kontroll;
-            }
-
-            return RedirectToAction("AllaTavlingar");
-        }
-    }
+           
 }
