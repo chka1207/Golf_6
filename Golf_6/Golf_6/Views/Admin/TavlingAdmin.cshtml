@@ -20,40 +20,48 @@
 
         <h2>Här kan du skapa en ny tävling</h2><br />
 
-
+        @{
+            if (TempData["notice"] != null)
+            {
+                <div class="alert alert-warning alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                    <strong>Varning! </strong> @TempData["notice"]
+                </div>
+            }
+        }
 
         <form>
 
             <h3>Individuell poängbogey</h3><br />
             <div class="form-group">
 
-                <input type="text" name="datepickerTavling" class="btn btn-info" id="datepickerTavling" value="Tävlingsdatum">
+                <input type="text" name="datepickerTavling" required class="btn btn-info" id="datepickerTavling" value="Tävlingsdatum">
             </div>
 
             <div class="form-group">
 
 
                 <label>Starttid</label><br />
-                <input name="Starttidinput" placeholder="Starttid (hh:mm)" class="form-control input-md" type="time">
+                <input name="Starttidinput" required placeholder="Starttid (hh:mm)" class="form-control input-md" type="time">
             </div>
 
 
             <div class="form-group">
 
                 <label>Sluttid</label><br />
-                <input name="sluttidinput" placeholder="Sluttid (hh:mm)" class="form-control input-md" type="time">
+                <input name="sluttidinput" required placeholder="Sluttid (hh:mm)" class="form-control input-md" type="time">
 
             </div>
 
             <div class="form-group">
 
-                <input name="deltagareinput" placeholder="Max antal deltagare" class="form-control input-md" type="number">
+                <input name="deltagareinput" required placeholder="Max antal deltagare" class="form-control input-md" type="number">
             </div>
 
             <div class="form-group">
 
 
-                <input type="text" name="datepickerSistaAnm" class="btn btn-info" id="datepickerSistaAnm" value="Sista anmälningsdag">
+                <input type="text" name="datepickerSistaAnm" required class="btn btn-info" id="datepickerSistaAnm" value="Sista anmälningsdag">
             </div>
             <br />
             <button type="submit" class="btn btn-primary btn-lg">Skapa tävling</button>
