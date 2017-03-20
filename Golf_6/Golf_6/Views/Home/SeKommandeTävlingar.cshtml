@@ -1,0 +1,81 @@
+﻿@model Golf_6.Models.TävlingModels
+@using Golf_6.Models;
+@using System.Data;
+@*@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}*@
+
+<br />
+<br />
+@{
+    if (TempData["notice"] != null)
+    {
+        <div class="alert alert-warning alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+            <strong>Varning! </strong> @TempData["notice"]
+        </div>
+    }
+
+}
+<div class="center-block">
+
+    <h2>Tävlingar</h2>
+
+    <table class="table table-striped table-responsive table-bordered">
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Starttid</th>
+                <th>Sluttid</th>
+                <th>Max antal deltagare</th>
+                <th>Totalt anmälda</th>
+                <th>Sista anmälningsdag</th>
+                <th>Information</th>
+            </tr>
+        </thead>
+        <tr>
+            @foreach (DataRow row in Model.AllaTavlingar.Rows)
+            {
+                TävlingModels t = new TävlingModels();
+                int id = Convert.ToInt32(@row["id"]);
+                int antalAnmälda = 0;
+                antalAnmälda = t.antalAnmälda(id);
+
+                t.AntalAnmälda = antalAnmälda;
+                int maxAntal = Convert.ToInt32(@row["max_antal"]);
+
+                TävlingModels.Startlista ts = new TävlingModels.Startlista();
+                bool slumpKontroll = ts.KontrolleraOmTävlingenÄrSlumpad(id);
+
+                string antal = t.AntalAnmälda.ToString();
+                <tr>
+                    <td>@Convert.ToDateTime(@row["datum"]).ToShortDateString()</td>
+                    <td>@row["starttid"]</td>
+                    <td>@row["sluttid"]</td>
+                    <td>@row["max_antal"]</td>
+                    <td>@antal</td>
+                    @*<td>@Html.Display(t.AntalAnmälda.ToString())</td>*@
+                    <th>@Convert.ToDateTime(@row["sista_anmalan"]).ToShortDateString()</th>
+                    @if (slumpKontroll == true)
+                    {
+                    <td align="right">
+                        @Html.ActionLink("Se startordningen", "KommandeTävlingar", "Home", new {validate = Convert.ToInt32(@row["id"])}, null)
+                    </td>
+                    }
+                    else if (DateTime.Today > Convert.ToDateTime(@row["sista_anmalan"]) && antalAnmälda < 2)
+                    {
+                    <td align="right">Saknas spelare</td>
+                    }
+                    else if (slumpKontroll == false && DateTime.Today <= Convert.ToDateTime(@row["sista_anmalan"]))
+                    {
+                        <td align="right">Kommer efter @Convert.ToDateTime(@row["sista_anmalan"]).ToShortDateString()</td>
+                    }
+                </tr>
+            }
+        </tr>
+        </table>
+
+
+    </div>
+
+

@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Golf_6.Models;
 
 namespace Golf_6.Controllers
 {
@@ -59,6 +60,7 @@ namespace Golf_6.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult KommandeTävlingar()
         {
             int tävlingsId = Convert.ToInt32(Request.QueryString["validate"]);
@@ -69,6 +71,18 @@ namespace Golf_6.Controllers
             dtGrupper = ac.HämtaSlumpadTävling(tävlingsId);
 
             return View(dtGrupper);
+        }
+
+        [HttpGet]
+        public ActionResult SeKommandeTävlingar()
+        {
+            TävlingModels t = new TävlingModels();
+            DataTable dt = new DataTable();
+            Postgres p = new Postgres();
+
+            dt = p.sqlFragaTable("SELECT * from tavling order by datum desc");
+            t.AllaTavlingar = dt;
+            return View(t);
         }
         //[AllowAnonymous]
         //public ActionResult Boka()
