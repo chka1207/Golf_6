@@ -1,8 +1,11 @@
-﻿@model Golf_6.Models.Tidsbokning
+﻿@*@model Golf_6.Models.Tidsbokning*@
+@model System.Data.DataTable
 @using Golf_6.Controllers;
 @using Golf_6.Models;
 @using System.Collections.Generic;
 @using System.Web.Mvc.Ajax;
+@using System.Data;
+
 @*@model Golf_6.ViewModels.SearchViewModel*@
 
 @{
@@ -11,6 +14,19 @@
 @{
     ViewBag.Title = "Bokning";
 }
+
+@Styles.Render("~/Content/DataTables/css/jquery.dataTables.css")
+@Styles.Render("~/Content/DataTables/css/dataTables.bootstrap.min.css")
+@Styles.Render("~/Content/DataTables/css/responsive.bootstrap.min.css")
+
+@*Ev kommande funktion behöver dessa*@
+@Styles.Render("~/Content/DataTables/css/responsive.dataTables.min.css")
+@Styles.Render("~/Content/DataTables/css/buttons.dataTables.min.css")
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 @*<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
@@ -37,6 +53,39 @@
 <div>
         <p>Behöver du ta reda på vilket golfID dina medspelare har? </p>
         @Html.ActionLink("Sök golfID här", "GetGolfID")
+    @if (Model.Columns == null)
+    {
+        string s = "Stanna här";
+    }
+    else
+    {
+        
+    
+    <table id="hamtaMedlemmar" class="display" cellspacing="0" width="100%">
+
+        <thead>
+            <tr>
+                @foreach (DataColumn x in Model.Columns)
+                {
+                    <th>@x.ColumnName</th>
+                }
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataRow row in Model.Rows)
+            {
+                <tr>
+                    @foreach (DataColumn x in Model.Columns)
+                    {
+                        <td>@row[x.ColumnName]</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+
     </div>
 
     @using (Html.BeginForm())
@@ -199,7 +248,15 @@
         @section Scripts {
 
             @Scripts.Render("~/bundles/jqueryval")
+            
+@Scripts.Render("~/Scripts/DataTables/jquery.dataTables.min.js")
+@Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap.min.js")
+@Scripts.Render("~/Scripts/DataTables/dataTables.responsive.min.js")
+@Scripts.Render("~/Scripts/DataTables/responsive.bootstrap.min.js")
 
+@*Testar ny funktion*@
+@Scripts.Render("~/Scripts/DataTables/dataTables.buttons.min.js")
+@Scripts.Render("~/Scripts/DataTables/buttons.colVis.min.js")
         }}
 
                     

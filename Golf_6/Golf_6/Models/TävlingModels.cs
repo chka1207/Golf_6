@@ -264,6 +264,23 @@ namespace Golf_6.Models
 
                 return startlistan;
             }
+
+            public Boolean KontrolleraOmTävlingenÄrSlumpad(int tavlingsId)
+            {
+                Postgres db = new Postgres();
+                DataTable kontroll;
+                
+                kontroll =
+                    db.SqlFrågaParameters("SELECT EXISTS ( SELECT 1 FROM tavlingsgrupper WHERE fk_tavling = @tavlingsid);",
+                    Postgres.lista = new List<NpgsqlParameter>()
+                    {
+                        new NpgsqlParameter("@tavlingsid", tavlingsId)
+                    });
+
+                bool ärTävlingenRedanSlumpad = Convert.ToBoolean(kontroll.Rows[0][0]);
+
+                return ärTävlingenRedanSlumpad;
+            }
         }
 
         public class Resultat

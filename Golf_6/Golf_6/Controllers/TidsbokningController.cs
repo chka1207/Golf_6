@@ -81,6 +81,7 @@ namespace Golf_6.Controllers
 
          
             //dt.Columns[0].ColumnName = "Förnamn";
+
             return View("Index");
         }
         [Authorize(Roles = "1")]
@@ -95,6 +96,7 @@ namespace Golf_6.Controllers
             dt.Columns[3].ColumnName = "Adress";
             dt.Columns[4].ColumnName = "Handikapp";
 
+  
             return View(dt);
         }
         // GET: Alla bokningar för en dag, ADMIN
@@ -831,8 +833,16 @@ namespace Golf_6.Controllers
 
             }
 
-        
-            return View("Index");
+            Tidsbokning medlemmarna = new Tidsbokning();
+            DataTable dt1 = new DataTable("MyTable");
+            dt1 = medlemmarna.HämtaMedlemmar();
+            dt1.Columns[0].ColumnName = "GolfID";
+            dt1.Columns[1].ColumnName = "Förnamn";
+            dt1.Columns[2].ColumnName = "Efternamn";
+            dt1.Columns[3].ColumnName = "Adress";
+            dt1.Columns[4].ColumnName = "Handikapp";
+
+            return View("Index", dt1);
         }
 
         // POST: Tidsbokning för medlem
@@ -864,6 +874,13 @@ namespace Golf_6.Controllers
             bool redanbokad = false;
             bool antalGäster = false;
             List<string> spelarlista = new List<string>();
+            
+            if(spelare1 == "2" || spelare1 == "3" || spelare1 == "4" || spelare2 == "2" || spelare2 == "3" || spelare2 == "4" || spelare3 == "2" || spelare3 == "3" || spelare3 == "4" || spelare4 == "2" || spelare4 == "3" || spelare4 == "4")
+            {
+                TempData["notice"] = "Du har försökt boka golfid som inte finns. Om du har försökt boka in en gäst, använd siffran 1. Bokningen har inte genomförts för starttid " + tid.ToString() + " " + datum.ToString() + ".";
+                return RedirectToAction("Bokningsschema");
+            }
+            
             if (spelare1 != null)
             {
                 spelarlista.Add(spelare1);
