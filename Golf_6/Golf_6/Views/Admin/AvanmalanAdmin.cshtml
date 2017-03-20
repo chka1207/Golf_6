@@ -10,21 +10,25 @@
 }
 
 
-@using (Html.BeginForm("AvanmalanAdmin"))
+@using (Html.BeginForm())
 {
+    TävlingModels.Anmälan a = new TävlingModels.Anmälan();
+    a.TavlingsId = Convert.ToInt32(ViewBag.TavlingsID);
+    @Html.Hidden("tavlingsID", a.TavlingsId);
 
     <h2>Avanmäl tävlingsdeltagare</h2>
     <div class="container">
         <select multiple class="form-control" id="sel2">
             @foreach
-                                        (var admin in
-                                        Model)
+                                                            (var admin in
+                                                            Model)
             {
 
-                <option class="list-group-item">@admin.GolfID, @admin.Fornamn @admin.Efternamn</option>
+                <option id ="deltagare"class="list-group-item">@admin.GolfID, @admin.Fornamn @admin.Efternamn</option>
 
             }
         </select>
+        <button class="btn btn-danger show" name="Avanmäl" type="submit" href="" title="Avanmäl" >Avanmäl</button>
 </div>
 }
 

@@ -16,7 +16,6 @@ namespace Golf_6.Controllers
         
         // GET: ScorekortModel
         //Genererar tomt scorekort via databasen. 
-        [AllowAnonymous]
         public ActionResult Scorekort()
         {
             ScorekortModel scorekort = new ScorekortModel();
@@ -53,12 +52,11 @@ namespace Golf_6.Controllers
         }
         //GET: ScorekortIfyllt
         //Genererar Scorekort med data ifyllt får vald medlem.
-        [AllowAnonymous]
         public ActionResult ScorekortIfyllt(FormCollection collection)
         {
             int MedlemID = Int16.Parse(Request.QueryString["m"]); // - variabel för medlemsid
             //int tee = Int16.Parse(Request.QueryString["teeid"]); // - variable för teeid
-            int tee = 1; //hårdkodat för tillfället
+            int tee = Int16.Parse(Request.QueryString["tee"]);
             string tid = Request.QueryString["starttid"];
             string starttid = tid;//.ToShortTimeString(); // - variabel för starttiden
             
@@ -133,6 +131,23 @@ namespace Golf_6.Controllers
             }
 
             scorekort.banansPar = scorekort.parFörstaHalvan + scorekort.parAndraHalvan;
+            
+            //Genererar en lista baserat på datum och starttid. Listan innehåller golfid på dem som deltar vid inbokad tid det datumet.
+            //Innehållet kan förändras om behov finns.
+            Postgres pg5 = new Postgres();
+            DataTable dt5 = new DataTable();
+            string dat = Request.QueryString["date"];
+            dt5 = pg5.SqlFrågaParameters("SELECT DISTINCT medlemmar.golfid FROM public.deltar, public.medlemmar, public.reservation WHERE deltar.reservation_id = reservation.bokning_id AND medlemmar.id = deltar.medlem_id AND reservation.tid = CAST(@starttid as TIME) AND reservation.datum = @datum", Postgres.lista = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@starttid", starttid),
+                new NpgsqlParameter("@datum", Convert.ToDateTime(dat))
+            });
+            foreach (DataRow dr in dt5.Rows)
+            {
+                ScorekortModel spelare = new ScorekortModel();
+                spelare.AktuellTidsbokning.GolfID = (string)dr["golfid"];
+                scorekort.Spelare.Add(spelare);
+            }
 
             //Kontrollerar vilka värden som blir relevanta baserat på kön för uträkning.
             if(scorekort.AktuellMedlem.Kön == "Male")
