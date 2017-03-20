@@ -704,7 +704,7 @@ namespace Golf_6.Controllers
         //GET: Registrera tävlingsresultat
         [Authorize(Roles = "2")]
         [HttpGet]
-        public ActionResult RegistreraTävling()
+        public ActionResult RegistreraResultat()
         {
             return View();
         }
@@ -712,33 +712,41 @@ namespace Golf_6.Controllers
         //POST: Registrera tävlingsresultat
         [Authorize(Roles = "2")]
         [HttpPost]
-        public ActionResult RegistreraTävling(FormCollection collection)
+        public ActionResult RegistreraResultat(FormCollection collection)
         {
             int tävlingsID = 3; //Hårdkodat, ska tas in från viewn
             string tee = "Röd"; //Hårdkodat, ska tas in från viewn
+            string golfid = collection["golfid"];
 
             TävlingModels.Anmälan ta = new TävlingModels.Anmälan();
-            string message = ta.kontrolleraGolfID(collection["golfid"]);
+            TävlingModels.Resultat t = new TävlingModels.Resultat();
+            bool redanReggad = t.redanRegistrerad(golfid, tävlingsID);
+            string message = ta.kontrolleraGolfID(golfid);
 
             if (message == "giltigt")
             {
-
-                TävlingModels.Resultat t = new TävlingModels.Resultat();
-                string golfid = collection["golfid"];
-                List<int> resultat = new List<int>();
-                List<int> erhållnaSlag = t.getErhållnaSlag(golfid, tee);
-                string meddelande = "";
-                int slag = 0;
-                for (int i = 0; i < 18; i++)
+                if (redanReggad == false)
                 {
-                    int y = i + 1;
-                    string x = "hål" + y.ToString();
-                    slag = Convert.ToInt32(collection[x]);
-                    resultat.Add(slag);
+                    List<int> resultat = new List<int>();
+                    List<int> erhållnaSlag = t.getErhållnaSlag(golfid, tee);
+                    string meddelande = "";
+                    int slag = 0;
+                    for (int i = 0; i < 18; i++)
+                    {
+                        int y = i + 1;
+                        string x = "hål" + y.ToString();
+                        slag = Convert.ToInt32(collection[x]);
+                        resultat.Add(slag);
+                    }
+                    t.Poäng = t.getPoäng(resultat, erhållnaSlag);
+                    meddelande = t.registreraResultat(tävlingsID, golfid, t.Poäng);
+                    return View();
                 }
-                t.Poäng = t.getPoäng(resultat, erhållnaSlag);
-                meddelande = t.registreraResultat(tävlingsID, golfid, t.Poäng);
-                return View();
+                else
+                {
+                    TempData["notice"] = "Spelaren har redan ett registrerat resultat för tävlingen. Den nya inmatningen har ej registrerats";
+                    return View();
+                }
             }
             else
             {

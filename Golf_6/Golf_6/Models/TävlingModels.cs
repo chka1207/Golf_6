@@ -492,7 +492,27 @@ namespace Golf_6.Models
                 return kön;
             }
 
+            public bool redanRegistrerad(string golfID, int tävlingsID)
+            {
+                bool b = false;
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
 
+                dt = x.SqlFrågaParameters("select * from resultat where fk_golfid = @par1 and fk_tavling = @par2;", Postgres.lista = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@par1", golfID),
+                    new NpgsqlParameter("@par2", tävlingsID)
+                });
+                if (dt.Rows.Count > 0)
+                {
+                    b = true;
+                    return b;
+                }
+                else
+                {
+                    return b;
+                }
+            }
 
         }
     }
