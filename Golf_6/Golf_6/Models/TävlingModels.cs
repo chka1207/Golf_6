@@ -256,7 +256,7 @@ namespace Golf_6.Models
                 DataTable startlistan = new DataTable();
 
                 startlistan = db.SqlFrågaParameters("SELECT m.fornamn, m.efternamn, a.golfid, a.fk_tavling FROM anmalan a " +
-                    "LEFT JOIN medlemmar m ON a.golfid=m.golfid WHERE fk_tavling = @tavlingsid;",
+                    "LEFT JOIN medlemmar m ON a.golfid=m.golfid WHERE a.fk_tavling = @tavlingsid;",
                     Postgres.lista = new List<NpgsqlParameter>()
                     {
                         new NpgsqlParameter("@tavlingsid", tavlingsId)

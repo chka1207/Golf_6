@@ -626,6 +626,7 @@
     <Content Include="Views\Admin\SlumpaTävling.cshtml" />
     <Content Include="Views\Admin\HämtaSlumpadTävling.cshtml" />
     <Content Include="Views\Home\KommandeTävlingar.cshtml" />
+    <Content Include="Views\Home\SeKommandeTävlingar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

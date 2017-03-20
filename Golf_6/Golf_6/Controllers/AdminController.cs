@@ -30,9 +30,7 @@ namespace Golf_6.Controllers
         {
             return View();
         }
-
-
-
+        
         #region Hämta alla medlemmar
 
         //GET: Admin/AllaMedlemmar
