@@ -76,13 +76,27 @@
                 {
                     <td></td>
                 }
-                @if (slumpKontroll == false)
+                @if (DateTime.Today > Convert.ToDateTime(@row["sista_anmalan"]) && antalAnmälda < 2)
                 {
-                    <td align="right">@Html.ActionLink("Skapa startordning", "SlumpaTävling", "Admin", new { validate = Convert.ToInt32(@row["id"]) }, null)</td>
+                    <td align="right">Saknas spelare</td>
                 }
-                else
+                else if (slumpKontroll == false && DateTime.Today > Convert.ToDateTime(@row["sista_anmalan"]))
                 {
-                    <td></td>
+                <td align="right">@Html.ActionLink("Skapa startordning", "SlumpaTävling", "Admin", new { validate = Convert.ToInt32(@row["id"]) }, null)</td>
+                }
+                else if (slumpKontroll == false && DateTime.Today <= Convert.ToDateTime(@row["sista_anmalan"]))
+                {
+                    <td align="right">Möjligt efter @Convert.ToDateTime(@row["sista_anmalan"]).ToShortDateString()</td>
+                }
+                else if (slumpKontroll == true)
+                {
+                    <td align="right">
+                        @Html.ActionLink("Se startordningen", "KommandeTävlingar", "Home", new { validate = Convert.ToInt32(@row["id"]) }, null)
+                        </td>
+                    }
+                    else
+                    {
+                <td></td>
                 }
 
                 <td align="right">@Html.ActionLink("Registrera tävlingsresultat", "RegistreraResultat", "Admin", new { validate = Convert.ToInt32(@row["id"]) }, null)</td>
