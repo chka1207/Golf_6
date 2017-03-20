@@ -16,7 +16,6 @@ namespace Golf_6.Controllers
         
         // GET: ScorekortModel
         //Genererar tomt scorekort via databasen. 
-        [AllowAnonymous]
         public ActionResult Scorekort()
         {
             ScorekortModel scorekort = new ScorekortModel();
@@ -53,7 +52,6 @@ namespace Golf_6.Controllers
         }
         //GET: ScorekortIfyllt
         //Genererar Scorekort med data ifyllt får vald medlem.
-        [AllowAnonymous]
         public ActionResult ScorekortIfyllt(FormCollection collection)
         {
             int MedlemID = Int16.Parse(Request.QueryString["m"]); // - variabel för medlemsid
@@ -133,7 +131,9 @@ namespace Golf_6.Controllers
             }
 
             scorekort.banansPar = scorekort.parFörstaHalvan + scorekort.parAndraHalvan;
-
+            
+            //Genererar en lista baserat på datum och starttid. Listan innehåller golfid på dem som deltar vid inbokad tid det datumet.
+            //Innehållet kan förändras om behov finns.
             Postgres pg5 = new Postgres();
             DataTable dt5 = new DataTable();
             string dat = Request.QueryString["date"];
@@ -148,6 +148,7 @@ namespace Golf_6.Controllers
                 spelare.AktuellTidsbokning.GolfID = (string)dr["golfid"];
                 scorekort.Spelare.Add(spelare);
             }
+
             //Kontrollerar vilka värden som blir relevanta baserat på kön för uträkning.
             if(scorekort.AktuellMedlem.Kön == "Male")
             {
