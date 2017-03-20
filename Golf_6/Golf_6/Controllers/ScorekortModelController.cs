@@ -134,6 +134,20 @@ namespace Golf_6.Controllers
 
             scorekort.banansPar = scorekort.parFörstaHalvan + scorekort.parAndraHalvan;
 
+            Postgres pg5 = new Postgres();
+            DataTable dt5 = new DataTable();
+            string dat = Request.QueryString["date"];
+            dt5 = pg5.SqlFrågaParameters("SELECT DISTINCT medlemmar.golfid FROM public.deltar, public.medlemmar, public.reservation WHERE deltar.reservation_id = reservation.bokning_id AND medlemmar.id = deltar.medlem_id AND reservation.tid = CAST(@starttid as TIME) AND reservation.datum = @datum", Postgres.lista = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@starttid", starttid),
+                new NpgsqlParameter("@datum", Convert.ToDateTime(dat))
+            });
+            foreach (DataRow dr in dt5.Rows)
+            {
+                ScorekortModel spelare = new ScorekortModel();
+                spelare.AktuellTidsbokning.GolfID = (string)dr["golfid"];
+                scorekort.Spelare.Add(spelare);
+            }
             //Kontrollerar vilka värden som blir relevanta baserat på kön för uträkning.
             if(scorekort.AktuellMedlem.Kön == "Male")
             {

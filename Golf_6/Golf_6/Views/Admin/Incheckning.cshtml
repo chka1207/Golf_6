@@ -126,8 +126,8 @@
                 <td>@row["efternamn"]</td>
                 <td>@row["golfid"]</td>
                 <td align="left">
-                    <br />@Html.ActionLink("Scorekort - Röd tee", "ScorekortIfyllt", "ScorekortModel", new { m = Convert.ToInt32(@row["medlem_id"]), tee = "1", starttid = @row["tid"] }, null)
-                    <br />@Html.ActionLink("Scorekort - Gul tee", "ScorekortIfyllt", "ScorekortModel", new { m = Convert.ToInt32(@row["medlem_id"]), tee = "3", starttid = @row["tid"] }, null)
+                    <br />@Html.ActionLink("Scorekort - Röd tee", "ScorekortIfyllt", "ScorekortModel", new { m = Convert.ToInt32(@row["medlem_id"]), tee = "1", starttid = @row["tid"], date = datum.ToShortDateString() }, null)
+                    <br />@Html.ActionLink("Scorekort - Gul tee", "ScorekortIfyllt", "ScorekortModel", new { m = Convert.ToInt32(@row["medlem_id"]), tee = "3", starttid = @row["tid"], date = datum.ToShortDateString() }, null)
                     <br />@Html.ActionLink("Scorekort - Tomt", "Scorekort", "ScorekortModel", new { }, null)
                 </td>
             </tr>
