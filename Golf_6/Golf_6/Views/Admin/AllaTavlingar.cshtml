@@ -84,6 +84,9 @@
                 {
                     <td></td>
                 }
+
+                <td align="right">@Html.ActionLink("Registrera tävlingsresultat", "RegistreraResultat", "Admin", new { validate = Convert.ToInt32(@row["id"]) }, null)</td>
+
             </tr>
             }
             </tr>
