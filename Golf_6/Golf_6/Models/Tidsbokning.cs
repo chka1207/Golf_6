@@ -51,6 +51,7 @@ namespace Golf_6.Models
         public DateTime SluttidTävling { get; set; }
         public DateTime StartDatumTävling { get; set; }
         public DateTime SlutdatumTävling { get; set; }
+        public DataTable AllaMedlemmar { get; set; }
         //public List<>
 
         public DataTable HämtaMedlemmar() /* Hämtar en lista med medlemmar*/
