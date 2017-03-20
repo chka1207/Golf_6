@@ -125,8 +125,12 @@ namespace Golf_6.Models
 
             dt = db.sqlFragaTable(sql);
 
+            
+
             return dt;
         }
+
+        
 
         public string stängBanan(DateTime startdatum, DateTime slutdatum, DateTime starttid, DateTime sluttid, string anledning) //Hanterar just nu bara ett datum , efter produktägarens önskemål. Start- och slutdatum måste alltså vara samma för att metoden skall fungera.
         {

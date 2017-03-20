@@ -297,7 +297,6 @@ namespace Golf_6.Controllers
         public ActionResult AnmalanAdmin(FormCollection collection)
         {
             TävlingModels.Anmälan a = new TävlingModels.Anmälan();
-
             a.TavlingsId = Convert.ToInt32(collection["tavlingsID"]);
             a.GolfID = collection["golfid"];
             string meddelande = "";
@@ -339,18 +338,42 @@ namespace Golf_6.Controllers
         [HttpPost]
         public ActionResult Tävling(FormCollection collection)
         {
-            TävlingModels t = new TävlingModels();
-            DateTime datum = Convert.ToDateTime(collection["datepickerTavling"]);
-            DateTime starttid = Convert.ToDateTime(collection["Starttidinput"]);
-            DateTime sluttid = Convert.ToDateTime(collection["sluttidinput"]);
-            DateTime sistaAnmälan = Convert.ToDateTime(collection["datepickerSistaAnm"]);
-            int maxAntal = Convert.ToInt32(collection["deltagareinput"]);
-            string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
+            if (collection["datepickerTavling"] != "Tävlingsdatum" && collection["datepickerSistaAnm"] != "Sista anmälningsdag")
+            {
+                TävlingModels t = new TävlingModels();
+                DateTime datum = Convert.ToDateTime(collection["datepickerTavling"]);
+                DateTime starttid = Convert.ToDateTime(collection["Starttidinput"]);
+                DateTime sluttid = Convert.ToDateTime(collection["sluttidinput"]);
+                DateTime sistaAnmälan = Convert.ToDateTime(collection["datepickerSistaAnm"]);
+                int maxAntal = Convert.ToInt32(collection["deltagareinput"]);
 
-            TempData["tävling"] = "Du har skapat en ny tävling";
-            return View("Index");
+                if (datum > sistaAnmälan)
+                {
+                    if (starttid < sluttid)
+                    {
+                        string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
 
-
+                        TempData["tävling"] = "Du har skapat en ny tävling";
+                        return View("Index");
+                    }
+                    else
+                    {
+                        TempData["notice"] = "Sluttid måste vara senare än starttid. Ingen tävling har skapats";
+                        return View("TavlingAdmin");
+                    }
+                }
+                else
+                {
+                    TempData["notice"] = "Sista anmälningsdag kan inte vara samma dag eller senare än tävlingsdagen. Ingen tävling har skapats.";
+                    return View("TavlingAdmin");
+                }
+            }
+            else
+            {
+                
+                TempData["notice"] = "Du måste ange både startdatum och sista anmälningsdag. Ingen tävling har skapats.";
+                return View("TavlingAdmin");
+            }
         }
 
         //GET: Incheckning
