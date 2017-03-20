@@ -621,7 +621,7 @@
     <Content Include="Views\Resultat\Resultat.cshtml" />
     <Content Include="Views\Resultat\TavlingarMedResultat.cshtml" />
     <Content Include="Views\Medlem\TavlingMedlem.cshtml" />
-    <Content Include="Views\Admin\RegistreraTävling.cshtml" />
+    <Content Include="Views\Admin\RegistreraResultat.cshtml" />
     <Content Include="Views\Admin\AvanmalanAdmin.cshtml" />
     <Content Include="Views\Admin\SlumpaTävling.cshtml" />
   </ItemGroup>
