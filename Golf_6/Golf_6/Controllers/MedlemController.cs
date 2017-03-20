@@ -137,7 +137,7 @@ namespace Golf_6.Controllers
                 return View();
             }
         }
-
+        
         // GET: Tidsbokning/Create i befintlig tid Admin
         [Authorize(Roles = "1")]
         public ActionResult AvbokningMedlem()

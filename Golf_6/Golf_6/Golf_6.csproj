@@ -624,6 +624,8 @@
     <Content Include="Views\Admin\RegistreraResultat.cshtml" />
     <Content Include="Views\Admin\AvanmalanAdmin.cshtml" />
     <Content Include="Views\Admin\SlumpaTävling.cshtml" />
+    <Content Include="Views\Admin\HämtaSlumpadTävling.cshtml" />
+    <Content Include="Views\Home\KommandeTävlingar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

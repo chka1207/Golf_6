@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -56,6 +57,18 @@ namespace Golf_6.Controllers
             ViewBag.Message = "";
 
             return View();
+        }
+
+        public ActionResult KommandeTävlingar()
+        {
+            int tävlingsId = Convert.ToInt32(Request.QueryString["validate"]);
+
+            DataTable dtGrupper = new DataTable();
+            AdminController ac = new AdminController();
+
+            dtGrupper = ac.HämtaSlumpadTävling(tävlingsId);
+
+            return View(dtGrupper);
         }
         //[AllowAnonymous]
         //public ActionResult Boka()
