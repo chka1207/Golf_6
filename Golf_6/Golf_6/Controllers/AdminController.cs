@@ -784,12 +784,18 @@ namespace Golf_6.Controllers
             return View(anmäldalistan);
         }
 
-        //Avanmälan
-        //[Authorize(Roles = "2")]
-        //[HttpPost]
-        //public ActionResult AvanmalanAdmin(FormCollection collection)
-        //{
-
-        //}
+       //Avanmälan tävling
+        [Authorize(Roles = "2")]
+        [HttpPost]
+        public ActionResult AvanmälanTävlingAdmin(FormCollection collection)
+        {
+            TävlingModels.Anmälan a = new TävlingModels.Anmälan();
+            string meddelande = "";
+            a.GolfID = collection["admin.GolfID"];
+            a.TavlingsId = Convert.ToInt32(collection["tavlingsID"]);
+            meddelande = a.avboka(a.GolfID, a.TavlingsId);
+            
+            return RedirectToAction("AllaTavlingar");
+        }
     }
 }
