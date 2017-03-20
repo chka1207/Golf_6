@@ -26,17 +26,22 @@
     <table class="table table-striped table-responsive table-bordered">
         <thead>
             <tr>
+                <th>Placering</th>
                 <th>Förnamn</th>
                 <th>Efternamn</th>
                 <th>GolfID</th>
                 <th>Poäng</th>
             </tr>
         </thead>
-        <tr>
+        <tr> @{
+            int count = 0;
+                }
+            
             @foreach (DataRow row in Model.ResultatTabell.Rows)
             {
-               
+               count++;
             <tr>
+                <td>@count</td>
                 <td>@row["fornamn"]</td>
                 <td>@row["efternamn"]</td>
                 <td>@row["golfid"]</td>
