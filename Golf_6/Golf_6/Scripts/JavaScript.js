@@ -13,6 +13,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('#hamtaMedlemmar').DataTable({
+        destroy: true,
         "pagingType": "simple",
         "language": {
             "search": "Sök:",
@@ -263,6 +264,12 @@ window.onload = function () { //Hämtar dag och visar upp detta i Admin/HanteraS
     document.getElementById("slutVeckodag").innerHTML = whichDay(document.getElementById("slutVeckodag").innerHTML);
 };
 
+function showDiv() {
+    document.getElementById('sokfunktion').style.display = "block";
+}
+function hideDiv() {
+    document.getElementById('sokfunktion').style.display = "none";
+}
 
 
 //$("#btnSök").on('click', function () {

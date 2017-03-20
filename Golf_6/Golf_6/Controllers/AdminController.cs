@@ -735,7 +735,9 @@ namespace Golf_6.Controllers
         public ActionResult RegistreraResultat()
         {
             TävlingModels.Resultat t = new TävlingModels.Resultat();
+            t.TavlingsID = Convert.ToInt32(Request.QueryString["validate"]);
             t.TeeTabell = t.getAllaTees();
+            ViewBag.TavlingsID = t.TavlingsID;
             return View(t);
         }
 
@@ -744,44 +746,52 @@ namespace Golf_6.Controllers
         [HttpPost]
         public ActionResult RegistreraResultat(FormCollection collection)
         {
-            int tävlingsID = 3; //Hårdkodat, ska tas in från viewn
+            int tävlingsID = Convert.ToInt32(collection["tavlingsID"]);
             string tee = collection["teelista"];
             string golfid = collection["golfid"];
-
+            ViewBag.TavlingsID = tävlingsID;
             TävlingModels.Anmälan ta = new TävlingModels.Anmälan();
             TävlingModels.Resultat t = new TävlingModels.Resultat();
             t.TeeTabell = t.getAllaTees();
             bool redanReggad = t.redanRegistrerad(golfid, tävlingsID);
             string message = ta.kontrolleraGolfID(golfid);
 
-            if (message == "giltigt")
+            if (tee != null)
             {
-                if (redanReggad == false)
+                if (message == "giltigt")
                 {
-                    List<int> resultat = new List<int>();
-                    List<int> erhållnaSlag = t.getErhållnaSlag(golfid, tee);
-                    string meddelande = "";
-                    int slag = 0;
-                    for (int i = 0; i < 18; i++)
+                    if (redanReggad == false)
                     {
-                        int y = i + 1;
-                        string x = "hål" + y.ToString();
-                        slag = Convert.ToInt32(collection[x]);
-                        resultat.Add(slag);
+                        List<int> resultat = new List<int>();
+                        List<int> erhållnaSlag = t.getErhållnaSlag(golfid, tee);
+                        string meddelande = "";
+                        int slag = 0;
+                        for (int i = 0; i < 18; i++)
+                        {
+                            int y = i + 1;
+                            string x = "hål" + y.ToString();
+                            slag = Convert.ToInt32(collection[x]);
+                            resultat.Add(slag);
+                        }
+                        t.Poäng = t.getPoäng(resultat, erhållnaSlag);
+                        meddelande = t.registreraResultat(tävlingsID, golfid, t.Poäng);
+                        return View(t);
                     }
-                    t.Poäng = t.getPoäng(resultat, erhållnaSlag);
-                    meddelande = t.registreraResultat(tävlingsID, golfid, t.Poäng);
-                    return View(t);
+                    else
+                    {
+                        TempData["notice"] = "Spelaren har redan ett registrerat resultat för tävlingen. Den nya inmatningen har ej registrerats";
+                        return View(t);
+                    }
                 }
                 else
                 {
-                    TempData["notice"] = "Spelaren har redan ett registrerat resultat för tävlingen. Den nya inmatningen har ej registrerats";
+                    TempData["notice"] = "Du har angett ett golfID som inte existerar. Resultatet har inte registrerats.";
                     return View(t);
                 }
             }
             else
             {
-                TempData["notice"] = "Du har angett ett golfID som inte existerar. Resultatet har inte registrerats.";
+                TempData["notice"] = "Du har glömt att ange vilken tee spelaren har använt. Inget resultat har registrerats.";
                 return View(t);
             }
         }
@@ -815,15 +825,18 @@ namespace Golf_6.Controllers
        //Avanmälan tävling
         [Authorize(Roles = "2")]
         [HttpPost]
-        public ActionResult AvanmälanTävlingAdmin(FormCollection collection)
+        public ActionResult AvanmalanAdmin(FormCollection collection)
         {
             TävlingModels.Anmälan a = new TävlingModels.Anmälan();
-            string meddelande = "";
-            a.GolfID = collection["admin.GolfID"];
-            a.TavlingsId = Convert.ToInt32(collection["tavlingsID"]);
-            meddelande = a.avboka(a.GolfID, a.TavlingsId);
+            a.GolfID = collection["sel2"];
+
             
-            return RedirectToAction("AllaTavlingar");
+                string meddelande = "";
+                a.TavlingsId = Convert.ToInt32(collection["tavlingsID"]);
+                meddelande = a.avboka(a.GolfID, a.TavlingsId);
+
+                return RedirectToAction("AllaTavlingar");
+          
         }
     }
 }

@@ -22,6 +22,9 @@
 
         <h2>Registrera resultat för tävlingsdeltagare</h2>
 
+        @{TävlingModels.Anmälan a = new TävlingModels.Anmälan();
+            a.TavlingsId = Convert.ToInt32(ViewBag.TavlingsID);
+        }
 
         @{
             if (TempData["notice"] != null)
@@ -143,9 +146,11 @@
                 <br />
                 <button type="submit" class="btn btn-primary btn-lg">Registrera resultat</button>
             </div>
+
+            @Html.Hidden("tavlingsID", a.TavlingsId)
 </form>
     </div>
-        
 
+    
 
-        }
+            }
