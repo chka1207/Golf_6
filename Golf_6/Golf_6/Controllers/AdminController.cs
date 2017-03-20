@@ -805,15 +805,18 @@ namespace Golf_6.Controllers
        //Avanmälan tävling
         [Authorize(Roles = "2")]
         [HttpPost]
-        public ActionResult AvanmälanTävlingAdmin(FormCollection collection)
+        public ActionResult AvanmalanAdmin(FormCollection collection)
         {
             TävlingModels.Anmälan a = new TävlingModels.Anmälan();
-            string meddelande = "";
-            a.GolfID = collection["admin.GolfID"];
-            a.TavlingsId = Convert.ToInt32(collection["tavlingsID"]);
-            meddelande = a.avboka(a.GolfID, a.TavlingsId);
+            a.GolfID = collection["sel2"];
+
             
-            return RedirectToAction("AllaTavlingar");
+                string meddelande = "";
+                a.TavlingsId = Convert.ToInt32(collection["tavlingsID"]);
+                meddelande = a.avboka(a.GolfID, a.TavlingsId);
+
+                return RedirectToAction("AllaTavlingar");
+          
         }
     }
 }

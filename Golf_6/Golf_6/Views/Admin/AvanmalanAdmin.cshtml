@@ -18,13 +18,13 @@
 
     <h2>Avanmäl tävlingsdeltagare</h2>
     <div class="container">
-        <select multiple class="form-control" id="sel2">
+        <select required class="form-control" name="sel2" id="sel2">
             @foreach
                                                             (var admin in
                                                             Model)
             {
 
-                <option id ="deltagare"class="list-group-item">@admin.GolfID, @admin.Fornamn @admin.Efternamn</option>
+                <option id ="deltagare"class="list-group-item" value="@admin.GolfID">@admin.GolfID, @admin.Fornamn @admin.Efternamn</option>
 
             }
         </select>
