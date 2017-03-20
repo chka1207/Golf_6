@@ -61,7 +61,19 @@ $(document).ready(function () { //Datatablen som visar alla medlemmar i Admin/Al
                     targets: [10], //Gömmer tele
                     visible: false
                 }
-            ]
+            ],
+            "language": {
+            "search": "Sök:",
+            "info": "",
+            "lengthMenu": "Visa _MENU_ åt gången",
+            "infoFiltered": "",
+            "zeroRecords": "Din sökning gav inga träffar",
+            "infoEmpty": "",
+            "paginate": {
+                "previous": "Föregående",
+                "next": "Nästa"
+            }
+        }
     });
 });
 

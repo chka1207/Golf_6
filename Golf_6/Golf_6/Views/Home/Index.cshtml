@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Hålslaget";
 }
 
 <div class="jumbotron">
@@ -7,31 +7,34 @@
     <p class="lead">Välkommen till Hålslagets golfklubb! Se lediga tider och boka redan nu.</p>
     <p><a class="btn btn-primary btn-lg" href="/Account/Login/">Boka</a></p>
 </div>
+
+
 <div class="row">
     <div class="col-md-4">
-        <h1>
-            <a href="/Home/Golfbanan/"><img src="~/Content/Images/golf-ball-549228_960_720square.jpg" class="img-circle img-responsive" title="Golfbanan" alt="Banan" style="max-width:220px" /></a>
-        </h1>
+        <div class="clearfix">
+            <a href="/Home/Golfbanan/"><img src="~/Content/Images/golf-ball-549228_960_720square.jpg" class="img-circle img-responsive pull-left" title="Golfbanan" alt="Golfbanan" style="max-height:200px" /></a>
+        </div>
         <h2>Golfbanan</h2>
         <p>
-            Beksrivning av golfbanan.
+            Beskrivning av golfbanan.
+
         </p>
-        <p><a class="btn btn-default" href="/Home/Golfbanan/">Banan &raquo;</a></p>
+        <p><a class="btn btn-primary" href="/Home/Golfbanan/">Banan &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h1>
-            <a href="/Home/Restauranger/"><img src="~/Content/Images/food-plate-restaurant-eatingsquare.jpg" class="img-circle img-responsive" title="Maten" alt="Maten" style="max-width:220px"/></a>
-        </h1>
+        <div class="clearfix">
+            <a href="/Home/Restauranger/"><img src="~/Content/Images/food-plate-restaurant-eatingsquare.jpg" class="img-circle img-responsive pull-left" title="Maten" alt="Maten" style="max-height:200px" /></a>
+        </div>
         <h2>Restauranger</h2>
         <p>Beskrivning av restauranger, mat med mera.</p>
-        <p><a class="btn btn-default" href="/Home/Restauranger/">Maten &raquo;</a></p>
+        <p><a class="btn btn-primary" href="/Home/Restauranger/">Maten &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h1>
-            <a href="/Home/Tävlingar/"><img src="~/Content/Images/Brandt_Snedeker_2012_PGA_Tour_Championship_Winsquare.jpg" class="img-circle img-responsive" title="Maten" alt="Maten" style="max-width:220px" /></a>
-        </h1>
+        <div class="clearfix">
+            <a href="/Home/Tävlingar/"><img src="~/Content/Images/Brandt_Snedeker_2012_PGA_Tour_Championship_Winsquare.jpg" class="img-circle img-responsive pull-left" title="Maten" alt="Maten" style="max-height:200px" /></a>
+        </div>
         <h2>Tävlingar</h2>
-        <p>Vill du tävla i nästa turnering?</p>
-        <p><a class="btn btn-default" href="/Home/Tävlingar/">Tävlingar &raquo;</a></p>
+        <p>Vill du tävla?</p>
+        <p><a class="btn btn-primary" href="/Home/Tävlingar/">Tävlingar &raquo;</a></p>
     </div>
 </div>
