@@ -8,6 +8,8 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -18,100 +20,112 @@
     <div class="container">
 
         <h2>Registrera resultat för tävlingsdeltagare</h2>
+
+
+        @{
+            if (TempData["notice"] != null)
+            {
+                <div class="alert alert-warning alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                    <strong>Varning! </strong> @TempData["notice"]
+                </div>
+            }
+        }
+
         <form>
             <div class="form-group">
                 <label>GolfID</label><br />
-                <input name="golfid" placeholder="Spelarens golfID" class="form-control input-md" type="text">
+                <input name="golfid" placeholder="Spelarens golfID" class="form-control input-md" type="text" required>
             </div>
 
             <div class="form-group">
                 <label>Hål 1</label><br />
-                <input name="hål1" placeholder="Hål 1" class="form-control input-md" type="number">
+                <input name="hål1" placeholder="Hål 1" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">
                 <label>Hål </label><br />
-                <input name="hål2" placeholder="Hål 2" class="form-control input-md" type="number">
+                <input name="hål2" placeholder="Hål 2" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">
                 <label>Hål 3</label><br />
-                <input name="hål3" placeholder="Hål 3" class="form-control input-md" type="number">
+                <input name="hål3" placeholder="Hål 3" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">
                 <label>Hål 4</label><br />
-                <input name="hål4" placeholder="Hål 4" class="form-control input-md" type="number">
+                <input name="hål4" placeholder="Hål 4" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">
                 <label>Hål 5</label><br />
-                <input name="hål5" placeholder="Hål 5" class="form-control input-md" type="number">
+                <input name="hål5" placeholder="Hål 5" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">
                 <label>Hål 6</label><br />
-                <input name="hål6" placeholder="Hål 6" class="form-control input-md" type="number">
+                <input name="hål6" placeholder="Hål 6" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">
                 <label>Hål 7</label><br />
-                <input name="hål7" placeholder="Hål 7" class="form-control input-md" type="number">
+                <input name="hål7" placeholder="Hål 7" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">
                 <label>Hål 8</label><br />
-                <input name="hål8" placeholder="Hål 8" class="form-control input-md" type="number">
+                <input name="hål8" placeholder="Hål 8" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">
                 <label>Hål 9</label><br />
-                <input name="hål9" placeholder="Hål 9" class="form-control input-md" type="number">
+                <input name="hål9" placeholder="Hål 9" class="form-control input-md" type="number" required>
             </div>
 
                      <div class="form-group">
                 <label>Hål 10</label><br />
-                <input name="hål10" placeholder="Hål 10" class="form-control input-md" type="number">
+                <input name="hål10" placeholder="Hål 10" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">
                 <label>Hål 11</label><br />
-                <input name="hål11" placeholder="Hål 11" class="form-control input-md" type="number">
+                <input name="hål11" placeholder="Hål 11" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">
                 <label>Hål 12</label><br />
-                <input name="hål12" placeholder="Hål 12" class="form-control input-md" type="number">
+                <input name="hål12" placeholder="Hål 12" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">
                 <label>Hål 13</label><br />
-                <input name="hål13" placeholder="Hål 13" class="form-control input-md" type="number">
+                <input name="hål13" placeholder="Hål 13" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">
                 <label>Hål 14</label><br />
-                <input name="hål14" placeholder="Hål 14" class="form-control input-md" type="number">
+                <input name="hål14" placeholder="Hål 14" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">
                 <label>Hål 15</label><br />
-                <input name="hål15" placeholder="Hål 15" class="form-control input-md" type="number">
+                <input name="hål15" placeholder="Hål 15" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">
                 <label>Hål 16</label><br />
-                <input name="hål16" placeholder="Hål 16" class="form-control input-md" type="number">
+                <input name="hål16" placeholder="Hål 16" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">
                 <label>Hål 17</label><br />
-                <input name="hål17" placeholder="Hål 17" class="form-control input-md" type="number">
+                <input name="hål17" placeholder="Hål 17" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">
                 <label>Hål 18</label><br />
-                <input name="hål18" placeholder="Hål 18" class="form-control input-md" type="number">
+                <input name="hål18" placeholder="Hål 18" class="form-control input-md" type="number" required>
             </div>
 
             <div class="form-group">

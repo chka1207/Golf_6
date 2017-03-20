@@ -125,7 +125,11 @@
                 <td>@row["fornamn"]</td>
                 <td>@row["efternamn"]</td>
                 <td>@row["golfid"]</td>
-                <td align="left">@Html.ActionLink("Scorekort", "ScorekortIfyllt", "ScorekortModel", new { m = Convert.ToInt32(@row["medlem_id"]), starttid = @row["tid"] }, null)</td>
+                <td align="left">
+                    @Html.ActionLink("Scorekort - Röd tee", "ScorekortIfyllt", "ScorekortModel", new { m = Convert.ToInt32(@row["medlem_id"]), tee = "1", starttid = @row["tid"], date = datum.ToShortDateString() }, null)
+                    <br />@Html.ActionLink("Scorekort - Gul tee", "ScorekortIfyllt", "ScorekortModel", new { m = Convert.ToInt32(@row["medlem_id"]), tee = "3", starttid = @row["tid"], date = datum.ToShortDateString() }, null)
+                    <br />@Html.ActionLink("Scorekort - Tomt", "Scorekort", "ScorekortModel", new { }, null)
+                </td>
             </tr>
             }
             </tr>
