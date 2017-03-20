@@ -40,7 +40,7 @@
                 <tr>
                     @if (Model.AllaTävlingar != null)
                     {
-                      
+
                         foreach (DataRow dr in Model.AllaTävlingar.Rows)
                         {
                             TävlingModels t = new TävlingModels();
@@ -88,5 +88,6 @@
 
                 </table>
             </div>
-
+            <button class="btn btn-primary btn-lg show center-block">@Html.ActionLink("Se kommande tävlingar", "SeKommandeTävlingar", "Home")</button>
+            
                                 }
