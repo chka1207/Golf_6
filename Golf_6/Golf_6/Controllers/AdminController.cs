@@ -351,10 +351,26 @@ namespace Golf_6.Controllers
                 {
                     if (starttid < sluttid)
                     {
-                        string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
+                        if (datum > DateTime.Today)
+                        {
+                            if (maxAntal > 0)
+                            {
+                                string boka = t.bokaTävling(datum, starttid, sluttid, maxAntal, sistaAnmälan);
 
-                        TempData["tävling"] = "Du har skapat en ny tävling";
-                        return View("Index");
+                                TempData["tävling"] = "Du har skapat en ny tävling";
+                                return View("Index");
+                            }
+                            else
+                            {
+                                TempData["notice"] = "Max antal deltagare för en tävling kan ej vara mindre än 1. Ingen tävling har skapats";
+                                return View("TavlingAdmin");
+                            }
+                        }
+                        else
+                        {
+                            TempData["notice"] = "En tävling kan ej skapas på ett datum före dagens datum.";
+                            return View("TavlingAdmin");
+                        }
                     }
                     else
                     {
