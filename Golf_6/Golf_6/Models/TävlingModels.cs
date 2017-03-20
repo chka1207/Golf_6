@@ -329,7 +329,7 @@ namespace Golf_6.Models
                 return meddelande;
             }
 
-            //Metod för att hämta erhållna slag för varje hål, ej färdig
+            //Metod för att hämta erhållna slag för varje hål
             public List<int> getErhållnaSlag(string golfid, string tee)
             {
                 TävlingModels.Resultat t = new TävlingModels.Resultat();

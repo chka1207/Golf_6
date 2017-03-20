@@ -717,23 +717,34 @@ namespace Golf_6.Controllers
             int tävlingsID = 3; //Hårdkodat, ska tas in från viewn
             string tee = "Röd"; //Hårdkodat, ska tas in från viewn
 
+            TävlingModels.Anmälan ta = new TävlingModels.Anmälan();
+            string message = ta.kontrolleraGolfID(collection["golfid"]);
 
-            TävlingModels.Resultat t = new TävlingModels.Resultat();
-            string golfid = collection["golfid"];
-            List<int> resultat = new List<int>();
-            List<int> erhållnaSlag = t.getErhållnaSlag(golfid, tee);
-            string meddelande = "";
-            int slag = 0;
-            for (int i = 0; i < 18; i++)
+            if (message == "giltigt")
             {
-                int y = i + 1;
-                string x = "hål" + y.ToString();
-                slag = Convert.ToInt32(collection[x]);
-                resultat.Add(slag);
+
+                TävlingModels.Resultat t = new TävlingModels.Resultat();
+                string golfid = collection["golfid"];
+                List<int> resultat = new List<int>();
+                List<int> erhållnaSlag = t.getErhållnaSlag(golfid, tee);
+                string meddelande = "";
+                int slag = 0;
+                for (int i = 0; i < 18; i++)
+                {
+                    int y = i + 1;
+                    string x = "hål" + y.ToString();
+                    slag = Convert.ToInt32(collection[x]);
+                    resultat.Add(slag);
+                }
+                t.Poäng = t.getPoäng(resultat, erhållnaSlag);
+                meddelande = t.registreraResultat(tävlingsID, golfid, t.Poäng);
+                return View();
             }
-            t.Poäng = t.getPoäng(resultat, erhållnaSlag);
-            meddelande = t.registreraResultat(tävlingsID, golfid, t.Poäng);
-            return View();
+            else
+            {
+                TempData["notice"] = "Du har angett ett golfID som inte existerar. Resultatet har inte registrerats.";
+                return View();
+            }
         }
 
         //GET: Avanmälningsvyn för admin
