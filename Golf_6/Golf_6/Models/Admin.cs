@@ -132,9 +132,7 @@ namespace Golf_6.Models
         {
             Postgres x = new Postgres();
             Postgres x1 = new Postgres();
-            Postgres x2 = new Postgres();
-            Postgres x3 = new Postgres();
-            Postgres x4 = new Postgres();
+           
             string meddelande = "";
             string delete = "";
             DataTable dt = new DataTable();
@@ -156,12 +154,16 @@ namespace Golf_6.Models
             });
             foreach(DataRow dr in dt.Rows)
             {
+                Postgres x2 = new Postgres();
+                Postgres x3 = new Postgres();
+                Postgres x4 = new Postgres();
+
                 bokningID = Convert.ToInt32(dr["bokning_id"].ToString());
                 delete = x2.SqlParameters("delete from reservation where bokning_id = @par1", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@par1", bokningID)
                 });
-                delete = x3.SqlParameters("delete from bokaren where bokaren.tid = @par1", Postgres.lista = new List<NpgsqlParameter>()
+                delete = x3.SqlParameters("delete from bokare where bokare.tid = @par1;", Postgres.lista = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@par1", bokningID)
                 });
