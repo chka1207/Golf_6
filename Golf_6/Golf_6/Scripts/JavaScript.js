@@ -13,6 +13,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('#hamtaMedlemmar').DataTable({
+        destroy: true,
         "pagingType": "simple",
         "language": {
             "search": "Sök:",
