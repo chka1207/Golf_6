@@ -263,6 +263,12 @@ window.onload = function () { //Hämtar dag och visar upp detta i Admin/HanteraS
     document.getElementById("slutVeckodag").innerHTML = whichDay(document.getElementById("slutVeckodag").innerHTML);
 };
 
+function showDiv() {
+    document.getElementById('sokfunktion').style.display = "block";
+}
+function hideDiv() {
+    document.getElementById('sokfunktion').style.display = "none";
+}
 
 
 //$("#btnSök").on('click', function () {

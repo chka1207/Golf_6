@@ -25,6 +25,8 @@
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
+<script src="~/Scripts/JavaScript.js"></script>
+<link href="~/Content/Site.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -49,44 +51,54 @@
     <br />
     Vid bokning av gäst ange siffran "1".
 </p>
-
+<br />
 <div>
-        <p>Behöver du ta reda på vilket golfID dina medspelare har? </p>
-        @Html.ActionLink("Sök golfID här", "GetGolfID")
+        <p><b>Använd sökfunktionen för ta reda på vilket golfID dina medspelare har.</b> </p>
+   
+    <button type="visaSok" class="btn btn-primary" onclick="showDiv()">Visa sökfunktion</button>
+        
+   
+    <button type="doljSok" class="btn btn-primary" onclick="hideDiv()">Dölj sökfunktion</button>
+        
+        @*@Html.ActionLink("Sök golfID här", "GetGolfID")*@
+    </div>
+<br />
+
+<div class="sokfunktion" id="sokfunktion" style="display:none;">
     @if (Model.Columns == null)
     {
         string s = "Stanna här";
     }
     else
     {
-        
-    
-    <table id="hamtaMedlemmar" class="display" cellspacing="0" width="100%">
 
-        <thead>
-            <tr>
-                @foreach (DataColumn x in Model.Columns)
-                {
-                    <th>@x.ColumnName</th>
-                }
 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (DataRow row in Model.Rows)
-            {
+        <table id="hamtaMedlemmar" class="display" cellspacing="0" width="100%">
+
+            <thead>
                 <tr>
                     @foreach (DataColumn x in Model.Columns)
                     {
-                        <td>@row[x.ColumnName]</td>
+                        <th>@x.ColumnName</th>
                     }
+
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.Rows)
+                {
+                    <tr>
+                        @foreach (DataColumn x in Model.Columns)
+                        {
+                            <td>@row[x.ColumnName]</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
 
-    </div>
+</div>
 
     @using (Html.BeginForm())
 
