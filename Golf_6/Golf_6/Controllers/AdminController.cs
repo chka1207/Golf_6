@@ -706,7 +706,9 @@ namespace Golf_6.Controllers
         [HttpGet]
         public ActionResult RegistreraResultat()
         {
-            return View();
+            TävlingModels.Resultat t = new TävlingModels.Resultat();
+            t.TeeTabell = t.getAllaTees();
+            return View(t);
         }
 
         //POST: Registrera tävlingsresultat
@@ -715,11 +717,12 @@ namespace Golf_6.Controllers
         public ActionResult RegistreraResultat(FormCollection collection)
         {
             int tävlingsID = 3; //Hårdkodat, ska tas in från viewn
-            string tee = "Röd"; //Hårdkodat, ska tas in från viewn
+            string tee = collection["teelista"];
             string golfid = collection["golfid"];
 
             TävlingModels.Anmälan ta = new TävlingModels.Anmälan();
             TävlingModels.Resultat t = new TävlingModels.Resultat();
+            t.TeeTabell = t.getAllaTees();
             bool redanReggad = t.redanRegistrerad(golfid, tävlingsID);
             string message = ta.kontrolleraGolfID(golfid);
 
@@ -740,18 +743,18 @@ namespace Golf_6.Controllers
                     }
                     t.Poäng = t.getPoäng(resultat, erhållnaSlag);
                     meddelande = t.registreraResultat(tävlingsID, golfid, t.Poäng);
-                    return View();
+                    return View(t);
                 }
                 else
                 {
                     TempData["notice"] = "Spelaren har redan ett registrerat resultat för tävlingen. Den nya inmatningen har ej registrerats";
-                    return View();
+                    return View(t);
                 }
             }
             else
             {
                 TempData["notice"] = "Du har angett ett golfID som inte existerar. Resultatet har inte registrerats.";
-                return View();
+                return View(t);
             }
         }
 

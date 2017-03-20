@@ -2,6 +2,7 @@
 @using Golf_6.Controllers;
 @using Golf_6.Models;
 @using System.Collections.Generic;
+@using System.Data;
 
 @{
     ViewBag.Title = "RegistreraTävling";
@@ -36,6 +37,16 @@
             <div class="form-group">
                 <label>GolfID</label><br />
                 <input name="golfid" placeholder="Spelarens golfID" class="form-control input-md" type="text" required>
+            </div>
+
+            <div class="form-group">
+                <label>Tee</label><br />
+                <select class="list-group" id="teelista" name="teelista" required>
+                    @foreach (DataRow dr in Model.TeeTabell.Rows)
+                    {
+                        <option value="@dr["namn"].ToString()">@dr["namn"].ToString()</option>
+                    }
+                </select>
             </div>
 
             <div class="form-group">

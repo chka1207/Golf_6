@@ -292,6 +292,8 @@ namespace Golf_6.Models
 
             public DataTable ResultatTabell { get; set; }
 
+            public DataTable TeeTabell { get; set; }
+
             public DataTable tavlingsResultat(int id)
             {
            
@@ -513,6 +515,16 @@ namespace Golf_6.Models
                     return b;
                 }
             }
+
+            public DataTable getAllaTees()
+            {
+                Postgres x = new Postgres();
+                DataTable dt = new DataTable();
+                dt = x.SqlFrågaParameters("select * from tee;", Postgres.lista = new List<NpgsqlParameter>(){});
+                return dt;
+            }
+
+
 
         }
     }
