@@ -20,7 +20,7 @@ namespace Golf_6.Controllers
         {
             return View();
         }
-
+        [AllowAnonymous]
         public ActionResult TavlingarMedResultat()
         {
             
@@ -32,6 +32,7 @@ namespace Golf_6.Controllers
         }
         //
         // GET: /Resultat/Details/5
+        [AllowAnonymous]
         public ActionResult Resultat()
         {
            

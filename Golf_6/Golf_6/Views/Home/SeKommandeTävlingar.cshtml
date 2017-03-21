@@ -47,6 +47,7 @@
                 <th>Totalt anmälda</th>
                 <th>Sista anmälningsdag</th>
                 <th>Information</th>
+                <th>Resultat</th>
             </tr>
         </thead>
         <tr>
@@ -86,7 +87,9 @@
                     {
                         <td align="right">Kommer efter @Convert.ToDateTime(@row["sista_anmalan"]).ToShortDateString()</td>
                     }
+                    <td align="left">@Html.ActionLink("Resultat", "Resultat", "Resultat", new { validate = Convert.ToInt32(@row["id"]) }, null)</td>
                 </tr>
+                
             }
         </tr>
         </table>
