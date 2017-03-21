@@ -61,6 +61,7 @@ namespace Golf_6.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult KommandeTävlingar()
         {
             int tävlingsId = Convert.ToInt32(Request.QueryString["validate"]);
@@ -74,6 +75,7 @@ namespace Golf_6.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult SeKommandeTävlingar()
         {
             TävlingModels t = new TävlingModels();

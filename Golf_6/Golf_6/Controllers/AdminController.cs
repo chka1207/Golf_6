@@ -7,8 +7,10 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
+using System.Web.Security;
 using Golf_6.Models;
 using Golf_6.ViewModels;
+using Microsoft.AspNet.Identity;
 using Npgsql;
 using Microsoft.AspNet.Identity;
 
@@ -522,6 +524,7 @@ namespace Golf_6.Controllers
         //[HttpPost]
         //[HttpGet]
         //[Authorize(Roles = "2")]
+        
         public DataTable HämtaSlumpadTävling(int tävlingsId)
         {   
             Postgres frånDb = new Postgres();
