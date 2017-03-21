@@ -8,7 +8,18 @@
 }
 
 @{
-    Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
+    if (User.IsInRole("1"))
+    {
+        Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
+    }
+    else if (User.IsInRole("2"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 }
 
 <h2>@ViewBag.Message</h2>
