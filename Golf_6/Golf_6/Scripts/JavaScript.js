@@ -29,6 +29,17 @@ $(document).ready(function () {
         }
     });
 });
+
+//$(document).ready(function () { 
+//    var table = $('#hamtaMedlemmar').DataTable();
+
+//    $('#hamtaMedlemmar').on('click','tr', function() {
+//                var data = table.row(this).data;
+//            ////$('myTextBox2').val(data[0]);
+//        //alert("hej" + data[1]);
+//                $('#testare').val("jag funkar");
+//        });
+//});
     //$(document).ready(function () {
     //    $('#btnSök').click(function () {
     //        $('#divSök').load('@Url.Action("Tidsbokning", "Search")');

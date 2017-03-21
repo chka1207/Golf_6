@@ -1,6 +1,22 @@
 ﻿@model Golf_6.Models.TävlingModels
 @using Golf_6.Models;
 @using System.Data;
+@using Golf_6.Controllers
+
+@{  
+    if (User.IsInRole("1"))
+    {
+        Layout = "~/Views/Shared/_LayoutMedlem.cshtml";
+    }
+    else if (User.IsInRole("2"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
 @*@{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }*@
