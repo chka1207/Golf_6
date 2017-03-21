@@ -10,7 +10,7 @@ using System.Web.Mvc;
 using Golf_6.Models;
 using Golf_6.ViewModels;
 using Npgsql;
-
+using Microsoft.AspNet.Identity;
 
 namespace Golf_6.Controllers
 {

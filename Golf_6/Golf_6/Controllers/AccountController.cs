@@ -121,11 +121,11 @@ namespace Golf_6.Controllers
                             var authManager = ctx.Authentication;
                             authManager.SignIn(identity);
                             
-                            if (User.IsInRole("1"))
+                            if (type == "1")
                             {
                                 return RedirectToAction("MinaBokningar", "Medlem");
                             }
-                            if (User.IsInRole("2"))
+                            if (type == "2")
                             {
                                 return RedirectToAction("Index", "Admin");
                             }
@@ -457,8 +457,8 @@ namespace Golf_6.Controllers
         {
             var ctx = Request.GetOwinContext();
             var authManager = ctx.Authentication;
-            authManager.SignOut("Applicationcookie");
-            return RedirectToAction("Login", "Account");
+            authManager.SignOut("ApplicationCookie");
+            return RedirectToAction("Index", "Home");
         }
 
         ////
